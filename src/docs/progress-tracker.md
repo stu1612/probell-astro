@@ -1,14 +1,14 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 17 May 2026**
+**Last updated: 17 May 2026 — Session 9**
 
 ---
 
 ## Current Status
 
 **Phase:** Active build
-**Active section:** Trending — Complete
-**Next action:** Build BrandStory.astro
+**Active section:** Bold Statement — Complete
+**Next action:** Build BuiltForEndurance.astro
 
 ---
 
@@ -63,9 +63,9 @@ These items must be confirmed before Claude Code begins building.
 | 2   | Hero                | Complete    | 17 May 2026 | margin-top: -72px applied to compensate body padding-top; headline--active on first option |
 | 3   | Identity            | Complete    | 17 May 2026 | Text only — product breakout omitted per developer instruction                             |
 | 4   | Trending            | Complete    | 17 May 2026 | Product PNGs confirmed (strawberry, cookies-cream, salted-caramel); 4th card placeholder   |
-| 5   | Brand Story         | Not started | —           |                                                                                            |
-| 6   | Built for Strength  | Not started | —           | Placeholder products                                                                       |
-| 7   | Bold Statement      | Not started | —           |                                                                                            |
+| 5   | Brand Story         | Complete    | 17 May 2026 | Image uses .png (not .jpg per spec); diagonal clip via existing .clip-diagonal-bottom global class |
+| 6   | Built for Strength  | Complete    | 17 May 2026 | Placeholder Creatine card; whey-cookies-cream.png used for Whey 100; large={true} prop added to ProductCard |
+| 7   | Bold Statement      | Complete    | 17 May 2026 | discipline.png used (spec says .jpg); TornEdge fill=black into Built for Endurance         |
 | 8   | Built for Endurance | Not started | —           | Placeholder products                                                                       |
 | 9   | Instagram           | Not started | —           | Placeholder grid at launch                                                                 |
 | 10  | Contact             | Not started | —           | Confirm email + Formspree                                                                  |
@@ -75,6 +75,83 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 9 — 17 May 2026
+
+**What was done:**
+
+- Built `BoldStatement.astro` — full viewport, `discipline.png` full bleed, `rgba(0,0,0,0.55)` overlay, centered headline
+- Reused `TornEdge.astro` at bottom, `fill="var(--color-black)"` to match Built for Endurance background
+- Imported `BoldStatement` into `index.astro` after `BuiltForStrength`
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- Image path uses `.png` — spec listed `.jpg` but confirmed asset is `discipline.png`
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Footer design
+- Contact form email address
+- Instagram URL
+
+---
+
+### Session 8 — 17 May 2026
+
+**What was done:**
+
+- Built `BuiltForStrength.astro` — black background, red eyebrow, display headline, grey sub-line, 2-col large product grid
+- Added `large?: boolean` prop to `ProductCard.astro` — applies `product-card--large` modifier class
+- Added `.product-card--large` and `.product-card--large .product-card__image` to `global.css`
+- Card 1: `whey-cookies-cream.png` with "Whey 100 Protein" / "Coming Soon" tag
+- Card 2: placeholder div with "Creatine" / "Coming Soon" tag
+- No border breaker — hard cut to Bold Statement per spec
+- Imported `BuiltForStrength` into `index.astro` after `BrandStory`
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- None — all spec-driven, no deviations
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Footer design
+- Contact form email address
+- Instagram URL
+
+---
+
+### Session 7 — 17 May 2026
+
+**What was done:**
+
+- Built `BrandStory.astro` — black background, 1fr 1fr grid, gym interior image left, content right
+- Used `.clip-diagonal-bottom` global class (already defined) — no new CSS added to global.css
+- Imported `BrandStory` into `index.astro` below Trending
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- Image path uses `.png` — spec listed `.jpg` but confirmed asset is `gym-interior.png`
+- Diagonal clip angle left at `85%` (global.css value) — adjust in browser if steeper angle preferred
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Footer design
+- Contact form email address
+- Instagram URL
+
+---
 
 ### Session 6 — 17 May 2026
 

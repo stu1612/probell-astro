@@ -1,7 +1,7 @@
 # Probell Nutrition — Bold Statement Spec
 
 **Version 1 · 14 May 2026**
-**Status: Not started**
+**Status: Complete — 17 May 2026**
 
 ---
 
@@ -77,13 +77,13 @@ Add BoldStatement below BuiltForStrength in `src/pages/index.astro`.
 
 ## Confirmed Working ✓
 
-- [ ] Image fills full viewport
-- [ ] Overlay heavier than hero — `rgba(0,0,0,0.55)`
-- [ ] Headline centered — correct copy, font, and size
-- [ ] No other elements present — nothing else in the section
-- [ ] Torn ink edge visible at section bottom
-- [ ] Responsive — headline scales correctly on mobile
-- [ ] `npm run build` passes
+- [x] Image fills full viewport
+- [x] Overlay heavier than hero — `rgba(0,0,0,0.55)`
+- [x] Headline centered — correct copy, font, and size
+- [x] No other elements present — nothing else in the section
+- [x] Torn ink edge visible at section bottom
+- [x] Responsive — headline scales correctly on mobile
+- [x] `npm run build` passes
 
 ---
 

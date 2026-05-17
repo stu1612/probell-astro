@@ -1,0 +1,91 @@
+---
+import { Image } from 'astro:assets';
+---
+
+<section id="brand-story" class="brand-story clip-diagonal-bottom">
+  <div class="brand-story-grid">
+    <div class="brand-story__image">
+      <Image
+        src="/images/brand-story/gym-interior.png"
+        alt="Raw gym interior — iron plates, concrete walls, hard lighting"
+        width={800}
+        height={900}
+        loading="lazy"
+      />
+    </div>
+    <div class="brand-story__content">
+      <p class="label-text label-text--gold">Our Story</p>
+      <h2 class="display-text brand-story__headline">
+        Built in the Gym.<br />Designed for It.
+      </h2>
+      <p class="brand-story__body">
+        Probell started with one idea — protein that performs as hard
+        as you do. Kettlebell-shaped. Uncompromising formula. Made in the USA.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .brand-story {
+    background: var(--color-black);
+    position: relative;
+    padding-bottom: calc(var(--space-xl) + 6rem);
+  }
+
+  .brand-story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 70vh;
+  }
+
+  .brand-story__image {
+    overflow: hidden;
+  }
+
+  .brand-story__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .brand-story__content {
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .label-text--gold {
+    margin-bottom: var(--space-sm);
+  }
+
+  .brand-story__headline {
+    color: var(--color-white);
+    font-size: var(--text-section);
+    margin-top: 0;
+  }
+
+  .brand-story__body {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-grey);
+    line-height: 1.6;
+    margin-top: var(--space-md);
+  }
+
+  @media (max-width: 768px) {
+    .brand-story-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .brand-story__image {
+      height: 50vh;
+    }
+
+    .brand-story__content {
+      padding: var(--space-md);
+    }
+  }
+</style>
