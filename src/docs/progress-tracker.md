@@ -1,14 +1,14 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 14 May 2026**
+**Last updated: 17 May 2026**
 
 ---
 
 ## Current Status
 
-**Phase:** Pre-build — specs complete, project not yet initialised
-**Active section:** None
-**Next action:** Initialise Astro project and confirm file structure
+**Phase:** Active build
+**Active section:** None — base setup complete
+**Next action:** Build Nav.astro
 
 ---
 
@@ -53,9 +53,9 @@ These items must be confirmed before Claude Code begins building.
 
 | # | Section | Status | Completed | Notes |
 |---|---------|--------|-----------|-------|
-| — | Project init | Not started | — | |
-| — | globals.css import | Not started | — | |
-| — | BaseLayout | Not started | — | |
+| — | Project init | Complete | 17 May 2026 | |
+| — | globals.css import | Complete | 17 May 2026 | |
+| — | BaseLayout | Complete | 17 May 2026 | |
 | 1 | Nav | Not started | — | |
 | 2 | Hero | Not started | — | |
 | 3 | Identity | Not started | — | |
@@ -72,6 +72,27 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 2 — 17 May 2026
+**What was done:**
+- Rebuilt `BaseLayout.astro` to spec: Props interface, default title, Google Fonts link tags, global.css import
+- Updated `index.astro`: uses `@layouts/BaseLayout.astro` alias, scaffold removed, wraps empty `<main>`
+- Confirmed `@components/` and `@layouts/` path aliases active via tsconfig.json
+- `npm run build` passes — zero errors, 1 page built
+- Progress tracker updated
+
+**Decisions made this session:**
+- None — all structural, no design decisions required
+
+**Decisions still open:**
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Footer design
+- Contact form email address
+- Instagram URL
+
+---
 
 ### Session 1 — 14 May 2026
 **What was done:**
@@ -106,7 +127,7 @@ These items must be confirmed before Claude Code begins building.
 
 ## Known Issues
 
-None at this stage — project not yet initialised.
+None.
 
 ---
 
