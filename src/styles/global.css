@@ -14,10 +14,8 @@
    ============================================================ */
 
 /* ============================================================
-   1. GOOGLE FONTS
+   1. GOOGLE FONTS — loaded via <link> in BaseLayout.astro
    ============================================================ */
-
-@import url("https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@700;900&family=Space+Grotesk:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap");
 
 /* ============================================================
    2. CSS CUSTOM PROPERTIES
@@ -73,6 +71,7 @@
   /* Transitions */
   --transition-fast: 0.15s ease;
   --transition-base: 0.2s ease;
+  --transition-slow: 0.3s ease;
 }
 
 /* ============================================================
@@ -99,6 +98,7 @@ body {
   font-family: var(--font-body);
   font-size: var(--text-body);
   line-height: 1.6;
+  padding-top: 72px;
 }
 
 img,

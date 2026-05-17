@@ -1,7 +1,7 @@
 # Probell Nutrition — Base Setup Spec
 
 **Version 1 · 14 May 2026**
-**Status: Not started**
+**Status: Complete — 17 May 2026**
 
 ---
 
@@ -71,11 +71,11 @@ Run build and confirm zero errors before marking complete.
 
 ## Confirmed Working ✓
 
-- [ ] BaseLayout renders in browser
-- [ ] globals.css tokens resolve — test with a red background on body, remove after
-- [ ] Google Fonts loading — confirm in browser network tab
-- [ ] Path aliases working
-- [ ] `npm run build` passes with zero errors
+- [x] BaseLayout renders in browser
+- [x] globals.css tokens resolve — test with a red background on body, remove after
+- [x] Google Fonts loading — confirm in browser network tab
+- [x] Path aliases working
+- [x] `npm run build` passes with zero errors
 
 ---
 
