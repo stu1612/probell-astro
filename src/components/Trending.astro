@@ -1,0 +1,77 @@
+---
+import ProductCard from '@components/ui/ProductCard.astro';
+---
+
+<section id="trending" class="trending">
+  <div class="container">
+    <h2 class="trending__heading">Trending</h2>
+    <div class="trending-grid grid-4">
+      <ProductCard
+        image="/images/products/whey-strawberry.png"
+        imageAlt="Probell Whey 100 Protein — Strawberry"
+        name="Whey Strawberry"
+        descriptor="25g protein. Blue collar formula."
+        tag="Coming Soon"
+      />
+      <ProductCard
+        image="/images/products/whey-cookies-cream.png"
+        imageAlt="Probell Whey 100 Protein — Cookies and Cream"
+        name="Whey Cookies"
+        descriptor="25g protein. No days off formula."
+        tag="Coming Soon"
+      />
+      <ProductCard
+        image="/images/products/whey-salted-caramel.png"
+        imageAlt="Probell Whey 100 Protein — Salted Caramel"
+        name="Whey Caramel"
+        descriptor="25g protein. Built for the grind."
+        tag="Coming Soon"
+      />
+      <ProductCard
+        name="More Coming Soon"
+        descriptor="New products launching soon."
+        tag="Coming Soon"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .trending {
+    background: var(--color-black);
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+  }
+
+  .trending__heading {
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    color: var(--color-white);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+
+  @media (max-width: 767px) {
+    .trending-grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: var(--space-sm);
+      padding-bottom: var(--space-sm);
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .trending-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .trending-grid :global(.product-card) {
+      scroll-snap-align: start;
+      min-width: 80vw;
+      flex-shrink: 0;
+    }
+  }
+</style>

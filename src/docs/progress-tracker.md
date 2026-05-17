@@ -7,8 +7,8 @@
 ## Current Status
 
 **Phase:** Active build
-**Active section:** Identity — Complete
-**Next action:** Build Trending.astro
+**Active section:** Trending — Complete
+**Next action:** Build BrandStory.astro
 
 ---
 
@@ -62,7 +62,7 @@ These items must be confirmed before Claude Code begins building.
 | 1   | Nav                 | Complete    | 17 May 2026 | Single logo asset used for both states — swap when two-variant PNGs arrive                 |
 | 2   | Hero                | Complete    | 17 May 2026 | margin-top: -72px applied to compensate body padding-top; headline--active on first option |
 | 3   | Identity            | Complete    | 17 May 2026 | Text only — product breakout omitted per developer instruction                             |
-| 4   | Trending            | Not started | —           | Needs product PNGs                                                                         |
+| 4   | Trending            | Complete    | 17 May 2026 | Product PNGs confirmed (strawberry, cookies-cream, salted-caramel); 4th card placeholder   |
 | 5   | Brand Story         | Not started | —           |                                                                                            |
 | 6   | Built for Strength  | Not started | —           | Placeholder products                                                                       |
 | 7   | Bold Statement      | Not started | —           |                                                                                            |
@@ -75,6 +75,33 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 6 — 17 May 2026
+
+**What was done:**
+
+- Built `ProductCard.astro` — optional `image` prop, placeholder div when absent, tag support
+- Built `Trending.astro` — black background, `var(--space-2xl)` top padding (160px), 4-column grid, mobile carousel (CSS only, no JS)
+- Imported `Trending` into `index.astro` below Identity
+- `npm run build` passes — zero errors
+- `page-structure.md` Section 4 product names and image paths synced to match feature spec and renamed assets
+
+**Decisions made this session:**
+
+- `var(--space-2xl)` used for 160px top padding — token match, no raw px value needed
+- Alt text for card 1 corrected to "Strawberry" — spec had stale "Chocolate Peanut Butter" alt from before image rename
+- Placeholder div for card 4 reuses `.product-card__image` class — aspect-ratio and background already defined globally, no scoped style needed
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Footer design
+- Contact form email address
+- Instagram URL
+
+---
 
 ### Session 5 — 17 May 2026
 
