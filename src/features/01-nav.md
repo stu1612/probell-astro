@@ -23,6 +23,7 @@ White background on all other pages from load.
 ## Design Tokens
 
 ### Transparent state (homepage default)
+
 - Background: `transparent`
 - Nav links: `var(--color-white)`
 - Nav links hover: `var(--color-red)`
@@ -32,6 +33,7 @@ White background on all other pages from load.
 - CTA: `.btn-primary` — red, stays consistent in both states
 
 ### Scrolled state (homepage after 50vh) + all other pages
+
 - Background: `#ffffff`
 - Nav links: `var(--color-black)`
 - Nav links hover: `var(--color-red)`
@@ -41,8 +43,11 @@ White background on all other pages from load.
 - CTA: `.btn-primary` — red, unchanged
 
 ### Transition
+
 ```css
-transition: background 0.3s ease, color 0.3s ease;
+transition:
+  background 0.3s ease,
+  color 0.3s ease;
 ```
 
 ---
@@ -67,10 +72,10 @@ transition: background 0.3s ease, color 0.3s ease;
 
 Two logo versions required:
 
-| File | Usage |
-|------|-------|
-| `/public/logo-light.png` | Transparent nav state — light version for dark backgrounds |
-| `/public/logo-dark.png` | White nav state — dark version for light backgrounds |
+| File                                     | Usage                                                      |
+| ---------------------------------------- | ---------------------------------------------------------- |
+| `/public/images/icons/probell-logo-.png` | Transparent nav state — light version for dark backgrounds |
+| `/public/images/icons/probell-logo-.png` | White nav state — dark version for light backgrounds       |
 
 - Height: `40px` — width auto
 - Both link to `/`
@@ -79,11 +84,19 @@ Two logo versions required:
   - Scrolled: `logo-dark` visible, `logo-light` hidden
 
 ```css
-.nav .logo-light { display: block; }
-.nav .logo-dark  { display: none; }
+.nav .logo-light {
+  display: block;
+}
+.nav .logo-dark {
+  display: none;
+}
 
-.nav--scrolled .logo-light { display: none; }
-.nav--scrolled .logo-dark  { display: block; }
+.nav--scrolled .logo-light {
+  display: none;
+}
+.nav--scrolled .logo-dark {
+  display: block;
+}
 ```
 
 ---
@@ -98,16 +111,19 @@ Requires `client:load` for scroll detection and mobile toggle.
 ### 2. Left side — logo + nav links
 
 **Logo:**
-- Two `<img>` elements — `logo-light.png` and `logo-dark.png`
+
+- Two `<img>` elements — `/public/images/icons/probell-logo-.png` and `/public/images/icons/probell-logo-.png`
 - Toggle via CSS class as above
 - Both wrapped in `<a href="/">`
 
 **Nav links — left to right:**
+
 - `Supplements` → `/supplements`
 - `About` → `/#brand-story`
 - `Contact` → `/#contact`
 
 Styles:
+
 - Font: `var(--font-body)`, `var(--text-label)`, weight 500
 - Uppercase, `letter-spacing: 0.1em`
 - Transition: `color var(--transition-fast)`
@@ -117,12 +133,14 @@ Styles:
 ### 3. Right side — CTA + social icons
 
 **CTA pill:**
+
 - Text: `Join the Waitlist`
 - Class: `.btn-primary`
 - Links to `/#contact`
 - Stays red in both nav states
 
 **Social icons — left to right after CTA:**
+
 - Facebook SVG icon — 20px
 - Instagram SVG icon — 20px
 - Both `href="#"` placeholder until client supplies URLs
@@ -135,6 +153,7 @@ Styles:
 Use simple inline SVG for icons — no icon library required:
 
 **Facebook SVG:**
+
 ```svg
 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
@@ -142,6 +161,7 @@ Use simple inline SVG for icons — no icon library required:
 ```
 
 **Instagram SVG:**
+
 ```svg
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
      stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -156,18 +176,18 @@ Use simple inline SVG for icons — no icon library required:
 JavaScript scroll listener toggles `.nav--scrolled` class:
 
 ```javascript
-const nav = document.querySelector('.nav');
+const nav = document.querySelector(".nav");
 const threshold = window.innerHeight * 0.5;
 
 function handleScroll() {
   if (window.scrollY > threshold) {
-    nav.classList.add('nav--scrolled');
+    nav.classList.add("nav--scrolled");
   } else {
-    nav.classList.remove('nav--scrolled');
+    nav.classList.remove("nav--scrolled");
   }
 }
 
-window.addEventListener('scroll', handleScroll, { passive: true });
+window.addEventListener("scroll", handleScroll, { passive: true });
 ```
 
 ### 5. Page-specific nav state
@@ -187,6 +207,7 @@ const { transparent = false } = Astro.props;
 - All other pages: `<Nav transparent={false} />` — white from load, no scroll listener needed
 
 When `transparent={false}`:
+
 - Apply `.nav--scrolled` class on render — no JS scroll listener
 - Logo dark, black links, white background from the start
 
@@ -196,6 +217,7 @@ Hamburger icon right on mobile (< 768px).
 Logo remains left — nav links and right side items move into overlay.
 
 Full screen overlay on open:
+
 - Background: `var(--color-black)`
 - Links stacked, centered, `var(--space-md)` gap
 - Social icons below links
@@ -205,16 +227,17 @@ Full screen overlay on open:
 Toggle via JS:
 
 ```javascript
-const hamburger = document.querySelector('.nav-hamburger');
-const overlay = document.querySelector('.nav-overlay');
+const hamburger = document.querySelector(".nav-hamburger");
+const overlay = document.querySelector(".nav-overlay");
 
-hamburger.addEventListener('click', () => {
-  overlay.classList.toggle('nav-overlay--open');
-  document.body.classList.toggle('nav-open');
+hamburger.addEventListener("click", () => {
+  overlay.classList.toggle("nav-overlay--open");
+  document.body.classList.toggle("nav-open");
 });
 ```
 
 Mobile overlay CSS:
+
 ```css
 .nav-overlay {
   position: fixed;
@@ -244,6 +267,7 @@ body.nav-open {
 ### 7. Body offset
 
 Add to `globals.css`:
+
 ```css
 body {
   padding-top: 72px;
@@ -270,11 +294,13 @@ const { title = 'Probell Nutrition — Built for the Grind',
 Pass `transparentNav` prop through to Nav component.
 
 Homepage `index.astro`:
+
 ```astro
 <BaseLayout transparentNav={true}>
 ```
 
 All other pages:
+
 ```astro
 <BaseLayout>
 ```
@@ -293,7 +319,9 @@ All other pages:
   z-index: 100;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  transition: background 0.3s ease, color 0.3s ease;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
 }
 
 .nav--transparent {
@@ -341,7 +369,9 @@ All other pages:
   transition: color var(--transition-fast);
 }
 
-.nav-link:hover { color: var(--color-red); }
+.nav-link:hover {
+  color: var(--color-red);
+}
 
 .nav-social {
   display: flex;
@@ -350,7 +380,9 @@ All other pages:
   transition: color var(--transition-fast);
 }
 
-.nav-social a:hover { color: var(--color-red); }
+.nav-social a:hover {
+  color: var(--color-red);
+}
 
 .nav-hamburger {
   display: none;
@@ -362,8 +394,12 @@ All other pages:
 
 @media (max-width: 768px) {
   .nav-links,
-  .nav-right { display: none; }
-  .nav-hamburger { display: block; }
+  .nav-right {
+    display: none;
+  }
+  .nav-hamburger {
+    display: block;
+  }
 }
 ```
 

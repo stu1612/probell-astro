@@ -1,0 +1,308 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  transparent?: boolean;
+}
+const { transparent = false } = Astro.props;
+
+const navClass = transparent ? 'nav nav--transparent' : 'nav nav--scrolled';
+---
+
+<header class={navClass}>
+  <div class="container nav-inner flex-between">
+
+    <!-- Left: logo + nav links -->
+    <div class="nav-left">
+      <a href="/" aria-label="Probell Nutrition home">
+        <Image
+          src="/images/icons/probell-logo.png"
+          alt="Probell Nutrition"
+          width={200}
+          height={40}
+          class="logo-light"
+          loading="eager"
+        />
+        <Image
+          src="/images/icons/probell-logo.png"
+          alt="Probell Nutrition"
+          width={200}
+          height={40}
+          class="logo-dark"
+          loading="eager"
+        />
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/supplements" class="nav-link">Supplements</a>
+        <a href="/#brand-story" class="nav-link">About</a>
+        <a href="/#contact" class="nav-link">Contact</a>
+      </nav>
+    </div>
+
+    <!-- Right: CTA + social icons -->
+    <div class="nav-right">
+      <a href="/#contact" class="btn-primary">Join the Waitlist</a>
+      <div class="nav-social">
+        <a href="#" aria-label="Facebook">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+
+  </div>
+</header>
+
+<!-- Mobile overlay -->
+<div class="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <button class="nav-overlay__close" aria-label="Close menu">&#215;</button>
+  <nav aria-label="Mobile navigation">
+    <a href="/supplements" class="nav-link">Supplements</a>
+    <a href="/#brand-story" class="nav-link">About</a>
+    <a href="/#contact" class="nav-link">Contact</a>
+  </nav>
+  <div class="nav-social">
+    <a href="#" aria-label="Facebook">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+      </svg>
+    </a>
+    <a href="#" aria-label="Instagram">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+    </a>
+  </div>
+  <a href="/#contact" class="btn-primary nav-overlay__cta">Join the Waitlist</a>
+</div>
+
+<script define:vars={{ transparent }}>
+  const nav = document.querySelector('.nav');
+  const hamburger = document.querySelector('.nav-hamburger');
+  const overlay = document.querySelector('.nav-overlay');
+  const closeBtn = document.querySelector('.nav-overlay__close');
+
+  // Scroll behaviour — homepage only
+  if (transparent) {
+    const threshold = window.innerHeight * 0.5;
+
+    function handleScroll() {
+      if (window.scrollY > threshold) {
+        nav.classList.remove('nav--transparent');
+        nav.classList.add('nav--scrolled');
+      } else {
+        nav.classList.remove('nav--scrolled');
+        nav.classList.add('nav--transparent');
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+  }
+
+  // Mobile overlay toggle
+  function openOverlay() {
+    overlay.classList.add('nav-overlay--open');
+    document.body.classList.add('nav-open');
+    hamburger.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeOverlay() {
+    overlay.classList.remove('nav-overlay--open');
+    document.body.classList.remove('nav-open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
+
+  hamburger.addEventListener('click', openOverlay);
+  closeBtn.addEventListener('click', closeOverlay);
+
+  overlay.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeOverlay);
+  });
+</script>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 72px;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background var(--transition-slow), color var(--transition-slow);
+  }
+
+  .nav--transparent {
+    background: transparent;
+    color: var(--color-white);
+  }
+
+  .nav--scrolled {
+    background: var(--color-white);
+    color: var(--color-black);
+  }
+
+  .nav-inner {
+    height: 100%;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  /* Logo toggle */
+  .nav .logo-light { display: block; }
+  .nav .logo-dark  { display: none; }
+
+  .nav--scrolled .logo-light { display: none; }
+  .nav--scrolled .logo-dark  { display: block; }
+
+  .logo-light,
+  .logo-dark {
+    height: 40px;
+    width: auto;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .nav-link {
+    font-family: var(--font-body);
+    font-size: var(--text-label);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: color var(--transition-fast);
+  }
+
+  .nav-link:hover {
+    color: var(--color-red);
+  }
+
+  .nav-social {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .nav-social a {
+    transition: color var(--transition-fast);
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-social a:hover {
+    color: var(--color-red);
+  }
+
+  .nav-hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-xs);
+    color: inherit;
+  }
+
+  /* Mobile overlay */
+  .nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--color-black);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-slow);
+  }
+
+  .nav-overlay--open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .nav-overlay nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .nav-overlay .nav-link {
+    font-size: var(--text-label);
+    color: var(--color-white);
+  }
+
+  .nav-overlay .nav-social {
+    color: var(--color-white);
+  }
+
+  .nav-overlay__close {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    background: none;
+    border: none;
+    color: var(--color-white);
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: var(--space-xs);
+  }
+
+  .nav-overlay__cta {
+    margin-top: var(--space-sm);
+    width: calc(100% - var(--space-2xl));
+    text-align: center;
+  }
+
+  body.nav-open {
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links,
+    .nav-right {
+      display: none;
+    }
+
+    .nav-hamburger {
+      display: block;
+    }
+  }
+</style>

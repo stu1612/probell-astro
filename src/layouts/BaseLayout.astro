@@ -1,10 +1,15 @@
 ---
+import Nav from '@components/Nav.astro';
 import "../styles/global.css";
 
 interface Props {
   title?: string;
+  transparentNav?: boolean;
 }
-const { title = 'Probell Nutrition — Built for the Grind' } = Astro.props;
+const {
+  title = 'Probell Nutrition — Built for the Grind',
+  transparentNav = false,
+} = Astro.props;
 ---
 <html lang="en">
   <head>
@@ -17,6 +22,7 @@ const { title = 'Probell Nutrition — Built for the Grind' } = Astro.props;
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@700;900&family=Space+Grotesk:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <Nav transparent={transparentNav} />
     <slot />
   </body>
 </html>

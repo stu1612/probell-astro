@@ -7,8 +7,8 @@
 ## Current Status
 
 **Phase:** Active build
-**Active section:** None — base setup complete
-**Next action:** Build Nav.astro
+**Active section:** Nav — Complete
+**Next action:** Build Hero.astro
 
 ---
 
@@ -26,7 +26,7 @@ These items must be confirmed before Claude Code begins building.
 - [x] `progress-tracker.md` — complete
 
 ### Assets
-- [ ] Logo PNG — transparent background — pending client supply
+- [x] Logo PNG — single asset supplied `/public/images/icons/probell-logo.png` — light/dark structure in place, awaiting two-variant assets
 - [x] Hero image — `hero-main.jpg` — generated and confirmed
 - [x] Brand story image — `gym-interior.jpg` — generated and confirmed
 - [x] Bold statement image — `discipline.jpg` — client supplied
@@ -56,7 +56,7 @@ These items must be confirmed before Claude Code begins building.
 | — | Project init | Complete | 17 May 2026 | |
 | — | globals.css import | Complete | 17 May 2026 | |
 | — | BaseLayout | Complete | 17 May 2026 | |
-| 1 | Nav | Not started | — | |
+| 1 | Nav | Complete | 17 May 2026 | Single logo asset used for both states — swap when two-variant PNGs arrive |
 | 2 | Hero | Not started | — | |
 | 3 | Identity | Not started | — | |
 | 4 | Trending | Not started | — | Needs product PNGs |
@@ -72,6 +72,29 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 3 — 17 May 2026
+**What was done:**
+- Built `Nav.astro` to full spec
+- `global.css`: removed `@import` (fonts now loaded exclusively via `<link>` in BaseLayout for better performance), added `--transition-slow: 0.3s ease` token, added `body { padding-top: 72px }`
+- `BaseLayout.astro`: added `Nav` import, `transparentNav?: boolean` prop, `<Nav transparent={transparentNav} />`
+- `index.astro`: passes `transparentNav={true}`
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+- `define:vars` used to pass `transparent` prop to client script — scroll listener only attaches on homepage
+- Single logo file used for both light/dark states — CSS toggle structure kept intact for when two-variant assets arrive
+- Google Fonts `@import` removed from `global.css` in favour of `<link>` in BaseLayout (faster: preconnect hints + parallel fetch vs. render-blocking @import)
+
+**Decisions still open:**
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Footer design
+- Contact form email address
+- Instagram URL
+
+---
 
 ### Session 2 — 17 May 2026
 **What was done:**
