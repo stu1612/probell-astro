@@ -9,9 +9,15 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "eslint \"src/**/*.{js,ts,astro}\""
   },
   "dependencies": {
     "astro": "^6.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^10.4.0",
+    "eslint-plugin-astro": "^1.7.0",
+    "typescript-eslint": "^8.59.3"
   }
 }
