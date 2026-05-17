@@ -1,0 +1,53 @@
+---
+import ProductCard from '@components/ui/ProductCard.astro';
+---
+
+<section class="section" id="built-for-strength">
+  <div class="container">
+    <p class="label-text label-text--red">Performance Series</p>
+    <h2 class="display-text">Built for Strength</h2>
+    <p class="sub-line">25g protein per serve. Everything you need. Nothing you don't.</p>
+
+    <div class="grid-2 cards-grid">
+      <ProductCard
+        image="/images/products/whey-cookies-cream.png"
+        imageAlt="Probell Whey 100 Protein — Chocolate Peanut Butter"
+        name="Whey 100 Protein"
+        descriptor="The foundation. 25g protein, zero compromise."
+        tag="Coming Soon"
+        large={true}
+      />
+      <ProductCard
+        name="Creatine"
+        descriptor="Power output. Recovery. Built in."
+        tag="Coming Soon"
+        large={true}
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  #built-for-strength {
+    background: var(--color-black);
+    padding-bottom: var(--space-xl);
+  }
+
+  .label-text {
+    margin-bottom: var(--space-sm);
+  }
+
+  .sub-line {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-grey);
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    color: var(--color-white);
+  }
+</style>

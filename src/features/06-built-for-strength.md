@@ -40,24 +40,30 @@ File: `src/components/BuiltForStrength.astro`
 ### 2. Section header
 
 **Eyebrow:**
+
 ```
 "Performance Series"
 ```
+
 Class: `.label-text--red`
 Margin bottom: `var(--space-sm)`
 
 **Headline:**
+
 ```
 "Built for Strength"
 ```
+
 Font: `var(--font-display)`, `var(--text-section)`
 Color: `var(--color-white)`
 Class: `display-text`
 
 **Sub-line:**
+
 ```
 "25g protein per serve. Everything you need. Nothing you don't."
 ```
+
 Font: `var(--font-body)`, `var(--text-body)`
 Color: `var(--color-grey)`
 Margin top: `var(--space-sm)`
@@ -70,7 +76,7 @@ Cards larger than Trending — `min-height: 400px` on desktop.
 
 ```
 1. Name: "Whey 100 Protein"
-   Image: /public/images/products/whey-cpb.png
+   Image: /public/images/products/whey-cookies-cream.png
    Alt: "Probell Whey 100 Protein — Chocolate Peanut Butter"
    Descriptor: "The foundation. 25g protein, zero compromise."
    Tag: "Coming Soon"

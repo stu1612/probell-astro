@@ -381,6 +381,14 @@ select {
   letter-spacing: 0.05em;
 }
 
+.product-card--large {
+  min-height: 400px;
+}
+
+.product-card--large .product-card__image {
+  aspect-ratio: 3 / 4;
+}
+
 /* --- Forms --- */
 
 .form-group {

@@ -7,12 +7,13 @@ interface Props {
   name: string;
   descriptor: string;
   tag?: string;
+  large?: boolean;
 }
 
-const { image, imageAlt = '', name, descriptor, tag } = Astro.props;
+const { image, imageAlt = '', name, descriptor, tag, large = false } = Astro.props;
 ---
 
-<div class="product-card">
+<div class={`product-card${large ? ' product-card--large' : ''}`}>
   {image ? (
     <Image
       src={image}
