@@ -7,8 +7,8 @@
 ## Current Status
 
 **Phase:** Active build
-**Active section:** Hero — Complete
-**Next action:** Build Identity.astro
+**Active section:** Identity — Complete
+**Next action:** Build Trending.astro
 
 ---
 
@@ -61,7 +61,7 @@ These items must be confirmed before Claude Code begins building.
 | —   | BaseLayout          | Complete    | 17 May 2026 |                                                                                            |
 | 1   | Nav                 | Complete    | 17 May 2026 | Single logo asset used for both states — swap when two-variant PNGs arrive                 |
 | 2   | Hero                | Complete    | 17 May 2026 | margin-top: -72px applied to compensate body padding-top; headline--active on first option |
-| 3   | Identity            | Not started | —           |                                                                                            |
+| 3   | Identity            | Complete    | 17 May 2026 | Text only — product breakout omitted per developer instruction                             |
 | 4   | Trending            | Not started | —           | Needs product PNGs                                                                         |
 | 5   | Brand Story         | Not started | —           |                                                                                            |
 | 6   | Built for Strength  | Not started | —           | Placeholder products                                                                       |
@@ -75,6 +75,30 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 5 — 17 May 2026
+
+**What was done:**
+
+- Built `Identity.astro` — black background, two display text lines, max-width 800px container
+- Product PNG breakout omitted per developer instruction — text only
+- Imported into `index.astro` below Hero
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- Product breakout removed from Identity — section is text only
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Footer design
+- Contact form email address
+- Instagram URL
+
+---
 
 ### Session 4 — 17 May 2026
 
