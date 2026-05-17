@@ -35,6 +35,7 @@ Swipeable carousel on mobile. Coming Soon tags throughout.
 File: `src/components/ui/ProductCard.astro`
 
 Props:
+
 ```ts
 interface Props {
   image: string;
@@ -73,19 +74,19 @@ File: `src/components/Trending.astro`
 Four product cards:
 
 ```
-1. Name: "Whey 100 Protein"
-   Image: /public/images/products/whey-cpb.png
+1. Name: "Whey Strawberry"
+   Image: /public/images/products/whey-strawberry.png
    Alt: "Probell Whey 100 Protein — Chocolate Peanut Butter"
    Descriptor: "25g protein. Blue collar formula."
    Tag: "Coming Soon"
 
-2. Name: "Whey 100 Protein"
+2. Name: "Whey Cookies"
    Image: /public/images/products/whey-cookies-cream.png
    Alt: "Probell Whey 100 Protein — Cookies and Cream"
    Descriptor: "25g protein. No days off formula."
    Tag: "Coming Soon"
 
-3. Name: "Whey 100 Protein"
+3. Name: "Whey Caramel"
    Image: /public/images/products/whey-salted-caramel.png
    Alt: "Probell Whey 100 Protein — Salted Caramel"
    Descriptor: "25g protein. Built for the grind."
@@ -122,7 +123,9 @@ Implement via media query — grid on desktop, carousel on mobile:
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
-  .trending-grid::-webkit-scrollbar { display: none; }
+  .trending-grid::-webkit-scrollbar {
+    display: none;
+  }
   .trending-grid .product-card {
     scroll-snap-align: start;
     min-width: 80vw;

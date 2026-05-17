@@ -241,24 +241,24 @@ Each card uses `.product-card` component.
 ### Products — 4 items
 
 ```
-1. Whey 100 — Chocolate Peanut Butter
-   Image: /public/images/products/whey-cpb.png
+1. Whey Strawberry
+   Image: /public/images/products/whey-strawberry.png
    Descriptor: "25g protein. Blue collar formula."
    Tag: Coming Soon
 
-2. Whey 100 — Cookies & Cream
+2. Whey Cookies
    Image: /public/images/products/whey-cookies-cream.png
    Descriptor: "25g protein. No days off formula."
    Tag: Coming Soon
 
-3. Whey 100 — Salted Caramel
+3. Whey Caramel
    Image: /public/images/products/whey-salted-caramel.png
    Descriptor: "25g protein. Built for the grind."
    Tag: Coming Soon
 
 4. [Fourth product — placeholder]
    Image: placeholder div, bg: var(--color-surface)
-   Descriptor: "More coming soon."
+   Descriptor: "New products launching soon."
    Tag: Coming Soon
 ```
 
