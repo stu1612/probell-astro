@@ -31,7 +31,7 @@ switchable via CSS class. Torn ink edge border breaker at bottom.
 
 ## Image Asset
 
-- File: `/public/images/hero/hero-main.jpg`
+- File: `/public/images/hero/hero-main.png`
 - Must exist before building — confirm in asset checklist
 - `loading="eager"`, `format="webp"`, `object-fit: cover`
 
@@ -44,6 +44,7 @@ switchable via CSS class. Torn ink edge border breaker at bottom.
 File: `src/components/Hero.astro`
 
 Structure:
+
 - Full viewport section, `position: relative`, `overflow: hidden`
 - Astro `<Image />` — full bleed, `object-fit: cover`, `position: absolute`
 - Dark overlay div — `rgba(0,0,0,0.35)`, `position: absolute`, `inset: 0`

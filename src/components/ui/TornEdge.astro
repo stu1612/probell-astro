@@ -1,0 +1,17 @@
+---
+interface Props {
+  fill?: string;
+  flipX?: boolean;
+}
+const { fill = 'var(--color-black)', flipX = false } = Astro.props;
+---
+<div class="torn-edge-bottom" style={flipX ? 'transform: scaleX(-1)' : ''}>
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"
+       xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M0,35 C120,65 240,10 380,45 C520,75 600,15 720,40
+         C840,65 960,20 1080,50 C1200,75 1320,25 1440,45 L1440,80 L0,80 Z"
+      fill={fill}
+    />
+  </svg>
+</div>

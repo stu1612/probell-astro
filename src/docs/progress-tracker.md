@@ -7,8 +7,8 @@
 ## Current Status
 
 **Phase:** Active build
-**Active section:** Nav — Complete
-**Next action:** Build Hero.astro
+**Active section:** Hero — Complete
+**Next action:** Build Identity.astro
 
 ---
 
@@ -57,7 +57,7 @@ These items must be confirmed before Claude Code begins building.
 | — | globals.css import | Complete | 17 May 2026 | |
 | — | BaseLayout | Complete | 17 May 2026 | |
 | 1 | Nav | Complete | 17 May 2026 | Single logo asset used for both states — swap when two-variant PNGs arrive |
-| 2 | Hero | Not started | — | |
+| 2 | Hero | Complete | 17 May 2026 | margin-top: -72px applied to compensate body padding-top; headline--active on first option |
 | 3 | Identity | Not started | — | |
 | 4 | Trending | Not started | — | Needs product PNGs |
 | 5 | Brand Story | Not started | — | |
@@ -72,6 +72,29 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 4 — 17 May 2026
+**What was done:**
+- Built `TornEdge.astro` UI component — SVG path from feature spec, `fill` and `flipX` props
+- Built `Hero.astro` to full spec — full viewport, image + overlay, four headlines, sub-line, CTA, torn edge
+- Applied `margin-top: -72px` on hero section to compensate `body { padding-top: 72px }` so hero fills true 0→100vh with transparent nav overlaying the top
+- Updated `index.astro` to import and render Hero
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+- `margin-top: -72px` on hero section — not in spec but required for correct full-viewport behaviour
+- Used feature spec SVG path for TornEdge (slightly more organic than design.md Technique A path)
+- Used DOM stacking order (not explicit z-index) for image/overlay/content layers; only `z-index: 2` on content div to guarantee it clears the overlay
+
+**Decisions still open:**
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Footer design
+- Contact form email address
+- Instagram URL
+
+---
 
 ### Session 3 — 17 May 2026
 **What was done:**
