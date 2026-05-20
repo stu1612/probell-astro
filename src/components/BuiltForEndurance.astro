@@ -1,0 +1,51 @@
+---
+import ProductCard from '@components/ui/ProductCard.astro';
+---
+
+<section class="section" id="built-for-endurance">
+  <div class="container">
+    <p class="label-text label-text--gold">Performance Series</p>
+    <h2 class="display-text">Built for Endurance</h2>
+    <p class="sub-line">Fuel longer. Recover faster. Go again.</p>
+
+    <div class="grid-2 cards-grid">
+      <ProductCard
+        name="Pre-Workout"
+        descriptor="Explosive energy. Dialled-in focus."
+        tag="Coming Soon"
+        large={true}
+      />
+      <ProductCard
+        name="Creatine"
+        descriptor="More reps. Faster recovery. No ceiling."
+        tag="Coming Soon"
+        large={true}
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  #built-for-endurance {
+    background: var(--color-black);
+    padding-bottom: var(--space-xl);
+  }
+
+  .label-text {
+    margin-bottom: var(--space-sm);
+  }
+
+  .sub-line {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-grey);
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    color: var(--color-white);
+  }
+</style>

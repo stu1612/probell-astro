@@ -1,14 +1,14 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 17 May 2026 — Session 9**
+**Last updated: 20 May 2026 — Session 10**
 
 ---
 
 ## Current Status
 
 **Phase:** Active build
-**Active section:** Bold Statement — Complete
-**Next action:** Build BuiltForEndurance.astro
+**Active section:** Built for Endurance — Complete
+**Next action:** Build Instagram.astro
 
 ---
 
@@ -66,7 +66,7 @@ These items must be confirmed before Claude Code begins building.
 | 5   | Brand Story         | Complete    | 17 May 2026 | Image uses .png (not .jpg per spec); diagonal clip via existing .clip-diagonal-bottom global class |
 | 6   | Built for Strength  | Complete    | 17 May 2026 | Placeholder Creatine card; whey-cookies-cream.png used for Whey 100; large={true} prop added to ProductCard |
 | 7   | Bold Statement      | Complete    | 17 May 2026 | discipline.png used (spec says .jpg); TornEdge fill=black into Built for Endurance         |
-| 8   | Built for Endurance | Not started | —           | Placeholder products                                                                       |
+| 8   | Built for Endurance | Complete    | 20 May 2026 | Both cards placeholder — no images available yet; gold eyebrow, clean bottom, no border breaker |
 | 9   | Instagram           | Not started | —           | Placeholder grid at launch                                                                 |
 | 10  | Contact             | Not started | —           | Confirm email + Formspree                                                                  |
 | 11  | Footer              | Not started | —           | Placeholder — design deferred                                                              |
@@ -75,6 +75,32 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 10 — 20 May 2026
+
+**What was done:**
+
+- Built `BuiltForEndurance.astro` — mirrors `BuiltForStrength.astro` structure exactly
+- Gold eyebrow (`.label-text--gold`) instead of red; headline, sub-line, and product copy per spec
+- Two placeholder product cards: "Pre-Workout" and "Creatine" — both `large={true}`, `tag="Coming Soon"`, no image props
+- No border breaker — clean transition to Instagram
+- Imported `BuiltForEndurance` into `index.astro` after `BoldStatement`
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- None — all spec-driven, no deviations
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Footer design
+- Contact form email address
+- Instagram URL
+
+---
 
 ### Session 9 — 17 May 2026
 
