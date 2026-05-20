@@ -1,14 +1,14 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 20 May 2026 — Session 10**
+**Last updated: 20 May 2026 — Session 13**
 
 ---
 
 ## Current Status
 
 **Phase:** Active build
-**Active section:** Built for Endurance — Complete
-**Next action:** Build Instagram.astro
+**Active section:** Footer — Complete
+**Next action:** Pre-launch review — font decisions, headline, env var, logo assets
 
 ---
 
@@ -67,14 +67,103 @@ These items must be confirmed before Claude Code begins building.
 | 6   | Built for Strength  | Complete    | 17 May 2026 | Placeholder Creatine card; whey-cookies-cream.png used for Whey 100; large={true} prop added to ProductCard |
 | 7   | Bold Statement      | Complete    | 17 May 2026 | discipline.png used (spec says .jpg); TornEdge fill=black into Built for Endurance         |
 | 8   | Built for Endurance | Complete    | 20 May 2026 | Both cards placeholder — no images available yet; gold eyebrow, clean bottom, no border breaker |
-| 9   | Instagram           | Not started | —           | Placeholder grid at launch                                                                 |
-| 10  | Contact             | Not started | —           | Confirm email + Formspree                                                                  |
-| 11  | Footer              | Not started | —           | Placeholder — design deferred                                                              |
+| 9   | Instagram           | Complete    | 20 May 2026 | Placeholder grid — 6 cols desktop, 4 tablet, 3 mobile; TODO comment for live feed         |
+| 10  | Contact             | Complete    | 20 May 2026 | Web3Forms; WEB3FORMS_KEY env var required before launch; hCaptcha included                 |
+| 11  | Footer              | Complete    | 20 May 2026 | 4-col grid; probell-logo.png used (swap when logo-light.png arrives); social icons #placeholder |
 | —   | Supplements page    | Not started | —           | Placeholder only at launch                                                                 |
 
 ---
 
 ## Session Log
+
+### Session 13 — 20 May 2026
+
+**What was done:**
+
+- Built `Footer.astro` — black background, 1px border-top, `var(--space-xl)` top / `var(--space-lg)` bottom padding
+- Four columns: Logo+tagline (2fr), Links (1fr), Products (1fr), Follow Us (1fr)
+- Logo uses `probell-logo.png` — swap when dedicated `logo-light.png` asset arrives
+- Links and Products columns: grey label text, red hover, `letter-spacing: 0.1em`, uppercase
+- Social icons: 40×40px, `1px solid var(--color-border)`, no border radius, red bg + border on hover; both `href="#"` placeholder
+- Divider `var(--space-lg)` top and bottom margin
+- Copyright bar: copy left, Privacy Policy right (links to `/legal`)
+- Tablet (≤1024px): 2-col grid, brand spans full width
+- Mobile (≤768px): single col, all centered
+- Imported `Footer` into `BaseLayout.astro` below `<slot />` — appears on all pages
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- `probell-logo.png` used in place of spec's `logo-light.png` — asset does not exist yet
+- `href="/legal"` used for Privacy Policy — page not built yet (deferred)
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL
+- Facebook URL
+- Logo light variant PNG (client to supply)
+
+---
+
+### Session 12 — 20 May 2026
+
+**What was done:**
+
+- Built `Contact.astro` — `var(--color-surface)` background, 2-col grid (content left, form right), single col on mobile
+- Red eyebrow, display headline "Stock Probell. Be First.", grey sub-line
+- Five form fields: Full Name, Business Name, Email Address, I am a... (select), Message
+- Web3Forms: POSTs to `https://api.web3forms.com/submit`, access key via `import.meta.env.WEB3FORMS_KEY`
+- Hidden fields: `access_key`, `subject`, `redirect=false`, honeypot checkbox
+- hCaptcha div + Web3Forms client script (loads hCaptcha automatically)
+- Fetch-based submission — no page reload; success replaces form (gold label), error shown inline (red label)
+- Imported `Contact` into `index.astro` after `Instagram`
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- `novalidate` on form — JS handles submission; browser validation deferred to fetch response
+- `WEB3FORMS_KEY` must be set in `.env` before launch — component renders with empty string if absent
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Footer design
+- Contact form email address (needed to generate Web3Forms access key)
+- Instagram URL
+
+---
+
+### Session 11 — 20 May 2026
+
+**What was done:**
+
+- Built `Instagram.astro` — black background, `@probellnutrition` handle label (`.label-text`, `var(--color-grey)`), placeholder grid
+- 6-column grid desktop, 4-column tablet (≤1024px), 3-column mobile (≤768px), 2px gap
+- Six `.instagram-placeholder` divs — `aspect-ratio: 1/1`, `var(--color-surface)` background
+- TODO comment in component for future live feed integration
+- Imported `Instagram` into `index.astro` after `BuiltForEndurance`
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- None — all spec-driven, no deviations
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Footer design
+- Contact form email address
+- Instagram URL
+
+---
 
 ### Session 10 — 20 May 2026
 
