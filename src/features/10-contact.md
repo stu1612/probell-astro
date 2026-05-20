@@ -1,6 +1,6 @@
 # Probell Nutrition — Contact Spec
 
-**Version 1 · 14 May 2026**
+**Version 2 · 17 May 2026**
 **Status: Not started**
 
 ---
@@ -8,8 +8,8 @@
 ## Goal
 
 B2B contact form. Two column layout — brand statement left, form right.
-Submits directly to client email via Formspree.
-No consumer waitlist language — this is a business enquiry form.
+Submits directly to client email via Web3Forms — free, no backend required,
+works on static hosting. No consumer waitlist language — business enquiry only.
 
 ---
 
@@ -34,9 +34,38 @@ No consumer waitlist language — this is a business enquiry form.
 ## Pre-Build Confirmation Required
 
 Before building this section confirm with developer:
-- [ ] Client email address for form submissions
-- [ ] Formspree account created — form ID available
-- [ ] Fallback: mailto if Formspree not ready
+- [ ] Web3Forms access key generated — web3forms.com
+- [ ] Client email address confirmed — Web3Forms sends submissions here
+- [ ] Access key added to project — store as `WEB3FORMS_KEY` in `.env`
+
+---
+
+## Web3Forms Setup
+
+Web3Forms is free, requires no backend, and works on any static host
+including one.com.
+
+**How it works:**
+- Form POSTs to `https://api.web3forms.com/submit`
+- Access key is a hidden input field in the form
+- Web3Forms forwards the submission to the client email
+- No server, no database, no paid plan required
+
+**Getting the access key:**
+1. Go to web3forms.com
+2. Enter the client email address
+3. Web3Forms sends the access key to that email
+4. Confirm and copy the key
+5. Add to `.env` as `WEB3FORMS_KEY=your-key-here`
+
+**Environment variable in Astro:**
+```
+// Access in component frontmatter:
+const web3formsKey = import.meta.env.WEB3FORMS_KEY;
+```
+
+**Important:** Never hardcode the access key in the component.
+Always use the environment variable.
 
 ---
 
@@ -45,154 +74,136 @@ Before building this section confirm with developer:
 ### 1. Create Contact.astro
 
 File: `src/components/Contact.astro`
-
 Requires `client:load` for form submission handling.
-Add to `src/pages/index.astro` as:
-```astro
-<Contact client:load />
-```
 
 ### 2. Two column layout
 
-```css
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-xl);
-  align-items: center;
-}
-
-@media (max-width: 768px) {
-  .contact-grid { grid-template-columns: 1fr; }
-}
-```
+- Left column: brand statement content
+- Right column: contact form
+- Single column on mobile — content top, form below
+- Aligned items centered vertically on desktop
 
 ### 3. Left column — brand statement
 
-**Eyebrow:**
-```
-"Partner with Probell"
-```
-Class: `.label-text--red`
+**Eyebrow:** `"Partner with Probell"` — `.label-text--red`
 
 **Headline:**
 ```
 "Stock Probell.
 Be First."
 ```
-Font: `var(--font-display)`, `var(--text-section)`
-Color: `var(--color-white)`
-Class: `display-text`
+Display font, section size, white, uppercase.
 
 **Sub-line:**
 ```
 "Whether you're a gym, distributor, or retailer —
 we want to hear from you."
 ```
-Font: `var(--font-body)`, `var(--text-body)`
-Color: `var(--color-grey)`
-Margin top: `var(--space-md)`
+Body font, body size, grey.
 
 ### 4. Right column — form
 
-Five fields using globals.css form classes.
+Five fields. All use globals.css form classes.
 
 ```
-Field 1: Full Name
-  type="text", required
-  label: "Full Name"
-  placeholder: "Your name"
-
-Field 2: Business Name
-  type="text", required
-  label: "Business Name"
-  placeholder: "Your business"
-
-Field 3: Email
-  type="email", required
-  label: "Email Address"
-  placeholder: "your@email.com"
-
-Field 4: Interest
-  type="select", required
-  label: "I am a..."
-  Options:
-    - "Select one..." (disabled, default)
-    - "Gym"
-    - "Distributor"
-    - "Retailer"
-    - "Other"
-
-Field 5: Message
-  type="textarea", optional
-  label: "Message (optional)"
-  placeholder: "Tell us about your business and
-                how you'd like to work with Probell."
-  min-height: 120px
+Field 1: Full Name       — text, required
+Field 2: Business Name   — text, required
+Field 3: Email Address   — email, required
+Field 4: I am a...       — select, required
+          Options: Gym / Distributor / Retailer / Other
+Field 5: Message         — textarea, optional
+          Placeholder: "Tell us about your business and
+                        how you'd like to work with Probell."
 ```
 
-### 5. Submit button
+### 5. Web3Forms hidden fields
 
-```
-"Get in Touch"
-```
-Class: `.btn-primary`
-Full width on mobile.
-Margin top: `var(--space-md)`.
+Required hidden inputs inside the form:
 
-### 6. Form submission — Formspree
+```html
+<!-- Access key -->
+<input type="hidden" name="access_key" value={web3formsKey} />
 
-```astro
-<form action="https://formspree.io/f/[FORM-ID]" method="POST">
-```
+<!-- Custom subject line in client inbox -->
+<input type="hidden" name="subject" value="New Probell Partnership Enquiry" />
 
-Replace `[FORM-ID]` with actual Formspree form ID when available.
+<!-- Redirect to same page after submission — handled by JS instead -->
+<input type="hidden" name="redirect" value="false" />
 
-Fallback if Formspree not ready:
-```astro
-<form action="mailto:[CLIENT-EMAIL]" method="POST" enctype="text/plain">
+<!-- Honeypot — spam protection -->
+<input type="checkbox" name="botcheck" style="display: none;" />
 ```
 
-### 7. Success state
+### 6. Form action and method
 
-On successful submission replace form with inline message:
+```html
+<form action="https://api.web3forms.com/submit" method="POST">
+```
 
+Form submits via fetch — not a full page reload. JS intercepts
+the submit event, POSTs via fetch, handles success/error states.
+
+### 7. Submit button
+
+Text: `"Get in Touch"` — `.btn-primary`, full width on mobile.
+
+### 8. Success and error states
+
+**Success:** Replace form with inline message.
 ```
 "Thanks for reaching out. We'll be in touch soon."
 ```
+Color: `var(--color-gold)`, `.label-text` style.
 
-- Color: `var(--color-gold)`
-- Class: `.label-text`
-- Implemented via JS — toggle `display: none` on form,
-  show success message div
+**Error:** Show inline error message below submit button.
+```
+"Something went wrong. Please try again or email us directly."
+```
+Color: `var(--color-red)`, `.label-text` style.
 
+Both states toggled via JS — no page reload.
+
+### 9. Spam protection
+
+Two layers of spam protection:
+
+**hCaptcha — Web3Forms free plan supported**
+Add Web3Forms client script to component head:
 ```html
-<div class="contact-success" style="display: none;">
-  Thanks for reaching out. We'll be in touch soon.
-</div>
+<script src="https://web3forms.com/client/script.js" async defer></script>
 ```
-
-### 8. Import into index.astro
-
-```astro
-import Contact from '@components/Contact.astro';
----
-<Contact client:load />
+Add hCaptcha div inside the form, above the submit button:
+```html
+<div class="h-captcha" data-captcha="true"></div>
 ```
+Web3Forms loads hCaptcha automatically — no separate hCaptcha account needed.
+
+Note: hCaptcha widget renders with its own styling. Test on localhost
+and adjust wrapper CSS if it clashes with the dark form aesthetic.
+
+**Honeypot field**
+The hidden honeypot checkbox remains as a secondary layer.
 
 ---
 
 ## Confirmed Working ✓
 
+- [ ] `.env` file created with `WEB3FORMS_KEY`
+- [ ] Access key not hardcoded — uses environment variable
 - [ ] Two column layout — content left, form right
 - [ ] Eyebrow correct — red label style
 - [ ] Headline correct copy and style
 - [ ] Sub-line correct copy and color
 - [ ] All five fields render with correct labels and placeholders
 - [ ] Select dropdown has correct options
-- [ ] Submit button correct style and label
-- [ ] Form submits to Formspree or mailto fallback
+- [ ] Hidden fields present — access key, subject, redirect, honeypot
+- [ ] Form submits via fetch — no page reload
 - [ ] Success message displays on submission
+- [ ] Error message displays on failure
+- [ ] Client email receives test submission — confirm before launch
+- [ ] hCaptcha renders correctly in form
+- [ ] hCaptcha visible and functional on localhost
+- [ ] hCaptcha styling sits cleanly within dark form aesthetic
 - [ ] Mobile: single column, inputs full width
 - [ ] `npm run build` passes
 
@@ -200,8 +211,10 @@ import Contact from '@components/Contact.astro';
 
 ## What Is Not In This Spec
 
+- No Formspree — replaced with Web3Forms
 - No consumer waitlist language
 - No newsletter signup
 - No GDPR consent checkbox — form goes direct to client email
 - No database storage of submissions
 - No file upload
+- No CAPTCHA alternative — hCaptcha via Web3Forms is the only option

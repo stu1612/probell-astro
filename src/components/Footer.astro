@@ -1,0 +1,218 @@
+---
+---
+<footer class="footer">
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <!-- Column 1: Logo + tagline -->
+      <div class="footer-brand">
+        <a href="/" aria-label="Probell Nutrition home">
+          <img
+            src="/images/icons/probell-logo.png"
+            alt="Probell Nutrition"
+            class="footer-logo"
+            width="120"
+            height="40"
+            loading="lazy"
+          />
+        </a>
+        <span class="label-text footer-tagline">Built for the Grind.</span>
+      </div>
+
+      <!-- Column 2: Links -->
+      <nav class="footer-col" aria-label="Site links">
+        <span class="label-text footer-col-heading">Links</span>
+        <a href="/" class="footer-link">Home</a>
+        <a href="/supplements" class="footer-link">Supplements</a>
+        <a href="/#brand-story" class="footer-link">About</a>
+        <a href="/#contact" class="footer-link">Contact</a>
+      </nav>
+
+      <!-- Column 3: Products -->
+      <nav class="footer-col" aria-label="Product links">
+        <span class="label-text footer-col-heading">Products</span>
+        <a href="/supplements" class="footer-link">Whey 100</a>
+        <a href="/supplements" class="footer-link">Creatine</a>
+        <a href="/supplements" class="footer-link">Pre-Workout</a>
+        <a href="/supplements" class="footer-link">Mass Gainer</a>
+      </nav>
+
+      <!-- Column 4: Follow Us -->
+      <div class="footer-col">
+        <span class="label-text footer-col-heading">Follow Us</span>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-icon" aria-label="Probell Nutrition on Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="#" class="footer-social-icon" aria-label="Probell Nutrition on Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divider footer-divider"></div>
+
+    <div class="footer-copyright">
+      <span class="label-text footer-copy">
+        &copy; 2026 Probell Nutrition. All rights reserved.
+      </span>
+      <a href="/legal" class="label-text footer-legal">Privacy Policy</a>
+    </div>
+
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-black);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-lg);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+  }
+
+  /* Column 1 */
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .footer-logo {
+    height: 40px;
+    width: auto;
+    display: block;
+  }
+
+  .footer-tagline {
+    color: var(--color-grey);
+  }
+
+  /* Columns 2–4 */
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footer-col-heading {
+    color: var(--color-white);
+    margin-bottom: var(--space-sm);
+  }
+
+  .footer-link {
+    display: block;
+    font-family: var(--font-body);
+    font-size: var(--text-label);
+    color: var(--color-grey);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: var(--space-xs);
+    transition: color var(--transition-fast);
+  }
+
+  .footer-link:hover {
+    color: var(--color-red);
+  }
+
+  /* Social icons */
+  .footer-socials {
+    display: flex;
+    gap: var(--space-xs);
+    margin-top: var(--space-xs);
+  }
+
+  .footer-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--color-border);
+    color: var(--color-white);
+    text-decoration: none;
+    transition: background-color var(--transition-base), border-color var(--transition-base);
+  }
+
+  .footer-social-icon:hover {
+    background-color: var(--color-red);
+    border-color: var(--color-red);
+  }
+
+  /* Divider */
+  .footer-divider {
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Copyright bar */
+  .footer-copyright {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    color: var(--color-grey);
+  }
+
+  .footer-legal {
+    color: var(--color-grey);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .footer-legal:hover {
+    color: var(--color-white);
+  }
+
+  /* Tablet */
+  @media (max-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      row-gap: var(--space-lg);
+    }
+
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .footer-brand {
+      grid-column: auto;
+      align-items: center;
+    }
+
+    .footer-socials {
+      justify-content: center;
+    }
+
+    .footer-copyright {
+      flex-direction: column;
+      gap: var(--space-sm);
+      text-align: center;
+    }
+  }
+</style>

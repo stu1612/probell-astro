@@ -1,23 +1,24 @@
 # Probell Nutrition — Footer Spec
 
-**Version 1 · 14 May 2026**
-**Status: Deferred — placeholder only at launch**
+**Version 2 · 17 May 2026**
+**Status: Not started**
 
 ---
 
 ## Goal
 
-A considered, on-brand footer — not an afterthought.
-Final design requires visual reference review before building.
-At launch: implement clean placeholder that completes the page.
-Full redesign in phase 2 once visual references are confirmed.
+Dark, considered footer. Not an afterthought — the last thing a visitor
+sees and should feel as intentional as the hero. Clean four column layout,
+logo left, navigation and product links centre, social icons right.
+Hard edges — no border radius. Copyright bar at bottom.
 
 ---
 
 ## Reference
 
-`docs/page-structure.md` — Section 11: Footer
+Visual reference: NutsDev footer structure — adapted for Probell brand.
 `docs/brand.md` — Brand principles
+`docs/design.md` — Color tokens, typography
 
 ---
 
@@ -25,155 +26,169 @@ Full redesign in phase 2 once visual references are confirmed.
 
 - Background: `var(--color-black)`
 - Border top: `1px solid var(--color-border)`
-- Text: `var(--color-grey)`, `var(--text-label)`
-- Links hover: `var(--color-white)`
-- Logo height: `32px`
+- Text primary: `var(--color-white)`
+- Text secondary: `var(--color-grey)`
+- Links hover: `var(--color-red)`
+- Social icon border: `var(--color-border)`
+- Social icon hover background: `var(--color-red)`
+- Font: `var(--font-body)`, `var(--text-label)`
+- Logo height: `40px`
 
 ---
 
-## Phase 1 — Placeholder (build now)
+## Layout
 
-### Tasks
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│  [ Logo ]          [ Links ]    [ Products ]   [ Follow Us ]   │
+│  Built for                                     [ fb ]  [ ig ]  │
+│  the Grind.                                                     │
+│                                                                 │
+│ ─────────────────────────────────────────────────────────────  │
+│                                                                 │
+│  © 2026 Probell Nutrition. All rights reserved.  Privacy Policy │
+└─────────────────────────────────────────────────────────────────┘
+```
 
-#### 1. Create Footer.astro
+- Four columns: Logo · Links · Products · Follow Us
+- Logo column wider — approximately 2fr, others 1fr each
+- Hard edges — no border radius anywhere
+- No background texture — pure `var(--color-black)`
+
+---
+
+## Tasks
+
+### 1. Create Footer.astro
 
 File: `src/components/Footer.astro`
 
-#### 2. Top row
+### 2. Top section — four columns
 
-Two column — logo + tagline left, nothing right.
+**Column 1 — Logo + tagline**
 
-**Logo:**
-- Asset: `/public/logo.png`, height `32px`
-- Links to `/`
+- Logo: `/public/logo-light.png`, height `40px`, links to `/`
+- Tagline below logo: `"Built for the Grind."`
+- Tagline: `.label-text`, `var(--color-grey)`
+- Margin top between logo and tagline: `var(--space-sm)`
+- Column has more width than others — logo needs breathing room
 
-**Tagline below logo:**
-```
-"Built for the Grind."
-```
-- Class: `.label-text`
-- Color: `var(--color-grey)`
-- Margin top: `var(--space-xs)`
+**Column 2 — Links**
 
-#### 3. Divider
+Column label: `"Links"` — `.label-text`, `var(--color-white)`
 
-```html
-<div class="divider" style="margin: var(--space-md) 0;"></div>
-```
-
-#### 4. Middle row — three columns
-
-```css
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-lg);
-}
-```
-
-**Column 1 — Navigate**
-
-Label: `"Navigate"` — `.label-text`
-
-Links:
+Links — each on its own line:
+- `Home` → `/`
 - `Supplements` → `/supplements`
 - `About` → `/#brand-story`
 - `Contact` → `/#contact`
 
-**Column 2 — Follow**
-
-Label: `"Follow"` — `.label-text`
-
-Links:
-- `Facebook` → `#` placeholder
-- `Instagram` → `#` placeholder
-
-**Column 3 — Legal**
-
-Label: `"Legal"` — `.label-text`
-
-Links:
-- `Privacy Policy` → `/legal`
-- `Terms of Use` → `/legal`
-
-All links:
-- Color: `var(--color-grey)`
-- Hover: `var(--color-white)`, `transition: var(--transition-fast)`
+Link styles:
 - Font: `var(--font-body)`, `var(--text-label)`
+- Color: `var(--color-grey)`
 - Uppercase, `letter-spacing: 0.1em`
+- Hover: `var(--color-red)`, `transition: var(--transition-fast)`
 - Display block, `margin-top: var(--space-xs)`
 
-#### 5. Divider
+**Column 3 — Products**
 
-Second divider below middle row.
+Column label: `"Products"` — `.label-text`, `var(--color-white)`
 
-#### 6. Bottom row
+Links — each on its own line:
+- `Whey 100` → `/supplements`
+- `Creatine` → `/supplements`
+- `Pre-Workout` → `/supplements`
+- `Mass Gainer` → `/supplements`
 
-Single row — copyright left.
+Same link styles as column 2.
+All link to `/supplements` for now — individual product pages deferred.
 
+**Column 4 — Follow Us**
+
+Column label: `"Follow Us"` — `.label-text`, `var(--color-white)`
+
+Two social icon boxes side by side:
+
+- Facebook icon — boxed
+- Instagram icon — boxed
+
+Icon box styles:
+- Size: `40px × 40px`
+- Border: `1px solid var(--color-border)`
+- Border radius: `0` — hard corners
+- Icon: SVG, `var(--color-white)`, centered
+- Hover: background `var(--color-red)`, border color `var(--color-red)`
+- Transition: `var(--transition-base)`
+- Both `href="#"` placeholder until client supplies URLs
+- Gap between boxes: `var(--space-xs)`
+
+### 3. Divider
+
+Full width `1px solid var(--color-border)` between top section
+and copyright bar. Margin: `var(--space-lg)` top and bottom.
+
+### 4. Copyright bar
+
+Single row — copyright left, legal right.
+
+**Left:**
 ```
 "© 2026 Probell Nutrition. All rights reserved."
 ```
+- `.label-text`, `var(--color-grey)`
 
-- Color: `var(--color-grey)`
-- Class: `.label-text`
-- Padding bottom: `var(--space-md)`
+**Right:**
+- `Privacy Policy` → `/legal`
+- Same label text style
+- Hover: `var(--color-white)`
 
-#### 7. Import into BaseLayout
+### 5. Section padding
 
-Add Footer to `src/layouts/BaseLayout.astro` below `<slot />`.
-Footer appears on all pages automatically.
+- Top padding: `var(--space-xl)`
+- Bottom padding: `var(--space-lg)`
 
-#### 8. Responsive
+### 6. Import into BaseLayout
 
-Mobile: all columns stack single column, centered.
-
-```css
-@media (max-width: 768px) {
-  .footer-grid { grid-template-columns: 1fr; text-align: center; }
-}
-```
+Footer imported in `src/layouts/BaseLayout.astro` below `<slot />`.
+Appears on all pages automatically.
 
 ---
 
-## Phase 2 — Full Design (deferred)
+## Responsive
 
-The following is deferred until visual references are confirmed
-with the developer:
-
-- Editorial dark footer with stronger visual hierarchy
-- Large brand statement or wordmark treatment
-- Potential background texture or photography element
-- Social icons as SVG rather than text labels
-- More considered column layout and spacing
-- Possible accent color usage
-
-**Before phase 2 begins:**
-- Developer reviews footer references from comparable brand sites
-- Developer saves reference screenshots
-- New footer spec written based on confirmed direction
-- Footer component rebuilt — not patched
+- Tablet: collapse to two columns — logo + tagline top full width,
+  Links and Products side by side, Follow Us below
+- Mobile: single column stack, all sections centered
+  Logo centered, tagline centered, links centered
+  Social icons centered, copyright centered
 
 ---
 
-## Confirmed Working ✓ (Phase 1)
+## Confirmed Working ✓
 
-- [ ] Logo visible — links to `/`
+- [ ] Logo light version renders — links to `/`
 - [ ] Tagline correct copy and style
-- [ ] Dividers render correctly
-- [ ] Three column grid — Navigate, Follow, Legal
-- [ ] All links correct — placeholders where noted
-- [ ] Copyright correct — correct year
-- [ ] Mobile: single column stack
+- [ ] Four columns render correctly on desktop
+- [ ] Links column — correct links and hover states
+- [ ] Products column — correct links and hover states
+- [ ] Social icon boxes — correct size, border, hover state
+- [ ] Divider renders correctly
+- [ ] Copyright correct — correct year, left aligned
+- [ ] Privacy Policy link right aligned
+- [ ] No border radius anywhere — hard corners throughout
+- [ ] Tablet: two column layout
+- [ ] Mobile: single column, centered
 - [ ] Footer appears on all pages via BaseLayout
 - [ ] `npm run build` passes
 
 ---
 
-## What Is Not In This Spec (Phase 1)
+## What Is Not In This Spec
 
-- No editorial design — placeholder only
-- No background texture or photography
-- No large typographic treatment
 - No newsletter signup
+- No background texture or photography
+- No border radius — hard edges only
 - No real social URLs — placeholder only
+- No individual product page links — all go to `/supplements`
+- No phone number or address — not confirmed

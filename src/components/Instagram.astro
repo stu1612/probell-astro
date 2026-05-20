@@ -1,0 +1,56 @@
+---
+---
+<!-- TODO: Replace placeholder grid with live Instagram feed
+     when client confirms account and API token -->
+<section id="instagram" class="section">
+  <div class="container">
+    <a
+      href="#"
+      class="label-text instagram-handle"
+      aria-label="Visit Probell Nutrition on Instagram"
+    >
+      @probellnutrition
+    </a>
+    <div class="instagram-grid">
+      <div class="instagram-placeholder"></div>
+      <div class="instagram-placeholder"></div>
+      <div class="instagram-placeholder"></div>
+      <div class="instagram-placeholder"></div>
+      <div class="instagram-placeholder"></div>
+      <div class="instagram-placeholder"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .instagram-handle {
+    display: block;
+    color: var(--color-grey);
+    text-decoration: none;
+    margin-bottom: var(--space-md);
+  }
+
+  .instagram-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2px;
+  }
+
+  .instagram-placeholder {
+    aspect-ratio: 1 / 1;
+    background: var(--color-surface);
+    width: 100%;
+  }
+
+  @media (max-width: 1024px) {
+    .instagram-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .instagram-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
