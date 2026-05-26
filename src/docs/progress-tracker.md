@@ -1,14 +1,14 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 20 May 2026 — Session 13**
+**Last updated: 22 May 2026 — Session 16**
 
 ---
 
 ## Current Status
 
-**Phase:** Active build
-**Active section:** Footer — Complete
-**Next action:** Pre-launch review — font decisions, headline, env var, logo assets
+**Phase:** Post-build feature updates
+**Active section:** Feature updates — see `src/features/feature-updates.md`
+**Next action:** Task 03 complete. Implement next task in `src/features/feature-updates.md`
 
 ---
 
@@ -29,7 +29,7 @@ These items must be confirmed before Claude Code begins building.
 ### Assets
 
 - [x] Logo PNG — single asset supplied `/public/images/icons/probell-logo.png` — light/dark structure in place, awaiting two-variant assets
-- [x] Hero image — `hero-main.png` — generated and confirmed
+- [x] Hero image — `hero-main-v2.png` — updated 20 May 2026 (replaces `hero-main.png`)
 - [x] Brand story image — `gym-interior.png` — generated and confirmed
 - [x] Bold statement image — `discipline.png` — client supplied
 - [ ] Whey CPB PNG — pending
@@ -60,9 +60,9 @@ These items must be confirmed before Claude Code begins building.
 | —   | globals.css import  | Complete    | 17 May 2026 |                                                                                            |
 | —   | BaseLayout          | Complete    | 17 May 2026 |                                                                                            |
 | 1   | Nav                 | Complete    | 17 May 2026 | Single logo asset used for both states — swap when two-variant PNGs arrive                 |
-| 2   | Hero                | Complete    | 17 May 2026 | margin-top: -72px applied to compensate body padding-top; headline--active on first option |
+| 2   | Hero                | Complete    | 17 May 2026 | margin-top: -72px applied to compensate body padding-top; headline--active on first option; hero-main-v2.png swapped in 20 May 2026 |
 | 3   | Identity            | Complete    | 17 May 2026 | Text only — product breakout omitted per developer instruction                             |
-| 4   | Trending            | Complete    | 17 May 2026 | Product PNGs confirmed (strawberry, cookies-cream, salted-caramel); 4th card placeholder   |
+| 4   | Trending            | Complete    | 22 May 2026 | Task 03: redesigned to light bg (--color-bg-warm), 3-col cinematic cards, composited product images, 4th placeholder removed |
 | 5   | Brand Story         | Complete    | 17 May 2026 | Image uses .png (not .jpg per spec); diagonal clip via existing .clip-diagonal-bottom global class |
 | 6   | Built for Strength  | Complete    | 17 May 2026 | Placeholder Creatine card; whey-cookies-cream.png used for Whey 100; large={true} prop added to ProductCard |
 | 7   | Bold Statement      | Complete    | 17 May 2026 | discipline.png used (spec says .jpg); TornEdge fill=black into Built for Endurance         |
@@ -75,6 +75,91 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 16 — 22 May 2026
+
+**What was done:**
+
+- Task 03 complete: Trending section redesigned to light treatment
+- Added `--color-bg-warm: #F5F3EF` token to `global.css`
+- Rewrote `Trending.astro`: removed `ProductCard` import, inline `<article>` cards with `<Image />` from astro:assets
+- Section background changed to `var(--color-bg-warm)`, "PERFORMANCE SERIES" red eyebrow added, "TRENDING" heading in `var(--color-black)`
+- Three-column grid, `var(--space-md)` gap, fourth placeholder card removed
+- Each card: composited product image in 3/4 aspect-ratio wrap, transparent card background, black product name, `var(--color-border)` descriptor
+- Scale hover (`transform: scale(1.03)`) approved as spec override to CLAUDE.md animation rules
+- Mobile: single column grid (removes previous CSS-only horizontal scroll carousel)
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- `--color-bg-warm: #F5F3EF` added as a global token (raw hex never used directly)
+- `<Image />` from astro:assets used in place of `<img>` per CLAUDE.md rule; `:global(img)` selector used in scoped styles to target the rendered element
+- Creatine descriptor: "Micronised creatine. Maximum absorption." — confirmed by developer
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL
+- Facebook URL
+- Logo light variant PNG (client to supply)
+
+---
+
+### Session 15 — 20 May 2026
+
+**What was done:**
+
+- Task 02 complete: Identity section redesign
+- Built `InkEdge.astro` — new component, organic ink-brush SVG (viewBox 1440×180), 5 ink drips (varying 30–62px), 8 splatter dots, `fill: var(--color-black)` via CSS
+- Updated `Identity.astro`: swapped narrow `max-width: 800px` container for `.container` (1400px), reduced `padding-top` from `--space-2xl` to `--space-lg`, removed `padding-bottom`, set `overflow: visible`, imported and placed `<InkEdge />` at the bottom
+- Trending section: background changed from `var(--color-black)` to `var(--color-white)`, heading colour changed to `var(--color-black)` — product cards retain `var(--color-surface)` dark background (self-contained)
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- Container widened to 1400px (using global `.container`) — fixes line 2 wrapping that occurred at `max-width: 800px`; `--text-section` held without needing a size reduction
+- InkEdge placed as a child of the Identity section (not absolutely positioned) — natural document flow, `overflow: visible` on section lets drips extend below the section boundary
+- Trending `padding-top` changed from `--space-2xl` to `--space-xl` to account for InkEdge extending into the visual top of the section
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL
+- Facebook URL
+- Logo light variant PNG (client to supply)
+
+---
+
+### Session 14 — 20 May 2026
+
+**What was done:**
+
+- Feature updates workflow introduced — all post-build tasks tracked in `src/features/feature-updates.md`
+- Task 01 complete: replaced `hero-main.png` with `hero-main-v2.png` in `Hero.astro`
+- No layout, copy, or other component changes
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- `src/features/feature-updates.md` is now the authoritative source for all post-build feature tasks
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL
+- Facebook URL
+- Logo light variant PNG (client to supply)
+
+---
 
 ### Session 13 — 20 May 2026
 
