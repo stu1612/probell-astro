@@ -5,21 +5,44 @@ import Identity from '@components/Identity.astro';
 import Trending from '@components/Trending.astro';
 import BrandStory from '@components/BrandStory.astro';
 import BuiltForStrength from '@components/BuiltForStrength.astro';
-import BoldStatement from '@components/BoldStatement.astro';
-import BuiltForEndurance from '@components/BuiltForEndurance.astro';
 import Instagram from '@components/Instagram.astro';
 import Contact from '@components/Contact.astro';
+import SectionWrapper from '@components/SectionWrapper.astro';
+import Banner from '@components/ui/Banner.astro';
 ---
 
 <BaseLayout transparentNav={true}>
   <main>
     <Hero />
-    <Identity />
-    <Trending />
+    <SectionWrapper>
+      <Identity
+        headline="Stock the brand that belongs in your gym."
+        body="The container gets their attention. The formula keeps them coming back. Give your members both.  Probell was built for people who don't need motivation — they just need fuel. No shortcuts, no fillers, no compromise. The kind of product your serious members have been waiting for someone to stock."
+        primaryCta={{ label: "View Products", href: "/#trending" }}
+      />
+        <Banner
+    eyebrow="Trending"
+    headline="Performance Series."
+    description="Discover the latest and greatest in our performance series — crafted for those who demand the best."
+    image="/images/lifestyle/athlete-walking.jpg"
+  />
+      <Trending />
+    </SectionWrapper>
     <BrandStory />
-    <BuiltForStrength />
-    <BoldStatement />
-    <BuiltForEndurance />
+     <SectionWrapper>
+      <Identity
+        headline="Stock the brand that belongs in your gym."
+        body="We're looking for the right gyms, distributors, and retailers to bring Probell to market. If your members train hard, this is the product they've been waiting for."
+        primaryCta={{ label: "Partner With Us", href: "/#contact" }}
+      />
+     <Banner
+    eyebrow="Trending"
+    headline="Performance Series."
+    description="Discover the latest and greatest in our performance series — crafted for those who demand the best."
+    image="/images/lifestyle/cpb-gym.jpg"
+  />
+      <BuiltForStrength />
+    </SectionWrapper>
     <Instagram />
     <Contact />
   </main>

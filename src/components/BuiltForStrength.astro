@@ -1,53 +1,135 @@
 ---
-import ProductCard from '@components/ui/ProductCard.astro';
+import { Image } from 'astro:assets';
 ---
 
-<section class="section" id="built-for-strength">
-  <div class="container">
-    <p class="label-text label-text--red">Performance Series</p>
-    <h2 class="display-text">Built for Strength</h2>
-    <p class="sub-line">25g protein per serve. Everything you need. Nothing you don't.</p>
+<section id="built-for-strength">
+    <!-- <div class="bfs__banner">
+      <span class="label-text label-text--red">Performance Series</span>
+      <h2 class="display-text bfs__headline">Built for Strength.</h2>
+    </div> -->
 
-    <div class="grid-2 cards-grid">
-      <ProductCard
-        image="/images/products/whey-cookies-cream.png"
-        imageAlt="Probell Whey 100 Protein — Chocolate Peanut Butter"
-        name="Whey 100 Protein"
-        descriptor="The foundation. 25g protein, zero compromise."
-        tag="Coming Soon"
-        large={true}
-      />
-      <ProductCard
-        name="Creatine"
-        descriptor="Power output. Recovery. Built in."
-        tag="Coming Soon"
-        large={true}
-      />
+    <div class="bfs__rows">
+      <!-- Row 1: image left, content right -->
+      <div class="bfs__row">
+        <div class="bfs__img-col">
+          <Image
+            src="/images/bold-statement/discipline.png"
+            alt="Probell Whey 100 Protein placeholder"
+            width={600}
+            height={600}
+            format="webp"
+            loading="lazy"
+          />
+        </div>
+        <div class="bfs__content-col">
+          <span class="label-text label-text--red">Strength</span>
+          <h3 class="display-text bfs__name">Whey 100 Protein</h3>
+          <p class="bfs__body">The foundation of every serious stack. 25g of pure protein per serve. No fillers, no shortcuts. Built for people who train like their results depend on it — because they do.</p>
+        </div>
+      </div>
+
+      <!-- Row 2: content left, image right (DOM: content first so desktop reads left→right correctly) -->
+      <div class="bfs__row bfs__row--reversed">
+        <div class="bfs__content-col">
+          <span class="label-text label-text--red">Power</span>
+          <h3 class="display-text bfs__name">Creatine</h3>
+          <p class="bfs__body">More reps. Heavier lifts. Faster recovery between sets. Pure creatine monohydrate — nothing added, nothing hidden. The most researched supplement in sport. Now in the only container worth lifting.</p>
+        </div>
+        <div class="bfs__img-col bfs__img-col--mobile-first">
+          <Image
+            src="/images/lifestyle/cpb-gym.jpg"
+            alt="Probell Creatine placeholder"
+            width={600}
+            height={600}
+            format="webp"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <!-- Row 3: image left, content right -->
+      <div class="bfs__row">
+        <div class="bfs__img-col">
+          <Image
+            src="/images/lifestyle/cpb-gym.jpg"
+            alt="Probell Pre-Workout placeholder"
+            width={600}
+            height={600}
+            format="webp"
+            loading="lazy"
+          />
+        </div>
+        <div class="bfs__content-col">
+          <span class="label-text label-text--red">Intensity</span>
+          <h3 class="display-text bfs__name">Pre-Workout</h3>
+          <p class="bfs__body">Explosive energy without the crash. Dialled-in focus from the first rep to the last. Coming soon — built to the same standard as everything else Probell makes.</p>
+        </div>
+      </div>
     </div>
-  </div>
 </section>
 
 <style>
   #built-for-strength {
-    background: var(--color-black);
-    padding-bottom: var(--space-xl);
+    padding: var(--space-xl) 0;
   }
 
-  .label-text {
-    margin-bottom: var(--space-sm);
+  .bfs__banner {
+    margin-bottom: var(--space-xl);
   }
 
-  .sub-line {
-    font-family: var(--font-body);
-    font-size: var(--text-body);
-    color: var(--color-grey);
-    margin-top: var(--space-sm);
-    margin-bottom: var(--space-lg);
-  }
-
-  h2 {
-    font-family: var(--font-display);
+  .bfs__headline {
+    color: var(--color-black);
     font-size: var(--text-section);
-    color: var(--color-white);
+    margin-top: var(--space-xs);
+  }
+
+  .bfs__rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .bfs__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .bfs__img-col :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-image);
+    display: block;
+    object-fit: contain;
+  }
+
+  .bfs__content-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .bfs__name {
+    color: var(--color-black);
+    font-size: var(--text-section);
+  }
+
+  .bfs__body {
+    font-family: var(--font-body);
+    font-size: 18px;
+    color: var(--color-black);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 768px) {
+    .bfs__row {
+      grid-template-columns: 1fr;
+    }
+
+    /* Row 2 reversed — image must appear above content on mobile */
+    .bfs__img-col--mobile-first {
+      order: -1;
+    }
   }
 </style>

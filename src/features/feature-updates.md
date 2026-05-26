@@ -339,3 +339,658 @@ uppercase, wide letter spacing
 - Three stats visible below body copy
 - Diagonal clip removed
 - Build passes with zero errors
+
+## Task 05 — White Layout Wrapper Component + Global Reset
+
+**Status:** Complete — 26 May 2026
+
+---
+
+### Context
+
+The site design has reset to a clean white background with
+black text. globals.css has already been updated to reflect
+this. A temporary div has been added in index.astro wrapping
+Identity, Trending and BrandStory — this needs to be replaced
+with a proper reusable component.
+
+---
+
+### Task 1 — Create SectionWrapper component
+
+Create: `src/components/SectionWrapper.astro`
+
+Requirements:
+
+- Accepts children via <slot />
+- Accepts a prop: `fullBleed?: boolean` — defaults to false
+- When fullBleed is false: applies container padding and
+  max-width constraint
+- When fullBleed is true: no container constraint,
+  content runs edge to edge
+- No background color set on the component itself —
+  background is inherited from globals.css
+- This component is the standard wrapper for all sections
+  going forward
+
+---
+
+### Task 2 — Update index.astro
+
+- Remove the temporary div with Tailwind classes currently
+  wrapping Identity, Trending and BrandStory
+- Tailwind classes are not used in this project —
+  remove any that were added
+- Do not wrap sections in SectionWrapper yet —
+  that happens per section as each is rebuilt
+- Keep all existing component imports and order unchanged
+
+---
+
+### Task 3 — Audit and fix globals.css
+
+globals.css has been updated to white background and black
+text. Claude Code must:
+
+- Confirm `body` background is `var(--color-white)`
+  or `#ffffff`
+- Confirm `body` default text color is `var(--color-black)`
+- Check for any hardcoded dark background values on
+  generic elements that would conflict with the new
+  white direction
+- Do not touch section-specific styles — only global
+  body-level defaults
+
+---
+
+### Awareness — design direction has changed
+
+The site is moving to a clean white background with black
+text and strong typography. All decorative elements added
+in previous sessions — grunge textures, ink edge assets,
+dark overlays on non-hero sections — are being removed
+section by section as each is rebuilt.
+
+Claude Code should not re-introduce any of these elements.
+The Hero remains full bleed and dark — everything after
+it is being rebuilt on white.
+
+---
+
+### What must not change
+
+- Hero component — untouched
+- Nav component — untouched
+- Any component not explicitly mentioned above
+- Existing component import order in index.astro
+
+---
+
+### Verify
+
+- SectionWrapper renders correctly with and without
+  fullBleed prop
+- No Tailwind classes remain in index.astro
+- globals.css body defaults are white background,
+  black text
+- Build passes with zero errors
+
+## Task 06 — Identity Section Redesign
+
+**Status:** Complete — 26 May 2026
+**Component:** `src/components/Identity.astro`
+
+---
+
+### Context
+
+Identity is being fully rebuilt. White background,
+clean typography, mosaic two-column layout.
+All previous styling, textures, gradients and
+decorative elements are removed entirely.
+
+---
+
+### Background
+
+White — inherited from globals.css body default.
+No background image. No gradient. No overlay.
+
+---
+
+### Layout — Mosaic pattern
+
+**Row 1 — two columns:**
+
+- Left: large display headline
+- Right: supporting body text
+
+**Row 2 — three equal stat columns**
+
+- Separated from Row 1 by a thin
+  `var(--color-border)` top border
+
+**Row 3 — CTAs**
+
+---
+
+### Content
+
+**Headline:**
+"Stock the brand that belongs in your gym."
+
+**Supporting text:**
+"We're looking for the right gyms, distributors,
+and retailers to bring Probell to market. If your
+members train hard, this is the product they've
+been waiting for."
+
+**Stats:**
+
+- 25g — Protein per serve
+- 3 — Flavors launching
+- 0 — Compromises
+
+**CTAs:**
+
+- Primary: "Partner With Us" → `/#contact`
+- Secondary: "View Products" → `/#trending`
+
+---
+
+### Typography
+
+- Headline: display font, large, black, uppercase
+- Supporting text: body font, `var(--color-grey)`
+- Stat values: display font, large, black
+- Stat labels: body font, small, `var(--color-grey)`,
+  uppercase, wide letter spacing
+
+---
+
+### Remove everything from previous build
+
+- Grunge background image
+- Top gradient fade
+- Both previous display text lines
+- Ink edge PNG and container
+- Any commented out InkEdge references
+- Any padding or spacing added for ink edge
+
+---
+
+### What must not change
+
+- Section id `identity`
+- Any other section or component
+
+---
+
+### Verify
+
+- White background, no texture visible
+- Two column layout at 1440px
+- Three stats in a row below
+- Both CTAs render correctly
+- Build passes with zero errors
+
+## Task 07 — Trending Section Redesign
+
+**Status:** Complete — 26 May 2026
+**Component:** `src/components/Trending.astro`
+
+---
+
+### Context
+
+Trending is being fully rebuilt with a mosaic alternating
+layout on a white background. Three products, three rows,
+alternating image and content columns. All previous card
+styling, dark backgrounds and grid structure are removed.
+
+---
+
+### Background
+
+White — inherited from globals.css body default.
+No background image. No dark card containers.
+
+---
+
+### Layout — Mosaic alternating rows
+
+**Banner row — full width**
+Large display headline left aligned:
+"Performance Series."
+Eyebrow label above: "TRENDING"
+in `var(--color-red)`, uppercase, wide letter spacing
+
+**Row 1 — two columns, equal width**
+
+- Left: product image
+- Right: product content
+
+**Row 2 — two columns, equal width, reversed**
+
+- Left: product content
+- Right: product image
+
+**Row 3 — two columns, equal width**
+
+- Left: product image
+- Right: product content
+
+Generous padding between rows — `var(--space-xl)`
+A thin `var(--color-border)` line separates each row.
+
+---
+
+### Images
+
+Each image fills its column fully — no card border,
+no border radius, edge to edge within the column.
+Aspect ratio: 4/3 landscape — enough to show
+the product with presence.
+
+Row 1: `/public/images/trending/trending-strawberry.png`
+Row 2: `/public/images/trending/trending-chocolate.png`
+Row 3: `/public/images/trending/trending-pineapple.png`
+
+---
+
+### Content — per product
+
+**Row 1 — Whey Strawberry**
+Tag: COMING SOON
+Name: Whey 100 Protein — Strawberry
+Descriptor: 25g protein per serve.
+Blue collar formula. No fillers, no shortcuts.
+Detail line: Gluten free · Non GMO · Made in the USA
+
+**Row 2 — Whey Cookies & Cream**
+Tag: COMING SOON
+Name: Whey 100 Protein — Cookies & Cream
+Descriptor: 25g protein per serve.
+No days off formula. Built for consistency.
+Detail line: Gluten free · Non GMO · Made in the USA
+
+**Row 3 — Creatine**
+Tag: COMING SOON
+Name: Creatine
+Descriptor: Power output. Recovery.
+More reps, faster recovery, no ceiling.
+Detail line: Pure creatine monohydrate ·
+Unflavored · Mixes clean
+
+---
+
+### Content column typography
+
+- Tag: `var(--color-red)`, uppercase,
+  `var(--text-label)`, wide letter spacing
+- Product name: display font, large, black, uppercase
+- Descriptor: body font, `var(--color-grey)`,
+  comfortable line height
+- Detail line: body font, small, `var(--color-grey)`,
+  uppercase, wide letter spacing
+- All content vertically centered within its column
+
+---
+
+### Remove everything from previous build
+
+- All dark card backgrounds
+- Four column grid structure
+- Fourth placeholder card
+- Any `var(--color-surface)` references
+  within this component
+
+---
+
+### What must not change
+
+- Section id `trending`
+- Any other section or component
+
+---
+
+### Verify
+
+- White background, no dark elements
+- Three rows alternating correctly at 1440px
+- All three product images load
+- Content readable and correctly styled
+- Build passes with zero errors
+
+## Task 07 — Trending Section Redesign (Updated)
+
+**Status:** Complete — 26 May 2026
+**Component:** `src/components/Trending.astro`
+
+---
+
+### Context
+
+Trending has a two part layout — a full width image
+banner at the top, followed by a three column modular
+grid for the three products. Each column has a different
+internal rhythm breaking up uniformity and allowing
+images to maintain their natural proportions.
+
+---
+
+### Part 1 — Banner row
+
+Full width image with text overlaid.
+Temporary image: `/public/images/hero/hero-main.png`
+Overlay: dark gradient so text is legible.
+
+Text overlaid on image:
+
+- Eyebrow: "TRENDING" — white, uppercase,
+  `var(--text-label)`, wide letter spacing
+- Headline: "Performance Series." — white,
+  display font, large
+
+Banner height: approximately 50vh
+
+---
+
+### Part 2 — Three column modular grid
+
+Three equal columns separated by thin
+`1px solid var(--color-border)` vertical dividers.
+No horizontal dividers.
+Generous padding within each column.
+
+**Column 1 — Whey Strawberry**
+
+- Top: content block
+  - Tag: "COMING SOON" in `var(--color-red)`
+  - Product name: "Whey 100 Protein — Strawberry"
+  - Descriptor: "25g protein per serve.
+    Blue collar formula. No fillers, no shortcuts."
+  - Detail: "Gluten Free · Non GMO · Made in the USA"
+- Bottom: product image
+  - `/public/images/trending/trending-strawberry.png`
+  - Natural aspect ratio — no forced crop
+  - `border-radius: 8px`
+
+**Column 2 — Whey Cookies & Cream**
+
+- Top: product image
+  - `/public/images/trending/trending-chocolate.png`
+  - Natural aspect ratio — no forced crop
+  - `border-radius: 8px`
+- Bottom: content block
+  - Tag: "COMING SOON" in `var(--color-red)`
+  - Product name: "Whey 100 Protein — Cookies & Cream"
+  - Descriptor: "25g protein per serve.
+    No days off formula. Built for consistency."
+  - Detail: "Gluten Free · Non GMO · Made in the USA"
+
+**Column 3 — Creatine**
+
+- Top: content block
+  - Tag: "COMING SOON" in `var(--color-red)`
+  - Product name: "Creatine"
+  - Descriptor: "Power output. Recovery.
+    More reps, faster recovery, no ceiling."
+  - Detail: "Pure creatine monohydrate ·
+    Unflavored · Mixes clean"
+- Bottom: product image
+  - `/public/images/trending/trending-pineapple.png`
+  - Natural aspect ratio — no forced crop
+  - `border-radius: 8px`
+
+---
+
+### Typography — all content blocks
+
+- Tag: `var(--color-red)`, uppercase,
+  `var(--text-label)`, wide letter spacing
+- Product name: display font, black, uppercase
+- Descriptor: body font, black, 18px
+- Detail line: body font, black,
+  `var(--text-label)`, uppercase, wide letter spacing
+
+---
+
+### Remove everything from previous build
+
+- Alternating row layout
+- All horizontal dividers
+- Any dark backgrounds or card containers
+
+---
+
+### What must not change
+
+- Section id `trending`
+- Any other section or component
+
+---
+
+### Verify
+
+- Banner renders with image and overlaid text
+- Three column grid renders correctly at 1440px
+- Column 1 and 3: content top, image bottom
+- Column 2: image top, content bottom
+- Thin vertical dividers between columns
+- All three product images load at natural proportions
+- Build passes with zero errors
+
+## Task 08 — Built for Strength Section Redesign
+
+**Status:** Complete — 26 May 2026
+**Component:** `src/components/BuiltForStrength.astro`
+
+---
+
+### Context
+
+Built for Strength is being rebuilt using the same
+mosaic alternating two column pattern as Trending.
+Three products, three rows, image and content
+alternating sides. Use existing images as placeholders.
+No black borders anywhere in this component.
+
+---
+
+### Layout
+
+Wrap in `<SectionWrapper>` — not full bleed.
+White background inherited from globals.
+
+**Banner row — full width**
+
+- Eyebrow: "PERFORMANCE SERIES" in `var(--color-red)`
+- Headline: "Built for Strength."
+- Display font, black, large, uppercase
+
+**Three alternating rows:**
+
+Row 1 — image left, content right
+Row 2 — content left, image right
+Row 3 — image left, content right
+
+Generous padding between rows: `var(--space-xl)`
+No dividers. No borders. No dark backgrounds.
+
+---
+
+### Placeholder images
+
+Use any existing product images from
+`/public/images/trending/` until strength-specific
+assets are available.
+
+Row 1: `trending-strawberry.png`
+Row 2: `trending-chocolate.png`
+Row 3: `trending-pineapple.png`
+
+Images: `border-radius: 8px`, natural aspect ratio,
+`object-fit: contain`
+
+---
+
+### Content — three rows
+
+**Row 1 — Whey 100 Protein**
+Tag: STRENGTH
+Name: Whey 100 Protein
+Body: "The foundation of every serious stack.
+25g of pure protein per serve. No fillers,
+no shortcuts. Built for people who train
+like their results depend on it — because they do."
+
+**Row 2 — Creatine**
+Tag: POWER
+Name: Creatine
+Body: "More reps. Heavier lifts. Faster recovery
+between sets. Pure creatine monohydrate —
+nothing added, nothing hidden. The most
+researched supplement in sport. Now in
+the only container worth lifting."
+
+**Row 3 — Pre-Workout**
+Tag: INTENSITY
+Name: Pre-Workout
+Body: "Explosive energy without the crash.
+Dialled-in focus from the first rep to the last.
+Coming soon — built to the same standard
+as everything else Probell makes."
+
+---
+
+### Typography
+
+- Tag: `var(--color-red)`, uppercase,
+  `var(--text-label)`, wide letter spacing
+- Name: display font, black, uppercase, large
+- Body: body font, black, 18px,
+  comfortable line height
+- No grey text — all content black
+
+---
+
+### What must not change
+
+- Section id `built-for-strength`
+- Any other section or component
+- No black borders anywhere
+
+---
+
+### Verify
+
+- Three alternating rows correct at 1440px
+- Banner renders above the rows
+- All placeholder images load
+- No borders, no dark backgrounds
+- Wrapped in SectionWrapper
+- Build passes with zero errors
+
+---
+
+## Task 09 — Built for Endurance Section Redesign
+
+**Status:** Ready to implement
+**Component:** `src/components/BuiltForEndurance.astro`
+
+---
+
+### Context
+
+Identical pattern to Built for Strength.
+Same mosaic alternating layout, different
+products and content angle.
+No black borders anywhere in this component.
+
+---
+
+### Layout
+
+Wrap in `<SectionWrapper>` — not full bleed.
+White background inherited from globals.
+
+**Banner row — full width**
+
+- Eyebrow: "PERFORMANCE SERIES" in `var(--color-gold)`
+- Headline: "Built for Endurance."
+- Display font, black, large, uppercase
+
+**Three alternating rows:**
+Row 1 — image left, content right
+Row 2 — content left, image right
+Row 3 — image left, content right
+
+No dividers. No borders. No dark backgrounds.
+
+---
+
+### Placeholder images
+
+Row 1: `trending-pineapple.png`
+Row 2: `trending-strawberry.png`
+Row 3: `trending-chocolate.png`
+
+Images: `border-radius: 8px`, natural aspect ratio,
+`object-fit: contain`
+
+---
+
+### Content — three rows
+
+**Row 1 — Pre-Workout**
+Tag: ENDURANCE
+Name: Pre-Workout
+Body: "Fuel longer. Sustained energy without
+the spike and crash. Built for athletes who
+train for time, not just weight.
+Coming soon — worth the wait."
+
+**Row 2 — Creatine**
+Tag: RECOVERY
+Name: Creatine
+Body: "Recovery is where endurance is built.
+Pure creatine monohydrate replenishes
+what hard training takes. Go again
+tomorrow because you did the work today."
+
+**Row 3 — Whey 100 Protein**
+Tag: CONSISTENCY
+Name: Whey 100 Protein
+Body: "Show up every day. Recover every night.
+25g protein per serve keeps the engine
+running. No compromise on formula,
+no compromise on results."
+
+---
+
+### Typography
+
+Same as Task 08 — all content black,
+body text 18px, tags in `var(--color-gold)`
+No grey text. No borders.
+
+---
+
+### What must not change
+
+- Section id `built-for-endurance`
+- Any other section or component
+- No black borders anywhere
+
+---
+
+### Verify
+
+- Three alternating rows correct at 1440px
+- Banner renders above the rows
+- Gold eyebrow not red
+- All placeholder images load
+- No borders, no dark backgrounds
+- Wrapped in SectionWrapper
+- Build passes with zero errors

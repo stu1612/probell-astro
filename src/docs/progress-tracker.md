@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 22 May 2026 — Session 16**
+**Last updated: 26 May 2026 — Session 21**
 
 ---
 
@@ -8,7 +8,7 @@
 
 **Phase:** Post-build feature updates
 **Active section:** Feature updates — see `src/features/feature-updates.md`
-**Next action:** Task 03 complete. Implement next task in `src/features/feature-updates.md`
+**Next action:** Task 08 complete. Implement Task 09 — Built for Endurance Section Redesign
 
 ---
 
@@ -64,7 +64,7 @@ These items must be confirmed before Claude Code begins building.
 | 3   | Identity            | Complete    | 17 May 2026 | Text only — product breakout omitted per developer instruction                             |
 | 4   | Trending            | Complete    | 22 May 2026 | Task 03: redesigned to light bg (--color-bg-warm), 3-col cinematic cards, composited product images, 4th placeholder removed |
 | 5   | Brand Story         | Complete    | 17 May 2026 | Image uses .png (not .jpg per spec); diagonal clip via existing .clip-diagonal-bottom global class |
-| 6   | Built for Strength  | Complete    | 17 May 2026 | Placeholder Creatine card; whey-cookies-cream.png used for Whey 100; large={true} prop added to ProductCard |
+| 6   | Built for Strength  | Complete    | 26 May 2026 | Task 08: rebuilt as 3 alternating 2-col rows, SectionWrapper, white bg, all black text, placeholder trending images |
 | 7   | Bold Statement      | Complete    | 17 May 2026 | discipline.png used (spec says .jpg); TornEdge fill=black into Built for Endurance         |
 | 8   | Built for Endurance | Complete    | 20 May 2026 | Both cards placeholder — no images available yet; gold eyebrow, clean bottom, no border breaker |
 | 9   | Instagram           | Complete    | 20 May 2026 | Placeholder grid — 6 cols desktop, 4 tablet, 3 mobile; TODO comment for live feed         |
@@ -75,6 +75,159 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 21 — 26 May 2026
+
+**What was done:**
+
+- Task 08 complete: Built for Strength fully rebuilt
+- Removed: dark background, ProductCard component, 2-col card grid, grey text
+- Banner row: "PERFORMANCE SERIES" red eyebrow (`.label-text--red`), "Built for Strength." display headline, black
+- Three alternating 2-column rows: Row 1 & 3 image left / content right; Row 2 content left / image right
+- Rows separated by `var(--space-xl)` gap — no borders, no dividers
+- Row 2: content first in DOM, image gets `.bfs__img-col--mobile-first` with `order: -1` on mobile to restore image-above-content
+- Images: `<Image />` from astro:assets, `border-radius: 8px`, `object-fit: contain`, natural aspect ratio, placeholder trending images
+- Tags: `.label-text--red` global class (STRENGTH / POWER / INTENSITY)
+- Names: `.display-text` + `.bfs__name`, `--text-section`, black
+- Body: 18px, black, 1.7 line height — per spec
+- Wrapped in `<SectionWrapper>` (not full bleed)
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- `18px` raw value used for body text — spec explicitly specifies it; no matching token exists
+- `border-radius: 8px` raw value — spec explicitly specifies it
+- Placeholder images from `/images/trending/` used — strength-specific assets not yet available
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL
+- Facebook URL
+- Logo light variant PNG (client to supply)
+
+---
+
+### Session 20 — 26 May 2026
+
+**What was done:**
+
+- Task 07 (Updated) complete: Trending section rebuilt with two-part layout
+- Part 1 — Banner: `50vh`, CSS `background-image` (decorative), `rgba(0,0,0,0.5)` overlay via `::after`, text anchored bottom-left; eyebrow "TRENDING" (white, label style), headline "Performance Series." (white, display font, `--text-section`)
+- Banner image: `hero-main-v2.png` used — spec referenced `hero-main.png` which was deleted in Task 01
+- Part 2 — Three-column grid: `repeat(3, 1fr)`, no gap, vertical `var(--color-border)` dividers via `border-right` on cols 1 & 2
+- Col 1 & 3: content top, image bottom; Col 2: image top, content bottom
+- Images: `<Image />` from astro:assets, `width: 100%; height: auto` (natural proportions), `border-radius: 8px`
+- Content: red tag, display name (`--text-product`), 18px black descriptor, black `--text-label` detail line
+- Mobile: single column, horizontal dividers replace vertical, no padding on sides
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- Banner constrained within SectionWrapper — confirmed by developer (no full-bleed needed)
+- `hero-main-v2.png` used as banner temp image; original `hero-main.png` was deleted
+- `border-radius: 8px` raw value used per explicit spec
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL
+- Facebook URL
+- Logo light variant PNG (client to supply)
+
+---
+
+### Session 19 — 26 May 2026
+
+**What was done:**
+
+- Task 07 complete: Trending section fully rebuilt as mosaic alternating layout
+- Removed: dark card backgrounds, four-column grid, `var(--color-surface)` references, warm off-white section background
+- Banner row: "TRENDING" red eyebrow, "Performance Series." display headline, left aligned
+- Three product rows alternating: Row 1 & 3 image left / content right; Row 2 content left / image right
+- Each row: `var(--space-xl)` padding, `var(--color-border)` top border separator
+- Images: `<Image />` from astro:assets, 4/3 aspect ratio, full column width, no border/radius
+- Content: red "Coming Soon" tag (`.label-text--red`), display name (`--text-section`), grey descriptor, grey detail line (`.label-text`)
+- Mobile: single column, image always above content (Row 2 uses `order: -1` on image-col)
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- Row 2 reversed via DOM order (content first, image second) — simpler than CSS `direction: rtl` trick; `order: -1` on image-col restores image-above-content on mobile
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL
+- Facebook URL
+- Logo light variant PNG (client to supply)
+
+---
+
+### Session 18 — 26 May 2026
+
+**What was done:**
+
+- Task 06 complete: Identity section fully rebuilt
+- Removed: grunge background image, top gradient fade, both previous display text lines, ink edge references, all dark-section styling
+- New layout: two-column mosaic (headline left, body text right), three-stat row with `var(--color-border)` top border, CTA row
+- Headline: "Stock the brand that belongs in your gym." — display font, `--text-section`, black, uppercase via `.display-text`
+- Supporting text: body font, `var(--color-grey)`
+- Stats: 25g / 3 / 0 with `.label-text` labels
+- CTAs: "Partner With Us" → `/#contact` (`.btn-primary`), "View Products" → `/#trending` (`.btn-secondary`)
+- Mobile: row1 collapses to single column, stats grid retains 3 cols with reduced gap, CTAs stack vertically
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- Stat row stays 3 columns on mobile (short content, consistent with Brand Story stats pattern)
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL
+- Facebook URL
+- Logo light variant PNG (client to supply)
+
+---
+
+### Session 17 — 26 May 2026
+
+**What was done:**
+
+- Task 05 complete: White layout wrapper component + global reset
+- Created `SectionWrapper.astro` — `fullBleed?: boolean` prop (default false); false applies `.wrapper` (max-width + padding via tokens), true applies `.wrapper--full-bleed` (full width, no constraint); no background set on component
+- Removed Tailwind `<div class="bg-white container mx-auto px-4">` from `index.astro` — Identity, Trending and BrandStory are now direct children of `<main>`; no sections wrapped in SectionWrapper yet (per spec)
+- Audited `globals.css`: body already has `background-color: var(--color-white)` and `color: var(--color-black)` — no changes required; no hardcoded dark backgrounds on generic elements found
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- No SectionWrapper usage introduced yet — sections will be wrapped individually as each is rebuilt per spec
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL
+- Facebook URL
+- Logo light variant PNG (client to supply)
+
+---
 
 ### Session 16 — 22 May 2026
 

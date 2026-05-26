@@ -1,67 +1,100 @@
+---
+interface Props {
+  headline: string;
+  body: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
 
+const { headline, body, primaryCta, secondaryCta } = Astro.props;
+const hasCtas = primaryCta || secondaryCta;
+---
 
 <section id="identity">
-  <div class="identity__content">
-    <p class="display-text identity-line-1">Fuel for people who already show up.</p>
-    <p class="display-text identity-line-2">No shortcuts. No fillers. No compromise.</p>
+  <div class="identity__row1">
+    <div class="identity__left">
+      <h4 class="display-text identity__headline">{headline}</h4>
+      {hasCtas && (
+        <div class="identity__ctas">
+          {primaryCta && <a href={primaryCta.href} class="btn-primary">{primaryCta.label}</a>}
+          {secondaryCta && <a href={secondaryCta.href} class="btn-secondary">{secondaryCta.label}</a>}
+        </div>
+      )}
+    </div>
+    <div class="identity__body">
+      <p class="identity__body-text">{body}</p>
+    </div>
   </div>
 </section>
 
 <style>
   #identity {
-    background-color: var(--color-black);
-    background-image: url('/images/backgrounds/grunge-bg.png');
-    background-repeat: no-repeat;
-    background-position: bottom center;
-    background-size: cover;
-    position: relative;
-    width: 100%;
-    padding: var(--space-xl) 0 var(--space-2xl);
+    padding: var(--space-md) 0;
   }
 
-  #identity::before {
-  content: '';
-  position: absolute;
-  top:-30px;
-  left: 0;
-  width: 100%;
-  height: 400px;
-  background: linear-gradient(
-    to bottom,
-    var(--color-black) 0%,
-    transparent 100%
-  );
-  z-index: 1;
-}
+  .identity__row1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+  }
 
-.identity__content {
-  position: relative;
-  z-index: 2;
-}
-
-
-  .identity__content {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 var(--space-lg);
+  .identity__left {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    gap: var(--space-lg);
+    justify-content: space-between;
+    height: 100%;
   }
 
-  .identity-line-1 {
+  .identity__headline {
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 4.5vw, 4rem);
+    font-size: var(--text-statement);
+    color: var(--color-black);
+  }
+
+  .identity__body {
+    background: var(--color-black);
+    height: 100%;
+    padding: var(--space-lg);
+    border-radius: var(--radius-image);
+
+  }
+
+  .identity__body-text {
+    font-size: 20px;
     color: var(--color-white);
-    margin: 0;
+    line-height: 1.6;
   }
 
-  .identity-line-2 {
-    font-family: var(--font-display);
-    font-size: var(--text-section);
-    color: var(--color-red);
-    margin: 0;
-    margin-top: var(--space-sm);
+  .identity__ctas {
+    display: flex;
+    gap: var(--space-md);
   }
+
+    @media (max-width: 1040px) {
+    .identity__row1 {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .identity__ctas {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+
+/* 
+  @media (max-width: 768px) {
+    .identity__row1 {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .identity__ctas {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  } */
 </style>

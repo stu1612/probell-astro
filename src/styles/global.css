@@ -30,7 +30,7 @@
   --color-grey: #a0a0a0;
   --color-border: #222222;
   --color-surface: #111111;
-  --color-bg-warm: #F5F3EF;
+  --color-bg-warm: #f5f3ef;
 
   /* Typography — families */
   --font-anton: "Anton", sans-serif;
@@ -76,6 +76,9 @@
   --transition-fast: 0.15s ease;
   --transition-base: 0.2s ease;
   --transition-slow: 0.3s ease;
+
+  /* Border radius */
+  --radius-image: 20px;
 }
 
 /* ============================================================
@@ -97,8 +100,8 @@ html {
 }
 
 body {
-  background-color: var(--color-black);
-  color: var(--color-white);
+  background-color: var(--color-white);
+  color: var(--color-black);
   font-family: var(--font-body);
   font-size: var(--text-body);
   line-height: 1.6;
