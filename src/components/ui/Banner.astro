@@ -1,0 +1,72 @@
+---
+interface Props {
+  eyebrow: string;
+  headline: string;
+  description?: string;
+  image: string;
+}
+
+const { eyebrow, headline, description, image } = Astro.props;
+---
+
+<div class="banner" style={`background-image: url(${image})`}>
+  <div class="banner__text">
+    <span class="banner__eyebrow">{eyebrow}</span>
+    <h2 class="display-text banner__headline">{headline}</h2>
+    {description && <p class="banner__description">{description}</p>}
+  </div>
+</div>
+
+<style>
+  .banner {
+    position: relative;
+    height: 50vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    overflow: hidden;
+    border-radius: var(--radius-image);
+  }
+
+  .banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .banner__text {
+    position: relative;
+    z-index: 1;
+  }
+
+  .banner__eyebrow {
+    display: block;
+    font-family: var(--font-body);
+    font-size: var(--text-label);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-white);
+    margin-bottom: var(--space-xs);
+  }
+
+  .banner__headline {
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    color: var(--color-white);
+  }
+
+  .banner__description {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-white);
+    opacity: 0.85;
+    margin-top: var(--space-sm);
+    max-width: 560px;
+    line-height: 1.6;
+  }
+</style>

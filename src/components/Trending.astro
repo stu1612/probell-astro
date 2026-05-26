@@ -1,130 +1,152 @@
 ---
 import { Image } from 'astro:assets';
-
-const products = [
-  {
-    image: '/images/trending/trending-strawberry.png',
-    alt: 'Probell Whey Strawberry',
-    name: 'Whey Strawberry',
-    descriptor: '25g protein. Blue collar formula.',
-    tag: 'Whey Protein'
-  },
-  {
-    image: '/images/trending/trending-chocolate.png',
-    alt: 'Probell Whey Cookies & Cream',
-    name: 'Whey Cookies & Cream',
-    descriptor: '25g protein. No days off formula.',
-    tag: 'Whey Protein'
-  },
-  {
-    image: '/images/trending/trending-pineapple.png',
-    alt: 'Probell Creatine',
-    name: 'Creatine',
-    descriptor: 'Micronised creatine. Maximum absorption.',
-    tag: 'Creatine'
-  },
-];
 ---
 
-<section id="trending" class="trending">
-  <div class="container">
-    <div class="trending__header">
-      <span class="label-text label-text--red">Performance Series</span>
-      <h2 class="trending__heading display-text">Trending</h2>
+<section id="trending">
+
+
+  <div class="trending__grid">
+    <div class="trending__col">
+      <span class="trending__tag">Strawberry Whey Protein</span>
+      <div class="trending__content">
+        <!-- <h3 class="display-text trending__name">Whey 100 Protein — Strawberry</h3> -->
+        <p class="trending__descriptor">Built for the ones who don't need motivation. You already show up. This is the protein that does the same — 25g per serve, no fillers, no apology.</p>
+        <!-- <p class="trending__detail">Gluten Free · Non GMO · Made in the USA</p> -->
+      </div>
+      <div class="trending__img-wrap">
+        <Image
+          src="/images/trending/trending-strawberry.png"
+          alt="Probell Whey 100 Protein – Strawberry"
+          width={400}
+          height={400}
+          format="webp"
+          loading="lazy"
+        />
+      </div>
     </div>
-    <div class="trending-grid">
-      {products.map((product) => (
-        <article class="product-card">
-          <div class="product-card__image-wrap">
-            <Image
-              src={product.image}
-              alt={product.alt}
-              width={600}
-              height={800}
-              format="webp"
-              loading="lazy"
-            />
-          </div>
-          <div class="product-card__content">
-            <span class="tag tag--coming-soon">{product.tag}</span>
-            <h3 class="product-card__name">{product.name}</h3>
-            <p class="product-card__descriptor">{product.descriptor}</p>
-          </div>
-        </article>
-      ))}
+
+    <div class="trending__col">
+      <span class="trending__tag">Chocolate Whey Protein</span>
+      <div class="trending__img-wrap">
+        <Image
+          src="/images/trending/trending-chocolate.png"
+          alt="Probell Whey 100 Protein – Cookies & Cream"
+          width={400}
+          height={400}
+          format="webp"
+          loading="lazy"
+        />
+      </div>
+      <div class="trending__content">
+        <!-- <h3 class="display-text trending__name">Whey 100 Protein — Cookies & Cream</h3> -->
+        <p class="trending__descriptor">Your members are already buying protein somewhere. Give them a reason to buy it from you. Probell is the brand they'll come back for — and tell their training partners about.</p>
+        <!-- <p class="trending__detail">Gluten Free · Non GMO · Made in the USA</p> -->
+      </div>
+    </div>
+
+    <div class="trending__col">
+      <span class="trending__tag">Caribbean Creatine</span>
+      <div class="trending__content">
+        <h4 class="display-text trending__name">Power output. Recovery. More reps, faster recovery, no ceiling.</h4>
+        <p class="trending__descriptor">Pure creatine monohydrate. No proprietary blends, no mystery ingredients. What's on the label is what's in the tub. More reps, faster recovery, no ceiling.</p>
+        <!-- <p class="trending__detail">Pure creatine monohydrate · Unflavored · Mixes clean</p> -->
+      </div>
+      <div class="trending__img-wrap">
+        <Image
+          src="/images/trending/trending-pineapple.png"
+          alt="Probell Creatine"
+          width={400}
+          height={400}
+          format="webp"
+          loading="lazy"
+        />
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .trending {
-    background: var(--color-bg-warm);
-    padding-top: var(--space-xl);
+  #trending {
     padding-bottom: var(--space-xl);
   }
 
-  .trending__header {
-    margin-bottom: var(--space-md);
-  }
-
-  .trending__heading {
-    font-size: var(--text-section);
-    color: var(--color-black);
-    margin: var(--space-xs) 0 0;
-  }
-
-  .trending-grid {
+  /* Grid */
+  .trending__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .trending__col {
+    padding: var(--space-md);
+    /* border-right: 1px solid var(--color-border); */
+    display: flex;
+    flex-direction: column;
     gap: var(--space-md);
   }
 
-  .product-card {
-    background: transparent;
-    border: none;
+  .trending__col:last-child {
+    border-right: none;
   }
 
-  .product-card__image-wrap {
-    width: 100%;
-    aspect-ratio: 3/4;
-    overflow: hidden;
-    border-radius: 4px;
+  /* Content */
+  .trending__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
   }
 
-  .product-card__image-wrap :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+  .trending__tag {
+    font-family: var(--font-body);
+    font-size: var(--text-label);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-grey);
   }
 
-  .product-card__image-wrap :global(img:hover) {
-    transform: scale(1.03);
-  }
-
-  .product-card__content {
-    padding: var(--space-sm) 0;
-  }
-
-  .product-card__name {
+  .trending__name {
     font-family: var(--font-display);
     font-size: var(--text-product);
     color: var(--color-black);
-    margin: var(--space-xs) 0 0;
-    text-transform: uppercase;
+    line-height: 1.3;
   }
 
-  .product-card__descriptor {
+  .trending__descriptor {
+    font-size: 16px;
+    color: var(--color-black);
+    line-height: 1.6;
+  }
+
+  .trending__detail {
     font-family: var(--font-body);
-    font-size: var(--text-body);
-    color: var(--color-border);
-    margin: var(--space-xs) 0 0;
+    font-size: var(--text-label);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-black);
   }
 
-  @media (max-width: 767px) {
-    .trending-grid {
+  /* Images */
+  .trending__img-wrap :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-image);
+    display: block;
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .trending__grid {
       grid-template-columns: 1fr;
+    }
+
+    .trending__col {
+      border-right: none;
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-md) 0;
+    }
+
+    .trending__col:last-child {
+      border-bottom: none;
     }
   }
 </style>

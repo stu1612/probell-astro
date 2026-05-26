@@ -4,7 +4,7 @@ import { Image } from 'astro:assets';
 
 <section id="brand-story" class="brand-story">
   <Image
-    src="/images/brand-story/gym-interior-v2.png"
+    src="/images/lifestyle/shelf-display.jpg"
     alt="Raw gym interior — iron plates, concrete walls, hard lighting"
     width={1440}
     height={900}
@@ -41,11 +41,12 @@ import { Image } from 'astro:assets';
 <style>
   .brand-story {
     position: relative;
-    min-height: 70vh;
+    min-height: 50vh;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    border-radius: var(--radius-image);
   }
 
   .brand-story__image {

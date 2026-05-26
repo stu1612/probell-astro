@@ -1,0 +1,24 @@
+---
+interface Props {
+  fullBleed?: boolean;
+}
+
+const { fullBleed = false } = Astro.props;
+---
+
+<div class={fullBleed ? 'wrapper--full-bleed' : 'wrapper'}>
+  <slot />
+</div>
+
+<style>
+  .wrapper {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-pad);
+  }
+
+  .wrapper--full-bleed {
+    width: 100%;
+  }
+</style>
