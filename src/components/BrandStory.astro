@@ -2,69 +2,87 @@
 import { Image } from 'astro:assets';
 ---
 
-<section id="brand-story" class="brand-story clip-diagonal-bottom">
-  <div class="brand-story-grid">
-    <div class="brand-story__image">
-      <Image
-        src="/images/brand-story/gym-interior.png"
-        alt="Raw gym interior — iron plates, concrete walls, hard lighting"
-        width={800}
-        height={900}
-        loading="lazy"
-      />
-    </div>
-    <div class="brand-story__content">
-      <p class="label-text label-text--gold">Our Story</p>
-      <h2 class="display-text brand-story__headline">
-        Built in the Gym.<br />Designed for It.
-      </h2>
-      <p class="brand-story__body">
-        Probell started with one idea — protein that performs as hard
-        as you do. Kettlebell-shaped. Uncompromising formula. Made in the USA.
-      </p>
+<section id="brand-story" class="brand-story">
+  <Image
+    src="/images/brand-story/gym-interior-v2.png"
+    alt="Raw gym interior — iron plates, concrete walls, hard lighting"
+    width={1440}
+    height={900}
+    loading="lazy"
+    class="brand-story__image"
+  />
+  <div class="brand-story__overlay"></div>
+  <div class="brand-story__content">
+    <p class="label-text label-text--gold">Our Story</p>
+    <h2 class="display-text brand-story__headline">
+      Built in the Gym.<br />Designed for It.
+    </h2>
+    <p class="brand-story__body">
+      Probell started with one idea — protein that performs as hard
+      as you do. Kettlebell-shaped. Uncompromising formula. Made in the USA.
+    </p>
+    <div class="brand-story__stats">
+      <div class="brand-story__stat">
+        <span class="brand-story__stat-number display-text">25g</span>
+        <span class="brand-story__stat-label label-text">Protein per serve</span>
+      </div>
+      <div class="brand-story__stat">
+        <span class="brand-story__stat-number display-text">100%</span>
+        <span class="brand-story__stat-label label-text">Made in the USA</span>
+      </div>
+      <div class="brand-story__stat">
+        <span class="brand-story__stat-number display-text">0</span>
+        <span class="brand-story__stat-label label-text">Compromises</span>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .brand-story {
-    background: var(--color-black);
     position: relative;
-    padding-bottom: calc(var(--space-xl) + 6rem);
-  }
-
-  .brand-story-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     min-height: 70vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 
   .brand-story__image {
-    overflow: hidden;
-  }
-
-  .brand-story__image img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+  }
+
+  /* Gradient overlay — right-side fade for text legibility over photography */
+  .brand-story__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.2) 35%,
+      rgba(0, 0, 0, 0.8) 60%,
+      rgba(0, 0, 0, 0.95) 100%
+    );
   }
 
   .brand-story__content {
-    padding: var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .label-text--gold {
-    margin-bottom: var(--space-sm);
+    position: relative;
+    z-index: 2;
+    width: 50%;
+    max-width: 640px;
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-lg);
   }
 
   .brand-story__headline {
     color: var(--color-white);
     font-size: var(--text-section);
-    margin-top: 0;
+    margin-top: var(--space-sm);
+    margin-bottom: 0;
   }
 
   .brand-story__body {
@@ -75,17 +93,59 @@ import { Image } from 'astro:assets';
     margin-top: var(--space-md);
   }
 
+  .brand-story__stats {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .brand-story__stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .brand-story__stat-number {
+    font-size: var(--text-section);
+    color: var(--color-white);
+  }
+
+  .brand-story__stat-label {
+    color: var(--color-grey);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
   @media (max-width: 768px) {
-    .brand-story-grid {
-      grid-template-columns: 1fr;
+    .brand-story {
+      align-items: flex-end;
+      justify-content: flex-start;
     }
 
     .brand-story__image {
-      height: 50vh;
+      object-position: center;
+    }
+
+    .brand-story__overlay {
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 0.7) 50%,
+        rgba(0, 0, 0, 0.2) 100%
+      );
     }
 
     .brand-story__content {
+      width: 100%;
+      max-width: 100%;
       padding: var(--space-md);
+    }
+
+    .brand-story__stats {
+      gap: var(--space-md);
     }
   }
 </style>

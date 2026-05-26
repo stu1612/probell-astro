@@ -1,7 +1,7 @@
----
----
+
+
 <section id="identity">
-  <div class="identity-container">
+  <div class="identity__content">
     <p class="display-text identity-line-1">Fuel for people who already show up.</p>
     <p class="display-text identity-line-2">No shortcuts. No fillers. No compromise.</p>
   </div>
@@ -9,23 +9,51 @@
 
 <style>
   #identity {
-    background: var(--color-black);
-    padding-top: var(--space-2xl);
-    padding-bottom: var(--space-xl);
+    background-color: var(--color-black);
+    background-image: url('/images/backgrounds/grunge-bg.png');
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: cover;
+    position: relative;
+    width: 100%;
+    padding: var(--space-xl) 0 var(--space-2xl);
   }
 
-  .identity-container {
-    width: 100%;
-    max-width: 800px;
+  #identity::before {
+  content: '';
+  position: absolute;
+  top:-30px;
+  left: 0;
+  width: 100%;
+  height: 400px;
+  background: linear-gradient(
+    to bottom,
+    var(--color-black) 0%,
+    transparent 100%
+  );
+  z-index: 1;
+}
+
+.identity__content {
+  position: relative;
+  z-index: 2;
+}
+
+
+  .identity__content {
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 var(--space-md);
+    padding: 0 var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 
   .identity-line-1 {
     font-family: var(--font-display);
-    font-size: var(--text-statement);
+    font-size: clamp(2.5rem, 4.5vw, 4rem);
     color: var(--color-white);
-    line-height: 0.95;
     margin: 0;
   }
 
@@ -33,7 +61,6 @@
     font-family: var(--font-display);
     font-size: var(--text-section);
     color: var(--color-red);
-    line-height: 0.95;
     margin: 0;
     margin-top: var(--space-sm);
   }
