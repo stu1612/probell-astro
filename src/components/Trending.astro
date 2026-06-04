@@ -1,21 +1,21 @@
 ---
-import { Image } from 'astro:assets';
+import { Image } from "astro:assets";
 ---
 
 <section id="trending">
-
-
   <div class="trending__grid">
     <div class="trending__col">
       <span class="trending__tag">Strawberry Whey Protein</span>
-      <div class="trending__content">
-        <!-- <h3 class="display-text trending__name">Whey 100 Protein — Strawberry</h3> -->
-        <p class="trending__descriptor">Built for the ones who don't need motivation. You already show up. This is the protein that does the same — 25g per serve, no fillers, no apology.</p>
-        <!-- <p class="trending__detail">Gluten Free · Non GMO · Made in the USA</p> -->
+      <div>
+        <p class="trending__descriptor">
+          Built for the ones who don't need motivation. You already show up.
+          This is the protein that does the same — 25g per serve, no fillers, no
+          apology.
+        </p>
       </div>
       <div class="trending__img-wrap">
         <Image
-          src="/images/trending/trending-strawberry.png"
+          src="/images/trending/trending-strawberry.jpg"
           alt="Probell Whey 100 Protein – Strawberry"
           width={400}
           height={400}
@@ -23,38 +23,57 @@ import { Image } from 'astro:assets';
           loading="lazy"
         />
       </div>
+      <div class="trending__blockquote">
+        <h4 class="trending__blockquote-text">
+          No shortcuts. No fillers. No apology.
+        </h4>
+      </div>
     </div>
-
     <div class="trending__col">
-      <span class="trending__tag">Chocolate Whey Protein</span>
+      <span class="trending__tag">Caribbean Creatine</span>
       <div class="trending__img-wrap">
         <Image
-          src="/images/trending/trending-chocolate.png"
-          alt="Probell Whey 100 Protein – Cookies & Cream"
+          src="/images/trending/trending-creatine.jpg"
+          alt="Probell Whey 100 Protein – Strawberry"
           width={400}
           height={400}
           format="webp"
           loading="lazy"
         />
       </div>
-      <div class="trending__content">
-        <!-- <h3 class="display-text trending__name">Whey 100 Protein — Cookies & Cream</h3> -->
-        <p class="trending__descriptor">Your members are already buying protein somewhere. Give them a reason to buy it from you. Probell is the brand they'll come back for — and tell their training partners about.</p>
-        <!-- <p class="trending__detail">Gluten Free · Non GMO · Made in the USA</p> -->
+      <div class="trending__blockquote">
+        <h4 class="trending__blockquote-text">
+          The only supplement you can actually lift.
+        </h4>
+      </div>
+      <div>
+        <p class="trending__descriptor">
+          Pure creatine monohydrate. No proprietary blends, no mystery
+          ingredients. What's on the label is what's in the tub. More reps,
+          faster recovery, faster return to peak performance. The most
+          researched supplement in sport — now in the only container worth
+          lifting.
+        </p>
       </div>
     </div>
-
     <div class="trending__col">
-      <span class="trending__tag">Caribbean Creatine</span>
-      <div class="trending__content">
-        <h4 class="display-text trending__name">Power output. Recovery. More reps, faster recovery, no ceiling.</h4>
-        <p class="trending__descriptor">Pure creatine monohydrate. No proprietary blends, no mystery ingredients. What's on the label is what's in the tub. More reps, faster recovery, no ceiling.</p>
-        <!-- <p class="trending__detail">Pure creatine monohydrate · Unflavored · Mixes clean</p> -->
+      <span class="trending__tag">Chocolate Whey Protein</span>
+      <div class="trending__blockquote">
+        <h4 class="trending__blockquote-text">
+          Power output. Recovery. More reps, faster recovery, no ceiling.
+        </h4>
+      </div>
+      <div class="trending">
+        <p class="trending__descriptor">
+          Your members are already buying protein somewhere. Give them a reason
+          to buy it from you. Probell is the brand they'll come back for — and
+          tell their training partners about.
+        </p>
       </div>
       <div class="trending__img-wrap">
         <Image
-          src="/images/trending/trending-pineapple.png"
-          alt="Probell Creatine"
+          src="/images/trending/trending-chocolate.jpg"
+          alt="Probell Whey 100 Protein – Strawberry"
           width={400}
           height={400}
           format="webp"
@@ -69,84 +88,70 @@ import { Image } from 'astro:assets';
   #trending {
     padding-bottom: var(--space-xl);
   }
-
-  /* Grid */
   .trending__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    align-items: start;
+    align-content: space-between;
   }
 
   .trending__col {
-    padding: var(--space-md);
-    /* border-right: 1px solid var(--color-border); */
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: var(--space-md);
   }
 
-  .trending__col:last-child {
-    border-right: none;
-  }
-
-  /* Content */
-  .trending__content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-  }
-
   .trending__tag {
-    font-family: var(--font-body);
-    font-size: var(--text-label);
-    font-weight: 500;
+    font-family: var(--font-dmsans);
+    font-size: 1rem;
+    font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: var(--color-grey);
+    color: var(--color-gold);
+    text-align: center;
+  }
+  .trending__img-wrap {
+    height: 280px;
+    overflow: hidden;
+    border-radius: var(--radius-image);
   }
 
-  .trending__name {
-    font-family: var(--font-display);
-    font-size: var(--text-product);
-    color: var(--color-black);
-    line-height: 1.3;
+  .trending__img-wrap :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .trending__descriptor {
-    font-size: 16px;
+    font-size: 18px;
     color: var(--color-black);
     line-height: 1.6;
   }
 
-  .trending__detail {
-    font-family: var(--font-body);
-    font-size: var(--text-label);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+  .dark-block {
+    background: var(--color-black);
+    padding: var(--space-md);
+    border-radius: var(--radius-default);
+    color: var(--color-white);
+  }
+
+  .trending__blockquote {
+    font-family: var(--font-display);
+    font-size: 2rem;
     color: var(--color-black);
+    line-height: 1.3;
   }
 
-  /* Images */
-  .trending__img-wrap :global(img) {
-    width: 100%;
-    height: auto;
-    border-radius: var(--radius-image);
-    display: block;
+  @media (max-width: 1040px) {
+    .trending__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
-  /* Mobile */
-  @media (max-width: 768px) {
+  @media (max-width: 640px) {
     .trending__grid {
       grid-template-columns: 1fr;
-    }
-
-    .trending__col {
-      border-right: none;
-      border-bottom: 1px solid var(--color-border);
-      padding: var(--space-md) 0;
-    }
-
-    .trending__col:last-child {
-      border-bottom: none;
     }
   }
 </style>
