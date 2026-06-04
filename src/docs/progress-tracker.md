@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 26 May 2026 — Session 21**
+**Last updated: 04 Jun 2026 — Session 22**
 
 ---
 
@@ -8,7 +8,7 @@
 
 **Phase:** Post-build feature updates
 **Active section:** Feature updates — see `src/features/feature-updates.md`
-**Next action:** Task 08 complete. Implement Task 09 — Built for Endurance Section Redesign
+**Next action:** Trending and Banner tweaks applied. Confirm visual result in browser; proceed with next feature task.
 
 ---
 
@@ -75,6 +75,33 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 22 — 04 Jun 2026
+
+**What was done:**
+
+- Installed `prettier` + `prettier-plugin-astro` as dev dependencies; `.prettierrc` config added
+- `Trending.astro`: swapped all three product images from `.png` to `.jpg` (new real assets); reordered columns to Strawberry → Creatine → Chocolate; added `.trending__blockquote` quote block to each column; removed `.trending__content` wrapper; CSS refactored — columns now use `grid`, image wrap fixed at `280px` with `object-fit: cover`, tag colour changed to `var(--color-gold)`, responsive breakpoints updated (1040px → 2-col, 640px → 1-col)
+- `Banner.astro`: height `50vh` → `60vh`; background position `center` → `50% 70%`; `.banner__text` repositioned to `absolute`, anchored top-right with `left: 50%`
+- `index.astro`: first Banner headline updated to "Three formulas. One standard. No compromise."; description cleared; quote normalisation from Prettier
+
+**Decisions made this session:**
+
+- `.jpg` images used in Trending — new real photography assets supplied
+- `font-size: 1rem` raw value used on `.trending__tag` — no matching token exists
+- `font-size: 18px` raw value used on `.trending__descriptor` — per existing spec pattern
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL
+- Facebook URL
+- Logo light variant PNG (client to supply)
+
+---
 
 ### Session 21 — 26 May 2026
 
