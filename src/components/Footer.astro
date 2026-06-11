@@ -4,14 +4,14 @@
 
 <footer class="footer">
   <div>
-    <div class="footer-grid">
+    <div class="footer__grid">
       <!-- Column 1: Logo + tagline -->
-      <div class="footer-brand">
+      <div class="footer__brand">
         <a href="/" aria-label="Probell Nutrition home">
           <img
             src="/images/icons/probell-logo.png"
             alt="Probell Nutrition"
-            class="footer-logo"
+            class="footer__logo"
             width="120"
             height="40"
             loading="lazy"
@@ -20,30 +20,30 @@
       </div>
 
       <!-- Column 2: Links -->
-      <nav class="footer-col" aria-label="Site links">
-        <span class="label-text footer-col-heading">Links</span>
-        <a href="/" class="footer-link">Home</a>
-        <a href="/supplements" class="footer-link">Supplements</a>
-        <a href="/#brand-story" class="footer-link">About</a>
-        <a href="/#contact" class="footer-link">Contact</a>
+      <nav class="footer__col" aria-label="Site links">
+        <span class="label-text footer__col-heading">Links</span>
+        <a href="/" class="footer__link">Home</a>
+        <a href="/supplements" class="footer__link">Supplements</a>
+        <a href="/#brand-story" class="footer__link">About</a>
+        <a href="/#contact" class="footer__link">Contact</a>
       </nav>
 
       <!-- Column 3: Products -->
-      <nav class="footer-col" aria-label="Product links">
-        <span class="label-text footer-col-heading">Products</span>
-        <a href="/supplements" class="footer-link">Whey 100</a>
-        <a href="/supplements" class="footer-link">Creatine</a>
-        <a href="/supplements" class="footer-link">Pre-Workout</a>
-        <a href="/supplements" class="footer-link">Mass Gainer</a>
+      <nav class="footer__col" aria-label="Product links">
+        <span class="label-text footer__col-heading">Products</span>
+        <a href="/supplements" class="footer__link">Whey 100</a>
+        <a href="/supplements" class="footer__link">Creatine</a>
+        <a href="/supplements" class="footer__link">Pre-Workout</a>
+        <a href="/supplements" class="footer__link">Mass Gainer</a>
       </nav>
 
       <!-- Column 4: Follow Us -->
-      <div class="footer-col">
-        <span class="label-text footer-col-heading">Follow Us</span>
-        <div class="footer-socials">
+      <div class="footer__col">
+        <span class="label-text footer__col-heading">Follow Us</span>
+        <div class="footer__socials">
           <a
             href="#"
-            class="footer-social-icon"
+            class="footer__social-icon"
             aria-label="Probell Nutrition on Facebook"
           >
             <svg
@@ -63,7 +63,7 @@
           </a>
           <a
             href="#"
-            class="footer-social-icon"
+            class="footer__social-icon"
             aria-label="Probell Nutrition on Instagram"
           >
             <svg
@@ -97,13 +97,13 @@
       </div>
     </div>
 
-    <div class="divider footer-divider"></div>
+    <div class="divider footer__divider"></div>
 
-    <div class="footer-copyright">
-      <span class="font-text footer-copy">
+    <div class="footer__copyright">
+      <span class="font-text footer__copy">
         &copy; 2026 Probell Nutrition. All rights reserved.
       </span>
-      <a href="/legal" class="font-text footer-legal">Privacy Policy</a>
+      <a href="/legal" class="font-text footer__legal">Privacy Policy</a>
     </div>
   </div>
 </footer>
@@ -115,7 +115,7 @@
     padding: var(--space-lg);
   }
 
-  .footer-grid {
+  .footer__grid {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: var(--space-lg);
@@ -123,34 +123,34 @@
   }
 
   /* Column 1 */
-  .footer-brand {
+  .footer__brand {
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
   }
 
-  .footer-logo {
+  .footer__logo {
     height: 80px;
     width: auto;
     display: block;
   }
 
-  .footer-tagline {
+  .footer__tagline {
     color: var(--color-grey);
   }
 
   /* Columns 2–4 */
-  .footer-col {
+  .footer__col {
     display: flex;
     flex-direction: column;
   }
 
-  .footer-col-heading {
+  .footer__col-heading {
     color: var(--color-white);
     margin-bottom: var(--space-sm);
   }
 
-  .footer-link {
+  .footer__link {
     display: block;
     font-family: var(--font-body);
     font-size: var(--text-label);
@@ -162,18 +162,18 @@
     transition: color var(--transition-fast);
   }
 
-  .footer-link:hover {
+  .footer__link:hover {
     color: var(--color-red);
   }
 
   /* Social icons */
-  .footer-socials {
+  .footer__socials {
     display: flex;
     gap: var(--space-xs);
     margin-top: var(--space-xs);
   }
 
-  .footer-social-icon {
+  .footer__social-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -187,67 +187,67 @@
       border-color var(--transition-base);
   }
 
-  .footer-social-icon:hover {
+  .footer__social-icon:hover {
     background-color: var(--color-red);
     border-color: var(--color-red);
   }
 
   /* Divider */
-  .footer-divider {
+  .footer__divider {
     margin-top: var(--space-lg);
     margin-bottom: var(--space-lg);
   }
 
   /* Copyright bar */
-  .footer-copyright {
+  .footer__copyright {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .footer-copy {
+  .footer__copy {
     color: var(--color-grey);
   }
 
-  .footer-legal {
+  .footer__legal {
     color: var(--color-grey);
     text-decoration: none;
     transition: color var(--transition-fast);
   }
 
-  .footer-legal:hover {
+  .footer__legal:hover {
     color: var(--color-white);
   }
 
   /* Tablet */
   @media (max-width: 1024px) {
-    .footer-grid {
+    .footer__grid {
       grid-template-columns: 1fr 1fr;
       row-gap: var(--space-lg);
     }
 
-    .footer-brand {
+    .footer__brand {
       grid-column: 1 / -1;
     }
   }
 
   /* Mobile */
   @media (max-width: 768px) {
-    .footer-grid {
+    .footer__grid {
       grid-template-columns: 1fr;
       text-align: center;
     }
 
-    .footer-brand {
+    .footer__brand {
       grid-column: auto;
       align-items: center;
     }
 
-    .footer-socials {
+    .footer__socials {
       justify-content: center;
     }
 
-    .footer-copyright {
+    .footer__copyright {
       flex-direction: column;
       gap: var(--space-sm);
       text-align: center;

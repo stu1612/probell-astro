@@ -11,7 +11,7 @@ const hasCtas = primaryCta || secondaryCta;
 ---
 
 <section id="identity">
-  <div class="identity__row1">
+  <div class="identity__row">
     <div class="identity__left">
       <h4 class="display-text identity__headline">{headline}</h4>
       {
@@ -46,14 +46,14 @@ const hasCtas = primaryCta || secondaryCta;
     padding: var(--space-lg) 0;
   }
 
-  .identity__row1 {
+  .identity__row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-lg);
     align-items: start;
   }
 
-  .identity__row1:not(:has(.identity__body)) {
+  .identity__row:not(:has(.identity__body)) {
     grid-template-columns: 1fr;
   }
 
@@ -89,7 +89,7 @@ const hasCtas = primaryCta || secondaryCta;
   }
 
   @media (max-width: 1040px) {
-    .identity__row1 {
+    .identity__row {
       grid-template-columns: 1fr;
       gap: var(--space-md);
     }

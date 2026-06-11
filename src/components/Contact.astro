@@ -4,11 +4,11 @@ const web3formsKey = import.meta.env.WEB3FORMS_KEY ?? "";
 
 <section id="contact" class="section section--lg">
   <div class="container">
-    <div class="contact-grid">
-      <div class="contact-form-wrap">
+    <div class="contact__grid">
+      <div class="contact__form-wrap">
         <div
           id="contact-success"
-          class="contact-success label-text"
+          class="contact__success label-text"
           style="display: none;"
           aria-live="polite"
         >
@@ -90,24 +90,24 @@ const web3formsKey = import.meta.env.WEB3FORMS_KEY ?? "";
 
           <p
             id="contact-error"
-            class="contact-error label-text"
+            class="contact__error label-text"
             style="display: none;"
             aria-live="polite"
           >
             Something went wrong. Please try again or email us directly.
           </p>
 
-          <button type="submit" class="btn-primary contact-submit">
+          <button type="submit" class="btn-primary contact__submit">
             Get in Touch
           </button>
         </form>
       </div>
-      <div class="contact-content">
+      <div class="contact__content">
         <span class="label-text label-text--red">Partner with Probell</span>
-        <h2 class="display-text contact-headline">
+        <h2 class="display-text contact__headline">
           Stock Probell.<br />Be First.
         </h2>
-        <p class="contact-subline font-text text-grey">
+        <p class="contact__subline font-text text-grey">
           Whether you&rsquo;re a gym, distributor, or retailer &mdash; we want
           to hear from you.
         </p>
@@ -153,14 +153,14 @@ const web3formsKey = import.meta.env.WEB3FORMS_KEY ?? "";
 </script>
 
 <style>
-  .contact-grid {
+  .contact__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-lg);
     align-items: center;
   }
 
-  .contact-content {
+  .contact__content {
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
@@ -175,38 +175,38 @@ const web3formsKey = import.meta.env.WEB3FORMS_KEY ?? "";
     padding: var(--space-md);
   }
 
-  .contact-headline {
+  .contact__headline {
     font-size: var(--text-statement);
     color: var(--color-white);
     margin: 0;
   }
 
-  .contact-subline {
+  .contact__subline {
     margin: 0;
     max-width: 26ch;
   }
 
-  .contact-success {
+  .contact__success {
     color: var(--color-gold);
     padding: var(--space-lg) 0;
   }
 
-  .contact-error {
+  .contact__error {
     color: var(--color-red);
     margin-bottom: var(--space-sm);
   }
 
-  .contact-submit {
+  .contact__submit {
     margin-top: var(--space-sm);
   }
 
   @media (max-width: 768px) {
-    .contact-grid {
+    .contact__grid {
       grid-template-columns: 1fr;
       gap: var(--space-lg);
     }
 
-    .contact-submit {
+    .contact__submit {
       width: 100%;
     }
   }

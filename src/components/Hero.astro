@@ -19,9 +19,9 @@ import { Image } from "astro:assets";
 
   <div class="hero__headline">
     <h1 class="headline display-text">
-      <span class="headline-1">Built</span>
-      <span class="headline-2">For The</span>
-      <span class="headline-3">Grind</span>
+      <span class="headline__line--1">Built</span>
+      <span class="headline__line--2">For The</span>
+      <span class="headline__line--3">Grind</span>
     </h1>
   </div>
 </section>
@@ -103,13 +103,13 @@ import { Image } from "astro:assets";
     text-transform: uppercase;
   }
 
-  .headline-1 {
+  .headline__line--1 {
     font-size: clamp(4rem, 13vw, 16rem);
   }
-  .headline-2 {
+  .headline__line--2 {
     font-size: clamp(4rem, 9vw, 11rem);
   }
-  .headline-3 {
+  .headline__line--3 {
     font-size: clamp(4rem, 12vw, 16rem);
   }
 
