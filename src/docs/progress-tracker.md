@@ -1,14 +1,14 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 04 Jun 2026 — Session 22**
+**Last updated: 11 Jun 2026 — Session 24**
 
 ---
 
 ## Current Status
 
-**Phase:** Post-build feature updates
-**Active section:** Feature updates — see `src/features/feature-updates.md`
-**Next action:** Trending and Banner tweaks applied. Confirm visual result in browser; proceed with next feature task.
+**Phase:** Post-build structural redesign
+**Active section:** Major page restructure complete — 11 sections condensed to 4 core sections
+**Next action:** Review redesigned page in browser. Confirm new section structure against brief. Decide on any remaining sections to add back (Built for Endurance, Instagram, etc.) or confirm streamlined layout as final.
 
 ---
 
@@ -29,7 +29,7 @@ These items must be confirmed before Claude Code begins building.
 ### Assets
 
 - [x] Logo PNG — single asset supplied `/public/images/icons/probell-logo.png` — light/dark structure in place, awaiting two-variant assets
-- [x] Hero image — `hero-main-v2.png` — updated 20 May 2026 (replaces `hero-main.png`)
+- [x] Hero image — `hero-main.jpg` — replaced `hero-main-v2.png` (Jun 2026); now .jpg format
 - [x] Brand story image — `gym-interior.png` — generated and confirmed
 - [x] Bold statement image — `discipline.png` — client supplied
 - [ ] Whey CPB PNG — pending
@@ -54,27 +54,93 @@ These items must be confirmed before Claude Code begins building.
 
 ## Build Sections
 
-| #   | Section             | Status      | Completed   | Notes                                                                                      |
-| --- | ------------------- | ----------- | ----------- | ------------------------------------------------------------------------------------------ |
-| —   | Project init        | Complete    | 17 May 2026 |                                                                                            |
-| —   | globals.css import  | Complete    | 17 May 2026 |                                                                                            |
-| —   | BaseLayout          | Complete    | 17 May 2026 |                                                                                            |
-| 1   | Nav                 | Complete    | 17 May 2026 | Single logo asset used for both states — swap when two-variant PNGs arrive                 |
-| 2   | Hero                | Complete    | 17 May 2026 | margin-top: -72px applied to compensate body padding-top; headline--active on first option; hero-main-v2.png swapped in 20 May 2026 |
-| 3   | Identity            | Complete    | 17 May 2026 | Text only — product breakout omitted per developer instruction                             |
-| 4   | Trending            | Complete    | 22 May 2026 | Task 03: redesigned to light bg (--color-bg-warm), 3-col cinematic cards, composited product images, 4th placeholder removed |
-| 5   | Brand Story         | Complete    | 17 May 2026 | Image uses .png (not .jpg per spec); diagonal clip via existing .clip-diagonal-bottom global class |
-| 6   | Built for Strength  | Complete    | 26 May 2026 | Task 08: rebuilt as 3 alternating 2-col rows, SectionWrapper, white bg, all black text, placeholder trending images |
-| 7   | Bold Statement      | Complete    | 17 May 2026 | discipline.png used (spec says .jpg); TornEdge fill=black into Built for Endurance         |
-| 8   | Built for Endurance | Complete    | 20 May 2026 | Both cards placeholder — no images available yet; gold eyebrow, clean bottom, no border breaker |
-| 9   | Instagram           | Complete    | 20 May 2026 | Placeholder grid — 6 cols desktop, 4 tablet, 3 mobile; TODO comment for live feed         |
-| 10  | Contact             | Complete    | 20 May 2026 | Web3Forms; WEB3FORMS_KEY env var required before launch; hCaptcha included                 |
-| 11  | Footer              | Complete    | 20 May 2026 | 4-col grid; probell-logo.png used (swap when logo-light.png arrives); social icons #placeholder |
-| —   | Supplements page    | Not started | —           | Placeholder only at launch                                                                 |
+| #   | Section                     | Status      | Completed   | Notes                                                                                      |
+| --- | --------------------------- | ----------- | ----------- | ------------------------------------------------------------------------------------------ |
+| —   | Project init                | Complete    | 17 May 2026 |                                                                                            |
+| —   | globals.css import          | Complete    | 17 May 2026 |                                                                                            |
+| —   | BaseLayout                  | Complete    | 17 May 2026 |                                                                                            |
+| 1   | Nav                         | Complete    | 17 May 2026 | Single logo asset used for both states — swap when two-variant PNGs arrive                 |
+| 2   | Hero                        | Complete    | 11 Jun 2026 | Session 24 redesign: uses hero-main.jpg (.jpg replaces .png); single headline "Built For The Grind"; dual gradients (bottom fade + right-side fade); 120vh height |
+| 3   | Identity                    | Complete    | 11 Jun 2026 | Session 24: refactored to accept headline/body/primaryCta props; secondary CTA removed; stats row removed; CTA points to #trending |
+| 4   | Banner (ui)                 | Complete    | 11 Jun 2026 | Session 24: 80vh; grid 1fr 1fr (empty left cell, content right); background-image from prop |
+| 5   | ProductStrips               | Complete    | 11 Jun 2026 | Session 24: NEW component replacing Trending + BuiltForStrength; 3 alternating full-width strips — Whey 100 Protein (image right), Creatine (image left, gold), Pre-Workout (muted/coming soon); ghost number watermark; stat callout on strip 01 |
+| 6   | Brand Story / Emotion       | Complete    | 11 Jun 2026 | Session 24: fully redesigned as white-bg social proof section (`#emotion`); large display headline; 4-stat list (1fr 2fr grid, sticky left anchor); image + CTA below; no longer uses gym-interior image or diagonal clip |
+| 7   | Trending                    | Removed     | —           | Removed Session 24 — replaced by Banner + ProductStrips                                    |
+| 8   | Built for Strength          | Removed     | —           | Removed Session 24 — product content merged into ProductStrips                             |
+| 9   | Bold Statement              | Removed     | —           | Removed Session 24 — component deleted                                                     |
+| 10  | Built for Endurance         | Removed     | —           | Removed Session 24 — Pre-Workout strip in ProductStrips serves as placeholder               |
+| 11  | Instagram                   | Removed     | —           | Removed Session 24 — component deleted; can be reinstated when account URL confirmed       |
+| 12  | Contact                     | Complete    | 20 May 2026 | Web3Forms; WEB3FORMS_KEY env var required before launch; hCaptcha included                 |
+| 13  | Footer                      | Complete    | 20 May 2026 | 4-col grid; probell-logo.png used (swap when logo-light.png arrives); social icons #placeholder |
+| —   | Supplements page            | Not started | —           | Placeholder only at launch                                                                 |
 
 ---
 
 ## Session Log
+
+### Session 24 — 11 Jun 2026
+
+**What was done:**
+
+- Major structural redesign — page condensed from 11 sections to 4 core content blocks
+- **Removed components:** `Trending.astro`, `BuiltForStrength.astro`, `BoldStatement.astro`, `Instagram.astro`, `InkEdge.astro`
+- **New component:** `ProductStrips.astro` — 3 alternating full-width 2-col strips; strip 01 (Whey 100 Protein, image right, red ghost, stat callout); strip 02 (Creatine, image left, gold ghost); strip 03 (Pre-Workout, image right, muted/grayscale, "coming soon" treatment); ghost numbers use `opacity: 0.08` on colour tokens
+- **Hero.astro:** swapped to `hero-main.jpg` (.jpg); simplified to single headline option "Built For The Grind"; replaced single overlay with two overlays (bottom gradient fade + right-side gradient fade)
+- **BrandStory.astro:** fully rebuilt as `#emotion` section on white background; large display headline; 4-stat grid with sticky left anchor (eyebrow + statement + body) and stats list on right (1fr 2fr); image + CTA block below; no diagonal clip
+- **Identity.astro:** props-driven (headline, body, primaryCta, secondaryCta); stat row and secondary CTA removed from current usage; simplified to 2-col headline + body
+- **Banner.astro (ui):** 80vh; changed to `display: grid; grid-template-columns: 1fr 1fr`; empty first cell acts as spacer; text in right cell, vertically centered; margin-bottom added
+- **SectionWrapper.astro:** added `bg` prop (`"black" | "white" | "surface"`); applies inline background-color and padding-block
+- **index.astro:** restructured — Hero → SectionWrapper(black)[Identity + Banner + ProductStrips] → SectionWrapper(white)[BrandStory] → SectionWrapper(black)[Contact]
+- **New assets:** `public/images/hero/hero-main.jpg`, `public/images/lifestyle/man-holding-kettlebell.jpg`; `hero-main-v2.png` deleted
+
+**Decisions made this session:**
+
+- Streamlined page structure chosen — removes sections that depend on product assets not yet available (BuiltForEndurance, Instagram) and sections that duplicated content already covered by ProductStrips
+- `hero-main.jpg` adopted as permanent hero asset (.jpg format)
+- Ghost numbers on ProductStrips use `color: var(--color-red/gold); opacity: 0.08` — photography exception not needed, pure CSS token approach
+- BrandStory repurposed as a white-bg social proof / emotion anchor section, no longer a photography section
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL / whether Instagram section will be reinstated
+- Facebook URL
+- Logo light variant PNG (client to supply)
+- Whether Built for Endurance section will be reinstated when product assets arrive
+
+---
+
+### Session 23 — 05 Jun 2026
+
+**What was done:**
+
+- `Trending.astro`: fully rebuilt as 3-act editorial layout
+- Act 01 (Strawberry Whey): image left 55% / content right — ghost outline "01", red "Strength" label, display headline, grey body
+- Act 02 (Creatine): content left / image right 55% — same ghost numbering pattern, reversed layout for visual rhythm
+- Act 03 (Chocolate Peanut Butter): cinematic full-width panel — `grid-template-columns: 1fr 1fr`, image as absolute background, flat `rgba(0,0,0,0.62)` overlay (photography exception), content in right column
+- All class names use `trending__` prefix; `id="trending"` nav anchor preserved
+- `Playground.astro` used as design sandbox, content promoted to `Trending.astro`, Playground removed from `index.astro`
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- Ghost numbers use `color: transparent; -webkit-text-stroke: 1px var(--color-border)` — CSS custom properties only, no raw values
+- Panel 03 overlay: flat `rgba` not gradient — consistent with photography exception rule; same pattern as BrandStory
+- Panel 03 grid follows Banner.astro pattern: `1fr 1fr`, empty left cell, content in right cell
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Active hero headline (A, B, C, or D)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL
+- Facebook URL
+- Logo light variant PNG (client to supply)
+
+---
 
 ### Session 22 — 04 Jun 2026
 

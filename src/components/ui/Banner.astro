@@ -1,18 +1,26 @@
 ---
 interface Props {
   eyebrow: string;
-  headline: string;
+  headline1: string;
+  headline2?: string;
+  headline3?: string;
   description?: string;
   image: string;
 }
 
-const { eyebrow, headline, description, image } = Astro.props;
+const { eyebrow, headline1, headline2, headline3, description, image } =
+  Astro.props;
 ---
 
 <div class="banner" style={`background-image: url(${image})`}>
+  <div class=""></div>
   <div class="banner__text">
     <span class="banner__eyebrow">{eyebrow}</span>
-    <h2 class="display-text banner__headline">{headline}</h2>
+    <div class="banner__headline-group">
+      <h2 class="display-text banner__headline headline1">{headline1}</h2>
+      <h2 class="display-text banner__headline headline2">{headline2}</h2>
+      <h2 class="display-text banner__headline headline3">{headline3}</h2>
+    </div>
     {description && <p class="banner__description">{description}</p>}
   </div>
 </div>
@@ -20,25 +28,28 @@ const { eyebrow, headline, description, image } = Astro.props;
 <style>
   .banner {
     position: relative;
-    height: 60vh;
+    height: 80vh;
     background-size: cover;
     background-position: 50% 70%;
-    display: flex;
-    align-items: flex-end;
+    /* display: flex;
+    align-items: flex-end; */
     padding: var(--space-lg);
     margin-bottom: var(--space-xl);
     overflow: hidden;
     border-radius: 4px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
   }
 
   .banner::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
   }
 
-  .banner__text {
+  /* .banner__text {
     position: absolute;
     top: 10%;
     left: 50%;
@@ -49,6 +60,15 @@ const { eyebrow, headline, description, image } = Astro.props;
     justify-content: end;
     justify-self: flex-start;
     text-align: right;
+  } */
+
+  .banner__text {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
   }
 
   .banner__eyebrow {
@@ -64,8 +84,20 @@ const { eyebrow, headline, description, image } = Astro.props;
 
   .banner__headline {
     font-family: var(--font-display);
-    font-size: var(--text-section);
+    font-size: var(--text-statement);
     color: var(--color-white);
+  }
+
+  .banner__headline-group {
+    z-index: 1;
+    position: relative;
+    /* position: absolute; */
+    display: flex;
+    flex-direction: column;
+    /* top: 5%;
+    left: 0;
+    transform: translateY(-50%, -50%); */
+    width: 100%;
   }
 
   .banner__description {
@@ -76,5 +108,32 @@ const { eyebrow, headline, description, image } = Astro.props;
     margin-top: var(--space-sm);
     max-width: 560px;
     line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .banner {
+      grid-template-columns: 1fr;
+      height: auto;
+      min-height: 60vh;
+      padding: var(--space-md);
+      align-items: end;
+    }
+
+    /* hide the empty spacer column on mobile */
+    .banner > div:first-child:not(.banner__text) {
+      display: none;
+    }
+
+    .banner__text {
+      width: 100%;
+    }
+
+    .banner__headline {
+      font-size: clamp(2.5rem, 10vw, 4rem);
+    }
+
+    .banner__description {
+      max-width: 100%;
+    }
   }
 </style>

@@ -1,0 +1,197 @@
+---
+import { Image } from "astro:assets";
+---
+
+<div class="ps">
+  <!-- 01 — Whey 100 Protein -->
+  <div class="ps__strip">
+    <div class="ps__content">
+      <div class="ps__ghost">01</div>
+      <span class="label-text label-text--red">01 — Strength</span>
+      <h3 class="display-text ps__name">Whey 100<br />Protein</h3>
+      <p class="ps__body font-text text-grey">
+        The foundation of every serious stack. 25g of pure protein per serve. No
+        fillers, no shortcuts. Built for people who train like their results
+        depend on it — because they do.
+      </p>
+      <div class="ps__stat">
+        <span class="display-text ps__stat-num">25g</span>
+        <span class="label-text ps__stat-label"
+          >pure protein<br />per serve</span
+        >
+      </div>
+    </div>
+    <div class="ps__img-wrap">
+      <Image
+        src="/images/lifestyle/three-flavours.jpg"
+        alt="Probell athlete with kettlebell"
+        width={900}
+        height={700}
+        format="webp"
+        loading="lazy"
+      />
+    </div>
+  </div>
+
+  <!-- 02 — Creatine (image left) -->
+  <div class="ps__strip ps__strip--flip">
+    <div class="ps__img-wrap">
+      <Image
+        src="/images/trending/trending-creatine.jpg"
+        alt="Probell Creatine in gym setting"
+        width={900}
+        height={700}
+        format="webp"
+        loading="lazy"
+      />
+    </div>
+    <div class="ps__content">
+      <div class="ps__ghost">02</div>
+      <span class="label-text label-text--gold">02 — Power</span>
+      <h3 class="display-text ps__name">Creatine</h3>
+      <p class="ps__body font-text text-grey">
+        More reps. Heavier lifts. Faster recovery between sets. Pure creatine
+        monohydrate — nothing added, nothing hidden. The most researched
+        supplement in sport. Now in the only container worth lifting.
+      </p>
+    </div>
+  </div>
+
+  <!-- 03 — Pre-Workout (coming soon) -->
+  <div class="ps__strip">
+    <div class="ps__content">
+      <div class="ps__ghost">03</div>
+      <span class="label-text label-text--red">03 — Intensity</span>
+      <h3 class="display-text ps__name">Pre-Workout</h3>
+      <p class="ps__body font-text text-grey">
+        Explosive energy without the crash. Dialled-in focus from the first rep
+        to the last. Coming soon — built to the same standard as everything else
+        Probell makes.
+      </p>
+    </div>
+    <div class="ps__img-wrap ps__img-wrap--muted">
+      <Image
+        src="/images/bold-statement/discipline.png"
+        alt="Probell athlete"
+        width={900}
+        height={700}
+        format="webp"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</div>
+
+<style>
+  .ps {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ps__strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 52vh;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+
+  .ps__content {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  .ps__ghost {
+    position: absolute;
+    right: 0;
+    bottom: calc(-1 * var(--space-lg));
+    font-family: var(--font-display);
+    font-size: 28vw;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    /* color: var(--color-white); */
+    color: var(--color-red);
+    opacity: 0.08;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .ps__strip--flip .ps__ghost {
+    color: var(--color-gold);
+  }
+
+  .ps__name {
+    font-size: var(--text-statement);
+    color: var(--color-white);
+    line-height: 0.95;
+  }
+
+  .ps__body {
+    max-width: 46ch;
+  }
+
+  .ps__stat {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .ps__stat-num {
+    font-size: var(--text-product);
+    color: var(--color-red);
+    line-height: 1;
+  }
+
+  .ps__stat-label {
+    color: var(--color-grey);
+    line-height: 1.4;
+  }
+
+  .ps__img-wrap {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ps__img-wrap :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ps__img-wrap--muted :global(img) {
+    filter: grayscale(50%);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 768px) {
+    .ps__strip {
+      grid-template-columns: 1fr;
+      min-height: unset;
+    }
+
+    .ps__content {
+      order: 0;
+    }
+
+    .ps__img-wrap {
+      height: 55vw;
+      order: 1;
+    }
+
+    .ps__content {
+      padding: var(--space-lg) var(--space-md);
+    }
+
+    .ps__ghost {
+      font-size: 55vw;
+    }
+  }
+</style>
