@@ -19,9 +19,9 @@ import { Image } from "astro:assets";
 
   <div class="hero__headline">
     <h1 class="headline display-text">
-      <span>Built</span>
-      <span>For The</span>
-      <span>Grind</span>
+      <span class="headline-1">Built</span>
+      <span class="headline-2">For The</span>
+      <span class="headline-3">Grind</span>
     </h1>
   </div>
 </section>
@@ -33,6 +33,7 @@ import { Image } from "astro:assets";
     height: 120vh;
     top: -72px;
   }
+
   .hero {
     position: absolute;
     top: 0;
@@ -84,22 +85,32 @@ import { Image } from "astro:assets";
   .hero__headline {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+    right: 0;
+    width: 50%;
+    transform: translateY(-50%);
+    text-align: left;
     padding: var(--space-lg);
     z-index: 1;
   }
 
   .headline {
     font-family: var(--font-display);
-    font-size: var(--text-hero-lg);
     color: var(--color-white);
     display: flex;
     flex-direction: column;
     line-height: 0.95;
     letter-spacing: 0.02em;
     text-transform: uppercase;
+  }
+
+  .headline-1 {
+    font-size: clamp(4rem, 13vw, 16rem);
+  }
+  .headline-2 {
+    font-size: clamp(4rem, 9vw, 11rem);
+  }
+  .headline-3 {
+    font-size: clamp(4rem, 12vw, 16rem);
   }
 
   @media (max-width: 1024px) {
