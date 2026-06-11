@@ -1,152 +1,252 @@
 ---
-import { Image } from 'astro:assets';
+import { Image } from "astro:assets";
+
+const stats = [
+  { number: "25g", label: "Pure protein per serve", accent: true },
+  {
+    number: "100%",
+    label: "Whey isolate. No blends. No compromise.",
+    accent: false,
+  },
+  { number: "0g", label: "Fillers. Ever.", accent: false },
+  {
+    number: "3",
+    label: "Products. All stocked and ready to move.",
+    accent: false,
+  },
+];
 ---
 
-<section id="brand-story" class="brand-story">
-  <Image
-    src="/images/lifestyle/shelf-display.jpg"
-    alt="Raw gym interior — iron plates, concrete walls, hard lighting"
-    width={1440}
-    height={900}
-    loading="lazy"
-    class="brand-story__image"
-  />
-  <div class="brand-story__overlay"></div>
-  <div class="brand-story__content">
-    <p class="label-text label-text--gold">Our Story</p>
-    <h2 class="display-text brand-story__headline">
-      Built in the Gym.<br />Designed for It.
-    </h2>
-    <p class="brand-story__body">
-      Probell started with one idea — protein that performs as hard
-      as you do. Kettlebell-shaped. Uncompromising formula. Made in the USA.
-    </p>
-    <div class="brand-story__stats">
-      <div class="brand-story__stat">
-        <span class="brand-story__stat-number display-text">25g</span>
-        <span class="brand-story__stat-label label-text">Protein per serve</span>
+<section id="emotion" class="container">
+  <h2 class="display-text em__headline">
+    Just the product your serious members have been waiting for someone to
+    stock.
+  </h2>
+  <!-- ── Stats block ── -->
+  <div class="em__stats-section">
+    <div class="em__stats-layout">
+      <!-- Left anchor -->
+      <div class="em__anchor">
+        <span class="label-text label-text--red em__eyebrow"
+          >Performance Data</span
+        >
+        <p class="em__anchor-statement display-text">
+          The numbers behind the product.
+        </p>
+        <p class="em__anchor-body font-text text-black">
+          Every scoop of Probell is built on a single standard: if it doesn't
+          serve the athlete, it doesn't go in.
+        </p>
       </div>
-      <div class="brand-story__stat">
-        <span class="brand-story__stat-number display-text">100%</span>
-        <span class="brand-story__stat-label label-text">Made in the USA</span>
+
+      <!-- Stats list -->
+      <div class="em__stats-list">
+        {
+          stats.map((stat) => (
+            <div class="em__stat-row">
+              <span
+                class={`display-text em__stat-num${stat.accent ? " em__stat-num--red" : ""}`}
+              >
+                {stat.number}
+              </span>
+              <div class="em__stat-right">
+                <span class="label-text em__stat-label">{stat.label}</span>
+              </div>
+            </div>
+          ))
+        }
       </div>
-      <div class="brand-story__stat">
-        <span class="brand-story__stat-number display-text">0</span>
-        <span class="brand-story__stat-label label-text">Compromises</span>
+    </div>
+  </div>
+
+  <!-- ── Image + CTA block ── -->
+  <div class="em__cta-section">
+    <div class="em__cta-layout">
+      <div class="em__cta-img">
+        <Image
+          src="/images/lifestyle/cpb-gym.jpg"
+          alt="Probell products in a gym setting"
+          width={780}
+          height={580}
+          format="webp"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="em__cta-content">
+        <!-- <span class="label-text em__cta-eyebrow">Ready to stock?</span> -->
+        <h2 class="display-text em__cta-headline">
+          Give your members what they've been asking for.
+        </h2>
+        <p class="em__cta-body font-text text-black">
+          Probell is stocked in gyms that take their members seriously. Talk to
+          us about wholesale pricing, margins, and display support.
+        </p>
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  .brand-story {
-    position: relative;
-    min-height: 50vh;
-    overflow: hidden;
+  #emotion {
+    background: var(--color-white);
+    padding: var(--space-xl) 0;
+  }
+
+  .em__headline {
+    font-family: var(--font-display);
+    font-size: var(--text-hero);
+    color: var(--color-black);
+    text-align: center;
+    padding-bottom: var(--space-2xl);
+  }
+
+  /* ── Stats block ── */
+  /* .em__stats-section {
+    border-bottom: 1px solid var(--color-border);
+  } */
+
+  .em__stats-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .em__anchor {
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    border-radius: var(--radius-image);
+    flex-direction: column;
+    gap: var(--space-md);
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-lg));
   }
 
-  .brand-story__image {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .em__eyebrow {
+    display: block;
   }
 
-  /* Gradient overlay — right-side fade for text legibility over photography */
-  .brand-story__overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(
-      to right,
-      transparent 0%,
-      rgba(0, 0, 0, 0.2) 35%,
-      rgba(0, 0, 0, 0.8) 60%,
-      rgba(0, 0, 0, 0.95) 100%
-    );
-  }
-
-  .brand-story__content {
-    position: relative;
-    z-index: 2;
-    width: 50%;
-    max-width: 640px;
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-lg);
-  }
-
-  .brand-story__headline {
-    color: var(--color-white);
+  .em__anchor-statement {
+    font-family: var(--font-display);
     font-size: var(--text-section);
-    margin-top: var(--space-sm);
-    margin-bottom: 0;
+    color: var(--color-black);
+    line-height: 0.95;
   }
 
-  .brand-story__body {
-    font-family: var(--font-body);
-    font-size: var(--text-body);
-    color: var(--color-grey);
-    line-height: 1.6;
-    margin-top: var(--space-md);
+  .em__anchor-body {
+    max-width: 28ch;
   }
 
-  .brand-story__stats {
+  /* Stats list */
+  .em__stats-list {
     display: flex;
-    flex-direction: row;
-    gap: var(--space-lg);
-    margin-top: var(--space-lg);
-    padding-top: var(--space-md);
+    flex-direction: column;
+  }
+
+  .em__stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md) 0;
     border-top: 1px solid var(--color-border);
   }
 
-  .brand-story__stat {
+  .em__stat-row:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .em__stat-num {
+    font-family: var(--font-display);
+    font-size: var(--text-hero);
+    color: var(--color-black);
+    line-height: 0.9;
+  }
+
+  .em__stat-num--red {
+    color: var(--color-red);
+  }
+
+  .em__stat-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .em__stat-label {
+    color: var(--color-grey);
+    letter-spacing: 0.12em;
+    max-width: 30ch;
+  }
+
+  /* ── CTA block ── */
+  .em__cta-section {
+    padding: var(--space-xl) 0;
+  }
+
+  .em__cta-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .em__cta-img :global(img) {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    border-radius: var(--radius-image);
+    display: block;
+  }
+
+  .em__cta-content {
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
+    gap: var(--space-md);
   }
 
-  .brand-story__stat-number {
-    font-size: var(--text-section);
-    color: var(--color-white);
+  .em__cta-eyebrow {
+    display: block;
+    color: var(--color-red);
   }
 
-  .brand-story__stat-label {
-    color: var(--color-grey);
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
+  .em__cta-headline {
+    font-family: var(--font-display);
+    font-size: var(--text-statement);
+    color: var(--color-black);
+    line-height: 0.95;
+  }
+
+  .em__cta-body {
+    max-width: 42ch;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .em__stats-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .em__anchor {
+      position: static;
+    }
+
+    .em__anchor-body {
+      max-width: 100%;
+    }
   }
 
   @media (max-width: 768px) {
-    .brand-story {
-      align-items: flex-end;
-      justify-content: flex-start;
+    .em__cta-layout {
+      grid-template-columns: 1fr;
     }
 
-    .brand-story__image {
-      object-position: center;
+    .em__stat-row {
+      grid-template-columns: auto 1fr;
+      gap: var(--space-sm);
     }
 
-    .brand-story__overlay {
-      background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.95) 0%,
-        rgba(0, 0, 0, 0.7) 50%,
-        rgba(0, 0, 0, 0.2) 100%
-      );
-    }
-
-    .brand-story__content {
-      width: 100%;
-      max-width: 100%;
-      padding: var(--space-md);
-    }
-
-    .brand-story__stats {
-      gap: var(--space-md);
+    .em__stat-num {
+      font-size: var(--text-statement);
     }
   }
 </style>

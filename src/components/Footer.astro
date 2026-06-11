@@ -1,10 +1,11 @@
 ---
+
 ---
+
 <footer class="footer">
-  <div class="container">
-
+  <!-- <div class="container"> -->
+  <div>
     <div class="footer-grid">
-
       <!-- Column 1: Logo + tagline -->
       <div class="footer-brand">
         <a href="/" aria-label="Probell Nutrition home">
@@ -17,7 +18,6 @@
             loading="lazy"
           />
         </a>
-        <span class="label-text footer-tagline">Built for the Grind.</span>
       </div>
 
       <!-- Column 2: Links -->
@@ -42,32 +42,70 @@
       <div class="footer-col">
         <span class="label-text footer-col-heading">Follow Us</span>
         <div class="footer-socials">
-          <a href="#" class="footer-social-icon" aria-label="Probell Nutrition on Facebook">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <a
+            href="#"
+            class="footer-social-icon"
+            aria-label="Probell Nutrition on Facebook"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
             </svg>
           </a>
-          <a href="#" class="footer-social-icon" aria-label="Probell Nutrition on Instagram">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
-              <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+          <a
+            href="#"
+            class="footer-social-icon"
+            aria-label="Probell Nutrition on Instagram"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <rect
+                x="2"
+                y="2"
+                width="20"
+                height="20"
+                rx="5"
+                ry="5"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"></rect>
+              <circle
+                cx="12"
+                cy="12"
+                r="4"
+                stroke="currentColor"
+                stroke-width="2"></circle>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor"></circle>
             </svg>
           </a>
         </div>
       </div>
-
     </div>
 
     <div class="divider footer-divider"></div>
 
     <div class="footer-copyright">
-      <span class="label-text footer-copy">
+      <span class="font-text footer-copy">
         &copy; 2026 Probell Nutrition. All rights reserved.
       </span>
-      <a href="/legal" class="label-text footer-legal">Privacy Policy</a>
+      <a href="/legal" class="font-text footer-legal">Privacy Policy</a>
     </div>
-
   </div>
 </footer>
 
@@ -75,8 +113,9 @@
   .footer {
     background: var(--color-black);
     border-top: 1px solid var(--color-border);
-    padding-top: var(--space-xl);
-    padding-bottom: var(--space-lg);
+    /* padding-top: var(--space-xl);
+    padding-bottom: var(--space-lg); */
+    padding: var(--space-lg);
   }
 
   .footer-grid {
@@ -94,7 +133,7 @@
   }
 
   .footer-logo {
-    height: 40px;
+    height: 80px;
     width: auto;
     display: block;
   }
@@ -146,7 +185,9 @@
     border: 1px solid var(--color-border);
     color: var(--color-white);
     text-decoration: none;
-    transition: background-color var(--transition-base), border-color var(--transition-base);
+    transition:
+      background-color var(--transition-base),
+      border-color var(--transition-base);
   }
 
   .footer-social-icon:hover {

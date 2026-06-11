@@ -1,24 +1,34 @@
 ---
 interface Props {
-  fullBleed?: boolean;
+  bg?: "black" | "white" | "surface";
 }
 
-const { fullBleed = false } = Astro.props;
+const bgMap = {
+  black: "var(--color-black)",
+  white: "var(--color-white)",
+  surface: "var(--color-surface)",
+};
+
+const { bg } = Astro.props;
+
+const styles = bg
+  ? `background-color: ${bgMap[bg]}; padding-block: var(--space-md);`
+  : undefined;
 ---
 
-<div class={fullBleed ? 'wrapper--full-bleed' : 'wrapper'}>
+<div class="wrapper" style={styles}>
   <slot />
 </div>
 
 <style>
   .wrapper {
     width: 100%;
-    max-width: var(--container-max);
-    margin: 0 auto;
-    padding: 0 var(--container-pad);
+    padding-inline: var(--container-pad-lg);
   }
 
-  .wrapper--full-bleed {
-    width: 100%;
+  @media (max-width: 1024px) {
+    .wrapper {
+      padding-inline: var(--container-pad);
+    }
   }
 </style>

@@ -1,17 +1,16 @@
 ---
-import { Image } from 'astro:assets';
+import { Image } from "astro:assets";
 
 interface Props {
   transparent?: boolean;
 }
 const { transparent = false } = Astro.props;
 
-const navClass = transparent ? 'nav nav--transparent' : 'nav nav--scrolled';
+const navClass = transparent ? "nav nav--transparent" : "nav nav--scrolled";
 ---
 
 <header class={navClass}>
-  <div class="container nav-inner flex-between">
-
+  <div class="nav-inner flex-between">
     <!-- Left: logo + nav links -->
     <div class="nav-left">
       <a href="/" aria-label="Probell Nutrition home">
@@ -19,7 +18,7 @@ const navClass = transparent ? 'nav nav--transparent' : 'nav nav--scrolled';
           src="/images/icons/probell-logo.png"
           alt="Probell Nutrition"
           width={200}
-          height={40}
+          height={80}
           class="logo-light"
           loading="eager"
         />
@@ -27,7 +26,7 @@ const navClass = transparent ? 'nav nav--transparent' : 'nav nav--scrolled';
           src="/images/icons/probell-logo.png"
           alt="Probell Nutrition"
           width={200}
-          height={40}
+          height={80}
           class="logo-dark"
           loading="eager"
         />
@@ -45,14 +44,25 @@ const navClass = transparent ? 'nav nav--transparent' : 'nav nav--scrolled';
       <div class="nav-social">
         <a href="#" aria-label="Facebook">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            <path
+              d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+            ></path>
           </svg>
         </a>
         <a href="#" aria-label="Instagram">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <circle cx="12" cy="12" r="4"/>
-            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"
+            ></circle>
           </svg>
         </a>
       </div>
@@ -60,18 +70,30 @@ const navClass = transparent ? 'nav nav--transparent' : 'nav nav--scrolled';
 
     <!-- Mobile hamburger -->
     <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <line x1="3" y1="6" x2="21" y2="6"/>
-        <line x1="3" y1="12" x2="21" y2="12"/>
-        <line x1="3" y1="18" x2="21" y2="18"/>
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      >
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
       </svg>
     </button>
-
   </div>
 </header>
 
 <!-- Mobile overlay -->
-<div class="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+<div
+  class="nav-overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Navigation menu"
+>
   <button class="nav-overlay__close" aria-label="Close menu">&#215;</button>
   <nav aria-label="Mobile navigation">
     <a href="/supplements" class="nav-link">Supplements</a>
@@ -81,14 +103,25 @@ const navClass = transparent ? 'nav nav--transparent' : 'nav nav--scrolled';
   <div class="nav-social">
     <a href="#" aria-label="Facebook">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+        <path
+          d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+        ></path>
       </svg>
     </a>
     <a href="#" aria-label="Instagram">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-        <circle cx="12" cy="12" r="4"/>
-        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      >
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+        <circle cx="12" cy="12" r="4"></circle>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"
+        ></circle>
       </svg>
     </a>
   </div>
@@ -96,10 +129,10 @@ const navClass = transparent ? 'nav nav--transparent' : 'nav nav--scrolled';
 </div>
 
 <script define:vars={{ transparent }}>
-  const nav = document.querySelector('.nav');
-  const hamburger = document.querySelector('.nav-hamburger');
-  const overlay = document.querySelector('.nav-overlay');
-  const closeBtn = document.querySelector('.nav-overlay__close');
+  const nav = document.querySelector(".nav");
+  const hamburger = document.querySelector(".nav-hamburger");
+  const overlay = document.querySelector(".nav-overlay");
+  const closeBtn = document.querySelector(".nav-overlay__close");
 
   // Scroll behaviour — homepage only
   if (transparent) {
@@ -107,41 +140,42 @@ const navClass = transparent ? 'nav nav--transparent' : 'nav nav--scrolled';
 
     function handleScroll() {
       if (window.scrollY > threshold) {
-        nav.classList.remove('nav--transparent');
-        nav.classList.add('nav--scrolled');
+        nav.classList.remove("nav--transparent");
+        nav.classList.add("nav--scrolled");
       } else {
-        nav.classList.remove('nav--scrolled');
-        nav.classList.add('nav--transparent');
+        nav.classList.remove("nav--scrolled");
+        nav.classList.add("nav--transparent");
       }
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
   }
 
   // Mobile overlay toggle
   function openOverlay() {
-    overlay.classList.add('nav-overlay--open');
-    document.body.classList.add('nav-open');
-    hamburger.setAttribute('aria-expanded', 'true');
+    overlay.classList.add("nav-overlay--open");
+    document.body.classList.add("nav-open");
+    hamburger.setAttribute("aria-expanded", "true");
   }
 
   function closeOverlay() {
-    overlay.classList.remove('nav-overlay--open');
-    document.body.classList.remove('nav-open');
-    hamburger.setAttribute('aria-expanded', 'false');
+    overlay.classList.remove("nav-overlay--open");
+    document.body.classList.remove("nav-open");
+    hamburger.setAttribute("aria-expanded", "false");
   }
 
-  hamburger.addEventListener('click', openOverlay);
-  closeBtn.addEventListener('click', closeOverlay);
+  hamburger.addEventListener("click", openOverlay);
+  closeBtn.addEventListener("click", closeOverlay);
 
-  overlay.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', closeOverlay);
+  overlay.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeOverlay);
   });
 </script>
 
 <style>
   .nav {
     position: fixed;
+    padding: 0 var(--container-pad-lg);
     top: 0;
     left: 0;
     width: 100%;
@@ -149,7 +183,9 @@ const navClass = transparent ? 'nav nav--transparent' : 'nav nav--scrolled';
     z-index: 100;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    transition: background var(--transition-slow), color var(--transition-slow);
+    transition:
+      background var(--transition-slow),
+      color var(--transition-slow);
   }
 
   .nav--transparent {
@@ -173,15 +209,23 @@ const navClass = transparent ? 'nav nav--transparent' : 'nav nav--scrolled';
   }
 
   /* Logo toggle */
-  .nav .logo-light { display: block; }
-  .nav .logo-dark  { display: none; }
+  .nav .logo-light {
+    display: block;
+  }
+  .nav .logo-dark {
+    display: none;
+  }
 
-  .nav--scrolled .logo-light { display: none; }
-  .nav--scrolled .logo-dark  { display: block; }
+  .nav--scrolled .logo-light {
+    display: none;
+  }
+  .nav--scrolled .logo-dark {
+    display: block;
+  }
 
   .logo-light,
   .logo-dark {
-    height: 40px;
+    height: 80px;
     width: auto;
   }
 
@@ -199,11 +243,13 @@ const navClass = transparent ? 'nav nav--transparent' : 'nav nav--scrolled';
 
   .nav-link {
     font-family: var(--font-body);
-    font-size: var(--text-label);
+    /* font-size: var(--text-body); */
+    font-size: 1.25rem;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    /* text-transform: uppercase; */
+    /* letter-spacing: 0.1em; */
     transition: color var(--transition-fast);
+    letter-spacing: 0.1em;
   }
 
   .nav-link:hover {
@@ -295,7 +341,11 @@ const navClass = transparent ? 'nav nav--transparent' : 'nav nav--scrolled';
     overflow: hidden;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
+    .nav {
+      padding: 0 var(--container-pad);
+    }
+
     .nav-links,
     .nav-right {
       display: none;

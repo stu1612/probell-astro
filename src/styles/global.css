@@ -23,14 +23,15 @@
 
 :root {
   /* Colors */
-  --color-black: #000000;
+  --color-black: #121213;
   --color-red: #c0392b;
   --color-gold: #c9a84c;
-  --color-white: #ffffff;
+  --color-white: #f9f6ee;
   --color-grey: #a0a0a0;
   --color-border: #222222;
   --color-surface: #111111;
   --color-bg-warm: #f5f3ef;
+  --color-silver: #9ca3ad;
 
   /* Typography — families */
   --font-anton: "Anton", sans-serif;
@@ -44,11 +45,14 @@
   --font-body: var(--font-grotesk);
 
   /* Typography — scale */
+  --text-hero-lg: clamp(6rem, 13vw, 14rem);
   --text-hero: clamp(4rem, 10vw, 9rem);
+  --text-highlight: clamp(3.5rem, 9vw, 8rem);
   --text-statement: clamp(3rem, 7vw, 6rem);
   --text-section: clamp(2rem, 5vw, 3.5rem);
   --text-product: clamp(1.5rem, 3vw, 2rem);
-  --text-body: 1rem;
+  --text-link: clamp(1rem, 2vw, 1.25rem);
+  --text-body: clamp(1rem, 1.5vw, 1.25rem);
   --text-label: 0.75rem;
 
   /* Spacing */
@@ -61,7 +65,8 @@
 
   /* Layout */
   --container-max: 1400px;
-  --container-pad: var(--space-md);
+  --container-pad: var(--space-xs);
+  --container-pad-lg: var(--space-lg);
 
   /* Breakpoints — reference only, use in media queries */
   --bp-sm: 640px;
@@ -100,8 +105,8 @@ html {
 }
 
 body {
-  background-color: var(--color-white);
-  color: var(--color-black);
+  background-color: var(--color-black);
+  color: var(--color-white);
   font-family: var(--font-body);
   font-size: var(--text-body);
   line-height: 1.6;
@@ -156,6 +161,13 @@ select {
 
 .font-body-dmsans {
   font-family: var(--font-dmsans);
+}
+
+.font-text {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-white);
+  line-height: 1.6;
 }
 
 /* Display text shared rules */
@@ -399,6 +411,7 @@ select {
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
+  margin-bottom: var(--space-xs);
 }
 
 .form-label {
@@ -407,16 +420,16 @@ select {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--color-grey);
+  color: var(--color-silver);
 }
 
 .form-input,
 .form-select,
 .form-textarea {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: var(--color-white);
+  border: 1px solid var(--color-white);
   border-radius: 0;
-  color: var(--color-white);
+  color: var(--color-black);
   padding: 0.75rem 1rem;
   font-family: var(--font-body);
   font-size: var(--text-body);
@@ -427,15 +440,15 @@ select {
 
 .form-input::placeholder,
 .form-textarea::placeholder {
-  color: var(--color-grey);
-  opacity: 0.6;
+  color: var(--color-black);
+  opacity: 0.8;
 }
 
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
   outline: none;
-  border-color: var(--color-red);
+  border-color: var(--color-grey);
 }
 
 .form-textarea {
@@ -517,6 +530,9 @@ select {
 }
 .text-white {
   color: var(--color-white);
+}
+.text-black {
+  color: var(--color-black);
 }
 
 /* Divider */
