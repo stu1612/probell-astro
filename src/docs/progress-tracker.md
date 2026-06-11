@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 11 Jun 2026 — Session 24**
+**Last updated: 11 Jun 2026 — Session 26**
 
 ---
 
@@ -8,7 +8,7 @@
 
 **Phase:** Post-build structural redesign
 **Active section:** Major page restructure complete — 11 sections condensed to 4 core sections
-**Next action:** Review redesigned page in browser. Confirm new section structure against brief. Decide on any remaining sections to add back (Built for Endurance, Instagram, etc.) or confirm streamlined layout as final.
+**Next action:** Review redesigned page in browser. Confirm new section structure against brief. Decide on any remaining sections to add back (Built for Endurance, Instagram, etc.) or confirm streamlined layout as final. CSS class naming is now BEM-compliant across all scoped component styles.
 
 ---
 
@@ -77,6 +77,69 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 26 — 11 Jun 2026
+
+**What was done:**
+
+- CSS class naming audit and BEM standardisation across all scoped component styles
+- Scope: scoped `<style>` blocks only — `global.css` conventions preserved (`btn-primary`, `grid-2`, `text-red`, `form-group`, etc.)
+- `Nav.astro`: renamed `nav-inner/left/right/links/link/social/hamburger` → `nav__*`; `logo-light/dark` → `nav__logo--light/dark`; updated JS `querySelector` reference for `nav__hamburger`; updated cross-selectors in overlay styles
+- `Hero.astro`: renamed `headline-1/2/3` → `headline__line--1/2/3` in template and style
+- `Identity.astro`: renamed `identity__row1` → `identity__row` (numeric suffix removed — single row, no modifier needed)
+- `Contact.astro`: renamed all `contact-*` elements → `contact__*` in template and style (8 classes)
+- `Footer.astro`: renamed all `footer-*` elements → `footer__*` in template and style (13 classes)
+- `ui/Banner.astro`: removed orphan classes `headline1/2/3` from template (no CSS definitions existed for them)
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- `global.css` utility classes (`btn-primary`, `btn-secondary`, `grid-2`, `flex-center`, `text-red`, `form-group`, `torn-edge-bottom`, `img-overlay`, etc.) retain their existing naming convention — BEM enforcement applies to scoped component styles only
+- `nav-overlay` kept as a standalone block name (not `nav__overlay`) — it is a separate DOM sibling to `<header class="nav">`, so treating it as its own block is correct BEM; `nav-overlay__close`, `nav-overlay__cta`, `nav-overlay--open` were already correct
+- `nav-open` body state class retained — applying BEM modifiers to `<body>` is not standard practice; functional state class on body is an accepted pattern
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL / whether Instagram section will be reinstated
+- Facebook URL
+- Logo light variant PNG (client to supply)
+- Whether Built for Endurance section will be reinstated when product assets arrive
+
+---
+
+### Session 25 — 11 Jun 2026
+
+**What was done:**
+
+- Codebase cleanup — removed all commented-out code from `src/`
+- `Nav.astro`: removed 3 commented-out CSS properties in `.nav-link` (`font-size`, `text-transform`, `letter-spacing`)
+- `Footer.astro`: removed commented-out `<div class="container">` opening tag; removed commented-out `padding-top`/`padding-bottom` CSS block
+- `BrandStory.astro`: removed commented-out `<span>` eyebrow element; removed commented-out `.em__stats-section` CSS rule
+- `ProductStrips.astro`: removed commented-out `color: var(--color-white)` in `.ps__ghost`
+- `Identity.astro`: removed commented-out `background`, `padding`, and `border-radius` properties in `.identity__body`
+- `Banner.astro`: removed commented-out `display: flex; align-items: flex-end` block; removed entire commented-out `.banner__text` rule; removed commented-out `position: absolute` and `top/left/transform` properties in `.banner__headline-group`
+- No logic, structure, class names, or active code changed
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- Explanatory comments retained throughout (TornEdge frontmatter docstring, section labels, `// Scroll behaviour — homepage only`, `/* hide the empty spacer column on mobile */`, etc.)
+- `global.css` untouched — all comments there are structural section headers or explanatory labels
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL / whether Instagram section will be reinstated
+- Facebook URL
+- Logo light variant PNG (client to supply)
+- Whether Built for Endurance section will be reinstated when product assets arrive
+
+---
 
 ### Session 24 — 11 Jun 2026
 
