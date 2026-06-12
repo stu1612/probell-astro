@@ -1,4 +1,5 @@
 ---
+import { CONTACT_SUBJECT } from "@constants/site";
 const web3formsKey = import.meta.env.WEB3FORMS_KEY ?? "";
 ---
 
@@ -25,7 +26,7 @@ const web3formsKey = import.meta.env.WEB3FORMS_KEY ?? "";
           <input
             type="hidden"
             name="subject"
-            value="New Probell Partnership Enquiry"
+            value={CONTACT_SUBJECT}
           />
           <input type="hidden" name="redirect" value="false" />
           <input type="checkbox" name="botcheck" style="display: none;" />

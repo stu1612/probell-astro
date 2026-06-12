@@ -1,5 +1,6 @@
 ---
-
+import { FOOTER_SITE_LINKS, FOOTER_PRODUCT_LINKS } from "@data/navigation";
+import { COPYRIGHT } from "@constants/site";
 ---
 
 <footer class="footer">
@@ -22,19 +23,17 @@
       <!-- Column 2: Links -->
       <nav class="footer__col" aria-label="Site links">
         <span class="label-text footer__col-heading">Links</span>
-        <a href="/" class="footer__link">Home</a>
-        <a href="/supplements" class="footer__link">Supplements</a>
-        <a href="/#brand-story" class="footer__link">About</a>
-        <a href="/#contact" class="footer__link">Contact</a>
+        {FOOTER_SITE_LINKS.map((link) => (
+          <a href={link.href} class="footer__link">{link.label}</a>
+        ))}
       </nav>
 
       <!-- Column 3: Products -->
       <nav class="footer__col" aria-label="Product links">
         <span class="label-text footer__col-heading">Products</span>
-        <a href="/supplements" class="footer__link">Whey 100</a>
-        <a href="/supplements" class="footer__link">Creatine</a>
-        <a href="/supplements" class="footer__link">Pre-Workout</a>
-        <a href="/supplements" class="footer__link">Mass Gainer</a>
+        {FOOTER_PRODUCT_LINKS.map((link) => (
+          <a href={link.href} class="footer__link">{link.label}</a>
+        ))}
       </nav>
 
       <!-- Column 4: Follow Us -->
@@ -101,7 +100,7 @@
 
     <div class="footer__copyright">
       <span class="font-text footer__copy">
-        &copy; 2026 Probell Nutrition. All rights reserved.
+        {COPYRIGHT}
       </span>
       <a href="/legal" class="font-text footer__legal">Privacy Policy</a>
     </div>

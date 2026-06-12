@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { NAV_LINKS } from "@data/navigation";
 
 interface Props {
   transparent?: boolean;
@@ -32,9 +33,9 @@ const navClass = transparent ? "nav nav--transparent" : "nav nav--scrolled";
         />
       </a>
       <nav class="nav__links" aria-label="Main navigation">
-        <a href="/supplements" class="nav__link">Supplements</a>
-        <a href="/#brand-story" class="nav__link">About</a>
-        <a href="/#contact" class="nav__link">Contact</a>
+        {NAV_LINKS.map((link) => (
+          <a href={link.href} class="nav__link">{link.label}</a>
+        ))}
       </nav>
     </div>
 
@@ -96,9 +97,9 @@ const navClass = transparent ? "nav nav--transparent" : "nav nav--scrolled";
 >
   <button class="nav-overlay__close" aria-label="Close menu">&#215;</button>
   <nav aria-label="Mobile navigation">
-    <a href="/supplements" class="nav__link">Supplements</a>
-    <a href="/#brand-story" class="nav__link">About</a>
-    <a href="/#contact" class="nav__link">Contact</a>
+    {NAV_LINKS.map((link) => (
+      <a href={link.href} class="nav__link">{link.label}</a>
+    ))}
   </nav>
   <div class="nav__social">
     <a href="#" aria-label="Facebook">
