@@ -1,85 +1,49 @@
 ---
 import { Image } from "astro:assets";
+import { PRODUCTS } from "@data/products";
 ---
 
 <div class="ps">
-  <!-- 01 — Whey 100 Protein -->
-  <div class="ps__strip">
-    <div class="ps__content">
-      <div class="ps__ghost">01</div>
-      <span class="label-text label-text--red">01 — Strength</span>
-      <h3 class="display-text ps__name">Whey 100<br />Protein</h3>
-      <p class="ps__body font-text text-grey">
-        The foundation of every serious stack. 25g of pure protein per serve. No
-        fillers, no shortcuts. Built for people who train like their results
-        depend on it — because they do.
-      </p>
-      <div class="ps__stat">
-        <span class="display-text ps__stat-num">25g</span>
-        <span class="label-text ps__stat-label"
-          >pure protein<br />per serve</span
-        >
+  {PRODUCTS.map((product) => (
+    <div class={`ps__strip${product.flip ? " ps__strip--flip" : ""}`}>
+      {product.flip && (
+        <div class="ps__img-wrap">
+          <Image
+            src={product.image}
+            alt={product.imageAlt}
+            width={900}
+            height={700}
+            format="webp"
+            loading="lazy"
+          />
+        </div>
+      )}
+      <div class="ps__content">
+        <div class="ps__ghost">{product.id}</div>
+        <span class={`label-text label-text--${product.labelAccent}`}>{product.label}</span>
+        <h3 class="display-text ps__name" set:html={product.name.replace("\n", "<br />")} />
+        <p class="ps__body font-text text-grey">{product.body}</p>
+        {product.stat && (
+          <div class="ps__stat">
+            <span class="display-text ps__stat-num">{product.stat.number}</span>
+            <span class="label-text ps__stat-label" set:html={product.stat.label.replace("\n", "<br />")} />
+          </div>
+        )}
       </div>
+      {!product.flip && (
+        <div class={`ps__img-wrap${product.imageMuted ? " ps__img-wrap--muted" : ""}`}>
+          <Image
+            src={product.image}
+            alt={product.imageAlt}
+            width={900}
+            height={700}
+            format="webp"
+            loading="lazy"
+          />
+        </div>
+      )}
     </div>
-    <div class="ps__img-wrap">
-      <Image
-        src="/images/lifestyle/three-flavours.jpg"
-        alt="Probell athlete with kettlebell"
-        width={900}
-        height={700}
-        format="webp"
-        loading="lazy"
-      />
-    </div>
-  </div>
-
-  <!-- 02 — Creatine (image left) -->
-  <div class="ps__strip ps__strip--flip">
-    <div class="ps__img-wrap">
-      <Image
-        src="/images/trending/trending-creatine.jpg"
-        alt="Probell Creatine in gym setting"
-        width={900}
-        height={700}
-        format="webp"
-        loading="lazy"
-      />
-    </div>
-    <div class="ps__content">
-      <div class="ps__ghost">02</div>
-      <span class="label-text label-text--gold">02 — Power</span>
-      <h3 class="display-text ps__name">Creatine</h3>
-      <p class="ps__body font-text text-grey">
-        More reps. Heavier lifts. Faster recovery between sets. Pure creatine
-        monohydrate — nothing added, nothing hidden. The most researched
-        supplement in sport. Now in the only container worth lifting.
-      </p>
-    </div>
-  </div>
-
-  <!-- 03 — Pre-Workout (coming soon) -->
-  <div class="ps__strip">
-    <div class="ps__content">
-      <div class="ps__ghost">03</div>
-      <span class="label-text label-text--red">03 — Intensity</span>
-      <h3 class="display-text ps__name">Pre-Workout</h3>
-      <p class="ps__body font-text text-grey">
-        Explosive energy without the crash. Dialled-in focus from the first rep
-        to the last. Coming soon — built to the same standard as everything else
-        Probell makes.
-      </p>
-    </div>
-    <div class="ps__img-wrap ps__img-wrap--muted">
-      <Image
-        src="/images/bold-statement/discipline.png"
-        alt="Probell athlete"
-        width={900}
-        height={700}
-        format="webp"
-        loading="lazy"
-      />
-    </div>
-  </div>
+  ))}
 </div>
 
 <style>

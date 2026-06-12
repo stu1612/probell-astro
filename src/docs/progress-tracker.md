@@ -1,14 +1,14 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 11 Jun 2026 — Session 26**
+**Last updated: 12 Jun 2026 — Session 27**
 
 ---
 
 ## Current Status
 
 **Phase:** Post-build structural redesign
-**Active section:** Major page restructure complete — 11 sections condensed to 4 core sections
-**Next action:** Review redesigned page in browser. Confirm new section structure against brief. Decide on any remaining sections to add back (Built for Endurance, Instagram, etc.) or confirm streamlined layout as final. CSS class naming is now BEM-compliant across all scoped component styles.
+**Active section:** Data & content architecture migration complete — all hardcoded content arrays extracted to `src/data/` and `src/constants/`
+**Next action:** Add new tasks to `src/features/feature-updates.md` for next work item, or review site in browser.
 
 ---
 
@@ -77,6 +77,36 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 27 — 12 Jun 2026
+
+**What was done:**
+
+- Task 10 complete: data and content architecture migration
+- Added `@data/*` and `@constants/*` path aliases to `tsconfig.json`
+- Created `src/data/stats.ts` — `STATS` array + `Stat` interface; extracted from `BrandStory.astro`
+- Created `src/data/products.ts` — `PRODUCTS` array + `Product` / `ProductStat` interfaces; extracted from `ProductStrips.astro` (3 hardcoded HTML blocks replaced with `.map()`)
+- Created `src/data/navigation.ts` — `NAV_LINKS`, `FOOTER_SITE_LINKS`, `FOOTER_PRODUCT_LINKS` + `NavLink` interface; nav links now maintained in one place, shared between desktop and mobile nav
+- Created `src/constants/site.ts` — `SITE_NAME`, `COPYRIGHT`, `CONTACT_SUBJECT`
+- Updated `BrandStory.astro`, `ProductStrips.astro`, `Nav.astro`, `Footer.astro`, `Contact.astro` to import via `@data/` and `@constants/` aliases
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- `index.astro` inline prop content (Identity headline/body, Banner headlines) left as-is — page-level configuration, not component-internal arrays
+- Contact form select options (Gym, Distributor, Retailer, Other) left as-is — form structure, not content data
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL / whether Instagram section will be reinstated
+- Facebook URL
+- Logo light variant PNG (client to supply)
+- Whether Built for Endurance section will be reinstated when product assets arrive
+
+---
 
 ### Session 26 — 11 Jun 2026
 

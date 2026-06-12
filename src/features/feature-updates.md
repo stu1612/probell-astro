@@ -896,7 +896,7 @@ as everything else Probell makes."
 
 ## Task 09 — Built for Endurance Section Redesign
 
-**Status:** Ready to implement
+**Status:** Complete — 12 Jun 2026
 **Component:** `src/components/BuiltForEndurance.astro`
 
 ---
@@ -993,4 +993,89 @@ No grey text. No borders.
 - All placeholder images load
 - No borders, no dark backgrounds
 - Wrapped in SectionWrapper
+- Build passes with zero errors
+
+## Task 10 — Data & Content Architecture Migration
+
+**Status:** Complete — 12 Jun 2026 (Session 27)
+**Scope:** Global — multiple components
+
+---
+
+### Context
+
+All static text and component-driven content currently
+hardcoded inside component files needs to be extracted
+into a dedicated data layer. This makes content changes
+trivial, separates concerns cleanly, and prepares the
+codebase for a potential CMS migration in future.
+
+Read `docs/data-architecture.md` before starting.
+
+---
+
+### Step 1 — Audit only, no changes yet
+
+Search every file in `src/` for:
+
+- Hardcoded static text inside components
+- Content arrays defined inside component files
+- Any repeating data structures not yet extracted
+
+List every instance — which file, what content,
+whether it belongs in `src/data/` or `src/constants/`
+per the rules in `docs/data-architecture.md`.
+
+Present the full list and wait for confirmation
+before touching anything.
+
+---
+
+### Step 2 — After confirmation
+
+- Create appropriate files in `src/data/`
+  and `src/constants/`
+- Define TypeScript interfaces for every data structure
+- Replace hardcoded content in components with imports
+  using the `@data/` alias
+- Use uppercase named exports throughout:
+  `export const STATS = [...]`
+- One file at a time — confirm each is working
+  before moving to the next
+- Run `npm run build` after all changes
+- List every file changed
+
+---
+
+### Convention
+
+```ts
+// src/data/stats.ts
+export interface Stat {
+  value: string;
+  label: string;
+}
+
+export const STATS: Stat[] = [
+  { value: "25G", label: "Pure protein per serve" },
+  { value: "100%", label: "Made in the USA" },
+  { value: "0", label: "Compromises" },
+];
+```
+
+---
+
+### What must not change
+
+- Any component logic or structure
+- Any styling or layout
+- Build must pass with zero errors after every file
+
+---
+
+### Verify
+
+- No hardcoded content arrays remain in component files
+- All data imports use `@data/` alias
+- TypeScript interfaces defined for every data structure
 - Build passes with zero errors
