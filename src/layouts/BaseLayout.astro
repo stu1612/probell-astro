@@ -4,11 +4,17 @@ import Footer from "@components/Footer/index.astro";
 import "../styles/global.css";
 
 interface Props {
-  title?: string;
+  title: string;
+  description: string;
+  ogImage?: string;
+  canonicalUrl?: string;
   transparentNav?: boolean;
 }
 const {
-  title = "Probell Nutrition — Built for the Grind",
+  title,
+  description,
+  ogImage = "/images/og-image.jpg",
+  canonicalUrl = Astro.url.href,
   transparentNav = false,
 } = Astro.props;
 ---
@@ -18,6 +24,18 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href="/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
