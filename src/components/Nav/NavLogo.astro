@@ -1,0 +1,46 @@
+---
+import { Image } from "astro:assets";
+---
+
+<a href="/" aria-label="Probell Nutrition home">
+  <Image
+    src="/images/icons/probell-logo.png"
+    alt="Probell Nutrition"
+    width={200}
+    height={80}
+    class="nav__logo--light"
+    loading="eager"
+  />
+  <Image
+    src="/images/icons/probell-logo.png"
+    alt="Probell Nutrition"
+    width={200}
+    height={80}
+    class="nav__logo--dark"
+    loading="eager"
+  />
+</a>
+
+<style>
+  .nav__logo--light,
+  .nav__logo--dark {
+    height: 80px;
+    width: auto;
+  }
+
+  .nav__logo--light {
+    display: block;
+  }
+
+  .nav__logo--dark {
+    display: none;
+  }
+
+  :global(.nav--scrolled) .nav__logo--light {
+    display: none;
+  }
+
+  :global(.nav--scrolled) .nav__logo--dark {
+    display: block;
+  }
+</style>

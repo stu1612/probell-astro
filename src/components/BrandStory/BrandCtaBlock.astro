@@ -1,0 +1,71 @@
+---
+import { Image } from "astro:assets";
+---
+
+<div class="em__cta-section">
+  <div class="em__cta-layout">
+    <div class="em__cta-img">
+      <Image
+        src="/images/lifestyle/cpb-gym.jpg"
+        alt="Probell products in a gym setting"
+        width={780}
+        height={580}
+        format="webp"
+        loading="lazy"
+      />
+    </div>
+    <div class="em__cta-content">
+      <h2 class="display-text em__cta-headline">
+        Give your members what they've been asking for.
+      </h2>
+      <p class="em__cta-body font-text text-black">
+        Probell is stocked in gyms that take their members seriously. Talk to
+        us about wholesale pricing, margins, and display support.
+      </p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .em__cta-section {
+    padding: var(--space-xl) 0;
+  }
+
+  .em__cta-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .em__cta-img :global(img) {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    border-radius: var(--radius-image);
+    display: block;
+  }
+
+  .em__cta-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .em__cta-headline {
+    font-family: var(--font-display);
+    font-size: var(--text-statement);
+    color: var(--color-black);
+    line-height: 0.95;
+  }
+
+  .em__cta-body {
+    max-width: 42ch;
+  }
+
+  @media (max-width: 768px) {
+    .em__cta-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

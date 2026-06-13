@@ -1,14 +1,14 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 12 Jun 2026 — Session 27**
+**Last updated: 13 Jun 2026 — Session 28**
 
 ---
 
 ## Current Status
 
 **Phase:** Post-build structural redesign
-**Active section:** Data & content architecture migration complete — all hardcoded content arrays extracted to `src/data/` and `src/constants/`
-**Next action:** Add new tasks to `src/features/feature-updates.md` for next work item, or review site in browser.
+**Active section:** Component architecture refactor complete — all section components converted to folder/index.astro pattern with sub-components extracted where warranted
+**Next action:** Review site in browser, or begin next feature task in `src/features/feature-updates.md`.
 
 ---
 
@@ -77,6 +77,38 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 28 — 13 Jun 2026
+
+**What was done:**
+
+- Built `ui/SocialIcons.astro` — eliminates duplicate Facebook + Instagram SVG block inside `Nav.astro` (desktop header and mobile overlay both used identical markup); `Nav.astro` replaced both with `<SocialIcons />`; `body.nav-open { overflow: hidden }` moved to `global.css`
+- Built `ui/FormField.astro` — renders `form-group` for `text`, `email`, `textarea`, `select` types; select options via `<slot />`; `Contact.astro` updated to use it (removed 5 repeated `<div class="form-group">` blocks)
+- Deleted `ui/ProductCard.astro` — dead code since Session 24 redesign removed all consumers
+- Converted all section-level components to folder/index.astro pattern; sub-components extracted where responsibility was clearly separate:
+  - `Nav/` → `NavLogo.astro`, `NavHamburger.astro`, `NavOverlay.astro` + `index.astro`
+  - `BrandStory/` → `BrandStatsBlock.astro`, `BrandCtaBlock.astro` + `index.astro`
+  - `Contact/` → `ContactForm.astro` (owns web3forms key, script, hidden fields) + `index.astro`
+  - `ProductStrips/` → `ProductStrip.astro` (single strip, `Product` prop) + `index.astro`
+  - `Footer/`, `Hero/`, `Identity/`, `SectionWrapper/` → folder/index.astro only (no sub-components warranted)
+- `npm run build` passes — zero errors
+
+**Decisions made this session:**
+
+- `ui/` components (Banner, TornEdge, FormField, SocialIcons) stay flat in `ui/` — the folder already provides their namespace
+- Nav links stay inline in `Nav/index.astro` — 5-line `<nav>` with map, not worth a separate file
+- Nav `<script>` stays in `Nav/index.astro` — coordinates all sub-components, cannot be split without a JS module
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL / whether Instagram section will be reinstated
+- Facebook URL
+- Logo light variant PNG (client to supply)
+
+---
 
 ### Session 27 — 12 Jun 2026
 
