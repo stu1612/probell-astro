@@ -1,0 +1,150 @@
+---
+import { NAV_LINKS } from "@data/navigation";
+import NavLogo from "@components/Nav/NavLogo.astro";
+import NavHamburger from "@components/Nav/NavHamburger.astro";
+import NavOverlay from "@components/Nav/NavOverlay.astro";
+import SocialIcons from "@components/ui/SocialIcons.astro";
+
+interface Props {
+  transparent?: boolean;
+}
+const { transparent = false } = Astro.props;
+
+const navClass = transparent ? "nav nav--transparent" : "nav nav--scrolled";
+---
+
+<header class={navClass}>
+  <div class="nav__inner flex-between">
+    <div class="nav__left">
+      <NavLogo />
+      <nav class="nav__links" aria-label="Main navigation">
+        {NAV_LINKS.map((link) => (
+          <a href={link.href} class="nav__link">{link.label}</a>
+        ))}
+      </nav>
+    </div>
+    <div class="nav__right">
+      <a href="/#contact" class="btn-primary">Join the Waitlist</a>
+      <SocialIcons />
+    </div>
+    <NavHamburger />
+  </div>
+</header>
+
+<NavOverlay />
+
+<script define:vars={{ transparent }}>
+  const nav = document.querySelector(".nav");
+  const hamburger = document.querySelector(".nav__hamburger");
+  const overlay = document.querySelector(".nav-overlay");
+  const closeBtn = document.querySelector(".nav-overlay__close");
+
+  // Scroll behaviour — homepage only
+  if (transparent) {
+    const threshold = window.innerHeight * 0.5;
+
+    function handleScroll() {
+      if (window.scrollY > threshold) {
+        nav.classList.remove("nav--transparent");
+        nav.classList.add("nav--scrolled");
+      } else {
+        nav.classList.remove("nav--scrolled");
+        nav.classList.add("nav--transparent");
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+  }
+
+  // Mobile overlay toggle
+  function openOverlay() {
+    overlay.classList.add("nav-overlay--open");
+    document.body.classList.add("nav-open");
+    hamburger.setAttribute("aria-expanded", "true");
+  }
+
+  function closeOverlay() {
+    overlay.classList.remove("nav-overlay--open");
+    document.body.classList.remove("nav-open");
+    hamburger.setAttribute("aria-expanded", "false");
+  }
+
+  hamburger.addEventListener("click", openOverlay);
+  closeBtn.addEventListener("click", closeOverlay);
+
+  overlay.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeOverlay);
+  });
+</script>
+
+<style>
+  .nav {
+    position: fixed;
+    padding: 0 var(--container-pad-lg);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 72px;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition:
+      background var(--transition-slow),
+      color var(--transition-slow);
+  }
+
+  .nav--transparent {
+    background: transparent;
+    color: var(--color-white);
+  }
+
+  .nav--scrolled {
+    background: var(--color-white);
+    color: var(--color-black);
+  }
+
+  .nav__inner {
+    height: 100%;
+  }
+
+  .nav__left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .nav__right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .nav__link {
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    font-weight: 500;
+    transition: color var(--transition-fast);
+    letter-spacing: 0.1em;
+  }
+
+  .nav__link:hover {
+    color: var(--color-red);
+  }
+
+  @media (max-width: 1024px) {
+    .nav {
+      padding: 0 var(--container-pad);
+    }
+
+    .nav__links,
+    .nav__right {
+      display: none;
+    }
+  }
+</style>

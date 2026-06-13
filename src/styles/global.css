@@ -554,3 +554,8 @@ select {
   white-space: nowrap;
   border: 0;
 }
+
+/* Navigation state */
+body.nav-open {
+  overflow: hidden;
+}

@@ -1,0 +1,28 @@
+---
+import BrandStatsBlock from "@components/BrandStory/BrandStatsBlock.astro";
+import BrandCtaBlock from "@components/BrandStory/BrandCtaBlock.astro";
+---
+
+<section id="emotion" class="container">
+  <h2 class="display-text em__headline">
+    Just the product your serious members have been waiting for someone to
+    stock.
+  </h2>
+  <BrandStatsBlock />
+  <BrandCtaBlock />
+</section>
+
+<style>
+  #emotion {
+    background: var(--color-white);
+    padding: var(--space-xl) 0;
+  }
+
+  .em__headline {
+    font-family: var(--font-display);
+    font-size: var(--text-hero);
+    color: var(--color-black);
+    text-align: center;
+    padding-bottom: var(--space-2xl);
+  }
+</style>

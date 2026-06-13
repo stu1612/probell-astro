@@ -1,0 +1,129 @@
+---
+import { STATS } from "@data/stats";
+---
+
+<div class="em__stats-section">
+  <div class="em__stats-layout">
+    <div class="em__anchor">
+      <span class="label-text label-text--red em__eyebrow">Performance Data</span>
+      <p class="em__anchor-statement display-text">
+        The numbers behind the product.
+      </p>
+      <p class="em__anchor-body font-text text-black">
+        Every scoop of Probell is built on a single standard: if it doesn't
+        serve the athlete, it doesn't go in.
+      </p>
+    </div>
+
+    <div class="em__stats-list">
+      {STATS.map((stat) => (
+        <div class="em__stat-row">
+          <span class={`display-text em__stat-num${stat.accent ? " em__stat-num--red" : ""}`}>
+            {stat.number}
+          </span>
+          <div class="em__stat-right">
+            <span class="label-text em__stat-label">{stat.label}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .em__stats-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .em__anchor {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-lg));
+  }
+
+  .em__eyebrow {
+    display: block;
+  }
+
+  .em__anchor-statement {
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    color: var(--color-black);
+    line-height: 0.95;
+  }
+
+  .em__anchor-body {
+    max-width: 28ch;
+  }
+
+  .em__stats-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .em__stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md) 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .em__stat-row:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .em__stat-num {
+    font-family: var(--font-display);
+    font-size: var(--text-hero);
+    color: var(--color-black);
+    line-height: 0.9;
+  }
+
+  .em__stat-num--red {
+    color: var(--color-red);
+  }
+
+  .em__stat-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .em__stat-label {
+    color: var(--color-grey);
+    letter-spacing: 0.12em;
+    max-width: 30ch;
+  }
+
+  @media (max-width: 1024px) {
+    .em__stats-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .em__anchor {
+      position: static;
+    }
+
+    .em__anchor-body {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .em__stat-row {
+      grid-template-columns: auto 1fr;
+      gap: var(--space-sm);
+    }
+
+    .em__stat-num {
+      font-size: var(--text-statement);
+    }
+  }
+</style>

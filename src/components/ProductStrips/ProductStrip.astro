@@ -1,64 +1,60 @@
 ---
 import { Image } from "astro:assets";
-import { PRODUCTS } from "@data/products";
+import type { Product } from "@data/products";
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
 ---
 
-<div class="ps">
-  {PRODUCTS.map((product) => (
-    <div class={`ps__strip${product.flip ? " ps__strip--flip" : ""}`}>
-      {product.flip && (
-        <div class="ps__img-wrap">
-          <Image
-            src={product.image}
-            alt={product.imageAlt}
-            width={900}
-            height={700}
-            format="webp"
-            loading="lazy"
-          />
-        </div>
-      )}
-      <div class="ps__content">
-        <div class="ps__ghost">{product.id}</div>
-        <span class={`label-text label-text--${product.labelAccent}`}>{product.label}</span>
-        <h3 class="display-text ps__name" set:html={product.name.replace("\n", "<br />")} />
-        <p class="ps__body font-text text-grey">{product.body}</p>
-        {product.stat && (
-          <div class="ps__stat">
-            <span class="display-text ps__stat-num">{product.stat.number}</span>
-            <span class="label-text ps__stat-label" set:html={product.stat.label.replace("\n", "<br />")} />
-          </div>
-        )}
-      </div>
-      {!product.flip && (
-        <div class={`ps__img-wrap${product.imageMuted ? " ps__img-wrap--muted" : ""}`}>
-          <Image
-            src={product.image}
-            alt={product.imageAlt}
-            width={900}
-            height={700}
-            format="webp"
-            loading="lazy"
-          />
-        </div>
-      )}
+<div class={`ps__strip${product.flip ? " ps__strip--flip" : ""}`}>
+  {product.flip && (
+    <div class="ps__img-wrap">
+      <Image
+        src={product.image}
+        alt={product.imageAlt}
+        width={900}
+        height={700}
+        format="webp"
+        loading="lazy"
+      />
     </div>
-  ))}
+  )}
+  <div class="ps__content">
+    <div class="ps__ghost">{product.id}</div>
+    <span class={`label-text label-text--${product.labelAccent}`}>{product.label}</span>
+    <h3 class="display-text ps__name" set:html={product.name.replace("\n", "<br />")} />
+    <p class="ps__body font-text text-grey">{product.body}</p>
+    {product.stat && (
+      <div class="ps__stat">
+        <span class="display-text ps__stat-num">{product.stat.number}</span>
+        <span class="label-text ps__stat-label" set:html={product.stat.label.replace("\n", "<br />")} />
+      </div>
+    )}
+  </div>
+  {!product.flip && (
+    <div class={`ps__img-wrap${product.imageMuted ? " ps__img-wrap--muted" : ""}`}>
+      <Image
+        src={product.image}
+        alt={product.imageAlt}
+        width={900}
+        height={700}
+        format="webp"
+        loading="lazy"
+      />
+    </div>
+  )}
 </div>
 
 <style>
-  .ps {
-    display: flex;
-    flex-direction: column;
-  }
-
   .ps__strip {
     display: grid;
     grid-template-columns: 1fr 1fr;
     min-height: 52vh;
     border-bottom: 1px solid var(--color-border);
   }
-
 
   .ps__content {
     position: relative;
@@ -142,15 +138,12 @@ import { PRODUCTS } from "@data/products";
 
     .ps__content {
       order: 0;
+      padding: var(--space-lg) var(--space-md);
     }
 
     .ps__img-wrap {
       height: 55vw;
       order: 1;
-    }
-
-    .ps__content {
-      padding: var(--space-lg) var(--space-md);
     }
 
     .ps__ghost {

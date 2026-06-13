@@ -1,0 +1,74 @@
+---
+import { NAV_LINKS } from "@data/navigation";
+import SocialIcons from "@components/ui/SocialIcons.astro";
+---
+
+<div
+  class="nav-overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Navigation menu"
+>
+  <button class="nav-overlay__close" aria-label="Close menu">&#215;</button>
+  <nav aria-label="Mobile navigation">
+    {NAV_LINKS.map((link) => (
+      <a href={link.href} class="nav__link">{link.label}</a>
+    ))}
+  </nav>
+  <SocialIcons />
+  <a href="/#contact" class="btn-primary nav-overlay__cta">Join the Waitlist</a>
+</div>
+
+<style>
+  .nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--color-black);
+    color: var(--color-white);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-slow);
+  }
+
+  .nav-overlay--open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .nav-overlay nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .nav-overlay .nav__link {
+    font-size: var(--text-label);
+    color: var(--color-white);
+  }
+
+  .nav-overlay__close {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    background: none;
+    border: none;
+    color: var(--color-white);
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: var(--space-xs);
+  }
+
+  .nav-overlay__cta {
+    margin-top: var(--space-sm);
+    width: calc(100% - var(--space-2xl));
+    text-align: center;
+  }
+</style>
