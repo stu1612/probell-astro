@@ -102,7 +102,10 @@ import { COPYRIGHT } from "@constants/site";
       <span class="font-text footer__copy">
         {COPYRIGHT}
       </span>
-      <a href="/legal" class="font-text footer__legal">Privacy Policy</a>
+      <div class="footer__legal-links">
+        <a href="/legal/privacy" class="font-text footer__legal">Privacy Policy</a>
+        <a href="/legal/terms" class="font-text footer__legal">Terms & Conditions</a>
+      </div>
     </div>
   </div>
 </footer>
@@ -206,6 +209,11 @@ import { COPYRIGHT } from "@constants/site";
 
   .footer__copy {
     color: var(--color-grey);
+  }
+
+  .footer__legal-links {
+    display: flex;
+    gap: var(--space-md);
   }
 
   .footer__legal {

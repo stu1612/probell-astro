@@ -1,0 +1,40 @@
+---
+import type { LegalSection } from "@data/legal";
+
+interface Props {
+  sections: LegalSection[];
+}
+
+const { sections } = Astro.props;
+---
+
+{sections.map((section) => (
+  <section class="legal__section">
+    <h2 class="legal__section-heading">{section.heading}</h2>
+    <p class="legal__section-content">{section.content}</p>
+  </section>
+))}
+
+<style>
+  .legal__section {
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-lg) 0;
+  }
+
+  .legal__section-heading {
+    font-family: var(--font-display);
+    font-size: var(--text-product);
+    color: var(--color-white);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-sm);
+  }
+
+  .legal__section-content {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-grey);
+    line-height: 1.8;
+    white-space: pre-line;
+  }
+</style>
