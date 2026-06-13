@@ -1,14 +1,14 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 13 Jun 2026 — Session 28**
+**Last updated: 13 Jun 2026 — Session 29**
 
 ---
 
 ## Current Status
 
 **Phase:** Post-build structural redesign
-**Active section:** Component architecture refactor complete — all section components converted to folder/index.astro pattern with sub-components extracted where warranted
-**Next action:** Review site in browser, or begin next feature task in `src/features/feature-updates.md`.
+**Active section:** Task 11 complete — legal pages built and Footer links updated
+**Next action:** Review legal pages in browser, or begin next feature task in `src/features/feature-updates.md`.
 
 ---
 
@@ -77,6 +77,35 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 29 — 13 Jun 2026
+
+**What was done:**
+
+- Task 11 complete: legal pages built
+- Created `src/layouts/LegalLayout.astro` — wraps `BaseLayout`; accepts `title`, `description`, `lastUpdated`, `intro` props; 800px max-width container; `var(--space-2xl)` top / `var(--space-xl)` bottom padding; black background, white title, grey updated/intro text
+- Created `src/components/ui/LegalSections.astro` — accepts `sections: LegalSection[]`; renders each section with `border-top`, white uppercase heading, grey body text, `white-space: pre-line` to preserve line breaks from data strings
+- Created `src/pages/legal/index.astro` — hub page listing all four policies as arrow-linked rows
+- Created `src/pages/legal/privacy.astro`, `terms.astro`, `returns.astro`, `shipping.astro` — each finds its record from `LEGAL_PAGES` via `.find(p => p.slug === '...')` and passes props to `LegalLayout` + `<LegalSections />`
+- Updated `Footer/index.astro` — `/legal` → `/legal/privacy`; Terms & Conditions link added pointing to `/legal/terms`; `.footer__legal-links` flex wrapper added for two-link layout
+- `npm run build` passes — zero errors, 6 pages generated
+
+**Decisions made this session:**
+
+- `LegalSections.astro` component used to centralise section rendering — one place to update styles across all four pages
+- `white-space: pre-line` on section content — preserves bullet-list newlines in the data strings without requiring markdown parsing
+- `LegalLayout` wraps `BaseLayout` (not Nav/Footer directly) — consistent with existing layout pattern
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL / whether Instagram section will be reinstated
+- Facebook URL
+- Logo light variant PNG (client to supply)
+
+---
 
 ### Session 28 — 13 Jun 2026
 

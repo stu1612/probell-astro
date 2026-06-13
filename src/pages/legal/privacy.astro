@@ -1,0 +1,16 @@
+---
+import LegalLayout from "@layouts/LegalLayout.astro";
+import LegalSections from "@components/ui/LegalSections.astro";
+import { LEGAL_PAGES } from "@data/legal";
+
+const page = LEGAL_PAGES.find((p) => p.slug === "privacy")!;
+---
+
+<LegalLayout
+  title={page.title}
+  description={page.metaDescription}
+  lastUpdated={page.lastUpdated}
+  intro={page.intro}
+>
+  <LegalSections sections={page.sections} />
+</LegalLayout>

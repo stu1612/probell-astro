@@ -1079,3 +1079,122 @@ export const STATS: Stat[] = [
 - All data imports use `@data/` alias
 - TypeScript interfaces defined for every data structure
 - Build passes with zero errors
+
+# Task 11 — Legal Pages
+
+**Status:** Pending
+**Scope:** New pages + Footer update
+
+---
+
+## Context
+
+Build four legal pages using the data file already
+created at `src/data/legal.ts`. Do not modify the
+data file.
+
+Read `docs/ai-interaction.md`, `docs/coding-standards.md`,
+`docs/design.md`, `docs/seo.md`, and
+`docs/data-architecture.md` before making any changes.
+
+---
+
+## Step 1 — Create the legal layout
+
+Create `src/layouts/LegalLayout.astro`:
+
+- Accepts props: `title`, `description`,
+  `lastUpdated`, `intro`
+- Includes `Nav` and `Footer` components
+- White background, black text
+- Max width container: `800px`, centered
+- Padding: `var(--space-2xl)` top,
+  `var(--space-xl)` bottom
+- Renders:
+  - Page title: display font, large, black, uppercase
+  - Last updated: body font, small,
+    `var(--color-grey)`, `var(--text-label)`
+  - Intro paragraph: body font, `var(--color-grey)`,
+    `line-height: 1.8`
+  - `<slot />` for section content below
+
+---
+
+## Step 2 — Create the legal index page
+
+Create `src/pages/legal/index.astro`:
+
+- Title: `Legal | Probell Nutrition`
+- Description: `Legal information for Probell Nutrition
+including privacy policy, terms, returns,
+and shipping.`
+- Imports `LEGAL_PAGES` from `@data/legal`
+- Renders a simple list of links:
+  - `/legal/privacy` — Privacy Policy
+  - `/legal/terms` — Terms & Conditions
+  - `/legal/returns` — Returns Policy
+  - `/legal/shipping` — Shipping Policy
+- Uses `LegalLayout`
+- Clean, minimal — no images
+
+---
+
+## Step 3 — Create four legal pages
+
+Create:
+
+- `src/pages/legal/privacy.astro`
+- `src/pages/legal/terms.astro`
+- `src/pages/legal/returns.astro`
+- `src/pages/legal/shipping.astro`
+
+Each page:
+
+- Imports `LEGAL_PAGES` from `@data/legal`
+- Finds its own data:
+  `LEGAL_PAGES.find(p => p.slug === 'privacy')`
+- Passes `title`, `description`, `lastUpdated`,
+  `intro` to `LegalLayout`
+- Iterates over `sections` and renders each as:
+
+```astro
+<section class="legal__section">
+  <h2 class="legal__section-heading">
+    {section.heading}
+  </h2>
+  <p class="legal__section-content">
+    {section.content}
+  </p>
+</section>
+```
+
+- Thin `var(--color-border)` top border per section
+- `var(--space-lg)` padding between sections
+
+---
+
+## Step 4 — Update footer links
+
+In the Footer component:
+
+- Update Privacy Policy link from `/legal`
+  to `/legal/privacy`
+- Add Terms link pointing to `/legal/terms`
+
+---
+
+## Step 5 — SEO
+
+Each page must pass correct `title` and `description`
+props to `BaseLayout` via `LegalLayout`.
+Use values from the data file.
+
+---
+
+## Verify
+
+- [ ] All five pages generate on build
+- [ ] Footer links updated correctly
+- [ ] SEO props passed on every page
+- [ ] Build passes with zero errors
+- [ ] List every file created or modified

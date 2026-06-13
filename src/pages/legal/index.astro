@@ -1,0 +1,57 @@
+---
+import LegalLayout from "@layouts/LegalLayout.astro";
+import { LEGAL_PAGES } from "@data/legal";
+---
+
+<LegalLayout
+  title="Legal"
+  description="Legal information for Probell Nutrition including privacy policy, terms, returns, and shipping."
+  lastUpdated="June 13, 2026"
+  intro="Legal documents for Probell Nutrition. Select a document below."
+>
+  <nav class="legal-index" aria-label="Legal documents">
+    {
+      LEGAL_PAGES.map((page) => (
+        <a href={`/legal/${page.slug}`} class="legal-index__link">
+          <span class="legal-index__title">{page.title}</span>
+          <span class="legal-index__arrow" aria-hidden="true">
+            →
+          </span>
+        </a>
+      ))
+    }
+  </nav>
+</LegalLayout>
+
+<style>
+  .legal-index {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .legal-index__link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--color-border);
+    text-decoration: none;
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    transition: color var(--transition-fast);
+  }
+
+  .legal-index__link:hover {
+    color: var(--color-red);
+  }
+
+  .legal-index__title {
+    font-weight: 500;
+  }
+
+  .legal-index__arrow {
+    color: var(--color-grey);
+  }
+</style>
