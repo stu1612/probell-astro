@@ -1,0 +1,275 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import SectionWrapper from "@components/SectionWrapper/index.astro";
+import { Image } from "astro:assets";
+import { SUPPLEMENTS } from "@data/supplements";
+
+const title = "Supplements | Probell Nutrition";
+const description =
+  "Whey protein, creatine, and pre-workout built to one standard. No fillers, no shortcuts.";
+
+// First sentence of each description — editorial one-liner for the list.
+const firstSentence = (copy: string): string => {
+  const end = copy.indexOf(". ");
+  return end === -1 ? copy : copy.slice(0, end + 1);
+};
+---
+
+<BaseLayout title={title} description={description} transparentNav={true}>
+  <div id="supplements-hero">
+    <div class="sup-hero">
+      <div class="container">
+        <span class="sup-hero__eyebrow label-text label-text--red">
+          The Range
+        </span>
+        <h1 class="sup-hero__title">Supplements.</h1>
+        <p class="sup-hero__sub">
+          One standard. No fillers, no shortcuts, no compromise.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <SectionWrapper bg="white">
+    <div class="container">
+      <ul class="sup-list">
+        {
+          SUPPLEMENTS.map((product, i) => (
+            <li class="sup-list__item">
+              <a
+                class={`sup-row${i % 2 === 1 ? " sup-row--reversed" : ""}`}
+                href={`/supplements/${product.slug}`}
+              >
+                <span class="sup-row__index" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                <div class="sup-row__image-wrap">
+                  <Image
+                    src={product.image}
+                    alt={`${product.flavour} ${product.name}`}
+                    width={900}
+                    height={900}
+                    format="webp"
+                    loading={i === 0 ? "eager" : "lazy"}
+                    class="sup-row__image"
+                  />
+                </div>
+
+                <div class="sup-row__content">
+                  <span class="sup-row__category label-text label-text--red">
+                    {product.category}
+                  </span>
+                  <h2 class="sup-row__name">{product.name}</h2>
+                  <span class="sup-row__flavour">{product.flavour}</span>
+                  <p class="sup-row__descriptor">
+                    {firstSentence(product.description)}
+                  </p>
+                  <span class="sup-row__link">View Product</span>
+                </div>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </SectionWrapper>
+</BaseLayout>
+
+<style>
+  /* Hero — dark, sits under the transparent nav */
+  #supplements-hero {
+    position: relative;
+    top: calc(var(--nav-height) * -1);
+    margin-bottom: calc(var(--nav-height) * -1);
+    background: var(--color-black);
+  }
+
+  .sup-hero {
+    display: flex;
+    align-items: flex-end;
+    min-height: 60vh;
+    padding-block: var(--space-2xl) var(--space-xl);
+  }
+
+  .sup-hero__eyebrow {
+    display: block;
+    margin-bottom: var(--space-sm);
+  }
+
+  .sup-hero__title {
+    font-family: var(--font-display);
+    font-size: var(--text-hero);
+    color: var(--color-white);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    margin: 0;
+  }
+
+  .sup-hero__sub {
+    max-width: 36ch;
+    margin-top: var(--space-md);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-grey);
+    line-height: 1.6;
+  }
+
+  /* Product list */
+  .sup-list {
+    padding-block: var(--space-xl);
+  }
+
+  .sup-list__item {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .sup-list__item:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .sup-row {
+    display: grid;
+    grid-template-columns: auto 1fr 2fr;
+    align-items: center;
+    gap: var(--space-lg);
+    padding-block: var(--space-lg);
+    position: relative;
+  }
+
+  .sup-row--reversed {
+    grid-template-columns: 2fr 1fr auto;
+  }
+
+  .sup-row--reversed .sup-row__index {
+    order: 3;
+  }
+
+  .sup-row--reversed .sup-row__image-wrap {
+    order: 2;
+  }
+
+  .sup-row--reversed .sup-row__content {
+    order: 1;
+    text-align: right;
+  }
+
+  /* Ghost index number */
+  .sup-row__index {
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-border);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .sup-row__image-wrap {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sup-row__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform var(--transition-slow);
+  }
+
+  .sup-row:hover .sup-row__image {
+    transform: scale(1.04);
+  }
+
+  .sup-row__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .sup-row--reversed .sup-row__content {
+    align-items: flex-end;
+  }
+
+  .sup-row__category {
+    margin-bottom: var(--space-xs);
+  }
+
+  .sup-row__name {
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    color: var(--color-black);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    margin: 0;
+  }
+
+  .sup-row__flavour {
+    font-family: var(--font-display);
+    font-size: var(--text-product);
+    color: var(--color-red);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .sup-row__descriptor {
+    max-width: 48ch;
+    margin-top: var(--space-xs);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-grey);
+    line-height: 1.6;
+  }
+
+  .sup-row__link {
+    margin-top: var(--space-sm);
+    font-family: var(--font-body);
+    font-size: var(--text-label);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-black);
+    transition: color var(--transition-fast);
+  }
+
+  .sup-row:hover .sup-row__link {
+    color: var(--color-red);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .sup-hero {
+      min-height: 50vh;
+    }
+
+    .sup-row,
+    .sup-row--reversed {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+      text-align: left;
+    }
+
+    .sup-row__index {
+      display: none;
+    }
+
+    .sup-row--reversed .sup-row__image-wrap {
+      order: 1;
+    }
+
+    .sup-row--reversed .sup-row__content {
+      order: 2;
+      text-align: left;
+      align-items: flex-start;
+    }
+
+    .sup-row__image-wrap {
+      aspect-ratio: 4 / 3;
+      max-height: 50vh;
+    }
+  }
+</style>

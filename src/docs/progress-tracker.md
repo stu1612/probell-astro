@@ -1,14 +1,14 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 13 Jun 2026 — Session 29**
+**Last updated: 14 Jun 2026 — Session 30**
 
 ---
 
 ## Current Status
 
 **Phase:** Post-build structural redesign
-**Active section:** Task 11 complete — legal pages built and Footer links updated
-**Next action:** Review legal pages in browser, or begin next feature task in `src/features/feature-updates.md`.
+**Active section:** Task 14 complete — supplements listing + detail pages built; broken category pages removed
+**Next action:** Review supplements pages in browser, or begin next feature task in `src/features/feature-updates.md`.
 
 ---
 
@@ -77,6 +77,46 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 30 — 14 Jun 2026
+
+**What was done (Task 14 — supplements pages):**
+
+- Built `src/pages/supplements/index.astro` — listing page; dark hero ("Supplements.") under transparent nav, then editorial alternating product rows (ghost index number, contain-fit product image, category eyebrow, name, red flavour, first-sentence descriptor, "View Product" link). Whole row links to `/supplements/[slug]`. No prices, no coming-soon tags.
+- Built `src/pages/supplements/[slug].astro` — dynamic detail page via `getStaticPaths()` from `SUPPLEMENTS`; section order per spec: dark product hero (image + name/flavour) → white body with 4-stat row (red values), full description, ingredients, three-item usage grid → black CTA block ("Interested in stocking Probell?" → `/#contact`). SEO: title `{flavour} {name} | Probell Nutrition`, description = first 155 chars of description.
+- Renamed data export `PRODUCTS` → `SUPPLEMENTS` in `src/data/supplements.ts` (matches spec import; avoids clash with existing `products.ts`); corrected file header path comment
+- Removed broken pages `whey.astro`, `creatine.astro`, `pre-workout.astro`, `mass-gainer.astro` — all imported a non-existent `@layouts/CategoryLayout.astro` (build was failing before this session's work); removal confirmed by developer
+- Repointed `FOOTER_LEARN_LINKS` in `navigation.ts` from the deleted `/whey` etc. routes to `/learn` (the single tabbed learn page)
+- `npm run build` passes — zero errors, 11 pages generated (incl. 3 supplement detail routes)
+
+**What was done (earlier in session — Task 13 + SEO):**
+
+- SEO meta tags added to `BaseLayout.astro` — `<meta name="description">`, Open Graph (`og:title`, `og:description`, `og:type`), Twitter card tags; `description` prop threaded through `LegalLayout`
+- Task 13 complete: `/learn` page built at `src/pages/learn.astro`
+  - Four product category tabs: Whey 100 Protein, Creatine, Pre-Workout, Mass Gainer
+  - Content driven entirely by `CATEGORY_PAGES` from `src/data/categories.ts` — no hardcoded copy
+  - Tab switching via vanilla JS, no npm packages; active state toggled via `data-tab` attributes
+  - Focal image swaps per tab from `hero.image` field on each category record
+  - `Nav` and `Footer` used; SEO title and description passed to `BaseLayout`
+  - Category pages: `src/pages/learn/[category].astro` dynamic route via `getStaticPaths()`
+- Footer: "Learn" column added — four links to category pages
+- Created `src/data/supplements.ts` — data prep for supplements page; 3 products (Whey Strawberry, Whey CPB, Creatine Caribbean Fruits) with full `Product` interface, stats, ingredients, and usage; not yet committed
+
+**Decisions made this session:**
+
+- `/learn` page uses `BaseLayout` directly — page structure is unique enough not to warrant a new layout component
+- Dynamic `[category].astro` route used for individual category pages via `getStaticPaths()`
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL / whether Instagram section will be reinstated
+- Facebook URL
+- Logo light variant PNG (client to supply)
+
+---
 
 ### Session 29 — 13 Jun 2026
 
