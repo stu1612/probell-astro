@@ -5,14 +5,14 @@ export interface NavLink {
 
 export const NAV_LINKS: NavLink[] = [
   { label: "Supplements", href: "/supplements" },
-  { label: "About", href: "/#brand-story" },
+  { label: "Learn", href: "/learn" },
   { label: "Contact", href: "/#contact" },
 ];
 
 export const FOOTER_SITE_LINKS: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Supplements", href: "/supplements" },
-  { label: "About", href: "/#brand-story" },
+  { label: "Learn", href: "/learn" },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -24,8 +24,8 @@ export const FOOTER_PRODUCT_LINKS: NavLink[] = [
 ];
 
 export const FOOTER_LEARN_LINKS: NavLink[] = [
-  { label: "Whey Protein", href: "/whey" },
-  { label: "Creatine", href: "/creatine" },
-  { label: "Pre-Workout", href: "/pre-workout" },
-  { label: "Mass Gainer", href: "/mass-gainer" },
+  { label: "Whey Protein", href: "/learn" },
+  { label: "Creatine", href: "/learn" },
+  { label: "Pre-Workout", href: "/learn" },
+  { label: "Mass Gainer", href: "/learn" },
 ];

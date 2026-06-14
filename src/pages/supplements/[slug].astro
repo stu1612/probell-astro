@@ -1,0 +1,311 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import SectionWrapper from "@components/SectionWrapper/index.astro";
+import { Image } from "astro:assets";
+import { SUPPLEMENTS, type Product } from "@data/supplements";
+
+export function getStaticPaths() {
+  return SUPPLEMENTS.map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+const title = `${product.flavour} ${product.name} | Probell Nutrition`;
+const description = product.description.slice(0, 155).trim();
+
+const usageItems = [
+  { label: "When to take it", value: product.usage.when },
+  { label: "How much", value: product.usage.amount },
+  { label: "What to mix with", value: product.usage.mixWith },
+];
+---
+
+<BaseLayout title={title} description={description} transparentNav={true}>
+  <!-- 2. Product hero block -->
+  <div id="product-hero">
+    <div class="prod-hero">
+      <div class="container">
+        <div class="prod-hero__grid">
+          <div class="prod-hero__image-wrap">
+            <Image
+              src={product.image}
+              alt={`${product.flavour} ${product.name}`}
+              width={1000}
+              height={1000}
+              format="webp"
+              loading="eager"
+              class="prod-hero__image"
+            />
+          </div>
+          <div class="prod-hero__intro">
+            <span class="prod-hero__category label-text label-text--red">
+              {product.category}
+            </span>
+            <h1 class="prod-hero__name">{product.name}</h1>
+            <span class="prod-hero__flavour">{product.flavour}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <SectionWrapper bg="white">
+    <div class="container">
+      <!-- 3. Key stats row -->
+      <ul class="prod-stats">
+        {
+          product.stats.map((stat) => (
+            <li class="prod-stats__item">
+              <span class="prod-stats__value">{stat.value}</span>
+              <span class="prod-stats__label">{stat.label}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <!-- 4. Description block -->
+      <section class="prod-block">
+        <p class="prod-description">{product.description}</p>
+      </section>
+
+      <!-- 5. Ingredients block -->
+      <section class="prod-block">
+        <h2 class="prod-block__heading">Ingredients</h2>
+        <p class="prod-ingredients">{product.ingredients}</p>
+      </section>
+
+      <!-- 6. Usage block -->
+      <section class="prod-block">
+        <h2 class="prod-block__heading">How to use it</h2>
+        <dl class="prod-usage">
+          {
+            usageItems.map((item) => (
+              <div class="prod-usage__item">
+                <dt class="prod-usage__label">{item.label}</dt>
+                <dd class="prod-usage__value">{item.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+    </div>
+  </SectionWrapper>
+
+  <!-- 7. CTA block -->
+  <SectionWrapper bg="black">
+    <div class="container">
+      <div class="prod-cta">
+        <h2 class="prod-cta__heading">Interested in stocking Probell?</h2>
+        <p class="prod-cta__sub">
+          Talk to us about wholesale pricing, margins, and display support.
+        </p>
+        <a href="/#contact" class="btn-primary prod-cta__btn">Get in Touch</a>
+      </div>
+    </div>
+  </SectionWrapper>
+</BaseLayout>
+
+<style>
+  /* 2. Hero — dark, sits under the transparent nav */
+  #product-hero {
+    position: relative;
+    top: calc(var(--nav-height) * -1);
+    margin-bottom: calc(var(--nav-height) * -1);
+    background: var(--color-black);
+  }
+
+  .prod-hero {
+    padding-block: var(--space-2xl) var(--space-xl);
+  }
+
+  .prod-hero__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .prod-hero__image-wrap {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .prod-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .prod-hero__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .prod-hero__category {
+    margin-bottom: var(--space-xs);
+  }
+
+  .prod-hero__name {
+    font-family: var(--font-display);
+    font-size: var(--text-statement);
+    color: var(--color-white);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    margin: 0;
+  }
+
+  .prod-hero__flavour {
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    color: var(--color-red);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  /* 3. Stats row */
+  .prod-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+    padding-block: var(--space-xl);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .prod-stats__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .prod-stats__value {
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    color: var(--color-red);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .prod-stats__label {
+    font-family: var(--font-body);
+    font-size: var(--text-label);
+    color: var(--color-grey);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  /* 4–6. Content blocks */
+  .prod-block {
+    padding-block: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .prod-block__heading {
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    color: var(--color-black);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    margin: 0 0 var(--space-md);
+  }
+
+  .prod-description {
+    max-width: 70ch;
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-black);
+    line-height: 1.8;
+  }
+
+  .prod-ingredients {
+    max-width: 70ch;
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-grey);
+    line-height: 1.8;
+  }
+
+  /* 6. Usage */
+  .prod-usage {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .prod-usage__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .prod-usage__label {
+    font-family: var(--font-body);
+    font-size: var(--text-label);
+    font-weight: 500;
+    color: var(--color-red);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  .prod-usage__value {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-black);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* 7. CTA */
+  .prod-cta {
+    padding-block: var(--space-xl);
+    max-width: 60ch;
+  }
+
+  .prod-cta__heading {
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    color: var(--color-white);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .prod-cta__sub {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-grey);
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .prod-hero__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .prod-stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg) var(--space-md);
+    }
+
+    .prod-usage {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+  }
+</style>

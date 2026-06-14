@@ -1082,7 +1082,7 @@ export const STATS: Stat[] = [
 
 # Task 11 — Legal Pages
 
-**Status:** Pending
+**Status:** Complete — 13 Jun 2026
 **Scope:** New pages + Footer update
 
 ---
@@ -1201,7 +1201,7 @@ Use values from the data file.
 
 # Task 13 — /learn Page
 
-**Status:** Pending
+**Status:** Complete — 14 Jun 2026
 **Route:** `src/pages/learn.astro`
 
 ---
@@ -1289,5 +1289,141 @@ for, and why they work.`
 - [ ] Focal image swaps on tab change
 - [ ] Fully responsive
 - [ ] SEO props correct
+- [ ] Build passes with zero errors
+- [ ] List every file created or modified
+
+
+# Task 14 — Supplements Listing & Detail Pages
+
+**Status:** Complete — 14 Jun 2026
+**Scope:** Two new page types + data import
+
+---
+
+## Context
+
+Build a supplements listing page at `/supplements`
+and individual product detail pages at
+`/supplements/[slug]`.
+
+This is not an ecommerce site. No prices.
+No coming soon tags. No add to cart.
+These pages exist to inform gym owners,
+distributors, and retailers about the product range.
+
+Read `docs/ai-interaction.md`, `docs/coding-standards.md`,
+`docs/design.md`, `docs/brand.md`, `docs/seo.md`, and
+`docs/data-architecture.md` before making any changes.
+
+---
+
+## Data
+
+Import `SUPPLEMENTS` from `@data/supplements`.
+All content comes from this file.
+Do not hardcode any content.
+Three products in the initial build.
+
+---
+
+## Page 1 — /supplements
+
+**Route:** `src/pages/supplements/index.astro`
+
+### Requirements
+
+- Lists all three products from `SUPPLEMENTS`
+- Each product links to `/supplements/[slug]`
+- No prices
+- No coming soon tags
+- Clean, confident, brand-appropriate
+- Uses `Nav` and `Footer`
+- Wrapped in `BaseLayout` with correct SEO props
+
+### SEO
+- Title: `Supplements | Probell Nutrition`
+- Description: `The Probell Nutrition product range.
+  Whey protein, creatine, and pre-workout built
+  to one standard. No fillers, no shortcuts.`
+
+### Design freedom
+Full creative latitude within `docs/design.md`
+and `docs/brand.md` constraints.
+Must feel bold and editorial — not a generic
+product grid.
+
+---
+
+## Page 2 — /supplements/[slug]
+
+**Route:** `src/pages/supplements/[slug].astro`
+
+Uses Astro static dynamic routing.
+Generate static paths from `SUPPLEMENTS` array:
+
+```astro
+export function getStaticPaths() {
+  return SUPPLEMENTS.map(product => ({
+    params: { slug: product.slug },
+    props: { product }
+  }))
+}
+```
+
+### Page structure — exact order
+
+1. Nav — fixed
+2. Product hero block
+   - Large product image — `<img>` not background
+   - PNG with transparent background
+   - Product name and flavour prominent
+3. Key stats row
+   - Four stats from `product.stats`
+   - Stat value: display font, large, `var(--color-red)`
+   - Stat label: body font, small, `var(--color-grey)`,
+     uppercase
+4. Description block
+   - `product.description` — full long form copy
+   - Body font, comfortable line height
+5. Ingredients block
+   - Heading: "Ingredients"
+   - `product.ingredients` copy
+   - Body font, `var(--color-grey)`
+6. Usage block — three items from `product.usage`
+   - When to take it — `product.usage.when`
+   - How much — `product.usage.amount`
+   - What to mix with — `product.usage.mixWith`
+   - Each item has a clear label and value
+7. CTA block
+   - Heading: "Interested in stocking Probell?"
+   - Sub-line: "Talk to us about wholesale pricing,
+     margins, and display support."
+   - Button: `.btn-primary` → `/#contact`
+
+### Design freedom
+Full creative latitude within `docs/design.md`
+and `docs/brand.md` constraints.
+No prices. No coming soon tags. No ecommerce signals.
+
+### SEO per product
+- Title: `{product.flavour} {product.name} |
+  Probell Nutrition`
+- Description: first 155 characters of
+  `product.description`
+
+---
+
+## Verify
+
+- [ ] `/supplements` lists all three products
+- [ ] Each product card links to correct slug
+- [ ] All three detail pages generate on build
+- [ ] Product image renders as `<img>` not background
+- [ ] Stats, description, ingredients, usage
+  all render from data
+- [ ] No prices anywhere
+- [ ] No coming soon tags anywhere
+- [ ] CTA links to `/#contact`
+- [ ] SEO props correct on all pages
 - [ ] Build passes with zero errors
 - [ ] List every file created or modified
