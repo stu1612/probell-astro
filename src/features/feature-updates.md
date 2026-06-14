@@ -1198,3 +1198,96 @@ Use values from the data file.
 - [ ] SEO props passed on every page
 - [ ] Build passes with zero errors
 - [ ] List every file created or modified
+
+# Task 13 — /learn Page
+
+**Status:** Pending
+**Route:** `src/pages/learn.astro`
+
+---
+
+## Context
+
+Build a single educational page at `/learn` that presents
+Probell's four product categories through a tabbed
+interface. This is not a product listing page and not
+an ecommerce page. It is a brand education tool —
+bold, confident, and visually engaging.
+
+Read `docs/ai-interaction.md`, `docs/coding-standards.md`,
+`docs/design.md`, `docs/brand.md`, `docs/seo.md`, and
+`docs/data-architecture.md` before making any changes.
+
+---
+
+## Data
+
+Import `CATEGORY_PAGES` from `@data/categories`.
+All content, stats, statements, and section copy
+comes from this file. Do not hardcode any content.
+
+---
+
+## Four tabs
+
+- Whey 100 Protein
+- Creatine
+- Pre-Workout
+- Mass Gainer
+
+Default active tab on load: Whey 100 Protein.
+
+---
+
+## Requirements
+
+- One page, four tabs, content switches on tab selection
+- Each tab displays: intro, sections with stats,
+  statement, and CTA
+- Focal image per tab uses `hero.image` from data
+  as placeholder — swaps when tab changes
+- Fully responsive — mobile and desktop
+- Tab switching handled by vanilla JS —
+  no npm packages
+- Uses `Nav` and `Footer` components
+- SEO: title and description passed to `BaseLayout`
+
+---
+
+## Design freedom
+
+Claude Code has full creative latitude on layout,
+typography treatment, image placement, tab style,
+and visual hierarchy — within the constraints of:
+
+- `docs/design.md` — color tokens, typography,
+  spacing system, component rules
+- `docs/brand.md` — brand principles and
+  photography rules
+- No Tailwind, no external CSS frameworks
+- No animations beyond hover transitions
+- The result must feel bold, editorial,
+  and visually strong — not generic or templated
+
+---
+
+## SEO
+
+- Title: `Learn | Probell Nutrition`
+- Description: `Understand the supplements behind
+the brand. Whey protein, creatine, pre-workout,
+and mass gainer — what they are, who they are
+for, and why they work.`
+
+---
+
+## Verify
+
+- [ ] Page generates at `/learn` on build
+- [ ] All four tabs render correct content from data
+- [ ] Tab switching works without page reload
+- [ ] Focal image swaps on tab change
+- [ ] Fully responsive
+- [ ] SEO props correct
+- [ ] Build passes with zero errors
+- [ ] List every file created or modified

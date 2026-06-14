@@ -18,9 +18,13 @@ const navClass = transparent ? "nav nav--transparent" : "nav nav--scrolled";
     <div class="nav__left">
       <NavLogo />
       <nav class="nav__links" aria-label="Main navigation">
-        {NAV_LINKS.map((link) => (
-          <a href={link.href} class="nav__link">{link.label}</a>
-        ))}
+        {
+          NAV_LINKS.map((link) => (
+            <a href={link.href} class="nav__link">
+              {link.label}
+            </a>
+          ))
+        }
       </nav>
     </div>
     <div class="nav__right">
@@ -126,11 +130,12 @@ const navClass = transparent ? "nav nav--transparent" : "nav nav--scrolled";
   }
 
   .nav__link {
-    font-family: var(--font-body);
+    font-family: var(--font-barlow);
     font-size: 1.25rem;
     font-weight: 500;
     transition: color var(--transition-fast);
     letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 
   .nav__link:hover {

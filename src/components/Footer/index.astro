@@ -1,5 +1,5 @@
 ---
-import { FOOTER_SITE_LINKS, FOOTER_PRODUCT_LINKS } from "@data/navigation";
+import { FOOTER_SITE_LINKS, FOOTER_PRODUCT_LINKS, FOOTER_LEARN_LINKS } from "@data/navigation";
 import { COPYRIGHT } from "@constants/site";
 ---
 
@@ -36,7 +36,15 @@ import { COPYRIGHT } from "@constants/site";
         ))}
       </nav>
 
-      <!-- Column 4: Follow Us -->
+      <!-- Column 4: Learn -->
+      <nav class="footer__col" aria-label="Learn links">
+        <span class="label-text footer__col-heading">Learn</span>
+        {FOOTER_LEARN_LINKS.map((link) => (
+          <a href={link.href} class="footer__link">{link.label}</a>
+        ))}
+      </nav>
+
+      <!-- Column 5: Follow Us -->
       <div class="footer__col">
         <span class="label-text footer__col-heading">Follow Us</span>
         <div class="footer__socials">
@@ -119,7 +127,7 @@ import { COPYRIGHT } from "@constants/site";
 
   .footer__grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
     gap: var(--space-lg);
     align-items: start;
   }

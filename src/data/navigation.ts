@@ -22,3 +22,10 @@ export const FOOTER_PRODUCT_LINKS: NavLink[] = [
   { label: "Pre-Workout", href: "/supplements" },
   { label: "Mass Gainer", href: "/supplements" },
 ];
+
+export const FOOTER_LEARN_LINKS: NavLink[] = [
+  { label: "Whey Protein", href: "/whey" },
+  { label: "Creatine", href: "/creatine" },
+  { label: "Pre-Workout", href: "/pre-workout" },
+  { label: "Mass Gainer", href: "/mass-gainer" },
+];
