@@ -19,16 +19,17 @@ import { Image } from "astro:assets";
         Give your members what they've been asking for.
       </h2>
       <p class="em__cta-body font-text text-black">
-        Probell is stocked in gyms that take their members seriously. Talk to
-        us about wholesale pricing, margins, and display support.
+        Probell is stocked in gyms that take their members seriously. Talk to us
+        about wholesale pricing, margins, and display support.
       </p>
+      <a href="/learn" class="btn-primary em__cta-btn">Learn</a>
     </div>
   </div>
 </div>
 
 <style>
   .em__cta-section {
-    padding: var(--space-xl) 0;
+    padding-top: var(--space-xl);
   }
 
   .em__cta-layout {
@@ -54,18 +55,36 @@ import { Image } from "astro:assets";
 
   .em__cta-headline {
     font-family: var(--font-display);
-    font-size: var(--text-statement);
+    font-size: var(--text-statement-md);
     color: var(--color-black);
     line-height: 0.95;
   }
 
+  .em__cta-btn {
+    width: min-content;
+  }
+
   .em__cta-body {
-    max-width: 42ch;
+    width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    .em__cta-body {
+      max-width: 42ch;
+    }
   }
 
   @media (max-width: 768px) {
     .em__cta-layout {
       grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .em__cta-content {
+      text-align: center;
+      display: flex;
+      align-items: center;
     }
   }
 </style>

@@ -42,10 +42,6 @@ const hasCtas = primaryCta || secondaryCta;
 </section>
 
 <style>
-  #identity {
-    padding: var(--space-lg) 0;
-  }
-
   .identity__row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -69,6 +65,7 @@ const hasCtas = primaryCta || secondaryCta;
     font-family: var(--font-display);
     font-size: var(--text-highlight);
     color: var(--color-white);
+    text-align: center;
   }
 
   .identity__body {
@@ -88,10 +85,22 @@ const hasCtas = primaryCta || secondaryCta;
     gap: var(--space-md);
   }
 
+  @media (min-width: 768px) {
+    #identity {
+      padding: var(--space-lg) 0;
+    }
+
+    .identity__headline {
+      text-align: left;
+    }
+  }
+
   @media (max-width: 1040px) {
     .identity__row {
       grid-template-columns: 1fr;
       gap: var(--space-md);
+      padding: 0 var(--space-md) var(--space-md);
+      text-align: center;
     }
 
     .identity__ctas {

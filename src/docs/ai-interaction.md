@@ -59,6 +59,8 @@ Do not take any action until the developer confirms.
 - Never add features not in `page-structure.md`
 - Never delete files without confirmation
 - Never auto-commit or run git operations
+- A passing build is not a completion signal for UI work — visual
+  verification (4.5) is required first
 
 ---
 
@@ -88,6 +90,34 @@ Follow `coding-standards.md` component structure exactly.
 ### 4. Import into page
 
 Add the component import and usage to `src/pages/index.astro`.
+
+### 4.5 Visual Verification (required for any layout/UI change)
+
+`npm run build` / `pnpm build` passing confirms the code compiles. It does
+not confirm the page looks right. This step is separate and mandatory
+before any layout, component, or styling task is reported complete.
+
+**Tooling:** Playwright MCP. Say "use the Playwright MCP" explicitly at
+the start of the session — Claude Code defaults to shelling out via Bash
+otherwise.
+
+**Process:**
+
+1. Start the dev server, navigate to the changed page/route via the
+   Playwright MCP.
+2. Screenshot at three breakpoints: `375px` (mobile), `768px` (tablet),
+   `1440px` (desktop).
+3. Compare each screenshot against `design.md` tokens and the relevant
+   section spec in `page-structure.md`.
+4. State explicitly what matches and what doesn't — overlap, overflow,
+   broken breakout elements, incorrect spacing tokens, illegible text.
+   "Looks good" is not an acceptable report.
+5. Fix issues found, re-screenshot, repeat until clean at all three
+   widths.
+6. Only then report the task complete and move to the Iterate step.
+
+This applies retroactively when doing an audit pass on existing
+sections, not just new builds.
 
 ### 5. Confirm completion
 
