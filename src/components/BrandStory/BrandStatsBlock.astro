@@ -5,7 +5,9 @@ import { STATS } from "@data/stats";
 <div class="em__stats-section">
   <div class="em__stats-layout">
     <div class="em__anchor">
-      <span class="label-text label-text--red em__eyebrow">Performance Data</span>
+      <span class="label-text label-text--red em__eyebrow"
+        >Performance Data</span
+      >
       <p class="em__anchor-statement display-text">
         The numbers behind the product.
       </p>
@@ -16,16 +18,20 @@ import { STATS } from "@data/stats";
     </div>
 
     <div class="em__stats-list">
-      {STATS.map((stat) => (
-        <div class="em__stat-row">
-          <span class={`display-text em__stat-num${stat.accent ? " em__stat-num--red" : ""}`}>
-            {stat.number}
-          </span>
-          <div class="em__stat-right">
-            <span class="label-text em__stat-label">{stat.label}</span>
+      {
+        STATS.map((stat) => (
+          <div class="em__stat-row">
+            <span
+              class={`display-text em__stat-num${stat.accent ? " em__stat-num--red" : ""}`}
+            >
+              {stat.number}
+            </span>
+            <div class="em__stat-right">
+              <span class="label-text em__stat-label">{stat.label}</span>
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </div>
@@ -109,6 +115,7 @@ import { STATS } from "@data/stats";
 
     .em__anchor {
       position: static;
+      text-align: center;
     }
 
     .em__anchor-body {

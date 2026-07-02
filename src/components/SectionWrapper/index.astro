@@ -1,12 +1,13 @@
 ---
 interface Props {
-  bg?: "black" | "white" | "surface";
+  bg?: "black" | "white" | "surface" | "silver";
 }
 
 const bgMap = {
   black: "var(--color-black)",
   white: "var(--color-white)",
   surface: "var(--color-surface)",
+  silver: "var(--color-silver)",
 };
 
 const { bg } = Astro.props;

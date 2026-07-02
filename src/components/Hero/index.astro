@@ -19,10 +19,14 @@ import { Image } from "astro:assets";
 
   <div class="hero__headline">
     <h1 class="headline display-text">
-      <span class="headline__line--1">Built</span>
+      <span class="headline__line--1">Built for</span>
+      <span class="headline__line--1">the Grind</span>
+      <!-- <span class="headline__line--1">Built</span>
       <span class="headline__line--2">For The</span>
-      <span class="headline__line--3">Grind</span>
+      <span class="headline__line--3">Grind</span> -->
     </h1>
+    <p class="hero__subline label-text">Probell Nutrition. Coming soon.</p>
+    <a href="/#contact" class="btn-primary hero__cta">Join the Waitlist</a>
   </div>
 </section>
 
@@ -50,7 +54,7 @@ import { Image } from "astro:assets";
     height: 100%;
     object-fit: cover;
     display: block;
-    object-position: 6% center;
+    object-position: 14% center;
   }
 
   .hero__overlay-bottom {
@@ -87,9 +91,9 @@ import { Image } from "astro:assets";
     position: absolute;
     top: 50%;
     right: 0;
-    width: 50%;
+    width: auto;
     transform: translateY(-50%);
-    text-align: left;
+    text-align: center;
     padding: var(--space-lg);
     z-index: 1;
   }
@@ -105,19 +109,44 @@ import { Image } from "astro:assets";
   }
 
   .headline__line--1 {
-    font-size: clamp(4rem, 13vw, 16rem);
+    font-size: clamp(5rem, 13vw, 16rem);
   }
-  .headline__line--2 {
+  /* .headline__line--2 {
     font-size: clamp(4rem, 9vw, 11rem);
   }
   .headline__line--3 {
     font-size: clamp(4rem, 12vw, 16rem);
+  } */
+
+  .hero__subline {
+    color: var(--color-grey);
+    margin-top: var(--space-sm);
+  }
+
+  .hero__cta {
+    margin-top: var(--space-md);
+    display: block;
+    text-align: center;
   }
 
   @media (max-width: 1024px) {
     .hero__headline {
       padding: var(--space-md);
       width: 100%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero__cta {
+      display: none;
+    }
+
+    .hero__headline {
+      text-align: right;
+    }
+
+    .hero__image {
+      object-position: 6% center;
     }
   }
 </style>

@@ -38,6 +38,7 @@ const { eyebrow, headline1, headline2, headline3, description, image } =
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-lg);
+    border-radius: var(--radius-image);
   }
 
   .banner::after {
@@ -91,6 +92,12 @@ const { eyebrow, headline1, headline2, headline3, description, image } =
     line-height: 1.6;
   }
 
+  @media (max-width: 1500px) {
+    .banner__headline {
+      font-size: var(--text-section);
+    }
+  }
+
   @media (max-width: 768px) {
     .banner {
       grid-template-columns: 1fr;
@@ -107,10 +114,11 @@ const { eyebrow, headline1, headline2, headline3, description, image } =
 
     .banner__text {
       width: 100%;
+      text-align: center;
     }
 
     .banner__headline {
-      font-size: clamp(2.5rem, 10vw, 4rem);
+      font-size: var(--text-statement);
     }
 
     .banner__description {

@@ -1,5 +1,9 @@
 ---
-import { FOOTER_SITE_LINKS, FOOTER_PRODUCT_LINKS, FOOTER_LEARN_LINKS } from "@data/navigation";
+import {
+  FOOTER_SITE_LINKS,
+  FOOTER_PRODUCT_LINKS,
+  FOOTER_LEARN_LINKS,
+} from "@data/navigation";
 import { COPYRIGHT } from "@constants/site";
 ---
 
@@ -23,25 +27,37 @@ import { COPYRIGHT } from "@constants/site";
       <!-- Column 2: Links -->
       <nav class="footer__col" aria-label="Site links">
         <span class="label-text footer__col-heading">Links</span>
-        {FOOTER_SITE_LINKS.map((link) => (
-          <a href={link.href} class="footer__link">{link.label}</a>
-        ))}
+        {
+          FOOTER_SITE_LINKS.map((link) => (
+            <a href={link.href} class="footer__link">
+              {link.label}
+            </a>
+          ))
+        }
       </nav>
 
       <!-- Column 3: Products -->
       <nav class="footer__col" aria-label="Product links">
         <span class="label-text footer__col-heading">Products</span>
-        {FOOTER_PRODUCT_LINKS.map((link) => (
-          <a href={link.href} class="footer__link">{link.label}</a>
-        ))}
+        {
+          FOOTER_PRODUCT_LINKS.map((link) => (
+            <a href={link.href} class="footer__link">
+              {link.label}
+            </a>
+          ))
+        }
       </nav>
 
       <!-- Column 4: Learn -->
       <nav class="footer__col" aria-label="Learn links">
         <span class="label-text footer__col-heading">Learn</span>
-        {FOOTER_LEARN_LINKS.map((link) => (
-          <a href={link.href} class="footer__link">{link.label}</a>
-        ))}
+        {
+          FOOTER_LEARN_LINKS.map((link) => (
+            <a href={link.href} class="footer__link">
+              {link.label}
+            </a>
+          ))
+        }
       </nav>
 
       <!-- Column 5: Follow Us -->
@@ -111,8 +127,12 @@ import { COPYRIGHT } from "@constants/site";
         {COPYRIGHT}
       </span>
       <div class="footer__legal-links">
-        <a href="/legal/privacy" class="font-text footer__legal">Privacy Policy</a>
-        <a href="/legal/terms" class="font-text footer__legal">Terms & Conditions</a>
+        <a href="/legal/privacy" class="font-text footer__legal"
+          >Privacy Policy</a
+        >
+        <a href="/legal/terms" class="font-text footer__legal"
+          >Terms & Conditions</a
+        >
       </div>
     </div>
   </div>
@@ -121,7 +141,7 @@ import { COPYRIGHT } from "@constants/site";
 <style>
   .footer {
     background: var(--color-black);
-    border-top: 1px solid var(--color-border);
+    /* border-top: 1px solid var(--color-border); */
     padding: var(--space-lg);
   }
 
