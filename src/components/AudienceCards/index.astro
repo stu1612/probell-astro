@@ -1,0 +1,27 @@
+---
+import { AUDIENCE_CARDS } from "@data/audience-cards";
+import AudienceCard from "@components/AudienceCards/AudienceCard.astro";
+---
+
+<section class="ac">
+  <h2 class="ac__heading">Become an ambassador</h2>
+  <div class="ac__grid grid-4">
+    {AUDIENCE_CARDS.map((card) => <AudienceCard card={card} />)}
+  </div>
+</section>
+
+<style>
+  .ac {
+    background: var(--color-black);
+    /* padding-block: var(--space-xl); */
+  }
+
+  .ac__heading {
+    font-family: var(--font-display);
+    font-size: var(--text-statement);
+    color: var(--color-white);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: var(--space-lg);
+  }
+</style>

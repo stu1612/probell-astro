@@ -5,7 +5,7 @@ import { Image } from "astro:assets";
 <section id="hero">
   <div class="hero">
     <Image
-      src="/images/hero/hero-main.jpg"
+      src="/images/hero/hero_img.jpg"
       alt="Probell Nutrition athlete in training"
       width={1920}
       height={1080}
@@ -14,7 +14,7 @@ import { Image } from "astro:assets";
       class="hero__image"
     />
     <div class="hero__overlay-bottom"></div>
-    <div class="hero__overlay-right"></div>
+    <!-- <div class="hero__overlay-right"></div> -->
   </div>
 
   <div class="hero__headline">
@@ -25,7 +25,7 @@ import { Image } from "astro:assets";
       <span class="headline__line--2">For The</span>
       <span class="headline__line--3">Grind</span> -->
     </h1>
-    <p class="hero__subline label-text">Probell Nutrition. Coming soon.</p>
+    <p class="hero__subline label-text">The only supplement you can lift</p>
     <a href="/#contact" class="btn-primary hero__cta">Join the Waitlist</a>
   </div>
 </section>
@@ -54,7 +54,7 @@ import { Image } from "astro:assets";
     height: 100%;
     object-fit: cover;
     display: block;
-    object-position: 14% center;
+    object-position: center;
   }
 
   .hero__overlay-bottom {
@@ -65,7 +65,7 @@ import { Image } from "astro:assets";
     height: 50%;
     background: linear-gradient(
       180deg,
-      rgba(18, 18, 19, 0) 0%,
+      rgba(18, 18, 19, 0.1) 40%,
       rgba(18, 18, 19, 1) 100%
     );
     pointer-events: none;
@@ -109,7 +109,7 @@ import { Image } from "astro:assets";
   }
 
   .headline__line--1 {
-    font-size: clamp(5rem, 13vw, 16rem);
+    font-size: clamp(5rem, 13vw, 10rem);
   }
   /* .headline__line--2 {
     font-size: clamp(4rem, 9vw, 11rem);
@@ -143,10 +143,6 @@ import { Image } from "astro:assets";
 
     .hero__headline {
       text-align: right;
-    }
-
-    .hero__image {
-      object-position: 6% center;
     }
   }
 </style>

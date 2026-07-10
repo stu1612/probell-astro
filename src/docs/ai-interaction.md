@@ -62,6 +62,37 @@ Do not take any action until the developer confirms.
 - A passing build is not a completion signal for UI work — visual
   verification (4.5) is required first
 
+## Deviations from Spec
+
+The developer may explicitly choose to work outside the documented specs
+(design.md, page-structure.md, brand.md, coding-standards.md, etc.).
+This is intentional and should not be treated as an error to correct.
+
+**Signal:** any task prefixed `Deviation:` means the developer is
+knowingly diverging from spec for this task. Proceed without flagging
+spec misalignment for that specific change.
+
+**Logging:** when updating progress-tracker.md at the end of a session
+(per the existing session-log pattern), tag any deviation-flagged
+change with a `**DEVIATION:**` prefix inside the normal "Decisions made
+this session" list — do not create a separate section or file for it.
+
+Example:
+
+**Decisions made this session:**
+
+- **DEVIATION:** Hero CTA changed from "Contact" to "Become a Partner"
+  — diverges from page-structure.md Nav spec, per developer direction
+
+This keeps deviations discoverable via search across the existing
+session logs without adding new files to maintain.
+
+If a deviation represents a genuine strategic/structural change (new
+audience segment, dropped market strategy, IA overhaul) rather than a
+one-off tactical choice — flag this distinction to the developer rather
+than silently logging it the same way. Structural changes should get
+their own doc (see market-strategy.md as the model), not a session-log tag.
+
 ---
 
 ## Workflow — Every Section
