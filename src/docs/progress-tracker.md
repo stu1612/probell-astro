@@ -1,14 +1,14 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 19 Jul 2026 — Session 34**
+**Last updated: 19 Jul 2026 — Session 35**
 
 ---
 
 ## Current Status
 
 **Phase:** Post-build structural redesign
-**Active section:** Sales Partner page (`/partners/sales`) built and functionally confirmed (HubSpot submission tested, payload landing). Retailer and Distributor routes (`/partners/retail`, `/partners/distributor`) still scaffolded as empty files. `/partners/index` also still empty.
-**Next action:** Build Retailer and Distributor pages from their v2 specs, reusing `src/lib/hubspot.ts` (now exists) rather than duplicating submission logic. Visual verification (Playwright, 375/768/1440px) on `/partners/sales` still outstanding — Playwright MCP was unavailable this session; developer to review in-browser directly before this page is marked fully complete.
+**Active section:** Sales Partner (`/partners/sales`) and Retailer (`/partners/retail`) pages built, both reusing `src/lib/hubspot.ts`. Retailer is developer-confirmed complete (visual check + working submission). Sales Partner's visual verification is still outstanding. Distributor route (`/partners/distributor`) and `/partners/index` still scaffolded as empty files.
+**Next action:** Build Distributor page from its v2 spec, reusing `src/lib/hubspot.ts`. Visual verification (Playwright, 375/768/1440px) on `/partners/sales` still outstanding — Playwright MCP has not been available in these sessions; developer to review in-browser directly before that page is marked fully complete.
 
 **Note on Sessions 31–33:** this work was carried out by the developer directly, without running through Claude Code sessions — logged here retroactively per developer request, sole-authorship, "off script." See entries below.
 
@@ -77,11 +77,35 @@ These items must be confirmed before Claude Code begins building.
 | —   | Supplements page            | Complete    | 14 Jun 2026 | Listing + detail pages built (Task 14)                                                     |
 | —   | AudienceCards                | Complete    | 10 Jul 2026 | Solo dev session (not run through Claude Code) — new homepage section, 4-card grid linking to `/supplements` and the three partner routes; see Session 32 |
 | —   | Sales Partner page (`/partners/sales`) | Built — pending visual verification | 19 Jul 2026 | Hero, Why Probell, How It Works, application form; FAQ cut (deviation, see Session 34). `src/lib/hubspot.ts` created as shared submission utility for all three partner forms. HubSpot submission functionally confirmed working. Playwright visual check (375/768/1440px) not yet done |
-| —   | Retailer / Distributor / partner index pages | Not started | —           | Routes scaffolded as empty files; specs revised to v2 in `src/features/` but no page markup built yet. Should reuse `src/lib/hubspot.ts` |
+| —   | Retailer page (`/partners/retail`)     | Complete    | 19 Jul 2026 | Hero, short "Why Stock Probell" list (deliberately not a stat-chip grid per spec), pricing-is-request-not-publish framing, How It Works, request form (Business Name, Your Name, Email, Phone, Message; no Business Type dropdown, no location field, both deliberate per spec). No automated confirmation email (per spec — inline success only). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working |
+| —   | Distributor / partner index pages | Not started | —           | Routes scaffolded as empty files; specs revised to v2 in `src/features/` but no page markup built yet. Should reuse `src/lib/hubspot.ts` |
 
 ---
 
 ## Session Log
+
+### Session 35 — 19 Jul 2026
+
+**What was done:**
+
+- Built `src/pages/partners/retail.astro` — Retailer Program page: dark text-only hero, short "Why Stock Probell" list, pricing-is-request-not-publish framing section, "How It Works" 4-step list, request form (Business Name, Your Name, Email, Phone, Message, hidden Partner Type)
+- Reused `src/lib/hubspot.ts` directly — no new submission utility created, per the shared-pattern instruction in `partner-crm-integration.md` and confirmed at kickoff before writing any code
+- Added `HUBSPOT_RETAILER_FORM_GUID` to `.env`, reusing the existing `HUBSPOT_PORTAL_ID`; same frontmatter → `data-*` attribute → client script pattern as Sales Partner (see Session 34)
+- `npm run build` passes — zero errors, 15 pages generated; confirmed built HTML carries the correct portal ID and form GUID
+- Bug found and fixed: developer hit a 404 on submission testing. Root cause was not a code bug — the `npm run dev` process had been running continuously since earlier in the session, started before `HUBSPOT_PORTAL_ID`/`HUBSPOT_SALES_FORM_GUID`/`HUBSPOT_RETAILER_FORM_GUID` existed in `.env`. Vite/Node load `.env` once at process startup and don't hot-reload it on file changes, so the long-running dev server kept serving both `data-portal-id` and `data-form-guid` empty on **both** `/partners/sales` and `/partners/retail` — confirmed via `curl` against the live dev server before and after a restart. Fixed by restarting the dev server; confirmed both forms then served the correct values. Operational note for future sessions: **any new env var added mid-session requires a dev server restart to take effect** — a fresh `npm run build` always re-reads `.env` correctly, which is why this wasn't caught by the build-output check alone.
+- Developer confirmed: visual check on `/partners/retail` complete, and a real submission after the restart lands correctly in HubSpot.
+
+**Decisions made this session:**
+
+- "Why Stock Probell" rendered as a plain left-bordered list (3 items), not a card/chip grid — spec explicitly calls for this section to stay light and avoid overclaiming scale the brand doesn't have yet, distinct from Sales Partner's 4-card "Why Probell" treatment
+- No automated confirmation email built for this form, per spec — inline success message only, same UI pattern as Sales Partner but no email-sending behavior implied
+- No Business Type dropdown, no location field — both deliberately excluded per spec (open Message field captures the real answer; logistics belong in the follow-up conversation, not the form)
+
+**Decisions still open:**
+
+- Same list as Session 34 (Retailer's own visual/functional verification items are resolved — see above)
+
+---
 
 ### Session 34 — 19 Jul 2026
 
