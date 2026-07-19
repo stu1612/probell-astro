@@ -14,7 +14,7 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     descriptor: "Premium protein, built for people who train hard.",
     href: "/supplements",
     image: "/images/audience/shop_2.jpg",
-    tint: "grey",
+    tint: "gold",
   },
   {
     number: "02",
@@ -22,7 +22,7 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     descriptor: "Stock Probell. Gyms, stores, and studios welcome.",
     href: "/partners/retail",
     image: "/images/audience/retailer.jpg",
-    tint: "grey",
+    tint: "gold",
   },
   {
     number: "03",
@@ -30,7 +30,7 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     descriptor: "Wholesale and national distribution opportunities.",
     href: "/partners/distributor",
     image: "/images/audience/distributor.jpg",
-    tint: "grey",
+    tint: "gold",
   },
   {
     number: "04",
@@ -38,6 +38,6 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     descriptor: "Independent reps. Real commission. Real product.",
     href: "/partners/sales",
     image: "/images/audience/partners.jpg",
-    tint: "grey",
+    tint: "gold",
   },
 ];

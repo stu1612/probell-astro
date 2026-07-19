@@ -29,7 +29,7 @@ const { card } = Astro.props;
     <p class="ac__descriptor">{card.descriptor}</p>
     <span class="ac__cta">Learn More &rarr;</span>
   </div>
-  <div class="ac__overlay"></div>
+  <!-- <div class="ac__overlay"></div> -->
 </a>
 
 <style>
@@ -50,7 +50,7 @@ const { card } = Astro.props;
     object-fit: cover;
   }
 
-  .ac__overlay {
+  /* .ac__overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(
@@ -60,7 +60,7 @@ const { card } = Astro.props;
       rgba(0, 0, 0, 0) 100%
     );
     pointer-events: none;
-  }
+  } */
 
   .ac__tint {
     position: absolute;
@@ -134,7 +134,7 @@ const { card } = Astro.props;
       rgba(0, 0, 0, 0) 100%
     );
     pointer-events: none;
-    opacity: 0;
+    /* opacity: 0; */
     transition: opacity var(--transition-base);
   }
 
