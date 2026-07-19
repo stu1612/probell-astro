@@ -1,14 +1,16 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 14 Jun 2026 — Session 30**
+**Last updated: 19 Jul 2026 — Session 33**
 
 ---
 
 ## Current Status
 
 **Phase:** Post-build structural redesign
-**Active section:** Task 14 complete — supplements listing + detail pages built; broken category pages removed
-**Next action:** Review supplements pages in browser, or begin next feature task in `src/features/feature-updates.md`.
+**Active section:** AudienceCards section built and live on homepage; partner program routes (`/partners/index`, `/partners/distributor`, `/partners/retail`, `/partners/sales`) scaffolded as empty files — specs for all four (`distributor-program-page.md`, `retailer-program-page.md`, `sales-partner-page.md`, `partner-crm-integration.md`) have been revised to v2 but pages are not yet built
+**Next action:** Build out the four partner program pages from their v2 specs in `src/features/`, wired through the shared HubSpot CRM integration pattern in `partner-crm-integration.md`.
+
+**Note on Sessions 31–33:** this work was carried out by the developer directly, without running through Claude Code sessions — logged here retroactively per developer request, sole-authorship, "off script." See entries below.
 
 ---
 
@@ -72,11 +74,89 @@ These items must be confirmed before Claude Code begins building.
 | 11  | Instagram                   | Removed     | —           | Removed Session 24 — component deleted; can be reinstated when account URL confirmed       |
 | 12  | Contact                     | Complete    | 20 May 2026 | Web3Forms; WEB3FORMS_KEY env var required before launch; hCaptcha included                 |
 | 13  | Footer                      | Complete    | 20 May 2026 | 4-col grid; probell-logo.png used (swap when logo-light.png arrives); social icons #placeholder |
-| —   | Supplements page            | Not started | —           | Placeholder only at launch                                                                 |
+| —   | Supplements page            | Complete    | 14 Jun 2026 | Listing + detail pages built (Task 14)                                                     |
+| —   | AudienceCards                | Complete    | 10 Jul 2026 | Solo dev session (not run through Claude Code) — new homepage section, 4-card grid linking to `/supplements` and the three partner routes; see Session 32 |
+| —   | Partner program pages        | Not started | —           | Routes scaffolded as empty files (`/partners/index`, `/distributor`, `/retail`, `/sales`); specs revised to v2 in `src/features/` but no page markup built yet |
 
 ---
 
 ## Session Log
+
+### Session 33 — 19 Jul 2026
+
+**Session type:** Solo developer work, not run through a Claude Code session. Logged retroactively at developer request to bring this tracker back in sync with git history before resuming Claude Code-driven build sessions.
+
+**What was done:**
+
+- Revised all four partner-page specs in `src/features/` to v2: `distributor-program-page.md`, `retailer-program-page.md`, `sales-partner-page.md`, `partner-crm-integration.md` — each expanded significantly with session decisions on positioning, scope, and page structure (distributor spec alone grew from ~100 to ~215 lines)
+- `AudienceCard.astro`: commented out the `.ac__overlay` gradient div and its style block (both the base and hover-state versions) rather than deleting them
+- `audience-cards.ts`: all four card `tint` values changed from `"grey"` to `"gold"`
+- These changes were sitting uncommitted in the working tree; committed and merged into `dev` as part of this session (see commit history for exact message)
+
+**Decisions made this session:**
+
+- **DEVIATION:** Partner-page specs rewritten to v2 with materially different scope than the versions Claude Code last built against — read the current `src/features/*-page.md` content fresh before starting the next partner-page build task; do not assume v1 scope
+- **DEVIATION:** AudienceCard overlay gradient disabled via comment-out rather than removal — per [[feedback-commented-code]], left in place rather than deleted; flag to developer if intent was actually to remove it permanently
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL / whether Instagram section will be reinstated
+- Facebook URL
+- Logo light variant PNG (client to supply)
+- Arnold Expo date — unconfirmed; per `market-strategy.md`, is the one hard external deadline in the project and should be requested from the client explicitly
+
+---
+
+### Session 32 — 10 Jul 2026
+
+**Session type:** Solo developer work, not run through a Claude Code session. Logged retroactively — see Session 33 note above.
+
+**What was done (commit `ed4dd82`):**
+
+- Hero mobile audit fixes continued: sub-line and "Join the Waitlist" CTA restored on mobile, mobile-only display added, headline font-size clamp and image object-position adjusted
+- New `AudienceCards` section built: `src/components/AudienceCards/index.astro` + `AudienceCard.astro`, driven by `src/data/audience-cards.ts` (4 cards — Shop, Retailer, Distributor, Partners); wired into `index.astro`
+- New images added under `public/images/audience/` (7 files) and a new `public/images/hero/hero_img.jpg`
+- Partner program routes scaffolded as empty files: `src/pages/partners/index.astro`, `distributor.astro`, `retail.astro`, `sales.astro` — no markup yet
+- New spec docs written: `src/features/audience-cards.md`, `distributor-program-page.md`, `retailer-program-page.md`, `sales-partner-page.md`, `partner-crm-integration.md`, `src/docs/market-strategy.md`
+- `src/docs/mobile-audit-findings.md` removed (83 lines) — superseded
+- `src/docs/ai-interaction.md`: added a "Deviations from Spec" section defining the `Deviation:` task-prefix convention and the `**DEVIATION:**` session-log tagging pattern used in this and future entries
+
+**Decisions made this session:**
+
+- **DEVIATION:** Market direction confirmed as US-only (see `market-strategy.md`) — a prior Sweden-first proof-of-concept strategy referenced in earlier project discussion is explicitly superseded and should be disregarded in historical summaries
+- **DEVIATION:** Partner program page routes added ahead of their content build — scaffolding only, intentionally sequenced before the full page-structure work
+
+**Decisions still open:** same list as Session 33 above, minus the spec-v2 item (specs were still at v1 as of this session).
+
+---
+
+### Session 31 — 02 Jul 2026
+
+**Session type:** Solo developer work, not run through a Claude Code session. Logged retroactively — see Session 33 note above.
+
+**What was done (commit `bb1d70e`):**
+
+- Mobile audit fixes applied across `Hero`, `Contact`, `BrandStory`, and layout components, per a new `mobile-audit.md` / `mobile-audit-findings.md` process (Playwright MCP-driven audit, documented in `src/docs/mobile-audit.md` and `src/features/mobile-audit.md`)
+- `Hero/index.astro`: restored missing sub-line and "Join the Waitlist" CTA; mobile-only display rules added
+- `Contact/index.astro`: removed `border-radius` from background image block; column order swapped on mobile (form first); padding corrected at breakpoints
+- `BrandStory/BrandCtaBlock.astro`: CTA button width constraint fixed on desktop; text-align/flex alignment fixed for tablet
+- `BrandStory/BrandStatsBlock.astro`: stat number font-size token reference corrected
+- `BrandStory/index.astro`: headline font-size set to `var(--text-statement)` on mobile; `padding-bottom` breakpoint fixed
+- `index.astro`: Contact moved outside `SectionWrapper` to correct background rendering
+- `global.css`: minor grid token correction
+- `src/docs/ai-interaction.md`: mobile-audit workflow section added (30 lines)
+- `.gitignore` updated
+
+**Decisions made this session:**
+
+- **DEVIATION:** Mobile audit conducted via Playwright MCP as a dedicated audit-only session type (no code changes during the audit itself) — findings then applied in this same commit; establishes the audit-then-fix pattern referenced in `mobile-audit.md`
+
+**Decisions still open:** same list as Session 33 above, minus the spec-v2 and Arnold Expo items (those postdate this session).
+
+---
 
 ### Session 30 — 14 Jun 2026
 
