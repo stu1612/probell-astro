@@ -99,8 +99,48 @@ avoids extra admin overhead for both developer and client.
 
 ## Spam Protection
 
-reCAPTCHA enabled on all three forms. Data privacy/consent fields
-present on all three per CAN-SPAM/GDPR requirements.
+**reCAPTCHA must stay OFF on all three HubSpot forms** — confirmed
+removed as of 19 Jul 2026. HubSpot's built-in reCAPTCHA is tied to
+their embedded widget (`hbspt.forms.create`) — it does not work with
+the raw `submissions/v3/integration/submit` endpoint this project
+uses. Per HubSpot's own documentation: *"if CAPTCHA has been turned on
+in the form, form submissions from the Submit data for a form API or
+other form integrations will not be accepted."* Turning it on doesn't
+just fail to help — it silently rejects every real submission.
+
+**Confirmed approach instead:**
+- **Honeypot field** — same hidden-checkbox pattern already used on the
+  existing Contact form (Web3Forms). A bot that fills every field
+  trips it; real applicants never see it.
+- **Time-trap check** — record a timestamp when the form renders,
+  compare against submission time; reject anything submitted faster
+  than ~3 seconds. Catches naive scrapers that fill and submit
+  instantly. No site key, no backend dependency.
+- **HubSpot's baseline API-level filtering still applies regardless**
+  of reCAPTCHA state — basic checks like HTML tags in name fields and
+  excluded IP/referrer rules run on all submissions, including via the
+  raw API. This is a floor, not the primary defense — honeypot + time
+  trap are the actual layer this project relies on.
+
+**Why this is the right trade for this stage, not just a stopgap:**
+these are B2B lead-gen forms (name, email, short message) at
+pre-launch/low-volume stage — one expo plus organic inbound. Worst
+case with light spam getting through is an occasional junk contact the
+business owner deletes during the manual review process already
+committed to for every application. Not payment or sensitive data —
+proportionate protection, not maximal protection.
+
+**Trigger for revisit:** if spam volume becomes a genuine operational
+problem post-launch, the real fix is independent Google reCAPTCHA v3
+(not HubSpot's built-in version) — but this requires server-side token
+verification, meaning a serverless function (e.g. Netlify or Cloudflare
+Worker) to verify the token before forwarding to HubSpot. That's a
+real architecture change away from the current "no backend" static-site
+model, not a small add-on — don't reach for it until actual spam volume
+justifies the added complexity.
+
+Data privacy/consent fields remain present on all three forms per
+CAN-SPAM/GDPR requirements — unaffected by the reCAPTCHA change.
 
 ---
 
