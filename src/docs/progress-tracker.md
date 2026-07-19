@@ -1,14 +1,14 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 19 Jul 2026 — Session 33**
+**Last updated: 19 Jul 2026 — Session 36**
 
 ---
 
 ## Current Status
 
 **Phase:** Post-build structural redesign
-**Active section:** AudienceCards section built and live on homepage; partner program routes (`/partners/index`, `/partners/distributor`, `/partners/retail`, `/partners/sales`) scaffolded as empty files — specs for all four (`distributor-program-page.md`, `retailer-program-page.md`, `sales-partner-page.md`, `partner-crm-integration.md`) have been revised to v2 but pages are not yet built
-**Next action:** Build out the four partner program pages from their v2 specs in `src/features/`, wired through the shared HubSpot CRM integration pattern in `partner-crm-integration.md`.
+**Active section:** Sales Partner, Retailer, and Distributor pages all built. Retailer and Distributor are developer-confirmed complete (visual check + working submission). Sales Partner's visual verification is still outstanding. `/partners/index` (the partner-program landing/hub page) remains an empty scaffold — no spec written for it yet.
+**Next action:** `/partners/index` has no feature spec in `src/features/` — needs one written (likely a simple hub linking to the three partner pages, similar in spirit to `/legal/index.astro`) before it can be built. Also still outstanding: visual verification (Playwright, 375/768/1440px) on `/partners/sales` — Playwright MCP has not been available in these sessions; developer to review in-browser directly before that page is marked fully complete.
 
 **Note on Sessions 31–33:** this work was carried out by the developer directly, without running through Claude Code sessions — logged here retroactively per developer request, sole-authorship, "off script." See entries below.
 
@@ -76,11 +76,95 @@ These items must be confirmed before Claude Code begins building.
 | 13  | Footer                      | Complete    | 20 May 2026 | 4-col grid; probell-logo.png used (swap when logo-light.png arrives); social icons #placeholder |
 | —   | Supplements page            | Complete    | 14 Jun 2026 | Listing + detail pages built (Task 14)                                                     |
 | —   | AudienceCards                | Complete    | 10 Jul 2026 | Solo dev session (not run through Claude Code) — new homepage section, 4-card grid linking to `/supplements` and the three partner routes; see Session 32 |
-| —   | Partner program pages        | Not started | —           | Routes scaffolded as empty files (`/partners/index`, `/distributor`, `/retail`, `/sales`); specs revised to v2 in `src/features/` but no page markup built yet |
+| —   | Sales Partner page (`/partners/sales`) | Built — pending visual verification | 19 Jul 2026 | Hero, Why Probell, How It Works, application form; FAQ cut (deviation, see Session 34). `src/lib/hubspot.ts` created as shared submission utility for all three partner forms. HubSpot submission functionally confirmed working. Playwright visual check (375/768/1440px) not yet done |
+| —   | Retailer page (`/partners/retail`)     | Complete    | 19 Jul 2026 | Hero, short "Why Stock Probell" list (deliberately not a stat-chip grid per spec), pricing-is-request-not-publish framing, How It Works, request form (Business Name, Your Name, Email, Phone, Message; no Business Type dropdown, no location field, both deliberate per spec). No automated confirmation email (per spec — inline success only). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working |
+| —   | Distributor page (`/partners/distributor`) | Complete | 19 Jul 2026 | Deliberately minimal per spec — hero (gold eyebrow, distinct from red on the other two), one short positioning paragraph (no stat chips, no numbers), minimal contact form (Business Name, Your Name, Contact Email, Phone; no message field, no FAQ, no how-it-works). No automated confirmation email (spec: would contradict the page's "not automated forms" positioning). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working (3/3 pass) |
+| —   | Partner index page (`/partners/index`) | Not started | —          | Empty scaffold, no feature spec written yet — needs one before it can be built |
 
 ---
 
 ## Session Log
+
+### Session 36 — 19 Jul 2026
+
+**What was done:**
+
+- Built `src/pages/partners/distributor.astro` — Distributor Program page: hero (gold eyebrow — the spec's one point of visual difference from Sales Partner/Retailer's red), one short positioning paragraph, minimal contact form (Business Name, Your Name, Contact Email, Phone, hidden Partner Type)
+- Reused `src/lib/hubspot.ts` directly — third page to call the shared utility unchanged, no per-page submission logic duplicated
+- Added `HUBSPOT_DISTRIBUTOR_FORM_GUID` to `.env`, reusing the existing `HUBSPOT_PORTAL_ID`
+- Restarted the dev server proactively before testing (per the operational lesson from Session 35 — new env vars require a restart) and confirmed via `curl` that the form served the correct `data-portal-id`/`data-form-guid` before asking the developer to test, avoiding a repeat of the Session 35 404
+- `npm run build` passes — zero errors, 15 pages generated
+- Developer confirmed: visual check complete, form submission successful (3/3 pass across Sales Partner, Retailer, Distributor)
+
+**Decisions made this session:**
+
+- No Message/textarea field, no region/business-background field — deliberately excluded per spec; this audience's relationship is built through direct conversation, not form detail
+- No automated confirmation email — spec is explicit this would directly contradict the page's stated positioning ("this isn't something we handle through automated forms")
+- No FAQ, no "How It Works" section — spec calls this page "deliberately minimal," warning that over-building it risks looking like it's compensating for a lack of track record
+
+**Decisions still open:**
+
+- Same list as Session 35, plus:
+- `/partners/index` has no feature spec yet — needs one written before it can be built. Likely a simple hub page linking to the three partner routes (Sales Partner, Retailer, Distributor), similar in spirit to `/legal/index.astro`'s pattern, but this hasn't been confirmed or scoped with the developer
+- Visual verification of `/partners/sales` — still the one remaining open item from Session 34
+
+---
+
+### Session 35 — 19 Jul 2026
+
+**What was done:**
+
+- Built `src/pages/partners/retail.astro` — Retailer Program page: dark text-only hero, short "Why Stock Probell" list, pricing-is-request-not-publish framing section, "How It Works" 4-step list, request form (Business Name, Your Name, Email, Phone, Message, hidden Partner Type)
+- Reused `src/lib/hubspot.ts` directly — no new submission utility created, per the shared-pattern instruction in `partner-crm-integration.md` and confirmed at kickoff before writing any code
+- Added `HUBSPOT_RETAILER_FORM_GUID` to `.env`, reusing the existing `HUBSPOT_PORTAL_ID`; same frontmatter → `data-*` attribute → client script pattern as Sales Partner (see Session 34)
+- `npm run build` passes — zero errors, 15 pages generated; confirmed built HTML carries the correct portal ID and form GUID
+- Bug found and fixed: developer hit a 404 on submission testing. Root cause was not a code bug — the `npm run dev` process had been running continuously since earlier in the session, started before `HUBSPOT_PORTAL_ID`/`HUBSPOT_SALES_FORM_GUID`/`HUBSPOT_RETAILER_FORM_GUID` existed in `.env`. Vite/Node load `.env` once at process startup and don't hot-reload it on file changes, so the long-running dev server kept serving both `data-portal-id` and `data-form-guid` empty on **both** `/partners/sales` and `/partners/retail` — confirmed via `curl` against the live dev server before and after a restart. Fixed by restarting the dev server; confirmed both forms then served the correct values. Operational note for future sessions: **any new env var added mid-session requires a dev server restart to take effect** — a fresh `npm run build` always re-reads `.env` correctly, which is why this wasn't caught by the build-output check alone.
+- Developer confirmed: visual check on `/partners/retail` complete, and a real submission after the restart lands correctly in HubSpot.
+
+**Decisions made this session:**
+
+- "Why Stock Probell" rendered as a plain left-bordered list (3 items), not a card/chip grid — spec explicitly calls for this section to stay light and avoid overclaiming scale the brand doesn't have yet, distinct from Sales Partner's 4-card "Why Probell" treatment
+- No automated confirmation email built for this form, per spec — inline success message only, same UI pattern as Sales Partner but no email-sending behavior implied
+- No Business Type dropdown, no location field — both deliberately excluded per spec (open Message field captures the real answer; logistics belong in the follow-up conversation, not the form)
+
+**Decisions still open:**
+
+- Same list as Session 34 (Retailer's own visual/functional verification items are resolved — see above)
+
+---
+
+### Session 34 — 19 Jul 2026
+
+**What was done:**
+
+- Built `src/pages/partners/sales.astro` — Sales Partner application page: dark text-only hero, "Why Probell" 4-card value grid, "How It Works" 4-step list, application form (Full Name, Email, Phone, Region, Event, Why Probell, How Heard, hidden Partner Type, GDPR consent checkbox)
+- Created `src/lib/hubspot.ts` — shared HubSpot Forms API submission utility for all three partner forms per `partner-crm-integration.md`: `submitToHubSpot()` (POSTs to the EU endpoint with `fields`/`context`/`legalConsentOptions`), `isSpamSubmission()` (honeypot + 3s time-trap), `splitFullName()` helper
+- Added `@lib/*` path alias to `tsconfig.json`, consistent with the existing `@data`/`@constants` pattern (Session 27)
+- `npm run build` passes — zero errors, 15 pages generated
+- Bug found (Claude investigation) and fixed (developer-applied): honeypot check read the checkbox's `.value` (always `"on"` regardless of checked state) instead of `.checked`, so `isSpamSubmission` returned `true` on every submission — silently blocking the fetch call before it ever reached HubSpot, with no error shown. Fixed by switching both the read (`sales.astro`) and `isSpamSubmission`'s signature (`hubspot.ts`) to a boolean `.checked` value. Confirmed working post-fix — payload lands in HubSpot.
+- Moved HubSpot portal ID and the Sales Partner form GUID out of hardcoded source into `.env` (`HUBSPOT_PORTAL_ID`, `HUBSPOT_SALES_FORM_GUID`) — flagged during review since these were literal strings in `hubspot.ts`/`sales.astro`. Verified via Context7 (Astro docs) that `import.meta.env` vars are only exposed to client-side code when prefixed `PUBLIC_`; since `hubspot.ts` runs in the browser (imported by a client `<script>`), the values are instead resolved server-side in `sales.astro`'s frontmatter and threaded into the client script via `data-portal-id`/`data-form-guid` attributes on the form — same pattern already used for `WEB3FORMS_KEY`, no `PUBLIC_` prefix needed. `submitToHubSpot()` now takes `portalId` as a required parameter instead of importing a hardcoded constant. Confirmed the built HTML output carries the real values through.
+
+**Decisions made this session:**
+
+- **DEVIATION:** FAQ section (Section 4 of `sales-partner-page.md`) cut from this build — spec assumed reuse of an existing homepage FAQ accordion component that no longer exists (removed in the Session 24 redesign, never rebuilt). Building a new accordion was out of scope for this session. Revisit if applicant confusion becomes a real issue post-launch.
+- `partner-crm-integration.md` was updated mid-session by the developer — reCAPTCHA removed entirely from all three HubSpot forms (confirmed incompatible with the raw `submissions/v3/integration/submit` API — HubSpot rejects API submissions outright when CAPTCHA is enabled on the form). Honeypot + time-trap is the confirmed, sole spam-protection layer; `hubspot.ts` reflects this — no reCAPTCHA site key dependency exists or is pending.
+- One shared `src/lib/hubspot.ts` built now (with the Sales Partner page) rather than deferred — Retailer and Distributor should call into it rather than duplicating fetch/endpoint logic, per the spec's explicit instruction.
+- Visual verification (Step 4.5) not performed by Claude Code this session — Playwright MCP was not connected. Developer opted to review `/partners/sales` in-browser directly rather than connect Playwright mid-session. Section is therefore logged as "Built — pending visual verification," not "Complete."
+
+**Decisions still open:**
+
+- Active display font (Anton or Barlow Condensed)
+- Active body font (Space Grotesk or DM Sans)
+- Contact form email + Web3Forms access key (`WEB3FORMS_KEY` in `.env`)
+- Instagram URL / whether Instagram section will be reinstated
+- Facebook URL
+- Logo light variant PNG (client to supply)
+- Arnold Expo date — unconfirmed (per `market-strategy.md`)
+- `info@probellnutrition.com` confirmation — needed before swapping the Sales Partner confirmation email's From address (per `partner-crm-integration.md`)
+- Visual verification of `/partners/sales` at 375/768/1440px — outstanding, developer to confirm
+- Whether the Sales Partner form's actual HubSpot form-builder configuration matches the field/consent shape assumed in `hubspot.ts` (e.g. consent type: process vs. communications) — not hit in practice since submission is confirmed landing, but worth a spot-check in the HubSpot portal
+
+---
 
 ### Session 33 — 19 Jul 2026
 

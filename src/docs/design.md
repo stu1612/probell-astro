@@ -1,16 +1,17 @@
 # Probell Nutrition — Design System
 
-**Last updated: 14 May 2026**
+**Last updated: 19 Jul 2026 — reconciled against progress-tracker.md through Session 33**
 
 ---
 
 ## Purpose
 
-This document defines every visual and layout rule for the Probell Nutrition
-frontend. It is a strict contract, not a guideline.
+This document defines every visual and layout rule for the Probell
+Nutrition frontend. It is a strict contract, not a guideline.
 
 Read this document in full before writing any UI code.
-Do not deviate without explicit approval.
+Do not deviate without explicit approval — or without a `Deviation:`
+prefix per `ai-interaction.md`, logged accordingly.
 
 ---
 
@@ -21,6 +22,11 @@ Dark. Gritty. Americana. Image-led. Bold type. Minimal UI chrome.
 The site feels built, not designed. Heavy photography, tight layouts,
 aggressive typography, and deliberate section transitions. Nothing soft.
 Nothing apologetic. Nothing that could belong to a different brand.
+
+**Note:** the BrandStory ("Emotion") section was rebuilt Session 24 on
+a **white** background as a social-proof/stats section — this is a
+deliberate, confirmed exception to the otherwise-dark aesthetic, not a
+drift. Treat it as locked, not as something to "fix" back to dark.
 
 ---
 
@@ -34,44 +40,51 @@ All colors are defined as CSS custom properties in `globals.css`.
 |-------|-----|-------|
 | `--color-black` | `#000000` | Primary background |
 | `--color-red` | `#C0392B` | Primary accent — CTAs, highlights, active states |
-| `--color-gold` | `#C9A84C` | Secondary accent — Built for sections, labels |
+| `--color-gold` | `#C9A84C` | Secondary accent — labels, ghost numbers |
 | `--color-white` | `#FFFFFF` | Primary text |
 | `--color-grey` | `#A0A0A0` | Secondary text, captions, labels |
 | `--color-border` | `#222222` | Dividers, card borders, subtle separators |
 | `--color-surface` | `#111111` | Slightly lifted surface — cards, form backgrounds |
+| `--color-bg-warm` | `#F5F3EF` | **Added Session 16.** Warm off-white background — used for the light-treatment product section |
 
 ### Usage rules — STRICT
 
 ```
 ✓ var(--color-black)       background default
 ✓ var(--color-red)         CTAs, active borders, highlights
-✓ var(--color-gold)        secondary labels, Built for Endurance accent
+✓ var(--color-gold)        secondary labels, ghost numbers
 ✓ var(--color-white)       headlines, primary text
 ✓ var(--color-grey)        body copy, secondary text
 ✓ var(--color-border)      dividers, borders
 ✓ var(--color-surface)     card and form backgrounds
+✓ var(--color-bg-warm)     warm off-white section backgrounds
 ```
 
 ```
 ✗ Any raw hex value in component code
-✗ Any Tailwind palette color if Tailwind is used
-✗ Any rgba() value not derived from a token
+✗ Any rgba() value not derived from a token, except the two exceptions below
 ✗ Any gradient — no gradients anywhere on the site
 ✗ Any color not in the token list above
 ```
 
-If a color is needed that does not exist — add it to `globals.css` first.
-Never improvise with a raw value.
+If a color is needed that does not exist — add it to `globals.css`
+first. Never improvise with a raw value.
 
-### Overlay exception
+### Overlay exceptions
 
-Dark overlays on photography are permitted and use:
+Two permitted `rgba()`/raw-value uses not derived from a color token:
 
-```css
-background: rgba(0, 0, 0, 0.5); /* adjust opacity as needed */
-```
-
-This is the only permitted rgba() value not derived from a token.
+1. **Dark overlays on photography:**
+   ```css
+   background: rgba(0, 0, 0, 0.5); /* adjust opacity as needed */
+   ```
+2. **Ghost numbers (ProductStrips):** `color` set on a color token, with
+   `opacity: 0.08` applied separately — this is a token-based approach,
+   not a raw value, and is the confirmed pattern (Session 24). Do not
+   use `-webkit-text-stroke` with a raw color for this — an earlier
+   session (23) tried a stroke-based ghost number using
+   `var(--color-border)`; the current, confirmed approach is the
+   opacity-on-token method from Session 24.
 
 ---
 
@@ -81,54 +94,55 @@ This is the only permitted rgba() value not derived from a token.
 
 | Role | Font | Weights | Usage |
 |------|------|---------|-------|
-| Display A | Anton | 400 | Hero headlines, bold statements |
+| Display A | Anton | 400 | Hero headlines, statement moments |
 | Display B | Barlow Condensed | 700, 900 | Section titles, product names |
 | Body A | Space Grotesk | 300, 400, 500 | Body copy — primary option |
 | Body B | DM Sans | 300, 400, 500 | Body copy — comparison option |
 
-Display font is decided in the browser against real photography.
-Body font is decided in the browser against real content.
-Both options are imported — one is activated per session decision.
+Display and body font choice is still an **open decision** as of
+Session 33 — decide in browser against real photography/content, per
+`progress-tracker.md`.
 
 ### CSS classes
 
 ```css
-.font-display-anton    { font-family: 'Anton', sans-serif; }
-.font-display-barlow    { font-family: 'Barlow Condensed', sans-serif;
-                     font-weight: 900; }
-.font-body-grotesk         { font-family: 'Space Grotesk', sans-serif; }
-.font-body-dmsans    { font-family: 'DM Sans', sans-serif; }
-                   
+.font-display-anton  { font-family: 'Anton', sans-serif; }
+.font-display-barlow  { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; }
+.font-body-grotesk    { font-family: 'Space Grotesk', sans-serif; }
+.font-body-dmsans     { font-family: 'DM Sans', sans-serif; }
 ```
 
 ### Scale
 
-All headline sizes use clamp() for responsive scaling.
-No fixed px font sizes for display text.
+All headline sizes use `clamp()`. No fixed px font sizes for display
+text.
 
 | Token | Value | Usage |
 |-------|-------|-------|
 | `--text-hero` | `clamp(4rem, 10vw, 9rem)` | Hero headline |
-| `--text-statement` | `clamp(3rem, 7vw, 6rem)` | Bold statement section |
+| `--text-statement` | `clamp(3rem, 7vw, 6rem)` | Statement moments |
 | `--text-section` | `clamp(2rem, 5vw, 3.5rem)` | Section headings |
 | `--text-product` | `clamp(1.5rem, 3vw, 2rem)` | Product names |
 | `--text-body` | `1rem` | Body copy |
 | `--text-label` | `0.75rem` | Labels, eyebrows, tags |
 
+**Known raw-value exceptions, confirmed and accepted (not violations
+to fix):** `18px` body text and `1rem`/`18px` on specific ProductStrips
+elements (Sessions 21, 22) — spec explicitly called for these where no
+matching token existed. Don't "correct" these back to a token without
+checking whether the exception is still intentional.
+
 ### Rules
 
-- All display text: uppercase
-- All display text: tight letter spacing — `letter-spacing: -0.02em`
-- Body text: normal case, comfortable line height — `line-height: 1.6`
+- Display text: uppercase, `letter-spacing: -0.02em`, `line-height: 0.95`
+- Body text: normal case, `line-height: 1.6`
 - No centered text blocks as a default — left align unless layout demands otherwise
 - No text decorations — no underlines on headings
-- Labels and eyebrows: uppercase, wide letter spacing — `letter-spacing: 0.15em`
+- Labels/eyebrows: uppercase, `letter-spacing: 0.15em`
 
 ---
 
 ## 3. Spacing System
-
-Simple scale. No arbitrary values.
 
 | Token | Value | Usage |
 |-------|-------|-------|
@@ -137,14 +151,10 @@ Simple scale. No arbitrary values.
 | `--space-md` | `2rem` | Between elements within a section |
 | `--space-lg` | `4rem` | Section internal padding top/bottom |
 | `--space-xl` | `6rem` | Large section padding |
-| `--space-2xl` | `10rem` | Hero and statement sections |
+| `--space-2xl` | `10rem` | Hero and statement-scale sections |
 
-### Rules
-
-- Sections use `--space-lg` or `--space-xl` vertical padding minimum
-- No arbitrary spacing values — e.g. `margin-top: 37px`
-- Tighter than a typical minimal site — density is intentional
-- Internal component spacing uses `--space-xs` to `--space-md` only
+No arbitrary spacing values. If a value is needed that isn't in the
+system, flag it and add it to `globals.css` first.
 
 ---
 
@@ -164,12 +174,10 @@ Simple scale. No arbitrary values.
 ### Grid helpers
 
 ```css
-.grid-2   { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
-.grid-3   { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
-.grid-4   { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md); }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md); }
 ```
-
-Responsive behaviour defined per section in `page-structure.md`.
 
 ### Rules
 
@@ -180,84 +188,55 @@ Responsive behaviour defined per section in `page-structure.md`.
 
 ---
 
-## 5. Border Breakers
+## 5. Section Transitions — ⚠️ Needs Verification Against Live Site
 
-Border breakers are the primary visual technique for section transitions.
-They replace standard horizontal divides with deliberate design moments.
+**This section is not currently reliable.** The original Techniques
+A–E below were written against the 11-section homepage that existed
+before Session 24. Since then, `Trending.astro`, `BuiltForStrength.astro`,
+`BoldStatement.astro`, `Instagram.astro`, and `InkEdge.astro` — the
+components these techniques were built for — have all been deleted.
 
-Each transition has an assigned technique — defined in `page-structure.md`.
-Do not substitute techniques without approval.
+The current homepage (see `page-structure.md`) uses `SectionWrapper`
+black/white backgrounds as the primary transition mechanism, not the
+torn-edge/clip-path techniques described below. **Before using any
+technique in this section, check whether it's still actually
+implemented anywhere in the live codebase** — it's plausible none of
+them survive Session 24's redesign.
 
-### Technique A — Torn ink edge
+<details>
+<summary>Original Techniques A–E (pre-Session 24, unverified as current)</summary>
 
-Used at: Hero → Identity, Bold Statement → Built for Endurance
+**Technique A — Torn ink edge.** SVG mask with organic torn edge shape,
+fill matching the lower section's background. Used at Hero→Identity
+and Bold Statement→Built for Endurance in the old structure — both
+target sections either deleted or restructured.
 
-Implementation: SVG mask with organic torn edge shape positioned absolutely
-at the bottom of the upper section. The SVG fill matches the lower section
-background color, creating the illusion of a torn boundary.
+**Technique B — Product image breakout.** Product PNG positioned
+absolutely with negative bottom offset, overlapping the section below.
+Used at Identity→Trending in the old structure — Trending no longer
+exists; Identity's product breakout was explicitly omitted per Session
+5 developer instruction anyway (Identity is text-only).
 
-```html
-<div class="torn-edge-bottom">
-  <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-    <path d="M0,40 C200,80 400,0 600,40 C800,80 1000,20 1200,50 
-             C1350,70 1400,30 1440,40 L1440,80 L0,80 Z" 
-          fill="var(--color-black)"/>
-  </svg>
-</div>
-```
+**Technique C — Full bleed image edge.** No border/divider — the image
+arriving at full width is the transition. Used at Trending→Brand Story
+— Trending no longer exists.
 
-The SVG path should feel hand-drawn and irregular — not smooth or geometric.
-Adjust the path control points to create a convincingly organic edge.
+**Technique D — Diagonal clip-path.** `clip-path: polygon(0 0, 100% 0,
+100% 85%, 0 100%)`. Used at Brand Story→Built for Strength — Brand
+Story's diagonal clip was explicitly removed in the Session 24 redesign,
+and Built for Strength was merged into ProductStrips.
 
-### Technique B — Product image breakout
+**Technique E — Hard cut.** No border breaker; background contrast
+alone creates the break. Used at Built for Strength→Bold Statement —
+both components no longer exist in this form.
 
-Used at: Identity → Trending
+</details>
 
-Implementation: Product PNG positioned absolutely at the bottom of the
-Identity section with a negative bottom offset, overlapping into the
-Trending section below. The section below has matching top padding to
-accommodate the breakout.
-
-```css
-.product-breakout {
-  position: absolute;
-  bottom: -120px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  width: 280px;
-  filter: drop-shadow(0 20px 60px rgba(0,0,0,0.8));
-}
-```
-
-### Technique C — Full bleed image edge
-
-Used at: Trending → Brand Story
-
-Implementation: Brand Story section opens with a full-bleed image that
-has no container padding — runs edge to edge. No border or divider between
-sections. The visual break is the image itself arriving at full width.
-
-### Technique D — Diagonal clip-path
-
-Used at: Brand Story → Built for Strength
-
-Implementation: CSS clip-path on the Brand Story section creating a
-diagonal bottom edge rather than horizontal.
-
-```css
-.clip-diagonal-bottom {
-  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-}
-```
-
-### Technique E — Hard cut
-
-Used at: Built for Strength → Bold Statement
-
-Implementation: No border breaker. The contrast between the product
-section and the full-bleed statement section creates the break.
-Black background both sides — the image is the transition.
+If any of these techniques are still genuinely in use somewhere (e.g.
+`TornEdge.astro` still exists in the component tree per
+`page-structure.md`), confirm where and update this section to reflect
+only what's real — don't restore the full original section from memory
+of this document.
 
 ---
 
@@ -308,8 +287,8 @@ Two styles only.
 }
 ```
 
-No other button styles without approval.
-One primary CTA per section maximum.
+No other button styles without approval. One primary CTA per section
+maximum.
 
 ### Tags
 
@@ -324,30 +303,17 @@ One primary CTA per section maximum.
   text-transform: uppercase;
   border-radius: 4px;
 }
-
-.tag-coming-soon {
-  border-color: var(--color-gold);
-  color: var(--color-gold);
-}
+.tag-coming-soon { border-color: var(--color-gold); color: var(--color-gold); }
 ```
-
-### Product cards
-
-- Black background — `var(--color-surface)`
-- Border — `1px solid var(--color-border)`
-- No border radius — hard corners only
-- Product image top, content below
-- One-line descriptor in `var(--color-grey)`
-- `Coming Soon` tag always present at launch
-- No price, no add to cart
 
 ### Nav
 
 - Fixed position, full width
 - Background: `rgba(0,0,0,0.9)` with backdrop blur
 - Logo left — PNG asset
-- Links right — uppercase, `var(--text-label)`, Space Grotesk 500
-- Social icons right of links — simple SVG, `var(--color-white)`
+- Links right — uppercase, `var(--text-label)`
+- Social icons via `ui/SocialIcons.astro` (Session 28 — single shared
+  component, no longer duplicated between desktop/mobile markup)
 - CTA pill rightmost — `btn-primary` style
 - No dropdown menus
 - Mobile: hamburger menu, full screen overlay
@@ -355,49 +321,44 @@ One primary CTA per section maximum.
 ### Forms
 
 - Input background: `var(--color-surface)`
-- Input border: `1px solid var(--color-border)`
-- Input border on focus: `1px solid var(--color-red)`
-- Input text: `var(--color-white)`
-- Input placeholder: `var(--color-grey)`
+- Input border: `1px solid var(--color-border)`, focus: `var(--color-red)`
+- Input text: `var(--color-white)`, placeholder: `var(--color-grey)`
 - No border radius on inputs — hard corners
-- Label above input — uppercase, `var(--text-label)`, `var(--color-grey)`
+- Label above input, uppercase, `var(--text-label)`, `var(--color-grey)`
+- Use `ui/FormField.astro` (Session 28) rather than repeating
+  `form-group` markup per field
 
 ---
 
 ## 7. Image Handling
 
-- All images served via Astro's built-in `<Image />` component
-- All images output as WebP with fallback
-- Hero and full bleed images: `layout="fill"`, `object-fit="cover"`
-- Product PNGs: transparent background, `object-fit="contain"`
-- No images without explicit width and height attributes
-- All photography has a dark overlay option via `.img-overlay` class
-
-```css
-.img-overlay {
-  position: relative;
-}
-.img-overlay::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-}
-```
+- All images via Astro's `<Image />` component, output as WebP
+- Hero/full-bleed images: `object-fit: cover`
+- Product PNGs: transparent background, `object-fit: contain`
+- Never `<img>` tags directly
 
 ---
 
 ## 8. Animation Rules
 
-No animations. No transitions on page load. No scroll-driven effects.
+**Default: no animations, no load-in transitions, no scroll-driven
+effects.** Permitted by default:
 
-The only permitted transitions:
+- Button hover — `opacity`/`background` — `0.2s ease` max
+- Nav link hover — `color` — `0.15s ease` max
+- Form input focus — `border-color` — `0.15s ease` max
 
-- Button hover — `opacity` or `background` — `0.2s ease` maximum
-- Nav link hover — `color` — `0.15s ease` maximum
-- Form input focus — `border-color` — `0.15s ease` maximum
+**Confirmed exception (Session 16):** a `transform: scale(1.03)` hover
+was explicitly approved as a spec override on product cards in the
+light-treatment Trending redesign. This is a genuine, developer-approved
+exception to the rule above — not an error to flag or revert. If this
+pattern still exists in the current ProductStrips component (Trending
+was later merged into it, Session 24), confirm it's carried forward
+intentionally; if it was dropped in the redesign, note that here rather
+than silently reintroducing it.
 
-No other motion without explicit approval.
+No other motion without explicit approval, logged as a `Deviation:` per
+`ai-interaction.md` if it happens.
 
 ---
 
@@ -410,7 +371,7 @@ No other motion without explicit approval.
 | `--bp-lg` | `1024px` |
 | `--bp-xl` | `1280px` |
 
-Mobile first. All components built for small screen, scaled up.
+Mobile first.
 
 ---
 
@@ -420,11 +381,10 @@ Before implementing any UI:
 
 1. Confirm which color tokens will be used — no raw values
 2. Confirm which typography tokens apply
-3. Confirm which border breaker technique is assigned to this section
+3. Check whether a section-transition technique from Section 5 above
+   is actually still relevant — most no longer are, see the warning
 4. Confirm the responsive behaviour from `page-structure.md`
 5. Then implement
-
-Do not jump straight to code.
 
 ---
 
@@ -436,6 +396,7 @@ Do not jump straight to code.
 | `design.md` | This document — tokens, components, layout |
 | `globals.css` | CSS custom properties and imports |
 | `coding-standards.md` | Astro rules, file structure, naming |
-| `page-structure.md` | Per-section build blueprint |
+| `page-structure.md` | Current homepage/page build state |
 | `ai-interaction.md` | Claude Code working process |
-| `progress-tracker.md` | Current build state and next actions |
+| `progress-tracker.md` | Current build state and session log |
+| `market-strategy.md` | Current market direction and go-to-market phasing — read before any market-facing copy or feature decision |

@@ -1,0 +1,456 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import FormField from "@components/ui/FormField.astro";
+
+const title = "Sales Partner Program | Probell Nutrition";
+const description =
+  "Probell partners aren't chosen for experience — they're chosen for conviction. Apply to become a Sales Partner.";
+
+const hubspotPortalId = import.meta.env.HUBSPOT_PORTAL_ID ?? "";
+const hubspotFormGuid = import.meta.env.HUBSPOT_SALES_FORM_GUID ?? "";
+
+const whyProbell = [
+  "US-made, no compromise formula",
+  "Kettlebell-shaped container — the product is the conversation starter",
+  "Ground-floor opportunity — early partners shape the network",
+  "Built for people who already show up",
+];
+
+const howItWorks = [
+  {
+    step: "01",
+    label: "Apply",
+    body: "A short form, a few minutes.",
+  },
+  {
+    step: "02",
+    label: "We Review",
+    body: "Every application read personally, including any region or event opportunities you've flagged.",
+  },
+  {
+    step: "03",
+    label: "Conversation",
+    body: "Commission structure and territory discussed 1:1.",
+  },
+  {
+    step: "04",
+    label: "Onboarding",
+    body: "Materials and kit — details to follow.",
+  },
+];
+---
+
+<BaseLayout title={title} description={description} transparentNav={true}>
+  <div id="sales-hero">
+    <div class="container">
+      <span class="label-text label-text--red">Sales Partner Program</span>
+      <h1 class="display-text sales-hero__title">
+        We&rsquo;re Not Looking for Salespeople.
+      </h1>
+      <p class="sales-hero__sub font-text text-grey">
+        Probell partners aren&rsquo;t chosen for experience — they&rsquo;re
+        chosen for conviction. If you already live this, we want to hear from
+        you.
+      </p>
+    </div>
+  </div>
+
+  <section class="sales-why">
+    <div class="container">
+      <ul class="sales-why__grid">
+        {
+          whyProbell.map((item) => (
+            <li class="sales-why__card">
+              <p class="font-text">{item}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="sales-how">
+    <div class="container">
+      <h2 class="display-text sales-how__title">How It Works</h2>
+      <ol class="sales-how__list">
+        {
+          howItWorks.map((item) => (
+            <li class="sales-how__item">
+              <span class="sales-how__num" aria-hidden="true">
+                {item.step}
+              </span>
+              <div class="sales-how__content">
+                <h3 class="sales-how__label">{item.label}</h3>
+                <p class="font-text text-grey">{item.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="sales-apply">
+    <div class="container sales-apply__inner">
+      <div class="sales-apply__intro">
+        <span class="label-text label-text--red">Apply</span>
+        <h2 class="display-text sales-apply__title">Tell Us Why Probell.</h2>
+        <p class="font-text text-grey">
+          We&rsquo;re building our partner network from the ground up. Tell us
+          where you want to sell — you could be the first Probell partner in
+          your area.
+        </p>
+      </div>
+
+      <div class="sales-apply__form-wrap">
+        <div
+          id="sales-success"
+          class="sales-apply__success label-text"
+          style="display: none;"
+          aria-live="polite"
+        >
+          Thanks for applying. We read every application personally — we'll be
+          in touch.
+        </div>
+
+        <form
+          id="sales-form"
+          novalidate
+          data-portal-id={hubspotPortalId}
+          data-form-guid={hubspotFormGuid}
+        >
+          <input
+            type="checkbox"
+            name="botcheck"
+            class="sales-apply__honeypot"
+            tabindex="-1"
+            autocomplete="off"
+          />
+
+          <FormField
+            id="sales-name"
+            label="Full Name"
+            name="fullName"
+            required={true}
+          />
+          <FormField
+            id="sales-email"
+            label="Email"
+            name="email"
+            type="email"
+            required={true}
+          />
+          <FormField id="sales-phone" label="Phone" name="phone" />
+          <FormField
+            id="sales-region"
+            label="Where do you want to sell?"
+            name="regionInterest"
+            required={true}
+          />
+          <FormField
+            id="sales-event"
+            label="Any event you'd like to sell at?"
+            name="eventInterest"
+          />
+          <FormField
+            id="sales-why"
+            label="Why Probell?"
+            name="inquiryMessage"
+            type="textarea"
+            required={true}
+          />
+          <FormField
+            id="sales-heard"
+            label="How did you hear about us?"
+            name="howHeard"
+          />
+
+          <div class="form-group sales-apply__consent">
+            <label class="sales-apply__consent-label">
+              <input type="checkbox" name="consent" required />
+              I agree to be contacted by Probell Nutrition regarding my application.
+              See our <a href="/legal/privacy">Privacy Policy</a>.
+            </label>
+          </div>
+
+          <p
+            id="sales-error"
+            class="sales-apply__error label-text"
+            style="display: none;"
+            aria-live="polite"
+          >
+            Something went wrong. Please try again or email us directly.
+          </p>
+
+          <button type="submit" class="btn-primary sales-apply__submit">
+            Apply Now
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import {
+    submitToHubSpot,
+    isSpamSubmission,
+    splitFullName,
+  } from "@lib/hubspot";
+
+  const CONSENT_TEXT =
+    "I agree to be contacted by Probell Nutrition regarding my application.";
+
+  const form = document.getElementById("sales-form") as HTMLFormElement | null;
+  const success = document.getElementById("sales-success");
+  const error = document.getElementById("sales-error");
+  const renderedAt = Date.now();
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!form || !success || !error) return;
+
+    error.style.display = "none";
+
+    const portalId = form.dataset.portalId ?? "";
+    const formGuid = form.dataset.formGuid ?? "";
+
+    const honeypot =
+      (form.elements.namedItem("botcheck") as HTMLInputElement)?.checked ??
+      false;
+
+    if (isSpamSubmission(honeypot, renderedAt)) {
+      return;
+    }
+
+    const data = new FormData(form);
+    const { firstname, lastname } = splitFullName(
+      String(data.get("fullName") ?? ""),
+    );
+
+    try {
+      const { success: ok } = await submitToHubSpot({
+        portalId,
+        formGuid,
+        consentText: CONSENT_TEXT,
+        fields: [
+          { name: "firstname", value: firstname },
+          { name: "lastname", value: lastname },
+          { name: "email", value: String(data.get("email") ?? "") },
+          { name: "phone", value: String(data.get("phone") ?? "") },
+          {
+            name: "region_interest",
+            value: String(data.get("regionInterest") ?? ""),
+          },
+          {
+            name: "event_interest",
+            value: String(data.get("eventInterest") ?? ""),
+          },
+          {
+            name: "inquiry_message",
+            value: String(data.get("inquiryMessage") ?? ""),
+          },
+          { name: "how_heard", value: String(data.get("howHeard") ?? "") },
+          { name: "partner_type", value: "Sales Partner" },
+        ],
+      });
+
+      if (ok) {
+        form.style.display = "none";
+        success.style.display = "block";
+      } else {
+        error.style.display = "block";
+      }
+    } catch {
+      error.style.display = "block";
+    }
+  });
+</script>
+
+<style>
+  /* Hero */
+  #sales-hero {
+    position: relative;
+    top: calc(var(--nav-height) * -1);
+    margin-bottom: calc(var(--nav-height) * -1);
+    background: var(--color-black);
+    padding-block: calc(var(--space-2xl) + var(--nav-height)) var(--space-xl);
+  }
+
+  .sales-hero__title {
+    margin-top: var(--space-sm);
+    font-size: var(--text-statement);
+    color: var(--color-white);
+    max-width: 16ch;
+  }
+
+  .sales-hero__sub {
+    margin-top: var(--space-md);
+    max-width: 50ch;
+    color: var(--color-grey);
+  }
+
+  /* Why Probell */
+  .sales-why {
+    background: var(--color-black);
+    padding-block: var(--space-lg);
+  }
+
+  .sales-why__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sales-why__card {
+    padding: var(--space-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .sales-why__card p {
+    color: var(--color-white);
+    line-height: 1.5;
+  }
+
+  /* How It Works */
+  .sales-how {
+    background: var(--color-black);
+    padding-block: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .sales-how__title {
+    font-size: var(--text-section);
+    color: var(--color-white);
+    margin-bottom: var(--space-lg);
+  }
+
+  .sales-how__list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sales-how__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .sales-how__num {
+    font-family: var(--font-display);
+    font-size: var(--text-product);
+    color: var(--color-red);
+    line-height: 1;
+  }
+
+  .sales-how__label {
+    font-family: var(--font-display);
+    font-size: var(--text-product);
+    color: var(--color-white);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  /* Application form */
+  .sales-apply {
+    background: var(--color-black);
+    padding-block: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .sales-apply__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .sales-apply__title {
+    margin-top: var(--space-sm);
+    font-size: var(--text-section);
+    color: var(--color-white);
+  }
+
+  .sales-apply__intro p {
+    margin-top: var(--space-md);
+    max-width: 42ch;
+    color: var(--color-grey);
+  }
+
+  .sales-apply__honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .sales-apply__consent-label {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    color: var(--color-grey);
+    font-size: var(--text-label);
+    line-height: 1.5;
+  }
+
+  .sales-apply__consent-label a {
+    color: var(--color-gold);
+  }
+
+  .sales-apply__consent-label input {
+    margin-top: 0.2em;
+  }
+
+  .sales-apply__success {
+    color: var(--color-gold);
+    padding: var(--space-lg) 0;
+  }
+
+  .sales-apply__error {
+    color: var(--color-red);
+    margin-bottom: var(--space-sm);
+  }
+
+  .sales-apply__submit {
+    margin-top: var(--space-sm);
+  }
+
+  @media (max-width: 1024px) {
+    .sales-why__grid,
+    .sales-how__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    #sales-hero {
+      padding-block: calc(var(--space-xl) + var(--nav-height)) var(--space-lg);
+    }
+
+    .sales-why__grid,
+    .sales-how__list {
+      grid-template-columns: 1fr;
+    }
+
+    .sales-apply__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .sales-apply__submit {
+      width: 100%;
+    }
+  }
+</style>
