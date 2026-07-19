@@ -1,0 +1,309 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import FormField from "@components/ui/FormField.astro";
+
+const title = "Distributor Program | Probell Nutrition";
+const description =
+  "We're early, and we're serious about growing right. If you see an opportunity here, we want to hear how you see it.";
+
+const hubspotPortalId = import.meta.env.HUBSPOT_PORTAL_ID ?? "";
+const hubspotFormGuid = import.meta.env.HUBSPOT_DISTRIBUTOR_FORM_GUID ?? "";
+---
+
+<BaseLayout title={title} description={description} transparentNav={true}>
+  <div id="distributor-hero">
+    <div class="container">
+      <span class="label-text label-text--gold">Distributor Program</span>
+      <h1 class="display-text distributor-hero__title">
+        Building the Network. Looking for the Right People.
+      </h1>
+      <p class="distributor-hero__sub font-text text-grey">
+        We&rsquo;re early, and we&rsquo;re serious about growing right. If you
+        see an opportunity here, we want to hear how you see it.
+      </p>
+    </div>
+  </div>
+
+  <section class="distributor-positioning">
+    <div class="container">
+      <p class="font-text distributor-positioning__copy">
+        Probell is a US-made kettlebell-shaped protein brand, currently
+        building distribution from the ground up. We&rsquo;re not pretending
+        to be bigger than we are — we&rsquo;re looking for distributors who
+        see the same opportunity we do, and want to build something real
+        together.
+      </p>
+    </div>
+  </section>
+
+  <section class="distributor-apply">
+    <div class="container distributor-apply__inner">
+      <div class="distributor-apply__intro">
+        <span class="label-text label-text--gold">Get In Touch</span>
+        <h2 class="display-text distributor-apply__title">
+          Let&rsquo;s Talk.
+        </h2>
+        <p class="font-text text-grey">
+          We&rsquo;ll be in touch personally to learn about your business.
+          This isn&rsquo;t something we handle through automated forms —
+          building the relationship starts with a real conversation.
+        </p>
+      </div>
+
+      <div class="distributor-apply__form-wrap">
+        <div
+          id="distributor-success"
+          class="distributor-apply__success label-text"
+          style="display: none;"
+          aria-live="polite"
+        >
+          Thanks for reaching out. We&rsquo;ll be in touch personally.
+        </div>
+
+        <form
+          id="distributor-form"
+          novalidate
+          data-portal-id={hubspotPortalId}
+          data-form-guid={hubspotFormGuid}
+        >
+          <input
+            type="checkbox"
+            name="botcheck"
+            class="distributor-apply__honeypot"
+            tabindex="-1"
+            autocomplete="off"
+          />
+
+          <FormField
+            id="distributor-business"
+            label="Business Name"
+            name="businessName"
+            required={true}
+          />
+          <FormField
+            id="distributor-name"
+            label="Your Name"
+            name="fullName"
+            required={true}
+          />
+          <FormField
+            id="distributor-email"
+            label="Contact Email"
+            name="email"
+            type="email"
+            required={true}
+          />
+          <FormField id="distributor-phone" label="Phone" name="phone" />
+
+          <div class="form-group distributor-apply__consent">
+            <label class="distributor-apply__consent-label">
+              <input type="checkbox" name="consent" required />
+              I agree to be contacted by Probell Nutrition regarding my
+              inquiry. See our <a href="/legal/privacy">Privacy Policy</a>.
+            </label>
+          </div>
+
+          <p
+            id="distributor-error"
+            class="distributor-apply__error label-text"
+            style="display: none;"
+            aria-live="polite"
+          >
+            Something went wrong. Please try again or email us directly.
+          </p>
+
+          <button type="submit" class="btn-primary distributor-apply__submit">
+            Get In Touch
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import {
+    submitToHubSpot,
+    isSpamSubmission,
+    splitFullName,
+  } from "@lib/hubspot";
+
+  const CONSENT_TEXT =
+    "I agree to be contacted by Probell Nutrition regarding my inquiry.";
+
+  const form = document.getElementById(
+    "distributor-form",
+  ) as HTMLFormElement | null;
+  const success = document.getElementById("distributor-success");
+  const error = document.getElementById("distributor-error");
+  const renderedAt = Date.now();
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!form || !success || !error) return;
+
+    error.style.display = "none";
+
+    const portalId = form.dataset.portalId ?? "";
+    const formGuid = form.dataset.formGuid ?? "";
+
+    const honeypot =
+      (form.elements.namedItem("botcheck") as HTMLInputElement)?.checked ??
+      false;
+
+    if (isSpamSubmission(honeypot, renderedAt)) {
+      return;
+    }
+
+    const data = new FormData(form);
+    const { firstname, lastname } = splitFullName(
+      String(data.get("fullName") ?? ""),
+    );
+
+    try {
+      const { success: ok } = await submitToHubSpot({
+        portalId,
+        formGuid,
+        consentText: CONSENT_TEXT,
+        fields: [
+          {
+            name: "business_name",
+            value: String(data.get("businessName") ?? ""),
+          },
+          { name: "firstname", value: firstname },
+          { name: "lastname", value: lastname },
+          { name: "email", value: String(data.get("email") ?? "") },
+          { name: "phone", value: String(data.get("phone") ?? "") },
+          { name: "partner_type", value: "Distributor" },
+        ],
+      });
+
+      if (ok) {
+        form.style.display = "none";
+        success.style.display = "block";
+      } else {
+        error.style.display = "block";
+      }
+    } catch {
+      error.style.display = "block";
+    }
+  });
+</script>
+
+<style>
+  /* Hero */
+  #distributor-hero {
+    position: relative;
+    top: calc(var(--nav-height) * -1);
+    margin-bottom: calc(var(--nav-height) * -1);
+    background: var(--color-black);
+    padding-block: calc(var(--space-2xl) + var(--nav-height)) var(--space-xl);
+  }
+
+  .distributor-hero__title {
+    margin-top: var(--space-sm);
+    font-size: var(--text-statement);
+    color: var(--color-white);
+    max-width: 20ch;
+  }
+
+  .distributor-hero__sub {
+    margin-top: var(--space-md);
+    max-width: 50ch;
+    color: var(--color-grey);
+  }
+
+  /* Positioning statement — deliberately just one short paragraph */
+  .distributor-positioning {
+    background: var(--color-black);
+    padding-block: var(--space-lg);
+  }
+
+  .distributor-positioning__copy {
+    max-width: 60ch;
+    color: var(--color-white);
+    line-height: 1.6;
+  }
+
+  /* Contact form */
+  .distributor-apply {
+    background: var(--color-black);
+    padding-block: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .distributor-apply__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .distributor-apply__title {
+    margin-top: var(--space-sm);
+    font-size: var(--text-section);
+    color: var(--color-white);
+  }
+
+  .distributor-apply__intro p {
+    margin-top: var(--space-md);
+    max-width: 42ch;
+    color: var(--color-grey);
+  }
+
+  .distributor-apply__honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .distributor-apply__consent-label {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    color: var(--color-grey);
+    font-size: var(--text-label);
+    line-height: 1.5;
+  }
+
+  .distributor-apply__consent-label a {
+    color: var(--color-gold);
+  }
+
+  .distributor-apply__consent-label input {
+    margin-top: 0.2em;
+  }
+
+  .distributor-apply__success {
+    color: var(--color-gold);
+    padding: var(--space-lg) 0;
+  }
+
+  .distributor-apply__error {
+    color: var(--color-red);
+    margin-bottom: var(--space-sm);
+  }
+
+  .distributor-apply__submit {
+    margin-top: var(--space-sm);
+  }
+
+  @media (max-width: 768px) {
+    #distributor-hero {
+      padding-block: calc(var(--space-xl) + var(--nav-height)) var(
+          --space-lg
+        );
+    }
+
+    .distributor-apply__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .distributor-apply__submit {
+      width: 100%;
+    }
+  }
+</style>

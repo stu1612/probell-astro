@@ -1,14 +1,14 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 19 Jul 2026 — Session 35**
+**Last updated: 19 Jul 2026 — Session 36**
 
 ---
 
 ## Current Status
 
 **Phase:** Post-build structural redesign
-**Active section:** Sales Partner (`/partners/sales`) and Retailer (`/partners/retail`) pages built, both reusing `src/lib/hubspot.ts`. Retailer is developer-confirmed complete (visual check + working submission). Sales Partner's visual verification is still outstanding. Distributor route (`/partners/distributor`) and `/partners/index` still scaffolded as empty files.
-**Next action:** Build Distributor page from its v2 spec, reusing `src/lib/hubspot.ts`. Visual verification (Playwright, 375/768/1440px) on `/partners/sales` still outstanding — Playwright MCP has not been available in these sessions; developer to review in-browser directly before that page is marked fully complete.
+**Active section:** Sales Partner, Retailer, and Distributor pages all built. Retailer and Distributor are developer-confirmed complete (visual check + working submission). Sales Partner's visual verification is still outstanding. `/partners/index` (the partner-program landing/hub page) remains an empty scaffold — no spec written for it yet.
+**Next action:** `/partners/index` has no feature spec in `src/features/` — needs one written (likely a simple hub linking to the three partner pages, similar in spirit to `/legal/index.astro`) before it can be built. Also still outstanding: visual verification (Playwright, 375/768/1440px) on `/partners/sales` — Playwright MCP has not been available in these sessions; developer to review in-browser directly before that page is marked fully complete.
 
 **Note on Sessions 31–33:** this work was carried out by the developer directly, without running through Claude Code sessions — logged here retroactively per developer request, sole-authorship, "off script." See entries below.
 
@@ -78,11 +78,37 @@ These items must be confirmed before Claude Code begins building.
 | —   | AudienceCards                | Complete    | 10 Jul 2026 | Solo dev session (not run through Claude Code) — new homepage section, 4-card grid linking to `/supplements` and the three partner routes; see Session 32 |
 | —   | Sales Partner page (`/partners/sales`) | Built — pending visual verification | 19 Jul 2026 | Hero, Why Probell, How It Works, application form; FAQ cut (deviation, see Session 34). `src/lib/hubspot.ts` created as shared submission utility for all three partner forms. HubSpot submission functionally confirmed working. Playwright visual check (375/768/1440px) not yet done |
 | —   | Retailer page (`/partners/retail`)     | Complete    | 19 Jul 2026 | Hero, short "Why Stock Probell" list (deliberately not a stat-chip grid per spec), pricing-is-request-not-publish framing, How It Works, request form (Business Name, Your Name, Email, Phone, Message; no Business Type dropdown, no location field, both deliberate per spec). No automated confirmation email (per spec — inline success only). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working |
-| —   | Distributor / partner index pages | Not started | —           | Routes scaffolded as empty files; specs revised to v2 in `src/features/` but no page markup built yet. Should reuse `src/lib/hubspot.ts` |
+| —   | Distributor page (`/partners/distributor`) | Complete | 19 Jul 2026 | Deliberately minimal per spec — hero (gold eyebrow, distinct from red on the other two), one short positioning paragraph (no stat chips, no numbers), minimal contact form (Business Name, Your Name, Contact Email, Phone; no message field, no FAQ, no how-it-works). No automated confirmation email (spec: would contradict the page's "not automated forms" positioning). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working (3/3 pass) |
+| —   | Partner index page (`/partners/index`) | Not started | —          | Empty scaffold, no feature spec written yet — needs one before it can be built |
 
 ---
 
 ## Session Log
+
+### Session 36 — 19 Jul 2026
+
+**What was done:**
+
+- Built `src/pages/partners/distributor.astro` — Distributor Program page: hero (gold eyebrow — the spec's one point of visual difference from Sales Partner/Retailer's red), one short positioning paragraph, minimal contact form (Business Name, Your Name, Contact Email, Phone, hidden Partner Type)
+- Reused `src/lib/hubspot.ts` directly — third page to call the shared utility unchanged, no per-page submission logic duplicated
+- Added `HUBSPOT_DISTRIBUTOR_FORM_GUID` to `.env`, reusing the existing `HUBSPOT_PORTAL_ID`
+- Restarted the dev server proactively before testing (per the operational lesson from Session 35 — new env vars require a restart) and confirmed via `curl` that the form served the correct `data-portal-id`/`data-form-guid` before asking the developer to test, avoiding a repeat of the Session 35 404
+- `npm run build` passes — zero errors, 15 pages generated
+- Developer confirmed: visual check complete, form submission successful (3/3 pass across Sales Partner, Retailer, Distributor)
+
+**Decisions made this session:**
+
+- No Message/textarea field, no region/business-background field — deliberately excluded per spec; this audience's relationship is built through direct conversation, not form detail
+- No automated confirmation email — spec is explicit this would directly contradict the page's stated positioning ("this isn't something we handle through automated forms")
+- No FAQ, no "How It Works" section — spec calls this page "deliberately minimal," warning that over-building it risks looking like it's compensating for a lack of track record
+
+**Decisions still open:**
+
+- Same list as Session 35, plus:
+- `/partners/index` has no feature spec yet — needs one written before it can be built. Likely a simple hub page linking to the three partner routes (Sales Partner, Retailer, Distributor), similar in spirit to `/legal/index.astro`'s pattern, but this hasn't been confirmed or scoped with the developer
+- Visual verification of `/partners/sales` — still the one remaining open item from Session 34
+
+---
 
 ### Session 35 — 19 Jul 2026
 
