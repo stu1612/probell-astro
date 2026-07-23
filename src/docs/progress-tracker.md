@@ -2,6 +2,14 @@
 
 **Last updated: 19 Jul 2026 — Session 36**
 
+
+**Pending/Deferred items**
+
+- [ ] DNS/hosting split: confirm probellnutrition.com's MX records are 
+  preserved when pointing DNS to Vercel. Screenshot current MX records 
+  before any DNS change. Do not conflate SMTP/mail settings with 
+  web-hosting DNS records — they're separate.
+
 ---
 
 ## Current Status
@@ -84,6 +92,43 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 37 — 22 Jul 2026
+
+**What was done:**
+
+- **DEVIATION:** UI Refresh exploration per `src/features/ui-refresh.md` — built three new visual treatments of the existing `ProductStrips` sections (Whey 100 Protein, Creatine, Pre-Workout) inside a new `src/components/Playground/index.astro`, matching the reference screenshots at `public/images/snippets/`. Production `ProductStrips`/`ProductStrip.astro` and `index.astro` were not touched; playground code is not imported anywhere in production.
+- **DEVIATION:** Added a temporary, unlinked `src/pages/playground.astro` route solely to render `<Playground />` for developer review — `coding-standards.md` prohibits test/playground pages; this is a deliberate, logged exception for review purposes only, to be removed (or its contents promoted) once reviewed.
+- Reused product names/body copy from `@data/products` (unchanged) rather than the placeholder copy visible in the reference screenshots, to keep brand-voice copy authoritative; only the visual treatment was rebuilt.
+- Per spec: `public/images/lifestyle/athlete-walking.jpg` used for all three sections regardless of the product imagery shown in the references; button styling in the references was ignored — existing `.btn-secondary` used as-is.
+- Visual deviations from `design.md`/`coding-standards.md`, per the reference: square (non-rounded) full-bleed image edges instead of the current `border-radius: 22px`; a "◆ 01 / FOUNDATION"-style eyebrow (uniform red accent across all three, rather than the current alternating red/gold) replacing "01 — Strength"; a two-stat-with-divider row (current component supports only one stat); section 3 (Pre-Workout) rebuilt as a full-bleed image background with dark scrim and overlaid content, replacing the current split-panel layout.
+- `npm run build` passes — zero errors, 16 pages generated (includes the new `/playground` route).
+- Visual verification not done via Playwright MCP (not connected this session, consistent with prior sessions) — build confirmed clean; developer to review `/playground` directly in-browser at 375/768/1440px before any decision on production use.
+- Developer revisions applied after initial build: section 1 desktop column order reversed (content left/image right; ghost-number anchor now follows content side via flip/overlay modifiers); section 3's `athlete-walking.jpg` zoomed (`transform: scale(1.45)`) to crop out the dark doorframe margins in the source photo that were reading as excess black background; mobile layout corrected from a stacked image-on-top pattern to the reference's actual side-by-side arrangement (narrow ~25% image column, same left/right side as desktop) for sections 1 & 2; whole-section hover added (image zoom 1.05x on sections 1/2, button color state on all three); each strip's data now carries its own `image`/`imageAlt` fields (still all pointing at `athlete-walking.jpg`) instead of one shared constant, so per-section images can be swapped later.
+- **DEVIATION:** Added `.btn-skeleton` to `global.css` — a colorless, structural-only button base (padding/border-width/typography/transition list, including `border-color` in the transition, which `.btn-secondary` was missing). Added because the Playground CTA's hover state is driven by the parent `.pg-strip:hover`, not the button's own `:hover`, which doesn't fit `.btn-secondary`'s baked-in hover colors — diagnosed that `.btn-secondary:hover` sets `border-color` to the same value as its `background`, so the border-color change is real but invisually blends into the fill. Playground's CTA now uses `.btn-skeleton` plus locally-scoped colors (gold border/text at rest, gold fill with a contrasting **black** border on hover) so the border change actually reads. Developer confirmed this is the start of a broader button redesign and it's fine to go off-script for now — `.btn-primary`/`.btn-secondary` themselves were left untouched.
+- Developer tested the Playground build wrapped in the real `SectionWrapper bg="black"` (matching production nesting) and confirmed the full-bleed treatment survives it, once `Playground`'s outer element cancels the wrapper's `padding-inline` via a negative-margin breakout (tracking `SectionWrapper`'s own 1024px breakpoint where it drops from `--container-pad-lg` to `--container-pad`). Also added `margin-top` between the three sections via `.pg-strip + .pg-strip` (previously stacked with zero gap).
+- **DEVIATION — promoted to production:** developer signed off on the visual result and had this migrated into the live `ProductStrips` component (previously logged as pending review in the entries above):
+  - `src/data/products.ts`: `Product` interface gained `category` (eyebrow term), `overlay?` (flags strip 03's full-bleed treatment), and `stats: ProductStat[]` replacing the old singular `stat?`. All three `PRODUCTS` entries updated with real `stats` pairs and `category` values. Original per-product images (`three-flavours.jpg`, `trending-creatine.jpg`, `discipline.png`) deliberately left as-is — not overwritten with the exploration's placeholder `athlete-walking.jpg`; images/hrefs/alt text are the developer's to finish.
+  - `ProductStrip.astro`: fully rewritten — branches on `product.overlay` for split-panel (01/02) vs. full-bleed-with-scrim (03), uniform red diamond eyebrow (`labelAccent`'s red/gold alternation is no longer used, left in the interface rather than deleted), dual-stat row, flip-aware ghost position, whole-strip hover (image zoom on non-overlay strips, button color on all three), `.btn-skeleton`-based CTA. All classes renamed from the playground's `pg-strip__*` to `ps__strip`/`ps__*`. `margin-bottom: 5rem` (raw value) on the old `.ps__strip` replaced with a token-based `.ps__strip + .ps__strip { margin-top: var(--space-xl); }`. Left a code comment flagging that the `.ps__bg` image's `scale(1.45)` zoom was tuned specifically for `athlete-walking.jpg`'s framing and will likely need retuning once strip 03's real image is finalized.
+  - `ProductStrips/index.astro`: added the same `SectionWrapper` padding-breakout margin confirmed in the Playground test, so the promoted component keeps its full-bleed edges without needing any change to `index.astro`'s homepage composition (`ProductStrips` is just one sibling inside the shared black `SectionWrapper` next to `AudienceCards`/`Identity`/`Banner` — the breakout only affects its own box).
+  - `npm run build` passes — zero errors, 16 pages generated; homepage confirmed serving (200) with the new component live.
+  - Per explicit instruction, `src/components/Playground/index.astro` and `src/pages/playground.astro` were **not** deleted — kept until final sign-off on the production result.
+- Reversed the `SectionWrapper` padding breakout after developer review — final decision is that `ProductStrips` should stay within the wrapper's normal padded boundaries, not bleed to the viewport edge. Removed the negative-`margin-inline` rule from both `ProductStrips/index.astro` and `Playground/index.astro` (kept in sync since Playground is still live); no other markup/CSS changed — the strips' own images/overlay still fill their own column exactly as before, just inset like the rest of the black section now instead of reaching past it.
+- Developer signed off on the production result. Deleted `src/components/Playground/index.astro` and `src/pages/playground.astro` — confirmed via grep that nothing else in `src/` referenced either before removing. `npm run build` passes clean post-deletion — 15 pages generated (down from 16; `/playground` route no longer exists). The UI Refresh task (`src/features/ui-refresh.md`) is complete.
+
+**Decisions made this session:**
+
+- **DEVIATION:** Entire task — see `src/features/ui-refresh.md`. Developer explicitly authorized working outside `design.md`/`coding-standards.md` boundaries for this exploration, including the otherwise-disallowed playground component and page.
+- **DEVIATION:** `.btn-skeleton` added to shared `global.css` (not playground-scoped) ahead of a planned broader button redesign — flagged since this is the one change from this session that touches production CSS directly, even though no existing button's rendered output changed.
+- **DEVIATION:** Playground treatment promoted into live `ProductStrips`/`ProductStrip.astro`/`products.ts` — see above. `design.md`'s Component Rules section (button system) and the ghost-number red/gold alternation are now stale against what's actually live and should be reconciled once the wider button redesign is scoped, rather than read as accidental drift.
+
+**Decisions still open:**
+
+- Images, CTA hrefs (currently `href="#"`), and alt text on the new `ProductStrips` are still to be finished by the developer
+- Whether/when the broader button redesign happens (`.btn-skeleton` exists in `global.css` but `.btn-primary`/`.btn-secondary` are otherwise untouched, and `design.md`'s Component Rules section doesn't yet reflect any of this)
+- Same list as Session 36
+
+---
 
 ### Session 36 — 19 Jul 2026
 
