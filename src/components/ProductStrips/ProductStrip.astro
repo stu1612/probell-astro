@@ -9,26 +9,42 @@ interface Props {
 const { product } = Astro.props;
 ---
 
-<div class={`ps__strip${product.flip ? " ps__strip--flip" : ""}`}>
+<div
+  class={`ps__strip${product.flip ? " ps__strip--flip" : ""}${product.overlay ? " ps__strip--overlay" : ""}`}
+>
   {
-    product.flip && (
-      <div class="ps__img-wrap">
+    product.overlay ? (
+      <div class="ps__bg">
         <Image
           src={product.image}
           alt={product.imageAlt}
-          width={900}
-          height={700}
+          width={1600}
+          height={1000}
+          format="webp"
+          loading="lazy"
+        />
+        <div class="ps__scrim" />
+      </div>
+    ) : (
+      <div
+        class={`ps__img-wrap${product.imageMuted ? " ps__img-wrap--muted" : ""}`}
+      >
+        <Image
+          src={product.image}
+          alt={product.imageAlt}
+          width={1200}
+          height={900}
           format="webp"
           loading="lazy"
         />
       </div>
     )
   }
+
   <div class="ps__content">
-    <div class="ps__ghost">{product.id}</div>
-    <span class={`label-text label-text--${product.labelAccent}`}
-      >{product.label}</span
-    >
+    <span class="label-text label-text--red ps__eyebrow">
+      <span class="ps__diamond">◆</span> {product.id} / {product.category}
+    </span>
     <h3 class="display-text ps__name">
       {
         product.name.split("\n").map((line, i) => (
@@ -40,75 +56,90 @@ const { product } = Astro.props;
       }
     </h3>
     <p class="ps__body font-text text-grey">{product.body}</p>
-    {
-      product.stat && (
-        <div class="ps__stat">
-          <span class="display-text ps__stat-num">{product.stat.number}</span>
-          <span class="label-text ps__stat-label">
-            {product.stat.label.split("\n").map((line, i) => (
-              <>
-                {i > 0 && <br />}
-                {line}
-              </>
-            ))}
-          </span>
-        </div>
-      )
-    }
+    <div class="ps__stats">
+      {
+        product.stats.map((stat) => (
+          <div class="ps__stat">
+            <span class="display-text ps__stat-num">{stat.number}</span>
+            <span class="label-text ps__stat-label">{stat.label}</span>
+          </div>
+        ))
+      }
+    </div>
+    <a href="#" class="btn-skeleton ps__cta">
+      Shop Now →
+    </a>
   </div>
-  {
-    !product.flip && (
-      <div
-        class={`ps__img-wrap${product.imageMuted ? " ps__img-wrap--muted" : ""}`}
-      >
-        <Image
-          src={product.image}
-          alt={product.imageAlt}
-          width={900}
-          height={700}
-          format="webp"
-          loading="lazy"
-        />
-      </div>
-    )
-  }
+
+  <span class="ps__ghost">{product.id}</span>
 </div>
 
 <style>
   .ps__strip {
+    position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 52vh;
-    /* border-bottom: 1px solid var(--color-border); */
-    margin-bottom: 5rem;
+    min-height: 90vh;
+    overflow: hidden;
+  }
+
+  .ps__strip + .ps__strip {
+    margin-top: var(--space-xl);
+  }
+
+  .ps__strip--flip .ps__content {
+    order: 2;
+  }
+
+  .ps__strip--flip .ps__img-wrap {
+    order: 1;
+  }
+
+  .ps__img-wrap {
+    order: 2;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .ps__img-wrap :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--transition-slow);
+  }
+
+  .ps__img-wrap--muted :global(img) {
+    filter: grayscale(50%);
+    opacity: 0.6;
+  }
+
+  .ps__strip:hover .ps__img-wrap :global(img) {
+    transform: scale(1.05);
   }
 
   .ps__content {
+    order: 1;
     position: relative;
-    overflow: visible;
+    z-index: 2;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
     gap: var(--space-md);
     padding: var(--space-xl) var(--space-lg);
+    max-width: 640px;
   }
 
-  .ps__ghost {
-    position: absolute;
-    right: 0;
-    bottom: calc(-0.5 * var(--space-lg));
-    font-family: var(--font-display);
-    font-size: 28vw;
-    line-height: 0.85;
-    letter-spacing: -0.04em;
-    color: var(--color-red);
-    opacity: 0.08;
-    pointer-events: none;
-    user-select: none;
+  .ps__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
   }
 
-  .ps__strip--flip .ps__ghost {
-    color: var(--color-gold);
+  .ps__diamond {
+    font-size: 0.6em;
   }
 
   .ps__name {
@@ -122,63 +153,115 @@ const { product } = Astro.props;
     max-width: 46ch;
   }
 
+  .ps__stats {
+    display: flex;
+    gap: var(--space-md);
+  }
+
   .ps__stat {
     display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding-top: var(--space-sm);
-    border-top: 1px solid var(--color-border);
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding-left: var(--space-sm);
+    border-left: 2px solid var(--color-red);
   }
 
   .ps__stat-num {
     font-size: var(--text-product);
-    color: var(--color-red);
+    color: var(--color-white);
     line-height: 1;
   }
 
   .ps__stat-label {
     color: var(--color-grey);
-    line-height: 1.4;
   }
 
-  .ps__img-wrap {
-    position: relative;
-    overflow: hidden;
-    border-radius: 22px;
-    height: 60vh;
+  .ps__cta {
+    background: transparent;
+    color: var(--color-gold);
+    border-color: var(--color-gold);
   }
 
-  .ps__img-wrap :global(img) {
+  .ps__strip:hover .ps__cta {
+    background: var(--color-gold);
+    color: var(--color-black);
+    border-color: var(--color-black);
+  }
+
+  .ps__ghost {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    bottom: -0.1em;
+    font-family: var(--font-display);
+    font-size: 28vw;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: var(--color-grey);
+    opacity: 0.08;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .ps__strip:hover .ps__ghost {
+    opacity: 0.12;
+  }
+
+  .ps__strip--flip .ps__ghost,
+  .ps__strip--overlay .ps__ghost {
+    left: auto;
+    right: 0;
+  }
+
+  /* Full-bleed image-background variant (strip 03) */
+  .ps__strip--overlay {
+    grid-template-columns: 1fr;
+  }
+
+  .ps__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .ps__bg :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    /* Zoom was tuned against athlete-walking.jpg's specific framing
+       (crops out its dark doorframe margins) — retune if the source
+       image for this strip changes. */
+    transform: scale(1.45);
+    transform-origin: center;
   }
 
-  .ps__img-wrap--muted :global(img) {
-    filter: grayscale(50%);
-    opacity: 0.6;
+  .ps__scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  .ps__strip--overlay .ps__content {
+    grid-column: 1;
   }
 
   @media (max-width: 768px) {
-    .ps__strip {
-      grid-template-columns: 1fr;
-      min-height: unset;
+    .ps__strip:not(.ps__strip--overlay) {
+      grid-template-columns: 3fr 1fr;
+    }
+
+    .ps__strip--flip:not(.ps__strip--overlay) {
+      grid-template-columns: 1fr 3fr;
     }
 
     .ps__content {
-      order: 0;
-      padding: var(--space-md) var(--space-md);
-      overflow: hidden;
-    }
-
-    .ps__img-wrap {
-      height: 55vw;
-      order: 1;
+      padding: var(--space-md);
+      max-width: none;
     }
 
     .ps__ghost {
-      font-size: 55vw;
+      font-size: 45vw;
     }
   }
 </style>

@@ -314,10 +314,11 @@ select {
 .btn-secondary {
   display: inline-block;
   background: transparent;
-  color: var(--color-gold);
+  color: var(--color-grey);
   padding: 0.75rem 2rem;
-  border-radius: 999px;
-  border: 1px solid var(--color-gold);
+  /* border-radius: 999px; */
+  border: 1px solid;
+  border-color: var(--color-grey);
   font-family: var(--font-body);
   font-weight: 500;
   font-size: var(--text-label);
@@ -332,6 +333,29 @@ select {
 .btn-secondary:hover {
   background: var(--color-gold);
   color: var(--color-black);
+  border-color: var(--color-gold);
+}
+
+/* Base button skeleton — structural/typographic properties only, no
+   color. Part of the upcoming button redesign track: components that
+   need non-standard hover mechanics (e.g. state driven by a parent
+   element rather than the button's own :hover) apply colors locally
+   instead of using .btn-primary/.btn-secondary directly. */
+.btn-skeleton {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  border: 1px solid;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--text-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base);
 }
 
 /* --- Tags --- */
