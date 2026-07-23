@@ -43,7 +43,8 @@ const { product } = Astro.props;
 
   <div class="ps__content">
     <span class="label-text label-text--red ps__eyebrow">
-      <span class="ps__diamond">◆</span> {product.id} / {product.category}
+      <span class="ps__diamond">◆</span>
+      {product.id} / {product.category}
     </span>
     <h3 class="display-text ps__name">
       {
@@ -66,9 +67,7 @@ const { product } = Astro.props;
         ))
       }
     </div>
-    <a href="#" class="btn-skeleton ps__cta">
-      Shop Now →
-    </a>
+    <a href="#" class="btn-skeleton ps__cta"> Shop Now → </a>
   </div>
 
   <span class="ps__ghost">{product.id}</span>
@@ -143,7 +142,7 @@ const { product } = Astro.props;
   }
 
   .ps__name {
-    font-size: var(--text-section);
+    font-size: var(--text-statement);
     font-family: var(--font-display);
     color: var(--color-white);
     line-height: 0.95;
