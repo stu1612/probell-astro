@@ -1,0 +1,127 @@
+---
+import { Image } from "astro:assets";
+---
+
+<section id="hero-desktop">
+  <div class="hero">
+    <picture class="hero__picture">
+      <Image
+        src="/images/hero/hero_v2.jpg"
+        alt="Probell Nutrition athlete in training"
+        width={1920}
+        height={1080}
+        format="webp"
+        loading="eager"
+        class="hero__image"
+      />
+    </picture>
+    <div class="hero__overlay-bottom"></div>
+  </div>
+
+  <div class="hero__headline">
+    <h1 class="headline">
+      <span class="headline__line--1">Built for</span>
+      <span class="headline__line--2">the Grind</span>
+    </h1>
+    <p class="hero__subline">The only supplement you can lift</p>
+  </div>
+</section>
+
+<style>
+  #hero-desktop {
+    position: relative;
+    overflow: hidden;
+    height: 120vh;
+    top: -72px;
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    #hero-desktop {
+      display: block;
+    }
+  }
+
+  .hero {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .hero__picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    object-position: 100% 50%;
+  }
+
+  .hero__overlay-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(
+      180deg,
+      rgba(18, 18, 19, 0.01) 0%,
+      rgba(18, 18, 19, 1) 100%
+    );
+    pointer-events: none;
+  }
+
+  .hero__headline {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: auto;
+    transform: translateY(-50%);
+    text-align: left;
+    padding: var(--space-lg);
+    z-index: 1;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  }
+
+  .headline {
+    font-family: var(--font-display);
+    color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-align: justify;
+  }
+
+  .headline__line--1 {
+    font-size: clamp(3rem, 7vw, 6rem);
+  }
+
+  .headline__line--2 {
+    font-size: clamp(5rem, 15vw, 12rem);
+  }
+
+  .hero__subline {
+    color: var(--color-grey);
+    margin-top: var(--space-sm);
+    font-size: var(--text-product);
+  }
+
+  @media (max-width: 1024px) {
+    .hero__headline {
+      padding: var(--space-md);
+      width: 100%;
+    }
+  }
+</style>
