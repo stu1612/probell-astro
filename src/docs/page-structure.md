@@ -46,7 +46,7 @@ Confirmed structure, from `index.astro`:
 | # | Section | Component | Background | Notes |
 |---|---------|-----------|------------|-------|
 | 1 | Nav | `Nav/index.astro` | transparent → solid on scroll | Internals refactored into `NavLogo.astro`, `NavHamburger.astro`, `NavOverlay.astro`, `ui/SocialIcons.astro` (Session 28) |
-| 2 | Hero | `Hero/index.astro` | full-bleed `hero-main.jpg` | Single headline "Built For The Grind" (Session 24); dual gradient overlay; mobile sub-line/CTA restored (Session 31) |
+| 2 | Hero | `Hero/index.astro` | full-bleed `hero_v2.png` (desktop) / `hero_v2_mobile.png` (mobile) | Single headline "Built For The Grind" (Session 24). Internals refactored into `HeroDesktop.astro` + `HeroMobile.astro` (both rendered, CSS `display: none`/`block` swap at 768px — no JS) so mobile can be styled independently; `index.astro` is now just the orchestrator |
 | 3 | **AudienceCards** | `AudienceCards/index.astro` + `AudienceCard.astro` | inside black wrapper | **Confirmed position: first item inside the black `SectionWrapper`, immediately after Hero, before Identity.** 4-card grid — Shop, Retailer, Distributor, Partners — from `src/data/audience-cards.ts`. Overlay gradient currently commented out, not deleted (Session 33) — flag to developer whether that's permanent |
 | 4 | Identity | `Identity/index.astro` | black (via wrapper) | Props-driven (`headline`, `body`, `primaryCta`) |
 | 5 | Banner | `ui/Banner.astro` | image, decorative | 80vh, `grid-template-columns: 1fr 1fr`, content right |
@@ -142,7 +142,7 @@ separate:
 ```
 src/components/
 ├── Nav/ (index.astro, NavLogo.astro, NavHamburger.astro, NavOverlay.astro)
-├── Hero/index.astro
+├── Hero/ (index.astro, HeroDesktop.astro, HeroMobile.astro)
 ├── Identity/index.astro
 ├── BrandStory/ (index.astro, BrandStatsBlock.astro, BrandCtaBlock.astro)
 ├── ProductStrips/ (index.astro, ProductStrip.astro)

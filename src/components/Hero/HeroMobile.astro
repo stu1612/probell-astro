@@ -1,0 +1,159 @@
+---
+import { Image } from "astro:assets";
+---
+
+<section id="hero-mobile">
+  <div class="hero">
+    <picture class="hero__picture">
+      <Image
+        src="/images/hero/hero_v2_mobile.jpg"
+        alt="Probell Nutrition athlete in training"
+        width={1080}
+        height={1920}
+        format="webp"
+        loading="eager"
+        class="hero__image"
+      />
+    </picture>
+    <div class="hero__overlay-top"></div>
+    <div class="hero__overlay-bottom"></div>
+    <p class="headline">
+      <span>Built for</span>
+      <span class="headline__line--1">the Grind</span>
+    </p>
+
+    <p class="headline-2">
+      <span>the only</span>
+      <span class="headline__line--2">supplement</span>
+      <span>you can lift</span>
+    </p>
+  </div>
+</section>
+
+<style>
+  #hero-mobile {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    top: -72px;
+    display: block;
+  }
+
+  @media (min-width: 768px) {
+    #hero-mobile {
+      display: none;
+    }
+  }
+
+  .hero {
+    position: relative;
+    height: 100%;
+  }
+
+  .hero__picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    object-position: center;
+    filter: brightness(0.75);
+  }
+
+  .hero__overlay-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70%;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    pointer-events: none;
+  }
+  .hero__overlay-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 40%,
+      rgba(0, 0, 0, 1) 100%
+    );
+    pointer-events: none;
+  }
+
+  .headline {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    font-family: var(--font-display);
+    color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-align: justify;
+    padding-left: 23px;
+  }
+  .headline-2 {
+    position: absolute;
+    bottom: 5%;
+    right: 0;
+    font-family: var(--font-display);
+    color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-align: right;
+    padding-right: 23px;
+  }
+
+  .headline__line--1 {
+    font-size: clamp(5rem, 13vw, 10rem);
+  }
+
+  .headline__line--2 {
+    font-size: clamp(3rem, 8vw, 10rem);
+  }
+
+  .hero__grid {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    align-items: center;
+    justify-items: center;
+    gap: 1rem;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--color-border);
+    box-sizing: border-box;
+    max-width: calc(100% - (var(--space-md) * 2));
+  }
+
+  .hero__grid a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    transition: color var(--transition-fast);
+  }
+
+  .hero__grid a:hover {
+    color: var(--color-red);
+  }
+</style>

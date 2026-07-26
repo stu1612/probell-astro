@@ -40,7 +40,7 @@ export const PRODUCTS: Product[] = [
     category: "Power",
     name: "Creatine",
     body: "More reps. Heavier lifts. Faster recovery between sets. Pure creatine monohydrate — nothing added, nothing hidden. The most researched supplement in sport. Now in the only container worth lifting.",
-    image: "/images/trending/trending-creatine.jpg",
+    image: "/images/bold-statement/discipline.png",
     imageAlt: "Probell Creatine in gym setting",
     flip: true,
     stats: [
@@ -55,7 +55,7 @@ export const PRODUCTS: Product[] = [
     category: "Ignite",
     name: "Pre-Workout",
     body: "Explosive energy without the crash. Dialled-in focus from the first rep to the last. Coming soon — built to the same standard as everything else Probell makes.",
-    image: "/images/bold-statement/discipline.png",
+    image: "/images/hero/hero_img.jpg",
     imageAlt: "Probell athlete",
     overlay: true,
     stats: [

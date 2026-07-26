@@ -246,13 +246,18 @@ of this document.
 
 Two styles only.
 
-**Primary — Red pill:**
+**As of 25 Jul 2026: square corners, not pill.** `border-radius` was
+removed from both button styles (developer design change, CSS change
+kept in place as commented-out `/* border-radius: 999px; */` rather
+than deleted). Do not flag the missing radius as a spec violation or
+re-add it — this is the current standing spec, not a one-off deviation.
+
+**Primary — Red block:**
 ```css
 .btn-primary {
   background: var(--color-red);
   color: var(--color-white);
   padding: 0.75rem 2rem;
-  border-radius: 999px;
   font-family: var(--font-body);
   font-weight: 500;
   font-size: var(--text-label);
@@ -271,7 +276,6 @@ Two styles only.
   background: transparent;
   color: var(--color-gold);
   padding: 0.75rem 2rem;
-  border-radius: 999px;
   border: 1px solid var(--color-gold);
   font-family: var(--font-body);
   font-weight: 500;

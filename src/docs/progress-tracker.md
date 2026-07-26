@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 19 Jul 2026 — Session 36**
+**Last updated: 26 Jul 2026 — Session 38**
 
 
 **Pending/Deferred items**
@@ -70,7 +70,7 @@ These items must be confirmed before Claude Code begins building.
 | —   | globals.css import          | Complete    | 17 May 2026 |                                                                                            |
 | —   | BaseLayout                  | Complete    | 17 May 2026 |                                                                                            |
 | 1   | Nav                         | Complete    | 17 May 2026 | Single logo asset used for both states — swap when two-variant PNGs arrive                 |
-| 2   | Hero                        | Complete    | 11 Jun 2026 | Session 24 redesign: uses hero-main.jpg (.jpg replaces .png); single headline "Built For The Grind"; dual gradients (bottom fade + right-side fade); 120vh height |
+| 2   | Hero                        | Complete    | 26 Jul 2026 | Session 38: split into `HeroDesktop.astro` + `HeroMobile.astro` (CSS `display` swap at 768px, `index.astro` now just the orchestrator) so mobile can be designed independently. Desktop: `hero_v2.png`, single-tier headline, bottom gradient. Mobile: `hero_v2_mobile.png`, two-tier headline layout + icon CTA row (currently commented out, developer WIP), still in active visual iteration — not yet developer-signed-off |
 | 3   | Identity                    | Complete    | 11 Jun 2026 | Session 24: refactored to accept headline/body/primaryCta props; secondary CTA removed; stats row removed; CTA points to #trending |
 | 4   | Banner (ui)                 | Complete    | 11 Jun 2026 | Session 24: 80vh; grid 1fr 1fr (empty left cell, content right); background-image from prop |
 | 5   | ProductStrips               | Complete    | 11 Jun 2026 | Session 24: NEW component replacing Trending + BuiltForStrength; 3 alternating full-width strips — Whey 100 Protein (image right), Creatine (image left, gold), Pre-Workout (muted/coming soon); ghost number watermark; stat callout on strip 01 |
@@ -92,6 +92,30 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 38 — 26 Jul 2026
+
+**What was done:**
+
+- Hero mobile image swap: desktop uses `hero_v2.png`, mobile uses `hero_v2_mobile.png` via a `<picture>`/`<source>` art-direction swap at 767px (later superseded by the full component split below).
+- Adjusted `hero__overlay-top`/`hero__overlay-bottom` gradients (direction, breakpoint visibility) and hero height handling (`100dvh` explored, later reverted).
+- **Structural refactor:** split `Hero/index.astro` into `HeroDesktop.astro` + `HeroMobile.astro`, both rendered and toggled via CSS `display: none`/`block` at the 768px breakpoint (no JS) — same pattern as the Nav sub-component split (Session 28). `index.astro` is now just the orchestrator. Done at developer's request so mobile can be designed independently of desktop without touching desktop's CSS.
+- Mobile hero has since gone through several rounds of developer-led layout iteration in-session (headline positioning, a bordered/padded 2-col CTA+subline grid, then a 3-icon CTA row modeled on `ui/SocialIcons.astro`'s inline-SVG pattern, then a two-tier headline layout) — currently mid-iteration; the icon CTA row is commented out pending further design decisions.
+- Code review pass on both new files: removed commented-out dead code (an unused `hero__overlay-right` markup+CSS pair on desktop, a commented alternate mobile height, commented-out flex properties), fixed a duplicate-`<h1>` issue (mobile had grown two `<h1>`s of its own on top of desktop's, all three rendered simultaneously in the DOM regardless of which is CSS-hidden — demoted mobile's two heading elements to `<p>`, leaving desktop's as the page's sole `<h1>`), and removed several dead/typo'd class references (`text-product` — not an actual class anywhere in the codebase, only `var(--text-product)` used inline elsewhere; a `text-produc` typo; `display-text` on mobile, whose properties were already being fully overridden by the more-specific scoped `.headline` rule). Added `font-size: var(--text-product)` directly to both `.hero__subline` rules where the dead class had left them unstyled.
+- `astro check` and `astro build` both pass clean throughout (0 errors).
+
+**Decisions made this session:**
+
+- **DEVIATION:** Mobile hero (`HeroMobile.astro`) currently uses raw, non-token color/shadow values that `design.md`'s "no raw hex/px/rgba outside the two documented exceptions" rule would normally disallow — e.g. `rgba(0, 0, 0, ...)` gradient stops (vs. the brand near-black token value used on desktop) and an invalid `rgba(0, 0, 0, 100)` alpha (browsers clamp this to fully opaque; not a rendering bug, just malformed syntax). Flagged to developer; developer has confirmed this is intentional for now — a `#000` hex value is planned to be added to `design.md`/`globals.css` as a formal token in an upcoming change, at which point this should be reconciled. Left as-is per explicit instruction, not fixed in this session.
+- Desktop's `hero__overlay-right` (a right-side fade gradient, previously kept commented-out "in case needed") was removed outright rather than kept commented, per explicit developer instruction this session to clean up commented-out code in the Hero files.
+
+**Decisions still open:**
+
+- Mobile hero layout (headline positions, whether the icon CTA row returns, final copy/hrefs) — developer still actively iterating, not yet signed off
+- `#000` token addition to `design.md`/`globals.css`, to reconcile the raw-value deviation noted above
+- Same list as Session 37
+
+---
 
 ### Session 37 — 22 Jul 2026
 
