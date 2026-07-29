@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 26 Jul 2026 — Session 38**
+**Last updated: 29 Jul 2026 — Session 39**
 
 
 **Pending/Deferred items**
@@ -92,6 +92,39 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 39 — 29 Jul 2026
+
+**What was done:**
+
+- Small mobile-styling pass across several existing components — developer-led, one consistent decision applied throughout: switch mobile content from centered to left-aligned, plus a couple of `AudienceCards` touch-specific fixes:
+  - `AudienceCards/AudienceCard.astro`: mobile (`max-width: 768px`) card now `width: 100%; height: 280px` (fixed height replacing desktop's `aspect-ratio: 4/5`); `.ac__overlay` darkened to the same gradient used on desktop `:hover` (touch has no hover state, so the darker scrim is now permanent on mobile); `.ac__descriptor` opacity forced to `1` on mobile so the descriptor text is visible without a hover interaction; hover-state overlay-darkening rule also added under `@media (hover: hover)` for parity
+  - `AudienceCards/index.astro`: `.ac__heading` left-aligned on mobile
+  - `BrandStory/BrandCtaBlock.astro`: removed a redundant `text-align: center` inside the `max-width: 1024px` block — `display: flex; align-items: center` on the same rule already handles alignment, the text-align was leftover
+  - `BrandStory/BrandStatsBlock.astro`: `text-align: left` moved onto the base `.em__anchor` rule; the now-redundant `text-align: center` mobile override removed (consolidation, not just a duplicate change)
+  - `BrandStory/index.astro`: `text-align: left` added to the existing mobile (`max-width: 768px`) `.em__headline` rule
+  - `Identity/index.astro`: `.identity__headline`/`.identity__row` text-align switched from center to left at the base/mobile level; the prior desktop-only (`min-width: 768px`) versions of the same two rules were initially commented out rather than deleted, per [[feedback-commented-code]] — since removed outright, see below
+  - `ui/Banner.astro`: `gap: var(--space-md)` added to `.banner__headline-group` inside the existing mobile breakpoint block
+- `npm run build` passes — zero errors, 15 pages generated
+- Claude code-review pass on the above (not implemented by Claude, developer had already made the changes): no functional or build issues found. One thing flagged to developer, not fixed — developer's call:
+  - `Identity/index.astro`'s `.identity__ctas` still has `align-items: center` inside `@media (max-width: 1040px)` — CTA buttons stay centered while the headline/body above them are now left-aligned; may be intentional, may have been missed
+- **DEVIATION:** Per explicit developer instruction this session, [[feedback-commented-code]]'s "never remove without being asked" default was overridden — all commented-out code and the resulting empty style rule were deleted outright (normally this would just be flagged, not fixed):
+  - `AudienceCards/AudienceCard.astro`: removed a commented-out `<div class="ac__overlay">` markup line, a commented-out `.ac__overlay { ... }` CSS block (dead duplicate of the live rule further down the file), and a commented-out `opacity: 0;` line inside the live `.ac__overlay` rule
+  - `AudienceCards/index.astro`: removed a commented-out `padding-block: var(--space-xl);` line in `.ac`
+  - `Identity/index.astro`: removed the commented-out `#identity`/`.identity__headline` rules inside `@media (min-width: 768px)` (flagged above), which left that media query block empty, so the empty block was removed too
+  - Explanatory (non-code) comments left untouched — e.g. `ui/Banner.astro`'s `/* hide the empty spacer column on mobile */`
+- `npm run build` re-run after cleanup — passes, zero errors, 15 pages generated
+
+**Decisions made this session:**
+
+- None requiring a spec update — CSS-only alignment/sizing adjustments to already-built components
+- **DEVIATION:** commented-out code removed outright rather than left in place, on explicit developer instruction — see above; [[feedback-commented-code]] itself is unchanged as a default, this was a one-off override
+
+**Decisions still open:**
+
+- Same list as Session 38, plus the `Identity/index.astro` CTA-centering flag above
+
+---
 
 ### Session 38 — 26 Jul 2026
 
