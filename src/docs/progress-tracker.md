@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 29 Jul 2026 — Session 39**
+**Last updated: 29 Jul 2026 — Session 40**
 
 
 **Pending/Deferred items**
@@ -15,7 +15,7 @@
 ## Current Status
 
 **Phase:** Post-build structural redesign
-**Active section:** Sales Partner, Retailer, and Distributor pages all built. Retailer and Distributor are developer-confirmed complete (visual check + working submission). Sales Partner's visual verification is still outstanding. `/partners/index` (the partner-program landing/hub page) remains an empty scaffold — no spec written for it yet.
+**Active section:** Sales Partner, Retailer, and Distributor pages all built. Retailer and Distributor were developer-confirmed complete (visual check + working submission) prior to Session 40; Session 40 added a photographic hero background to all three pages, so Retailer/Distributor's prior visual sign-off predates that change and is worth a quick re-look. Sales Partner's visual verification is still outstanding. `/partners/index` (the partner-program landing/hub page) remains an empty scaffold — no spec written for it yet.
 **Next action:** `/partners/index` has no feature spec in `src/features/` — needs one written (likely a simple hub linking to the three partner pages, similar in spirit to `/legal/index.astro`) before it can be built. Also still outstanding: visual verification (Playwright, 375/768/1440px) on `/partners/sales` — Playwright MCP has not been available in these sessions; developer to review in-browser directly before that page is marked fully complete.
 
 **Note on Sessions 31–33:** this work was carried out by the developer directly, without running through Claude Code sessions — logged here retroactively per developer request, sole-authorship, "off script." See entries below.
@@ -84,14 +84,37 @@ These items must be confirmed before Claude Code begins building.
 | 13  | Footer                      | Complete    | 20 May 2026 | 4-col grid; probell-logo.png used (swap when logo-light.png arrives); social icons #placeholder |
 | —   | Supplements page            | Complete    | 14 Jun 2026 | Listing + detail pages built (Task 14)                                                     |
 | —   | AudienceCards                | Complete    | 10 Jul 2026 | Solo dev session (not run through Claude Code) — new homepage section, 4-card grid linking to `/supplements` and the three partner routes; see Session 32 |
-| —   | Sales Partner page (`/partners/sales`) | Built — pending visual verification | 19 Jul 2026 | Hero, Why Probell, How It Works, application form; FAQ cut (deviation, see Session 34). `src/lib/hubspot.ts` created as shared submission utility for all three partner forms. HubSpot submission functionally confirmed working. Playwright visual check (375/768/1440px) not yet done |
-| —   | Retailer page (`/partners/retail`)     | Complete    | 19 Jul 2026 | Hero, short "Why Stock Probell" list (deliberately not a stat-chip grid per spec), pricing-is-request-not-publish framing, How It Works, request form (Business Name, Your Name, Email, Phone, Message; no Business Type dropdown, no location field, both deliberate per spec). No automated confirmation email (per spec — inline success only). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working |
-| —   | Distributor page (`/partners/distributor`) | Complete | 19 Jul 2026 | Deliberately minimal per spec — hero (gold eyebrow, distinct from red on the other two), one short positioning paragraph (no stat chips, no numbers), minimal contact form (Business Name, Your Name, Contact Email, Phone; no message field, no FAQ, no how-it-works). No automated confirmation email (spec: would contradict the page's "not automated forms" positioning). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working (3/3 pass) |
+| —   | Sales Partner page (`/partners/sales`) | Built — pending visual verification | 19 Jul 2026 | Hero, Why Probell, How It Works, application form; FAQ cut (deviation, see Session 34). `src/lib/hubspot.ts` created as shared submission utility for all three partner forms. HubSpot submission functionally confirmed working. Session 40: hero switched from text-only to photographic background (`partner-sales.jpg`, flat `rgba(0,0,0,0.5)` scrim). Playwright visual check (375/768/1440px) not yet done |
+| —   | Retailer page (`/partners/retail`)     | Complete    | 19 Jul 2026 | Hero, short "Why Stock Probell" list (deliberately not a stat-chip grid per spec), pricing-is-request-not-publish framing, How It Works, request form (Business Name, Your Name, Email, Phone, Message; no Business Type dropdown, no location field, both deliberate per spec). No automated confirmation email (per spec — inline success only). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working. Session 40: hero switched from text-only to photographic background (`partner-retail.jpg`, flat `rgba(0,0,0,0.5)` scrim) |
+| —   | Distributor page (`/partners/distributor`) | Complete | 19 Jul 2026 | Deliberately minimal per spec — hero (gold eyebrow, distinct from red on the other two), one short positioning paragraph (no stat chips, no numbers), minimal contact form (Business Name, Your Name, Contact Email, Phone; no message field, no FAQ, no how-it-works). No automated confirmation email (spec: would contradict the page's "not automated forms" positioning). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working (3/3 pass). Session 40: hero switched from text-only to photographic background (`distributor.jpg`, flat `rgba(0,0,0,0.5)` scrim) |
 | —   | Partner index page (`/partners/index`) | Not started | —          | Empty scaffold, no feature spec written yet — needs one before it can be built |
 
 ---
 
 ## Session Log
+
+### Session 40 — 29 Jul 2026
+
+**What was done:**
+
+- Added photographic hero backgrounds to all three partner pages, replacing the dark text-only hero treatment used since their initial build (Sessions 34–36):
+  - `src/pages/partners/retail.astro` — `/images/partners/partner-retail.jpg`
+  - `src/pages/partners/distributor.astro` — `/images/audience/distributor.jpg`
+  - `src/pages/partners/sales.astro` — `/images/partners/partner-sales.jpg`
+- Same pattern applied to all three, matching `HeroDesktop.astro`'s established approach (`astro:assets` `<Image />`, `object-fit: cover`, absolutely positioned): the `<Image />` and a new overlay div sit inside the existing `#*-hero` wrapper alongside the `.container`; hero copy was moved into a new `.*-hero__content` class (`position: relative` so it sits above the image/overlay) and now carries the padding that used to live directly on `#*-hero`. Mobile breakpoint padding overrides retargeted to `.*-hero__content` for the same reason.
+- Overlay uses flat `rgba(0, 0, 0, 0.5)` per `design.md`'s documented "dark overlays on photography" exception — not a gradient (the sitewide "no gradients" rule is intact here, unlike `HeroDesktop.astro`'s pre-existing gradient overlay, which predates this session and wasn't touched)
+- Self-review caught one `coding-standards.md` violation before considering this done: all three `<Image />` tags were initially given `alt=""`, but the standard requires meaningful alt text on content images (empty alt is only for decorative images, and none of Probell's documented exceptions cover hero photography). Fixed with descriptive alt text per page (e.g. "Probell Nutrition retail display")
+- `astro check` (0 errors) and `npm run build` (15 pages, zero errors) both re-run clean after the alt-text fix
+
+**Decisions made this session:**
+
+- None requiring a spec update — visual-only addition to already-built, developer-confirmed pages; no copy, form, or CRM-integration logic touched
+
+**Decisions still open:**
+
+- Same list as Session 39, plus: the three partner-page heroes' new photographic backgrounds have not yet had a developer visual check (this changes previously developer-confirmed "visual check done" pages for Retail and Distributor — worth a quick re-look, not just Sales Partner's still-outstanding one)
+
+---
 
 ### Session 39 — 29 Jul 2026
 

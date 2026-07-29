@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import FormField from "@components/ui/FormField.astro";
 
@@ -12,7 +13,17 @@ const hubspotFormGuid = import.meta.env.HUBSPOT_DISTRIBUTOR_FORM_GUID ?? "";
 
 <BaseLayout title={title} description={description} transparentNav={true}>
   <div id="distributor-hero">
-    <div class="container">
+    <Image
+      src="/images/audience/distributor.jpg"
+      alt="Probell Nutrition distribution and logistics"
+      width={1920}
+      height={1080}
+      format="webp"
+      loading="eager"
+      class="distributor-hero__image"
+    />
+    <div class="distributor-hero__overlay"></div>
+    <div class="container distributor-hero__content">
       <span class="label-text label-text--gold">Distributor Program</span>
       <h1 class="display-text distributor-hero__title">
         Building the Network. Looking for the Right People.
@@ -197,6 +208,25 @@ const hubspotFormGuid = import.meta.env.HUBSPOT_DISTRIBUTOR_FORM_GUID ?? "";
     top: calc(var(--nav-height) * -1);
     margin-bottom: calc(var(--nav-height) * -1);
     background: var(--color-black);
+    overflow: hidden;
+  }
+
+  .distributor-hero__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .distributor-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .distributor-hero__content {
+    position: relative;
     padding-block: calc(var(--space-2xl) + var(--nav-height)) var(--space-xl);
   }
 
@@ -292,7 +322,7 @@ const hubspotFormGuid = import.meta.env.HUBSPOT_DISTRIBUTOR_FORM_GUID ?? "";
   }
 
   @media (max-width: 768px) {
-    #distributor-hero {
+    .distributor-hero__content {
       padding-block: calc(var(--space-xl) + var(--nav-height)) var(
           --space-lg
         );

@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import FormField from "@components/ui/FormField.astro";
 
@@ -42,7 +43,17 @@ const howItWorks = [
 
 <BaseLayout title={title} description={description} transparentNav={true}>
   <div id="sales-hero">
-    <div class="container">
+    <Image
+      src="/images/partners/partner-sales.jpg"
+      alt="Probell Nutrition sales partner in the field"
+      width={1920}
+      height={1080}
+      format="webp"
+      loading="eager"
+      class="sales-hero__image"
+    />
+    <div class="sales-hero__overlay"></div>
+    <div class="container sales-hero__content">
       <span class="label-text label-text--red">Sales Partner Program</span>
       <h1 class="display-text sales-hero__title">
         We&rsquo;re Not Looking for Salespeople.
@@ -274,6 +285,25 @@ const howItWorks = [
     top: calc(var(--nav-height) * -1);
     margin-bottom: calc(var(--nav-height) * -1);
     background: var(--color-black);
+    overflow: hidden;
+  }
+
+  .sales-hero__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sales-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .sales-hero__content {
+    position: relative;
     padding-block: calc(var(--space-2xl) + var(--nav-height)) var(--space-xl);
   }
 
@@ -436,7 +466,7 @@ const howItWorks = [
   }
 
   @media (max-width: 768px) {
-    #sales-hero {
+    .sales-hero__content {
       padding-block: calc(var(--space-xl) + var(--nav-height)) var(--space-lg);
     }
 
