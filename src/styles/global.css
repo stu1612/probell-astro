@@ -24,6 +24,7 @@
 :root {
   /* Colors */
   --color-black: #121213;
+  --color-black-true: #000000;
   --color-red: #c0392b;
   --color-gold: #c9a84c;
   --color-white: #f9f6ee;

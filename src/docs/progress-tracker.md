@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 29 Jul 2026 — Session 40**
+**Last updated: 30 Jul 2026 — Session 41**
 
 
 **Pending/Deferred items**
@@ -15,8 +15,8 @@
 ## Current Status
 
 **Phase:** Post-build structural redesign
-**Active section:** Sales Partner, Retailer, and Distributor pages all built. Retailer and Distributor were developer-confirmed complete (visual check + working submission) prior to Session 40; Session 40 added a photographic hero background to all three pages, so Retailer/Distributor's prior visual sign-off predates that change and is worth a quick re-look. Sales Partner's visual verification is still outstanding. `/partners/index` (the partner-program landing/hub page) remains an empty scaffold — no spec written for it yet.
-**Next action:** `/partners/index` has no feature spec in `src/features/` — needs one written (likely a simple hub linking to the three partner pages, similar in spirit to `/legal/index.astro`) before it can be built. Also still outstanding: visual verification (Playwright, 375/768/1440px) on `/partners/sales` — Playwright MCP has not been available in these sessions; developer to review in-browser directly before that page is marked fully complete.
+**Active section:** Sales Partner, Retailer, and Distributor pages all built, now live at flat routes `/sales`, `/retail`, `/distributor` (moved out of `/partners/*` in Session 41 — see below; the `/partners/index` hub-page scaffold this note used to mention was deleted as part of the same move, not left pending). Retailer and Distributor were developer-confirmed complete (visual check + working submission) prior to Session 40; Session 40 added a photographic hero background to all three pages, so Retailer/Distributor's prior visual sign-off predates that change and is worth a quick re-look. Sales Partner's visual verification is still outstanding.
+**Next action:** `/sales` visual sign-off still outstanding — developer to review in-browser directly when ready (Playwright verification is opt-in only, not a blocker — see Session 41 process note). Contact router and footer/nav social links (both Session 41) have since been developer-confirmed working.
 
 **Note on Sessions 31–33:** this work was carried out by the developer directly, without running through Claude Code sessions — logged here retroactively per developer request, sole-authorship, "off script." See entries below.
 
@@ -56,9 +56,9 @@ These items must be confirmed before Claude Code begins building.
 - [ ] Active hero headline — A, B, C, or D
       Decide in browser against hero image
 - [ ] Footer design — visual references to be confirmed
-- [ ] Contact form email address — confirm with client
-- [ ] Instagram account URL — confirm with client
-- [ ] Formspree account setup — confirm before building Contact section
+- [x] Contact form email address — resolved Session 41: Contact section no longer has a form (replaced by the router, see Session 41 log); `mailto:info@probellnutrition.com` is the fallback contact point
+- [x] Instagram account URL — resolved Session 41: `https://www.instagram.com/probellnutrition/`
+- [x] Formspree account setup — moot; project used Web3Forms instead of Formspree, and Web3Forms itself was removed entirely in Session 41 (Contact section replaced with a partner router + mailto fallback)
 
 ---
 
@@ -80,18 +80,51 @@ These items must be confirmed before Claude Code begins building.
 | 9   | Bold Statement              | Removed     | —           | Removed Session 24 — component deleted                                                     |
 | 10  | Built for Endurance         | Removed     | —           | Removed Session 24 — Pre-Workout strip in ProductStrips serves as placeholder               |
 | 11  | Instagram                   | Removed     | —           | Removed Session 24 — component deleted; can be reinstated when account URL confirmed       |
-| 12  | Contact                     | Complete    | 20 May 2026 | Web3Forms; WEB3FORMS_KEY env var required before launch; hCaptcha included                 |
-| 13  | Footer                      | Complete    | 20 May 2026 | 4-col grid; probell-logo.png used (swap when logo-light.png arrives); social icons #placeholder |
+| 12  | Contact                     | Complete    | 30 Jul 2026 | Session 41: Web3Forms form removed entirely (form markup, `WEB3FORMS_KEY`, hCaptcha, `CONTACT_SUBJECT` constant) and replaced with a 3-option partner router (`ContactRouter.astro`, renamed from `ContactForm.astro`) linking to `/sales`, `/distributor`, `/retail`, plus a plain `mailto:info@probellnutrition.com` fallback — no form, no JS, no third-party service. `WEB3FORMS_KEY` also removed from `.env`. Per `src/features/contact-router-route-flatten.md` |
+| 13  | Footer                      | Complete    | 30 Jul 2026 | 4-col grid; probell-logo.png used (swap when logo-light.png arrives). Session 41: social icons now point to real URLs (`facebook.com/probellnutrition`, `instagram.com/probellnutrition`) and open in a new tab (`target="_blank" rel="noopener noreferrer"`) — same change applied to `ui/SocialIcons.astro` (used in the mobile nav overlay). Footer background switched from `var(--color-black)` to new `var(--color-black-true)` token — developer confirmed the pure-`#000` background is intentional, not a mistake; see `design.md` Section 1 |
 | —   | Supplements page            | Complete    | 14 Jun 2026 | Listing + detail pages built (Task 14)                                                     |
 | —   | AudienceCards                | Complete    | 10 Jul 2026 | Solo dev session (not run through Claude Code) — new homepage section, 4-card grid linking to `/supplements` and the three partner routes; see Session 32 |
-| —   | Sales Partner page (`/partners/sales`) | Built — pending visual verification | 19 Jul 2026 | Hero, Why Probell, How It Works, application form; FAQ cut (deviation, see Session 34). `src/lib/hubspot.ts` created as shared submission utility for all three partner forms. HubSpot submission functionally confirmed working. Session 40: hero switched from text-only to photographic background (`partner-sales.jpg`, flat `rgba(0,0,0,0.5)` scrim). Playwright visual check (375/768/1440px) not yet done |
-| —   | Retailer page (`/partners/retail`)     | Complete    | 19 Jul 2026 | Hero, short "Why Stock Probell" list (deliberately not a stat-chip grid per spec), pricing-is-request-not-publish framing, How It Works, request form (Business Name, Your Name, Email, Phone, Message; no Business Type dropdown, no location field, both deliberate per spec). No automated confirmation email (per spec — inline success only). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working. Session 40: hero switched from text-only to photographic background (`partner-retail.jpg`, flat `rgba(0,0,0,0.5)` scrim) |
-| —   | Distributor page (`/partners/distributor`) | Complete | 19 Jul 2026 | Deliberately minimal per spec — hero (gold eyebrow, distinct from red on the other two), one short positioning paragraph (no stat chips, no numbers), minimal contact form (Business Name, Your Name, Contact Email, Phone; no message field, no FAQ, no how-it-works). No automated confirmation email (spec: would contradict the page's "not automated forms" positioning). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working (3/3 pass). Session 40: hero switched from text-only to photographic background (`distributor.jpg`, flat `rgba(0,0,0,0.5)` scrim) |
-| —   | Partner index page (`/partners/index`) | Not started | —          | Empty scaffold, no feature spec written yet — needs one before it can be built |
+| —   | Sales Partner page (`/sales`) | Built — pending visual verification | 19 Jul 2026 | Hero, Why Probell, How It Works, application form; FAQ cut (deviation, see Session 34). `src/lib/hubspot.ts` created as shared submission utility for all three partner forms. HubSpot submission functionally confirmed working. Session 40: hero switched from text-only to photographic background (`partner-sales.jpg`, flat `rgba(0,0,0,0.5)` scrim). Session 41: route moved from `/partners/sales` to `/sales` (see below). Visual sign-off still outstanding — developer to review in-browser when ready, not tooling-blocked (see Session 41 process note) |
+| —   | Retailer page (`/retail`)     | Complete    | 19 Jul 2026 | Hero, short "Why Stock Probell" list (deliberately not a stat-chip grid per spec), pricing-is-request-not-publish framing, How It Works, request form (Business Name, Your Name, Email, Phone, Message; no Business Type dropdown, no location field, both deliberate per spec). No automated confirmation email (per spec — inline success only). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working. Session 40: hero switched from text-only to photographic background (`partner-retail.jpg`, flat `rgba(0,0,0,0.5)` scrim). Session 41: route moved from `/partners/retail` to `/retail` |
+| —   | Distributor page (`/distributor`) | Complete | 19 Jul 2026 | Deliberately minimal per spec — hero (gold eyebrow, distinct from red on the other two), one short positioning paragraph (no stat chips, no numbers), minimal contact form (Business Name, Your Name, Contact Email, Phone; no message field, no FAQ, no how-it-works). No automated confirmation email (spec: would contradict the page's "not automated forms" positioning). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working (3/3 pass). Session 40: hero switched from text-only to photographic background (`distributor.jpg`, flat `rgba(0,0,0,0.5)` scrim). Session 41: route moved from `/partners/distributor` to `/distributor` |
+| —   | Partner index page (`/partners/index`) | Removed | 30 Jul 2026 | Session 41: deleted along with the `/partners/` directory as part of the route flatten — no spec had been written for it, and per `src/features/contact-router-route-flatten.md` nothing links to `/partners` itself, so the nested segment was unused taxonomy. Developer confirmed deletion (not a deferral) when asked |
 
 ---
 
 ## Session Log
+
+### Session 41 — 30 Jul 2026
+
+**What was done:**
+
+- Per `src/features/contact-router-route-flatten.md` (**DEVIATION: intentional structure simplification**, logged in the spec itself):
+  - **Route flatten:** grepped the codebase for every `partners/` reference first, per the spec's requirement, and confirmed the full set with the developer before editing. Moved `src/pages/partners/{sales,retail,distributor}.astro` to `src/pages/{sales,retail,distributor}.astro` via `git mv` (history preserved); updated the three `href`s in `src/data/audience-cards.ts` from `/partners/*` to the flat paths. Developer confirmed the empty `src/pages/partners/index.astro` scaffold (previously logged as "not started, no spec written") should be deleted, not moved — deleted it along with the rest of the now-empty `partners/` directory.
+  - **Contact section:** removed the Web3Forms form entirely — form markup/fields, `WEB3FORMS_KEY` env var reference, hCaptcha script/div, honeypot — from what was `Contact/ContactForm.astro`. Renamed the file to `Contact/ContactRouter.astro` (it no longer contains a form) and rebuilt it as 3 link options ("I'm a Gym" → `/sales`, "I'm a Distributor" → `/distributor`, "I'm a Retailer" → `/retail`) plus a plain `mailto:info@probellnutrition.com` fallback ("Something else? Reach out directly.") — no JS, no third-party service. `Contact/index.astro` updated to import/wrap the renamed component. Removed the now-unused `CONTACT_SUBJECT` constant from `src/constants/site.ts` (its only consumer was the deleted form's hidden `subject` field).
+  - Developer subsequently hand-edited `ContactRouter.astro` directly in the IDE: router options switched from `.btn-primary` to `.btn-secondary`, added a `rgba(0,0,0,0.5)` background panel behind the options group, centered the fallback line.
+  - `npm run build` verified clean after each step (route flatten, then contact router); confirmed via `curl` against the dev server that rendered HTML had zero remaining `web3forms`/`hcaptcha` references.
+- Removed `WEB3FORMS_KEY` from `.env` (dead after the Contact section rewrite above; `HUBSPOT_*` vars untouched).
+- Updated footer social links (`Footer/index.astro`) and the shared `ui/SocialIcons.astro` (used in the mobile nav overlay) from placeholder `href="#"` to `https://www.facebook.com/probellnutrition/` and `https://www.instagram.com/probellnutrition/`; both now open in a new tab (`target="_blank" rel="noopener noreferrer"`). This resolves two of the long-standing "Decisions pending" items (Instagram URL, and Footer's placeholder social icons).
+- **Color token fix:** developer flagged that `Footer/index.astro`'s `background: #000;` was a deliberate raw-hex deviation (true black, not the site's off-black `--color-black` = `#121213`), not an oversight, and asked for a proper token rather than leaving the raw value or silently mapping it onto the wrong existing token. Added `--color-black-true: #000000` to `globals.css` and pointed the footer at it. While in `design.md`'s color table, also corrected a pre-existing (not introduced this session) documentation error: the table had listed `--color-black` as `#000000`, but the actual `globals.css` value has been `#121213` since the token was introduced — table now matches the real value, with `--color-black-true` added as its own row. Note: this token is unrelated to the Session 38 deviation still open on `HeroMobile.astro`'s raw `rgba(0,0,0,…)` gradient stops — that one is still unreconciled, see below.
+
+**Decisions made this session:**
+
+- **DEVIATION:** Route flatten and Contact-section rebuild — both pre-logged as deliberate in `src/features/contact-router-route-flatten.md`, not flagged as spec drift.
+- `/partners/index.astro` deleted outright rather than moved/kept as a placeholder — explicit developer instruction, overriding this doc's prior note that it was just an unstarted future page.
+- `--color-black-true` token added to formalize a developer-confirmed intentional true-black background (Footer) — not a fix-in-place of `--color-black` itself, since that token's existing off-black value is used correctly elsewhere.
+- `design.md`'s `--color-black` hex corrected from `#000000` to `#121213` to match `globals.css` — a documentation correction, not a code change; flagging here in case the developer intended the doc's `#000000` as the target and the code as the drift, rather than the reverse (the code's value long predates this session, so it was treated as authoritative).
+
+**Decisions still open:**
+
+- Session 38's `HeroMobile.astro` raw-`rgba(0,0,0,…)` gradient-stop deviation is still open and unrelated to the `--color-black-true` addition above — not addressed this session.
+- Same list as Session 40 (Sales Partner `/sales` visual verification still outstanding) — see note below, not currently an active blocker.
+
+**Developer-confirmed working (visual check, in-browser):**
+
+- Contact router (including the `.btn-secondary`/overlay hand-edits) and the footer/nav social icon links — both confirmed working.
+
+**Process note:** developer confirmed Playwright-based visual verification is opt-in only ("ignore playwright verification — this will no longer be used until i ask for it"), consistent with `ai-interaction.md`'s existing "say 'use the Playwright MCP' explicitly" convention. This isn't a new rule, just a reaffirmation — future sessions should stop surfacing "pending Playwright verification" as an open action item (e.g. for `/sales`, still visually unverified but not blocked on any tooling decision) unless the developer asks for a Playwright pass specifically.
+
+---
 
 ### Session 40 — 29 Jul 2026
 
