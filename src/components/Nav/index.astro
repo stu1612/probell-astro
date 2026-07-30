@@ -41,7 +41,6 @@ const navClass = transparent ? "nav nav--transparent" : "nav nav--scrolled";
   const nav = document.querySelector(".nav");
   const hamburger = document.querySelector(".nav__hamburger");
   const overlay = document.querySelector(".nav-overlay");
-  const closeBtn = document.querySelector(".nav-overlay__close");
 
   // Scroll behaviour — homepage only
   if (transparent) {
@@ -65,16 +64,25 @@ const navClass = transparent ? "nav nav--transparent" : "nav nav--scrolled";
     overlay.classList.add("nav-overlay--open");
     document.body.classList.add("nav-open");
     hamburger.setAttribute("aria-expanded", "true");
+    hamburger.setAttribute("aria-label", "Close menu");
   }
 
   function closeOverlay() {
     overlay.classList.remove("nav-overlay--open");
     document.body.classList.remove("nav-open");
     hamburger.setAttribute("aria-expanded", "false");
+    hamburger.setAttribute("aria-label", "Open menu");
   }
 
-  hamburger.addEventListener("click", openOverlay);
-  closeBtn.addEventListener("click", closeOverlay);
+  function toggleOverlay() {
+    if (overlay.classList.contains("nav-overlay--open")) {
+      closeOverlay();
+    } else {
+      openOverlay();
+    }
+  }
+
+  hamburger.addEventListener("click", toggleOverlay);
 
   overlay.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", closeOverlay);
@@ -89,7 +97,7 @@ const navClass = transparent ? "nav nav--transparent" : "nav nav--scrolled";
     left: 0;
     width: 100%;
     height: 72px;
-    z-index: 100;
+    z-index: 250;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     transition:
@@ -149,5 +157,10 @@ const navClass = transparent ? "nav nav--transparent" : "nav nav--scrolled";
     .nav__right {
       display: none;
     }
+  }
+
+  :global(body.nav-open) .nav {
+    background: var(--color-white);
+    color: var(--color-black);
   }
 </style>

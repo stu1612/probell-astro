@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 30 Jul 2026 — Session 41**
+**Last updated: 30 Jul 2026 — Session 42**
 
 
 **Pending/Deferred items**
@@ -15,8 +15,8 @@
 ## Current Status
 
 **Phase:** Post-build structural redesign
-**Active section:** Sales Partner, Retailer, and Distributor pages all built, now live at flat routes `/sales`, `/retail`, `/distributor` (moved out of `/partners/*` in Session 41 — see below; the `/partners/index` hub-page scaffold this note used to mention was deleted as part of the same move, not left pending). Retailer and Distributor were developer-confirmed complete (visual check + working submission) prior to Session 40; Session 40 added a photographic hero background to all three pages, so Retailer/Distributor's prior visual sign-off predates that change and is worth a quick re-look. Sales Partner's visual verification is still outstanding.
-**Next action:** `/sales` visual sign-off still outstanding — developer to review in-browser directly when ready (Playwright verification is opt-in only, not a blocker — see Session 41 process note). Contact router and footer/nav social links (both Session 41) have since been developer-confirmed working.
+**Active section:** Sales Partner, Retailer, and Distributor pages all built, now live at flat routes `/sales`, `/retail`, `/distributor` (moved out of `/partners/*` in Session 41 — see below; the `/partners/index` hub-page scaffold this note used to mention was deleted as part of the same move, not left pending). Retailer and Distributor were developer-confirmed complete (visual check + working submission) prior to Session 40; Session 40 added a photographic hero background to all three pages, so Retailer/Distributor's prior visual sign-off predates that change and is worth a quick re-look. Sales Partner's visual verification is still outstanding. Session 42: mobile nav overlay (`Nav/NavOverlay.astro`, `Nav/NavHamburger.astro`) reworked — link list, toggle button, layout, and colors all revised across several in-session rounds of feedback — see Session 42 log; not yet developer-signed-off in-browser.
+**Next action:** `/sales` visual sign-off still outstanding — developer to review in-browser directly when ready (Playwright verification is opt-in only, not a blocker — see Session 41 process note). Mobile nav overlay changes (Session 42) also still need an in-browser look. Contact router and footer/nav social links (both Session 41) have since been developer-confirmed working.
 
 **Note on Sessions 31–33:** this work was carried out by the developer directly, without running through Claude Code sessions — logged here retroactively per developer request, sole-authorship, "off script." See entries below.
 
@@ -69,7 +69,7 @@ These items must be confirmed before Claude Code begins building.
 | —   | Project init                | Complete    | 17 May 2026 |                                                                                            |
 | —   | globals.css import          | Complete    | 17 May 2026 |                                                                                            |
 | —   | BaseLayout                  | Complete    | 17 May 2026 |                                                                                            |
-| 1   | Nav                         | Complete    | 17 May 2026 | Single logo asset used for both states — swap when two-variant PNGs arrive                 |
+| 1   | Nav                         | Complete    | 17 May 2026 | Single logo asset used for both states — swap when two-variant PNGs arrive. Session 42: mobile overlay refactored, see below — not yet developer-signed-off in-browser |
 | 2   | Hero                        | Complete    | 26 Jul 2026 | Session 38: split into `HeroDesktop.astro` + `HeroMobile.astro` (CSS `display` swap at 768px, `index.astro` now just the orchestrator) so mobile can be designed independently. Desktop: `hero_v2.png`, single-tier headline, bottom gradient. Mobile: `hero_v2_mobile.png`, two-tier headline layout + icon CTA row (currently commented out, developer WIP), still in active visual iteration — not yet developer-signed-off |
 | 3   | Identity                    | Complete    | 11 Jun 2026 | Session 24: refactored to accept headline/body/primaryCta props; secondary CTA removed; stats row removed; CTA points to #trending |
 | 4   | Banner (ui)                 | Complete    | 11 Jun 2026 | Session 24: 80vh; grid 1fr 1fr (empty left cell, content right); background-image from prop |
@@ -92,6 +92,36 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 42 — 30 Jul 2026
+
+**What was done:**
+
+- Mobile nav overlay (`Nav/NavOverlay.astro`) refactored, per direct developer task (not a `page-structure.md` spec item):
+  - **Link list:** overlay previously reused the shared `NAV_LINKS` array (Supplements, Learn, Contact — same as desktop nav). Added a new `MOBILE_NAV_LINKS` export in `src/data/navigation.ts` (Home, Supplements, Learn, Contact, Legal) scoped to mobile only — desktop `Nav/index.astro` still uses `NAV_LINKS`, unchanged. Developer confirmed this split over updating the shared array.
+  - Removed the "Join the Waitlist" `btn-primary` CTA from the overlay, and the now-dead `.nav-overlay__cta` style rule.
+  - **Layout:** overlay background changed from full-bleed (`inset: 0`) to `width: 80%` anchored to the right edge (`top/right/bottom: 0`), so it reads as a right-side drawer rather than a full-screen takeover. No new transition added — existing opacity fade (`--transition-slow`) reused as-is.
+- Follow-up, same session, per direct developer feedback after first review:
+  - **Toggle button repositioning fix:** the overlay's separate `.nav-overlay__close` (×) button was positioned independently of the hamburger button, so it visibly jumped position on open. Replaced the two-button pattern with a single persistent toggle: `NavHamburger.astro` now renders both a hamburger-lines SVG and an X SVG in the same button, swapped instantly via an `[aria-expanded]` CSS attribute selector (no transition/animation added — instant swap only, consistent with `design.md` Section 8's no-new-animation rule). `Nav/index.astro`'s script collapsed `openOverlay`/`closeOverlay` into a `toggleOverlay` handler on the hamburger itself (also updates `aria-label` between "Open menu"/"Close menu"); removed the now-obsolete `closeBtn` reference. `.nav`'s `z-index` raised from `100` to `250` (above `.nav-overlay`'s `200`, confirmed via grep no other component uses a z-index in that range) so the header bar — and the hamburger button inside it — stays visually on top and in place while the overlay is open, instead of being covered and replaced by a separately-positioned close control. Added `body.nav-open .nav { background: var(--color-white); color: var(--color-black); }` so the header bar reads correctly against the (now white, see below) overlay rather than picking up its scroll-based transparent/scrolled state. Removed `.nav-overlay__close` markup and styles from `NavOverlay.astro` entirely.
+  - **Color swap:** `.nav-overlay` background changed from `var(--color-black)` to `var(--color-white)`, text from `var(--color-white)` to `var(--color-black)`, per direct developer request. `SocialIcons` inside the overlay inherits `color` from `.nav-overlay` (no explicit color of its own), so icons followed automatically — no change needed there.
+  - **Second follow-up:** developer manually commented-out (not deleted, per [[feedback-commented-code]]) the dedicated X-shaped `<svg>` added above and asked to reuse the single hamburger-lines icon for both states instead of swapping to a second icon. Reworked `NavHamburger.astro`: the three `<line>` elements now carry `--top`/`--middle`/`--bottom` classes; when `[aria-expanded="true"]`, `--top`/`--bottom` are transformed (`translateY` + `rotate(±45deg)`, `transform-box: fill-box`/`transform-origin: center` so each line rotates about its own midpoint) into an X shape and `--middle` fades via `opacity: 0` — no `transition` property set, so the change is instant, not an animation, keeping this within `design.md` Section 8's default-no-animation rule. Removed the now-dead `.nav__hamburger-icon--menu`/`--close` display-toggle rules (they targeted the two-SVG version). The commented-out X `<svg>` block itself was left in place in the markup, not deleted, matching [[feedback-commented-code]].
+  - **Third follow-up:** developer reviewed the CSS-morph X and asked to drop the cross entirely — icon should stay the identical hamburger-lines glyph in both open and closed states, no visual change at all on toggle. Removed the `--top`/`--middle`/`--bottom` classes and their transform/opacity rules from `NavHamburger.astro`; the three `<line>` elements are now plain, unstyled by open/closed state. State is communicated via the drawer itself plus the button's `aria-label` (still toggled "Open menu"/"Close menu" in `Nav/index.astro`'s script) rather than the icon shape. The commented-out X `<svg>` remains in the markup, untouched.
+  - **Fourth follow-up:** developer had also hand-edited `NavOverlay.astro` directly in the IDE between turns (drawer `width` 80% → 70%, background/text reverted from the white/black swap above back to `var(--color-black)`/`var(--color-white)`, links restyled to `font-display` uppercase `1.3rem` with `text-decoration: none`) — those hand-edits were left as-is, not reverted, per the "don't touch changes you didn't just make" default. On top of that state, developer asked for the link list + social icons to sit directly under the header instead of vertically centered, nudged left rather than centered horizontally. Changed `.nav-overlay`: `justify-content`/`align-items` from `center` to `flex-start`, added `padding-top: calc(var(--nav-height) + var(--space-lg))` (clears the fixed header using the existing `--nav-height` token) and `padding-left: var(--space-lg)` (left inset instead of full-bleed-left or centered). Also fixed `.nav-overlay nav`'s `align-items: left` — not a valid CSS value for that property (silently no-ops, falls back to initial) — to `align-items: flex-start`, since it was directly relevant to the alignment being requested.
+- `npm run build` passes — zero errors, 14 pages generated (re-verified after all four follow-up fixes).
+
+**Decisions made this session:**
+
+- `MOBILE_NAV_LINKS` kept as a separate export in `navigation.ts` rather than folding Home/Legal into the shared `NAV_LINKS` — developer's explicit call, avoids changing the desktop nav's link set as a side effect.
+- Single toggle-button pattern (hamburger ↔ X) chosen over trying to reposition the separate close button to match — eliminates the positioning-drift class of bug entirely rather than patching coordinates.
+- Toggle icon settled on a single, static hamburger-lines glyph for both states — no cross/X shape at all, developer's explicit call after reviewing both the two-SVG and CSS-morph versions. Open/closed state communicated via `aria-label` + the drawer's presence, not the icon.
+- Overlay content top-aligned (under the header) and left-inset rather than centered — developer's explicit call; incidentally fixed an invalid `align-items: left` declaration encountered along the way.
+
+**Decisions still open:**
+
+- Visual sign-off on the mobile overlay refactor — developer to review in-browser directly (Playwright verification is opt-in only, declined for this task, per Session 41 process note).
+- Same list as Session 41 (`/sales` visual sign-off still outstanding).
+
+---
 
 ### Session 41 — 30 Jul 2026
 
