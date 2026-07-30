@@ -2,7 +2,7 @@
 import {
   FOOTER_SITE_LINKS,
   FOOTER_PRODUCT_LINKS,
-  FOOTER_LEARN_LINKS,
+  FOOTER_PARTNER_LINKS,
 } from "@data/navigation";
 import { COPYRIGHT } from "@constants/site";
 ---
@@ -50,9 +50,9 @@ import { COPYRIGHT } from "@constants/site";
 
       <!-- Column 4: Learn -->
       <nav class="footer__col" aria-label="Learn links">
-        <span class="label-text footer__col-heading">Learn</span>
+        <span class="label-text footer__col-heading">Partners</span>
         {
-          FOOTER_LEARN_LINKS.map((link) => (
+          FOOTER_PARTNER_LINKS.map((link) => (
             <a href={link.href} class="footer__link">
               {link.label}
             </a>
@@ -131,12 +131,7 @@ import { COPYRIGHT } from "@constants/site";
         {COPYRIGHT}
       </span>
       <div class="footer__legal-links">
-        <a href="/legal/privacy" class="font-text footer__legal"
-          >Privacy Policy</a
-        >
-        <a href="/legal/terms" class="font-text footer__legal"
-          >Terms & Conditions</a
-        >
+        <a href="/legal" class="font-text footer__legal">Legal Policies</a>
       </div>
     </div>
   </div>
