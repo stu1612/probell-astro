@@ -1,12 +1,12 @@
 ---
-import ContactForm from "@components/Contact/ContactForm.astro";
+import ContactRouter from "@components/Contact/ContactRouter.astro";
 ---
 
 <section id="contact" class="section section--lg">
   <div class="container">
     <div class="contact__grid">
-      <div class="contact__form-wrap">
-        <ContactForm />
+      <div class="contact__router-wrap">
+        <ContactRouter />
       </div>
       <div class="contact__content">
         <span class="label-text label-text--red">Partner with Probell</span>
@@ -48,7 +48,7 @@ import ContactForm from "@components/Contact/ContactForm.astro";
     order: 0;
   }
 
-  .contact__form-wrap {
+  .contact__router-wrap {
     order: 1;
   }
 
@@ -64,12 +64,12 @@ import ContactForm from "@components/Contact/ContactForm.astro";
   }
 
   @media (min-width: 768px) {
-    .contact__form-wrap {
-      order: 0;
+    .contact__router-wrap {
+      order: 1;
     }
 
     .contact__content {
-      order: 1;
+      order: 0;
       padding: var(--space-md);
     }
 

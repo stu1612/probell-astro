@@ -38,7 +38,8 @@ All colors are defined as CSS custom properties in `globals.css`.
 
 | Token | Hex | Usage |
 |-------|-----|-------|
-| `--color-black` | `#000000` | Primary background |
+| `--color-black` | `#121213` | Primary background (table previously listed this as `#000000` — corrected Session 41 to match the actual `globals.css` value, which has been `#121213` since the token was introduced) |
+| `--color-black-true` | `#000000` | **Added Session 41.** Pure black — for spots that deliberately want true black rather than the off-black `--color-black`. First use: `Footer`'s background, per explicit developer confirmation that pure black there is intentional. This is the token Session 38 flagged as needing to be formalized (that entry was about `HeroMobile.astro`'s raw `rgba(0,0,0,…)` gradient stops specifically — those are unrelated overlay gradients, still unreconciled, and not addressed by this token) |
 | `--color-red` | `#C0392B` | Primary accent — CTAs, highlights, active states |
 | `--color-gold` | `#C9A84C` | Secondary accent — labels, ghost numbers |
 | `--color-white` | `#FFFFFF` | Primary text |

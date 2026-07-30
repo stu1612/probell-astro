@@ -1,0 +1,83 @@
+---
+const ROUTER_OPTIONS = [
+  { label: "I'm a Gym", href: "/sales" },
+  { label: "I'm a Distributor", href: "/distributor" },
+  { label: "I'm a Retailer", href: "/retail" },
+];
+---
+
+<div class="contact-router">
+  <div class="contact-router__options">
+    {
+      ROUTER_OPTIONS.map((option) => (
+        <a href={option.href} class="btn-secondary contact-router__option">
+          {option.label}
+        </a>
+      ))
+    }
+  </div>
+
+  <p class="contact-router__fallback label-text">
+    Something else? <a
+      href="mailto:info@probellnutrition.com"
+      class="contact-router__mailto">Reach out directly.</a
+    >
+  </p>
+</div>
+
+<style>
+  .contact-router {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .contact-router__fallback {
+    text-align: center;
+  }
+
+  .contact-router__options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: var(--space-md);
+  }
+
+  .contact-router__option {
+    text-align: center;
+  }
+
+  .contact-router__mailto {
+    color: var(--color-gold);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 479px) {
+    .contact-router__option {
+      background: var(--color-red);
+      color: var(--color-white);
+      border: none;
+    }
+
+    .contact-router__option:hover {
+      opacity: 0.85;
+    }
+
+    .contact-router__options {
+      background-color: transparent;
+      padding: 0;
+    }
+  }
+
+  @media (min-width: 480px) {
+    .contact-router__options {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .contact-router__option {
+      flex: 1 1 0;
+    }
+  }
+</style>
