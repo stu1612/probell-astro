@@ -383,55 +383,6 @@ select {
   color: var(--color-red);
 }
 
-/* --- Product card --- */
-
-.product-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 0; /* hard corners — no radius */
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.product-card__image {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: contain;
-  padding: var(--space-sm);
-  background: var(--color-surface);
-}
-
-.product-card__content {
-  padding: var(--space-sm) var(--space-md);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-  border-top: 1px solid var(--color-border);
-}
-
-.product-card__name {
-  font-family: var(--font-display);
-  font-size: var(--text-product);
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  color: var(--color-white);
-}
-
-.product-card__descriptor {
-  font-size: var(--text-label);
-  color: var(--color-grey);
-  letter-spacing: 0.05em;
-}
-
-.product-card--large {
-  min-height: 400px;
-}
-
-.product-card--large .product-card__image {
-  aspect-ratio: 3 / 4;
-}
-
 /* --- Forms --- */
 
 .form-group {

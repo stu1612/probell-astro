@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 03 Aug 2026 — Session 46**
+**Last updated: 03 Aug 2026 — Session 48**
 
 
 **Pending/Deferred items**
@@ -16,7 +16,7 @@
 
 **Phase:** Post-build structural redesign
 **Active section:** Sales Partner, Retailer, and Distributor pages all built, now live at flat routes `/sales`, `/retail`, `/distributor` (moved out of `/partners/*` in Session 41 — see below; the `/partners/index` hub-page scaffold this note used to mention was deleted as part of the same move, not left pending). Retailer and Distributor were developer-confirmed complete (visual check + working submission) prior to Session 40; Session 40 added a photographic hero background to all three pages, so Retailer/Distributor's prior visual sign-off predates that change and is worth a quick re-look. Sales Partner's visual verification is still outstanding. Session 42: mobile nav overlay (`Nav/NavOverlay.astro`, `Nav/NavHamburger.astro`) reworked — link list, toggle button, layout, and colors all revised across several in-session rounds of feedback — see Session 42 log; not yet developer-signed-off in-browser.
-**Next action:** `/sales` visual sign-off still outstanding — developer to review in-browser directly when ready (Playwright verification is opt-in only, not a blocker — see Session 41 process note). Mobile nav overlay changes (Session 42) also still need an in-browser look. Contact router and footer/nav social links (both Session 41) have since been developer-confirmed working. Session 44: `/supplements/[slug]` rebuilt on the Session 43 playground design via new `src/components/ProductDetail/*` components; the playground route/components have since been deleted. Visual sign-off still needed on Creatine/PWO/Mass Gainer specifically (only Whey was reviewed before adoption).
+**Next action:** `/sales` visual sign-off still outstanding — developer to review in-browser directly when ready (Playwright verification is opt-in only, not a blocker — see Session 41 process note). Mobile nav overlay changes (Session 42) also still need an in-browser look. Contact router and footer/nav social links (both Session 41) have since been developer-confirmed working. Session 44: `/supplements/[slug]` rebuilt on the Session 43 playground design via new `src/components/ProductDetail/*` components; the playground route/components have since been deleted. Visual sign-off still needed on Creatine/PWO/Mass Gainer specifically (only Whey was reviewed before adoption). Session 48: `/supplements` listing page's product card given a dedicated mobile layout (smaller centered image, tighter spacing, always-visible red CTA) — visual sign-off still outstanding.
 
 **Note on Sessions 31–33:** this work was carried out by the developer directly, without running through Claude Code sessions — logged here retroactively per developer request, sole-authorship, "off script." See entries below.
 
@@ -82,7 +82,7 @@ These items must be confirmed before Claude Code begins building.
 | 11  | Instagram                   | Removed     | —           | Removed Session 24 — component deleted; can be reinstated when account URL confirmed       |
 | 12  | Contact                     | Complete    | 30 Jul 2026 | Session 41: Web3Forms form removed entirely (form markup, `WEB3FORMS_KEY`, hCaptcha, `CONTACT_SUBJECT` constant) and replaced with a 3-option partner router (`ContactRouter.astro`, renamed from `ContactForm.astro`) linking to `/sales`, `/distributor`, `/retail`, plus a plain `mailto:info@probellnutrition.com` fallback — no form, no JS, no third-party service. `WEB3FORMS_KEY` also removed from `.env`. Per `src/features/contact-router-route-flatten.md` |
 | 13  | Footer                      | Complete    | 30 Jul 2026 | 4-col grid; probell-logo.png used (swap when logo-light.png arrives). Session 41: social icons now point to real URLs (`facebook.com/probellnutrition`, `instagram.com/probellnutrition`) and open in a new tab (`target="_blank" rel="noopener noreferrer"`) — same change applied to `ui/SocialIcons.astro` (used in the mobile nav overlay). Footer background switched from `var(--color-black)` to new `var(--color-black-true)` token — developer confirmed the pure-`#000` background is intentional, not a mistake; see `design.md` Section 1 |
-| —   | Supplements page            | Complete    | 14 Jun 2026 | Listing + detail pages built (Task 14). Session 44 (03 Aug 2026): detail page (`[slug].astro`) rebuilt on the bold full-bleed-hero design trialled in Session 43's playground — see Session 44 log; the "dark hero + white 4-stat body" layout this row originally described is superseded, not additive |
+| —   | Supplements page            | Complete    | 14 Jun 2026 | Listing + detail pages built (Task 14). Session 44 (03 Aug 2026): detail page (`[slug].astro`) rebuilt on the bold full-bleed-hero design trialled in Session 43's playground — see Session 44 log; the "dark hero + white 4-stat body" layout this row originally described is superseded, not additive. Session 48 (03 Aug 2026): listing page's product card given a dedicated mobile layout and consolidated out of the page into `src/components/ui/ProductCard.astro` (also removed `global.css`'s dead, unused `.product-card` primitive) — see Session 48 log |
 | —   | AudienceCards                | Complete    | 10 Jul 2026 | Solo dev session (not run through Claude Code) — new homepage section, 4-card grid linking to `/supplements` and the three partner routes; see Session 32 |
 | —   | Sales Partner page (`/sales`) | Built — pending visual verification | 19 Jul 2026 | Hero, Why Probell, How It Works, application form; FAQ cut (deviation, see Session 34). `src/lib/hubspot.ts` created as shared submission utility for all three partner forms. HubSpot submission functionally confirmed working. Session 40: hero switched from text-only to photographic background (`partner-sales.jpg`, flat `rgba(0,0,0,0.5)` scrim). Session 41: route moved from `/partners/sales` to `/sales` (see below). Visual sign-off still outstanding — developer to review in-browser when ready, not tooling-blocked (see Session 41 process note) |
 | —   | Retailer page (`/retail`)     | Complete    | 19 Jul 2026 | Hero, short "Why Stock Probell" list (deliberately not a stat-chip grid per spec), pricing-is-request-not-publish framing, How It Works, request form (Business Name, Your Name, Email, Phone, Message; no Business Type dropdown, no location field, both deliberate per spec). No automated confirmation email (per spec — inline success only). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working. Session 40: hero switched from text-only to photographic background (`partner-retail.jpg`, flat `rgba(0,0,0,0.5)` scrim). Session 41: route moved from `/partners/retail` to `/retail` |
@@ -92,6 +92,52 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 48 — 03 Aug 2026
+
+**What was done:**
+
+- Reviewed a developer-supplied screenshot of the `/supplements` listing page's product card at mobile width — the product image ran near full-bleed/oversized, the "View Product" CTA had no visual definition at rest (color only changed on `.sup-card:hover`, which never fires on touch), the gap between image and text felt too loose, and the text block felt cramped against the viewport edge.
+- Fixed entirely inside the existing `@media (max-width: 768px)` block in `src/pages/supplements/index.astro` — no new component created, no changes to the desktop grid or to the shared `SectionWrapper` component:
+  - `.sup-card__image-wrap` capped to `max-width: 60%` and centered (`margin-inline: auto`) so the product photo reads as a contained shot rather than a full-width banner.
+  - `.sup-card` gap reduced from `--space-md` to `--space-sm`, tightening the image-to-content margin.
+  - `padding-inline: var(--space-sm)` added to `.sup-grid` and `var(--space-xs)` to `.sup-card__content`, compensating for `SectionWrapper`'s side padding dropping from `--container-pad-lg` (desktop) to the much smaller `--container-pad` below 1024px.
+  - `.sup-card__link` ("View Product") now `var(--color-red)` and `font-weight: 700` by default, with a trailing `→` via `::after` — reusing the arrow-CTA pattern already established in the homepage hero's "View Products →" copy, and no longer relying on a `:hover` state that touch devices can't trigger.
+- All new values are existing tokens (`--space-*`, `--color-red`) or plain layout sizing (`%`, flex) — nothing added to the token system, per `coding-standards.md`'s "no raw values" rule.
+- Flagged, then consolidated same session per developer follow-up instruction: this card's markup/styles previously lived inline in `supplements/index.astro` (class prefix `sup-card`) instead of a standalone component, and `global.css` separately defined an unused, competing `.product-card` primitive (dark-surface themed). Resolved:
+  - Created `src/components/ui/ProductCard.astro` — the intended location per `coding-standards.md`'s file-structure example. Takes `product: Product` and an optional `loading` prop; owns the `firstSentence` editorial-descriptor helper (moved from the page) and all card markup/styles, including the mobile treatment above. Classes renamed `sup-card__*` → `product-card__*` (matches `coding-standards.md`'s own naming example, `.product-card__name`).
+  - `src/pages/supplements/index.astro` rewritten to render `<ProductCard product={product} loading={...} />` per item; all `.sup-card*` styles and the `firstSentence` helper removed from the page, leaving only the grid layout (`.sup-grid`) in its scoped styles.
+  - Removed the dead `.product-card`/`.product-card__*`/`.product-card--large` block from `global.css` (confirmed via grep it had zero references anywhere in `src/`) — this cleared the name collision risk before the new scoped component started using the same class names.
+  - `astro check` (0 errors, 0 warnings, 1 pre-existing unrelated hint) and `npm run build` (14 pages, zero errors) both re-run clean after the consolidation.
+
+**Decisions made this session:**
+
+- None requiring a spec update — CSS-only mobile fix, followed by a same-session structural consolidation into a proper component, both confined to the supplements listing card. No data/markup changes elsewhere.
+- Card component's `firstSentence` helper and the "first sentence of description" display convention moved into `ProductCard.astro` itself rather than staying page-local, since it's part of how the card renders, not something the page needs to know about.
+
+**Decisions still open:**
+
+- Visual sign-off on the mobile card layout and the consolidated component — developer to review in-browser directly at 375–390px widths (Playwright verification opt-in only, not run here, per Session 41 process note).
+
+---
+
+### Session 47 — 03 Aug 2026
+
+**What was done:**
+
+- Investigated developer report that `/images/products/whey_new.png` wasn't rendering on Vercel despite working locally and the path being correct in `src/data/supplements.ts`.
+- Root cause found in `.gitignore`: a blanket `*.png` rule (added under a "audit screenshots" comment, alongside `.playwright-mcp/`) was silently excluding every PNG in the repo from version control, not just screenshots. Since Vercel builds from git rather than the local filesystem, any PNG that only existed on disk never reached the deploy.
+- Confirmed via `git ls-files` that this had untracked: `public/images/products/whey_new.png`, all six favicon PNGs (`favicon-16x16.png`, `favicon-32x32.png`, `favicon-48x48.png`, `favicon-192x192.png`, `apple-touch-icon.png`, `favicon-512x512.png`), and `public/images/snippets/*.png`. Only PNGs added before the ignore rule existed (`discipline.png`, `favicon-logo.png`, `probell-logo.png`) had survived.
+- This also means Session 46's commit (`d2435cc`, "fix: correct favicon/manifest asset set...") did not actually ship the favicon PNGs its message describes — `git show --stat` on that commit confirms none of the six favicon files were included, only `favicon.ico`, `site.webmanifest`, and code changes. The favicon set was live locally but not on Vercel until this session's fix.
+- Fix: removed the `*.png` line from `.gitignore` (`.playwright-mcp/` ignore left in place). No directory-scoped replacement was added — developer confirmed there's no fixed location for audit screenshots, so the rule was dropped rather than narrowed.
+- Developer deleted `public/images/snippets/*.png` (Session 37's UI-refresh reference screenshots, no longer needed) before staging.
+- Developer committed the fix directly: `295040d` — `.gitignore` change plus `whey_new.png` and the six favicon PNGs now tracked (snippets excluded, per the deletion above).
+
+**Decisions made this session:**
+
+- `.gitignore`'s `*.png` rule removed outright rather than replaced with a scoped path — developer doesn't have a fixed location for audit screenshots, so a blanket rule of any granularity risked repeating this failure mode.
+
+---
 
 ### Session 46 — 03 Aug 2026
 

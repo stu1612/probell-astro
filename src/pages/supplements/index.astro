@@ -1,18 +1,13 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import SectionWrapper from "@components/SectionWrapper/index.astro";
+import ProductCard from "@components/ui/ProductCard.astro";
 import { Image } from "astro:assets";
 import { SUPPLEMENTS } from "@data/supplements";
 
 const title = "Supplements | Probell Nutrition";
 const description =
   "Whey protein, creatine, and pre-workout built to one standard. No fillers, no shortcuts.";
-
-// First sentence of each description — editorial one-liner for the list.
-const firstSentence = (copy: string): string => {
-  const end = copy.indexOf(". ");
-  return end === -1 ? copy : copy.slice(0, end + 1);
-};
 ---
 
 <BaseLayout title={title} description={description} transparentNav={true}>
@@ -45,30 +40,7 @@ const firstSentence = (copy: string): string => {
       {
         SUPPLEMENTS.map((product, i) => (
           <li class="sup-grid__item">
-            <a class="sup-card" href={`/supplements/${product.slug}`}>
-              <div class="sup-card__image-wrap">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  width={800}
-                  height={800}
-                  format="webp"
-                  loading={i === 0 ? "eager" : "lazy"}
-                  class="sup-card__image"
-                />
-              </div>
-
-              <div class="sup-card__content">
-                <span class="sup-card__category label-text label-text--red">
-                  {product.category}
-                </span>
-                <h2 class="sup-card__name">{product.name}</h2>
-                <p class="sup-card__descriptor">
-                  {firstSentence(product.description)}
-                </p>
-                <span class="sup-card__link">View Product</span>
-              </div>
-            </a>
+            <ProductCard product={product} loading={i === 0 ? "eager" : "lazy"} />
           </li>
         ))
       }
@@ -132,79 +104,12 @@ const firstSentence = (copy: string): string => {
     line-height: 1.6;
   }
 
-  /* Product grid */
+  /* Product grid — card itself lives in ui/ProductCard.astro */
   .sup-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: var(--space-xl) var(--space-md);
     padding-block: var(--space-sm);
-  }
-
-  .sup-card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-
-  .sup-card__image-wrap {
-    aspect-ratio: 1 / 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .sup-card__image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: transform var(--transition-slow);
-  }
-
-  .sup-card:hover .sup-card__image {
-    transform: scale(0.95);
-  }
-
-  .sup-card__content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-  }
-
-  .sup-card__category {
-    margin-bottom: var(--space-xs);
-  }
-
-  .sup-card__name {
-    font-family: var(--font-display);
-    font-size: var(--text-product);
-    color: var(--color-black);
-    text-transform: uppercase;
-    letter-spacing: -0.02em;
-    line-height: 0.95;
-    margin: 0;
-  }
-
-  .sup-card__descriptor {
-    margin-top: var(--space-xs);
-    font-family: var(--font-body);
-    font-size: var(--text-body);
-    color: var(--color-black);
-    line-height: 1.6;
-  }
-
-  .sup-card__link {
-    margin-top: var(--space-sm);
-    font-family: var(--font-body);
-    font-size: var(--text-label);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--color-black);
-    transition: color var(--transition-fast);
-  }
-
-  .sup-card:hover .sup-card__link {
-    color: var(--color-red);
   }
 
   /* Responsive */
@@ -222,6 +127,7 @@ const firstSentence = (copy: string): string => {
     .sup-grid {
       grid-template-columns: 1fr;
       gap: var(--space-lg);
+      padding-inline: var(--space-sm);
     }
   }
 </style>
