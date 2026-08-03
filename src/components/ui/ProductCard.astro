@@ -1,0 +1,143 @@
+---
+import { Image } from "astro:assets";
+import type { Product } from "@data/supplements";
+
+interface Props {
+  product: Product;
+  loading?: "eager" | "lazy";
+}
+
+const { product, loading = "lazy" } = Astro.props;
+
+// First sentence of the description — editorial one-liner for the card.
+const firstSentence = (copy: string): string => {
+  const end = copy.indexOf(". ");
+  return end === -1 ? copy : copy.slice(0, end + 1);
+};
+---
+
+<a class="product-card" href={`/supplements/${product.slug}`}>
+  <div class="product-card__image-wrap">
+    <Image
+      src={product.image}
+      alt={product.name}
+      width={800}
+      height={800}
+      format="webp"
+      loading={loading}
+      class="product-card__image"
+    />
+  </div>
+
+  <div class="product-card__content">
+    <span class="product-card__category label-text label-text--red">
+      {product.category}
+    </span>
+    <h2 class="product-card__name">{product.name}</h2>
+    <p class="product-card__descriptor">
+      {firstSentence(product.description)}
+    </p>
+    <span class="product-card__link">View Product</span>
+  </div>
+</a>
+
+<style>
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .product-card__image-wrap {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform var(--transition-slow);
+  }
+
+  .product-card:hover .product-card__image {
+    transform: scale(0.95);
+  }
+
+  .product-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .product-card__category {
+    margin-bottom: var(--space-xs);
+  }
+
+  .product-card__name {
+    font-family: var(--font-display);
+    font-size: var(--text-product);
+    color: var(--color-black);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    margin: 0;
+  }
+
+  .product-card__descriptor {
+    margin-top: var(--space-xs);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-black);
+    line-height: 1.6;
+  }
+
+  .product-card__link {
+    margin-top: var(--space-sm);
+    font-family: var(--font-body);
+    font-size: var(--text-label);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-black);
+    transition: color var(--transition-fast);
+  }
+
+  .product-card:hover .product-card__link {
+    color: var(--color-red);
+  }
+
+  /* Mobile — smaller centered image, tighter spacing, always-visible
+     CTA since hover never fires on touch. See progress-tracker.md
+     Session 48. */
+  @media (max-width: 768px) {
+    .product-card {
+      gap: var(--space-sm);
+    }
+
+    .product-card__image-wrap {
+      max-width: 60%;
+      margin-inline: auto;
+    }
+
+    .product-card__content {
+      gap: var(--space-sm);
+      padding-inline: var(--space-xs);
+    }
+
+    .product-card__link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-top: var(--space-sm);
+      color: var(--color-red);
+      font-weight: 700;
+    }
+
+    .product-card__link::after {
+      content: "→";
+    }
+  }
+</style>
