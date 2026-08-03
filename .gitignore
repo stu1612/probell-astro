@@ -25,6 +25,3 @@ pnpm-debug.log*
 
 # playwright mcp session artefacts
 .playwright-mcp/
-
-# audit screenshots
-*.png
