@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 03 Aug 2026 — Session 45**
+**Last updated: 03 Aug 2026 — Session 46**
 
 
 **Pending/Deferred items**
@@ -92,6 +92,21 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 46 — 03 Aug 2026
+
+**What was done:**
+
+- Reviewed developer-supplied favicon asset upload (`public/favicon.ico` replaced; `favicon-16x16.png`, `favicon-32x32.png`, `favicon-48x48.png`, `favicon-192x192.png`, `favicon-512x512.png`, `apple-touch-icon.png` added to `public/`) plus new icon `<link>` tags and a `site.webmanifest` added to `BaseLayout.astro`.
+- Found `site.webmanifest` had been created at the project root instead of `public/` — Astro only copies `public/` into the build output, so the `<link rel="manifest">` tag would have 404'd. Moved it to `public/site.webmanifest`; no other changes needed, rest of the implementation (icon tag set, `.ico` multi-resolution, apple-touch-icon size, manifest content) was correct as supplied.
+- `public/favicon-48x48.png` remains unreferenced (not wired into `BaseLayout` or the manifest) — left as-is, flagged to developer, not treated as an error.
+- Per developer instruction, did not touch the uncommitted `AudienceCards` reorder/padding change in `index.astro` / `AudienceCards/index.astro` — confirmed intentional, out of scope for this review.
+
+**Decisions made this session:**
+
+- `favicon.svg` (pre-existing, has a built-in `prefers-color-scheme: dark` variant) remains unlinked in `BaseLayout.astro` — not part of this asset upload, left alone rather than opportunistically wired in.
+
+---
 
 ### Session 45 — 03 Aug 2026
 
