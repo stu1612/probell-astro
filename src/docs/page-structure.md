@@ -76,21 +76,27 @@ here.
 ### Supplements
 **Routes:** `src/pages/supplements/index.astro` (listing),
 `src/pages/supplements/[slug].astro` (detail) —
-**Complete, Session 30 (14 Jun 2026)**
+**Complete, Session 30 (14 Jun 2026); detail page rebuilt Session 44 (03 Aug 2026)**
 
 - Listing: dark hero → editorial alternating product rows, whole row
   links to detail page
-- Detail: dark product hero → white body (4-stat row, description,
-  ingredients, usage grid) → black CTA block
+- Detail (current, Session 44): full-bleed photographic hero
+  (`product.slugImage`) with ghost stat number → stat strip breaking
+  out over the hero's bottom edge → black Overview / white Ingredients
+  two-column section → white BrandStory-style "How to use it"
+  anchor/row section → red CTA block. Built as five components under
+  `src/components/ProductDetail/`. Replaces the original "dark hero +
+  white 4-stat body" layout from Session 30 — not an addition to it.
 - Data: `src/data/supplements.ts`, exported as `SUPPLEMENTS`
 
 ### Learn
-**Routes:** `src/pages/learn.astro`, `src/pages/learn/[category].astro`
-— **Complete, Session 30 (13 Jun 2026)**
-
-- 4 tabs (Whey, Creatine, Pre-Workout, Mass Gainer), content from
-  `CATEGORY_PAGES` in `src/data/categories.ts`
-- Tab switching via vanilla JS, no npm packages
+**Removed, Session 45 (03 Aug 2026).** Was `src/pages/learn.astro`
+(4 tabs — Whey, Creatine, Pre-Workout, Mass Gainer — content from
+`CATEGORY_PAGES`, tab switching via vanilla JS). Deleted per developer
+instruction along with every nav/footer link that pointed at `/learn`.
+`src/data/categories.ts` (`CATEGORY_PAGES`) was deliberately **not**
+deleted — kept per developer instruction even though currently unused;
+don't treat it as dead code to clean up.
 
 ### Legal
 **Routes:** `src/pages/legal/index.astro`, `privacy.astro`,
@@ -122,8 +128,8 @@ imported via `@data/*` and `@constants/*` aliases:
 | `src/data/stats.ts` | `STATS`, `Stat` | BrandStory |
 | `src/data/products.ts` | `PRODUCTS`, `Product`/`ProductStat` | ProductStrips |
 | `src/data/supplements.ts` | `SUPPLEMENTS`, `Product` | Supplements pages |
-| `src/data/navigation.ts` | `NAV_LINKS`, `FOOTER_SITE_LINKS`, `FOOTER_PRODUCT_LINKS`, `FOOTER_LEARN_LINKS` | Nav, Footer |
-| `src/data/categories.ts` | `CATEGORY_PAGES` | Learn pages |
+| `src/data/navigation.ts` | `NAV_LINKS`, `MOBILE_NAV_LINKS`, `FOOTER_SITE_LINKS`, `FOOTER_PRODUCT_LINKS`, `FOOTER_PARTNER_LINKS` | Nav, Footer |
+| `src/data/categories.ts` | `CATEGORY_PAGES` | Unused since Learn was removed (Session 45) — kept per developer instruction, not deleted |
 | `src/data/audience-cards.ts` | audience card content | AudienceCards |
 | `src/constants/site.ts` | `SITE_NAME`, `COPYRIGHT`, `CONTACT_SUBJECT` | Footer, Contact |
 

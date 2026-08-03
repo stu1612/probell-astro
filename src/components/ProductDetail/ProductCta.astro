@@ -1,0 +1,60 @@
+---
+// Full-bleed red closing CTA, product name interpolated dynamically.
+import type { Product } from "@data/supplements";
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+---
+
+<section class="pd-cta">
+  <div class="container pd-cta__inner">
+    <h2 class="display-text pd-cta__heading">
+      Ready to stock Probell {product.name}?
+    </h2>
+    <p class="pd-cta__sub">
+      Talk to us about wholesale pricing, margins, and display support.
+    </p>
+    <a href="/#contact" class="btn-secondary pd-cta__btn">Get in Touch</a>
+  </div>
+</section>
+
+<style>
+  .pd-cta {
+    background: var(--color-red);
+  }
+
+  .pd-cta__inner {
+    padding-block: var(--space-xl);
+    max-width: 60ch;
+    text-align: center;
+  }
+
+  .pd-cta__heading {
+    font-size: var(--text-section);
+    color: var(--color-white);
+    margin-bottom: var(--space-sm);
+  }
+
+  .pd-cta__sub {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-white);
+    opacity: 0.85;
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+  }
+
+  .pd-cta__btn {
+    color: var(--color-white);
+    border-color: var(--color-white);
+  }
+
+  .pd-cta__btn:hover {
+    background: var(--color-white);
+    color: var(--color-red);
+    border-color: var(--color-white);
+  }
+</style>

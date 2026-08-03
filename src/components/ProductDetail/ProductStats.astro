@@ -1,0 +1,74 @@
+---
+// Stat strip that breaks out over the hero's bottom edge. Renders
+// whichever four stats belong to the product passed in.
+import type { ProductStat } from "@data/supplements";
+
+interface Props {
+  stats: ProductStat[];
+}
+
+const { stats } = Astro.props;
+---
+
+<div class="container">
+  <ul class="pd-stats">
+    {
+      stats.map((stat) => (
+        <li class="pd-stats__item">
+          <span class="display-text pd-stats__value">{stat.value}</span>
+          <span class="label-text pd-stats__label">{stat.label}</span>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .pd-stats {
+    position: relative;
+    z-index: 3;
+    margin-top: calc(var(--space-xl) * -1);
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-gold);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .pd-stats__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    border-left: 1px solid var(--color-border);
+  }
+
+  .pd-stats__item:first-child {
+    border-left: none;
+  }
+
+  .pd-stats__value {
+    font-size: var(--text-stat-value);
+    color: var(--color-white);
+    font-family: var(--font-display);
+    line-height: 1;
+  }
+
+  .pd-stats__label {
+    color: var(--color-grey);
+  }
+
+  @media (max-width: 768px) {
+    .pd-stats {
+      grid-template-columns: repeat(2, 1fr);
+      margin-top: calc(var(--space-lg) * -1);
+    }
+
+    .pd-stats__item:nth-child(2) {
+      border-left: none;
+    }
+
+    .pd-stats__item:nth-child(n + 3) {
+      border-top: 1px solid var(--color-border);
+    }
+  }
+</style>

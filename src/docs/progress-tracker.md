@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 30 Jul 2026 — Session 42**
+**Last updated: 03 Aug 2026 — Session 45**
 
 
 **Pending/Deferred items**
@@ -16,7 +16,7 @@
 
 **Phase:** Post-build structural redesign
 **Active section:** Sales Partner, Retailer, and Distributor pages all built, now live at flat routes `/sales`, `/retail`, `/distributor` (moved out of `/partners/*` in Session 41 — see below; the `/partners/index` hub-page scaffold this note used to mention was deleted as part of the same move, not left pending). Retailer and Distributor were developer-confirmed complete (visual check + working submission) prior to Session 40; Session 40 added a photographic hero background to all three pages, so Retailer/Distributor's prior visual sign-off predates that change and is worth a quick re-look. Sales Partner's visual verification is still outstanding. Session 42: mobile nav overlay (`Nav/NavOverlay.astro`, `Nav/NavHamburger.astro`) reworked — link list, toggle button, layout, and colors all revised across several in-session rounds of feedback — see Session 42 log; not yet developer-signed-off in-browser.
-**Next action:** `/sales` visual sign-off still outstanding — developer to review in-browser directly when ready (Playwright verification is opt-in only, not a blocker — see Session 41 process note). Mobile nav overlay changes (Session 42) also still need an in-browser look. Contact router and footer/nav social links (both Session 41) have since been developer-confirmed working.
+**Next action:** `/sales` visual sign-off still outstanding — developer to review in-browser directly when ready (Playwright verification is opt-in only, not a blocker — see Session 41 process note). Mobile nav overlay changes (Session 42) also still need an in-browser look. Contact router and footer/nav social links (both Session 41) have since been developer-confirmed working. Session 44: `/supplements/[slug]` rebuilt on the Session 43 playground design via new `src/components/ProductDetail/*` components; the playground route/components have since been deleted. Visual sign-off still needed on Creatine/PWO/Mass Gainer specifically (only Whey was reviewed before adoption).
 
 **Note on Sessions 31–33:** this work was carried out by the developer directly, without running through Claude Code sessions — logged here retroactively per developer request, sole-authorship, "off script." See entries below.
 
@@ -82,7 +82,7 @@ These items must be confirmed before Claude Code begins building.
 | 11  | Instagram                   | Removed     | —           | Removed Session 24 — component deleted; can be reinstated when account URL confirmed       |
 | 12  | Contact                     | Complete    | 30 Jul 2026 | Session 41: Web3Forms form removed entirely (form markup, `WEB3FORMS_KEY`, hCaptcha, `CONTACT_SUBJECT` constant) and replaced with a 3-option partner router (`ContactRouter.astro`, renamed from `ContactForm.astro`) linking to `/sales`, `/distributor`, `/retail`, plus a plain `mailto:info@probellnutrition.com` fallback — no form, no JS, no third-party service. `WEB3FORMS_KEY` also removed from `.env`. Per `src/features/contact-router-route-flatten.md` |
 | 13  | Footer                      | Complete    | 30 Jul 2026 | 4-col grid; probell-logo.png used (swap when logo-light.png arrives). Session 41: social icons now point to real URLs (`facebook.com/probellnutrition`, `instagram.com/probellnutrition`) and open in a new tab (`target="_blank" rel="noopener noreferrer"`) — same change applied to `ui/SocialIcons.astro` (used in the mobile nav overlay). Footer background switched from `var(--color-black)` to new `var(--color-black-true)` token — developer confirmed the pure-`#000` background is intentional, not a mistake; see `design.md` Section 1 |
-| —   | Supplements page            | Complete    | 14 Jun 2026 | Listing + detail pages built (Task 14)                                                     |
+| —   | Supplements page            | Complete    | 14 Jun 2026 | Listing + detail pages built (Task 14). Session 44 (03 Aug 2026): detail page (`[slug].astro`) rebuilt on the bold full-bleed-hero design trialled in Session 43's playground — see Session 44 log; the "dark hero + white 4-stat body" layout this row originally described is superseded, not additive |
 | —   | AudienceCards                | Complete    | 10 Jul 2026 | Solo dev session (not run through Claude Code) — new homepage section, 4-card grid linking to `/supplements` and the three partner routes; see Session 32 |
 | —   | Sales Partner page (`/sales`) | Built — pending visual verification | 19 Jul 2026 | Hero, Why Probell, How It Works, application form; FAQ cut (deviation, see Session 34). `src/lib/hubspot.ts` created as shared submission utility for all three partner forms. HubSpot submission functionally confirmed working. Session 40: hero switched from text-only to photographic background (`partner-sales.jpg`, flat `rgba(0,0,0,0.5)` scrim). Session 41: route moved from `/partners/sales` to `/sales` (see below). Visual sign-off still outstanding — developer to review in-browser when ready, not tooling-blocked (see Session 41 process note) |
 | —   | Retailer page (`/retail`)     | Complete    | 19 Jul 2026 | Hero, short "Why Stock Probell" list (deliberately not a stat-chip grid per spec), pricing-is-request-not-publish framing, How It Works, request form (Business Name, Your Name, Email, Phone, Message; no Business Type dropdown, no location field, both deliberate per spec). No automated confirmation email (per spec — inline success only). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working. Session 40: hero switched from text-only to photographic background (`partner-retail.jpg`, flat `rgba(0,0,0,0.5)` scrim). Session 41: route moved from `/partners/retail` to `/retail` |
@@ -92,6 +92,67 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 45 — 03 Aug 2026
+
+**What was done:**
+
+- Removed the `/learn` route entirely, per direct developer instruction ("no longer required").
+  - Deleted `src/pages/learn.astro`.
+  - `src/data/navigation.ts`: removed the `{ label: "Learn", href: "/learn" }` entry from `NAV_LINKS`, `MOBILE_NAV_LINKS`, and `FOOTER_SITE_LINKS`. Deleted the `FOOTER_LEARN_LINKS` export outright — all four of its entries pointed at `/learn`, and it turned out to already be dead code (`Footer/index.astro` never actually imported it; its "Column 4: Learn" comment was stale — the column it labels has rendered `FOOTER_PARTNER_LINKS` under a "Partners" heading for a while, unrelated to this change, left as-is).
+  - `src/components/BrandStory/BrandCtaBlock.astro`: its CTA button (`href="/learn"`, label "Learn") was the one other link in the app pointing at the route. Repointed to `/supplements` with label "See Supplements" (matching the wording already used by `ProductHero`'s equivalent CTA) since that's the closest surviving destination for "browse the products." Also added `white-space: nowrap` to `.em__cta-btn` — the existing `width: min-content` was fine for the single word "Learn" but would have wrapped "See Supplements" onto two lines.
+  - Deleted `public/images/lifestyle/shelf-display.jpg` — was only used by `learn.astro`'s hero background, confirmed via grep not referenced anywhere else; removed per `coding-standards.md`'s "no unused files" rule.
+  - **`src/data/categories.ts` (`CATEGORY_PAGES`) deliberately NOT deleted** — kept per explicit developer instruction even though nothing currently imports it. Don't treat it as dead code to clean up in a future session without checking back.
+  - Updated `page-structure.md`'s Learn entry and the data-architecture table to match.
+- `npm run build` passes clean — 14 pages generated (down from 15; `/learn` no longer exists). Confirmed via grep that no `.astro`/`.ts` file references `/learn` or `FOOTER_LEARN_LINKS` anymore.
+
+**Decisions made this session:**
+
+- `BrandCtaBlock`'s orphaned CTA repointed to `/supplements` rather than removed outright — the section still needs a CTA, and Supplements is the nearest live equivalent to what Learn offered.
+
+---
+
+### Session 44 — 03 Aug 2026
+
+**What was done:**
+
+- Resolved Session 43's open deviation. Developer reviewed the `supplements/playground.astro` layout trial in-browser and signed off on adopting it as the real `/supplements/[slug]` design.
+- Built a permanent component set at `src/components/ProductDetail/` (`ProductHero.astro`, `ProductStats.astro`, `ProductOverview.astro`, `ProductUsage.astro`, `ProductCta.astro`) — same visual layout as the playground version, but fully data-driven per product (no hardcoded Whey values) and scoped with a `pd-` class prefix to keep it distinct from the playground's `pg-` prefix. Hero background now reads from `product.slugImage` per product, rather than a hardcoded image path.
+- `src/pages/supplements/[slug].astro` fully rewritten to compose these five components; `getStaticPaths` logic unchanged, still generates all four products (Whey, Creatine, PWO, Mass Gainer). Also fixed a stray leading-space typo in the page `<title>` template string while rewriting it (no visual/behavioral effect).
+- Per developer instruction, deleted `src/pages/supplements/playground.astro` and the entire `src/components/playground/` directory (5 files) now that the design has been carried into production — confirmed via grep that nothing else in `src/` referenced either before removing.
+- `npm run build` passes clean post-deletion — 15 pages generated (down from 16; the `/supplements/playground` route no longer exists). All four `/supplements/[slug]` routes (`whey`, `creatine`, `pwo`, `gainer`) confirmed returning 200 in dev.
+
+**Decisions made this session:**
+
+- The bold full-bleed-hero / breakout-stat-strip / BrandStory-style usage section design (originated in the Session 43 playground) is now the live `/supplements/[slug]` design — Session 43's older split-image hero layout is fully replaced, not kept as an alternate.
+- New production components kept in a dedicated `src/components/ProductDetail/` folder rather than reusing/renaming the playground files directly, per developer instruction to maintain clean separation.
+
+**Decisions still open:**
+
+- Visual sign-off on the new `/supplements/[slug]` pages across all four products (only Whey's underlying design was reviewed pre-adoption) — developer to review Creatine/PWO/Mass Gainer in-browser, particularly since all four currently share the same placeholder `slugImage`/`backgroundImage` asset.
+- Same outstanding items as Session 42/43 (`/sales` visual sign-off, mobile nav overlay in-browser check).
+
+---
+
+### Session 43 — 03 Aug 2026
+
+**What was done:**
+
+- **DEVIATION:** built `src/pages/supplements/playground.astro` — a standalone route (not a `getStaticPaths` dynamic page, not linked from nav) to trial a bolder visual direction for `/supplements/[slug]` against real Whey data before deciding whether to carry any of it back into the live template. `coding-standards.md` explicitly bans playground/test pages ("build directly in components") — flagged by the developer as a knowing deviation, proceeded per `ai-interaction.md`'s `Deviation:` convention.
+- Layout, using only existing tokens/components (no new global primitives):
+  - Full-bleed photographic hero (`creatine_bg.jpg`, per developer instruction — not `product.backgroundImage`/`slugImage`) with the standard `rgba(0,0,0,0.5)` scrim exception, a large low-opacity ghost stat number (pattern borrowed from `ProductStrip.astro`'s `.ps__ghost`), and left-aligned statement-scale product name.
+  - A stat strip that breaks out over the hero's bottom edge via negative `margin-top` (bold "card overlapping photography" moment, no new token needed).
+  - Two-column overview/ingredients section on white, with ingredients pulled into a black card for contrast against the white section — the one deliberately bold structural choice with no existing precedent in `[slug].astro`.
+  - Numbered (01/02/03) usage section on black, red display-font numerals at reduced opacity.
+  - Full-bleed red CTA block closing the page.
+- `npm run dev` started and route confirmed returning 200; visual/browser sign-off left to the developer (Playwright/chromium-cli automation wasn't available in this environment, and is opt-in only per Session 41 process note regardless).
+
+**Decisions still open:**
+
+- Whether any part of this layout gets carried back into the real `/supplements/[slug].astro` template, or the playground route gets deleted outright once reviewed — developer to decide after an in-browser look.
+- This file should not be left in the repo long-term per the standing "no playground pages" rule — delete once the layout decision is made either way.
+
+---
 
 ### Session 42 — 30 Jul 2026
 
@@ -1323,10 +1384,9 @@ None.
 | Footer design               | Needs visual reference review         | Developer          |
 | Product PNGs                | Client assets not yet finalised       | Client / Developer |
 | Logo transparent PNG        | Client to supply                      | Client             |
-| Instagram live feed         | Account URL not confirmed             | Client             |
+| Instagram live feed         | Account URL confirmed (Session 41); component itself was removed Session 24 and hasn't been rebuilt | Developer |
 | Font decisions              | Must be made in browser               | Developer          |
 | Hero headline               | Must be made in browser               | Developer          |
-| Supplements page full build | Deferred to phase 2                   | Developer          |
 | CMS integration (Hygraph)   | Deferred until core UI stable         | Developer          |
 | Payment gateway             | Deferred — business decisions pending | Client / Developer |
 
