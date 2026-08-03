@@ -1,0 +1,78 @@
+---
+// Overview (description) + Ingredients, per product.
+import SectionWrapper from "@components/SectionWrapper/index.astro";
+import type { Product } from "@data/supplements";
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+---
+
+<SectionWrapper bg="black">
+  <div class="container" id="details">
+    <div class="pd-content-grid">
+      <div class="pd-description">
+        <span class="label-text label-text--red">Overview</span>
+        <h2 class="display-text pd-content-heading">Built different.</h2>
+        <p class="pd-description__text">{product.description}</p>
+      </div>
+
+      <div class="pd-ingredients-card">
+        <h3 class="display-text pd-content-heading pd-content-heading--sm">
+          Ingredients
+        </h3>
+        <p class="pd-ingredients-card__text">{product.ingredients}</p>
+      </div>
+    </div>
+  </div>
+</SectionWrapper>
+
+<style>
+  .pd-content-grid {
+    padding-block: var(--space-xl);
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: var(--space-lg);
+    align-items: start;
+  }
+
+  .pd-content-heading {
+    font-size: var(--text-section);
+    color: var(--color-white);
+    margin-block: var(--space-xs) var(--space-md);
+  }
+
+  .pd-content-heading--sm {
+    font-size: var(--text-product);
+    color: var(--color-black);
+  }
+
+  .pd-description__text {
+    max-width: 60ch;
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-white);
+    line-height: 1.8;
+  }
+
+  .pd-ingredients-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    padding: var(--space-lg);
+  }
+
+  .pd-ingredients-card__text {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-grey);
+    line-height: 1.8;
+  }
+
+  @media (max-width: 1024px) {
+    .pd-content-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

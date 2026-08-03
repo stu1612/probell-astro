@@ -1,0 +1,141 @@
+---
+// Full-bleed photographic hero — background image is per-product
+// (product.slugImage), not a fixed asset, so each /supplements/[slug]
+// page renders its own photography once real product shots replace
+// the shared placeholder in src/data/supplements.ts.
+import { Image } from "astro:assets";
+import type { Product, ProductStat } from "@data/supplements";
+
+interface Props {
+  product: Product;
+  leadStat: ProductStat;
+}
+
+const { product, leadStat } = Astro.props;
+---
+
+<section class="pd-hero">
+  <div class="pd-hero__bg">
+    <Image
+      src={product.slugImage}
+      alt=""
+      width={1920}
+      height={1280}
+      format="webp"
+      loading="eager"
+      class="pd-hero__bg-img"
+    />
+    <div class="pd-hero__scrim"></div>
+  </div>
+
+  <span class="display-text pd-hero__ghost" aria-hidden="true"
+    >{leadStat.value}</span
+  >
+
+  <div class="container pd-hero__inner">
+    <div class="pd-hero__content">
+      <h1 class="display-text pd-hero__name">{product.name}</h1>
+      <p class="pd-hero__lead">
+        {leadStat.value}
+        {leadStat.label.toLowerCase()} — no fillers, no proprietary blends, no compromise.
+      </p>
+      <div class="pd-hero__actions">
+        <a href="/supplements" class="btn-secondary">See Supplements</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pd-hero {
+    position: relative;
+    top: calc(var(--nav-height) * -1);
+    margin-bottom: calc(var(--nav-height) * -1);
+    height: 92vh;
+    min-height: 640px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background: var(--color-black);
+  }
+
+  .pd-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .pd-hero__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .pd-hero__scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .pd-hero__ghost {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    bottom: -0.12em;
+    font-size: 32vw;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: var(--color-white);
+    opacity: 0.08;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .pd-hero__inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding-bottom: var(--space-xl);
+  }
+
+  .pd-hero__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    max-width: 700px;
+  }
+
+  .pd-hero__name {
+    font-size: var(--text-hero);
+    color: var(--color-white);
+    font-family: var(--font-display);
+  }
+
+  .pd-hero__lead {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-grey);
+    line-height: 1.6;
+    max-width: 46ch;
+  }
+
+  .pd-hero__actions {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 768px) {
+    .pd-hero {
+      height: auto;
+      min-height: 80vh;
+    }
+
+    .pd-hero__ghost {
+      font-size: 50vw;
+    }
+  }
+</style>

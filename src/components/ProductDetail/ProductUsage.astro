@@ -1,0 +1,184 @@
+---
+// Section title + anchor/stat-row layout, adopted from BrandStory.
+// usageItems is always the product's when/amount/mixWith triplet,
+// built by the page from product.usage.
+import SectionWrapper from "@components/SectionWrapper/index.astro";
+
+interface UsageItem {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  usageItems: UsageItem[];
+}
+
+const { usageItems } = Astro.props;
+---
+
+<SectionWrapper bg="white">
+  <div class="container pd-usage-container">
+    <h2 class="display-text pd-usage-headline">
+      The difference between taking a supplement and taking it right.
+    </h2>
+
+    <div class="pd-usage-layout">
+      <div class="pd-usage-anchor">
+        <span class="label-text label-text--red pd-usage-eyebrow"
+          >How to use it</span
+        >
+        <p class="pd-usage-statement display-text">
+          Three steps. No guesswork.
+        </p>
+        <p class="pd-usage-body font-text text-black">
+          Every serve is dosed for one job — get it in, get back to work.
+        </p>
+      </div>
+
+      <div class="pd-usage-list">
+        {
+          usageItems.map((item, i) => (
+            <div class="pd-usage-row">
+              <span class="display-text pd-usage-num">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div class="pd-usage-right">
+                <span class="label-text label-text--red pd-usage-label">
+                  {item.label}
+                </span>
+                <p class="pd-usage-value">{item.value}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</SectionWrapper>
+
+<style>
+  .pd-usage-container {
+    padding: var(--space-xl) 0;
+  }
+
+  .pd-usage-headline {
+    font-size: var(--text-highlight);
+    font-family: var(--font-display);
+    color: var(--color-black);
+    text-align: center;
+    padding-bottom: var(--space-xl);
+  }
+
+  @media (min-width: 768px) {
+    .pd-usage-headline {
+      padding-bottom: var(--space-2xl);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .pd-usage-headline {
+      font-size: var(--text-statement);
+      text-align: left;
+    }
+  }
+
+  .pd-usage-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .pd-usage-anchor {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-lg));
+    text-align: left;
+  }
+
+  .pd-usage-eyebrow {
+    display: block;
+  }
+
+  .pd-usage-statement {
+    font-size: var(--text-section);
+    font-family: var(--font-display);
+    color: var(--color-black);
+    line-height: 0.95;
+  }
+
+  .pd-usage-body {
+    max-width: 28ch;
+  }
+
+  .pd-usage-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pd-usage-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md) 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .pd-usage-row:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .pd-usage-num {
+    font-size: var(--text-hero);
+    font-family: var(--font-display);
+    color: var(--color-black);
+    line-height: 0.9;
+  }
+
+  .pd-usage-right {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .pd-usage-label {
+    display: block;
+  }
+
+  .pd-usage-value {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-black);
+    line-height: 1.6;
+    max-width: 40ch;
+  }
+
+  @media (max-width: 1024px) {
+    .pd-usage-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .pd-usage-anchor {
+      position: static;
+    }
+
+    .pd-usage-body {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .pd-usage-row {
+      grid-template-columns: auto 1fr;
+      gap: var(--space-sm);
+    }
+
+    .pd-usage-num {
+      font-size: var(--text-statement);
+    }
+  }
+</style>
