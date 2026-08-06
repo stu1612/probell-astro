@@ -5,7 +5,6 @@ import AudienceCards from "@components/AudienceCards/index.astro";
 import Identity from "@components/Identity/index.astro";
 import Contact from "@components/Contact/index.astro";
 import SectionWrapper from "@components/SectionWrapper/index.astro";
-import Banner from "@components/ui/Banner.astro";
 import ProductStrips from "@components/ProductStrips/index.astro";
 import BrandStory from "@components/BrandStory/index.astro";
 ---
@@ -20,16 +19,10 @@ import BrandStory from "@components/BrandStory/index.astro";
     <SectionWrapper bg="black">
       <Identity
         headline="Stock the brand that belongs in your gym."
+        accentText="One Standard."
+        highlightText="No Compromise."
         body="The container gets their attention. The formula keeps them coming back. Give your members both.  Probell was built for people who don't need motivation — they just need fuel. No shortcuts, no fillers, no compromise. The kind of product your serious members have been waiting for someone to stock."
-        primaryCta={{ label: "View Products → ", href: "/#trending" }}
-      />
-      <Banner
-        eyebrow="Trending"
-        headline1="Three formulas."
-        headline2="One standard."
-        headline3="No compromise."
-        description=""
-        image="/images/bold-statement/focus.jpg"
+        primaryCta={{ label: "View Products → ", href: "/supplements" }}
       />
       <ProductStrips />
       <AudienceCards />

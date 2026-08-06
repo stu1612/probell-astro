@@ -67,7 +67,7 @@ const { product } = Astro.props;
         ))
       }
     </div>
-    <a href="#" class="btn-skeleton ps__cta"> Shop Now → </a>
+    <a href={product.href} class="btn-skeleton ps__cta"> See More → </a>
   </div>
 
   <span class="ps__ghost">{product.id}</span>
