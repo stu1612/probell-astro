@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 03 Aug 2026 — Session 48**
+**Last updated: 06 Aug 2026 — Session 49**
 
 
 **Pending/Deferred items**
@@ -92,6 +92,40 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 49 — 06 Aug 2026
+
+**What was done:**
+
+- Developer made a round of image-asset edits directly (outside a Claude Code session, similar to Sessions 31–33) before this session started; reviewed the working-tree diff and logged it here retroactively per developer request.
+- Two new dedicated product photos added: `public/images/bold-statement/focus.jpg` and `public/images/products/gainer_bg.jpg`.
+- `src/data/products.ts` (homepage product strips): Creatine's `image` swapped from `discipline.png` to `creatine_bg.jpg`; Pre-Workout's `image` swapped from the reused `hero_img.jpg` to its own `pwo_bg.jpg`.
+- `src/data/supplements.ts` (`/supplements/[slug]` hero images): Whey, Pre-Workout, and Mass Gainer had all three incorrectly shared the same `slugImage` placeholder (`creatine_bg.jpg`, left over from earlier work). Now each has distinct imagery — Whey → `athlete-walking.jpg`, Pre-Workout → `pwo_bg.jpg`, Mass Gainer → `gainer_bg.jpg` (new asset). The standalone `creatine` supplement entry was untouched and still correctly uses `creatine_bg.jpg`.
+- `src/pages/index.astro`: the "Trending" `Banner` component's `image` swapped from `three-flavours.jpg` to the new `focus.jpg`.
+- Also reviewed, at developer request, which files under `public/images/` had no code references at all (checked against `.astro`/`.ts` source, not docs). Developer had already deleted seven of them from the working tree prior to this session: `audience/shop.jpg`, `audience/shop_1.jpg`, `hero/hero-main.jpg` (superseded by `hero_v2.jpg`/`hero_v2_mobile.jpg` when `Hero.astro` was replaced by `HeroDesktop`/`HeroMobile`), `icons/favicon-logo.png` (superseded by `probell-logo.png`), and all three `trending/*.jpg` files (only ever referenced by `src/data/categories.ts`, which nothing imports — dead data file, presumably left over from the Session 24 homepage redesign that removed the Trending section).
+- Confirmed all edits are functionally sound: `Banner.astro` renders `image` as a plain CSS `background-image` (no `alt` requirement to update), and every new/repointed path exists on disk.
+
+**Newly orphaned by this session's edits — not deleted, flagging for a decision:**
+
+- `public/images/bold-statement/discipline.png` — was Creatine's only reference in `products.ts`; now unreferenced anywhere in `src/`.
+- `public/images/hero/hero_img.jpg` — was Pre-Workout's only reference in `products.ts`; now unreferenced anywhere in `src/`.
+
+**Still unused, not part of this session's edits (carried over, developer's call whether to delete):**
+
+- `public/images/products/pwo_bg.jpg` was unused before this session's edits — now resolved, it's live in both files above.
+- `public/favicon-48x48.png` — remains unwired into `BaseLayout`/`site.webmanifest` (flagged since Session 46/47).
+- `src/data/categories.ts` — the dead data file itself, not just its images; nothing imports it.
+
+**Decisions made this session:**
+
+- None requiring a spec update — asset swaps and cleanup only, no markup/structural changes.
+
+**Decisions still open:**
+
+- Whether to delete `discipline.png` and `hero_img.jpg` now that they're orphaned, or hold onto them.
+- Whether `categories.ts` (and its Trending-section data) should be deleted outright or is being kept for a future revival of that section.
+
+---
 
 ### Session 48 — 03 Aug 2026
 
