@@ -40,7 +40,7 @@ export const SUPPLEMENTS: Product[] = [
     name: "Whey 100 Protein",
     category: "whey",
     image: "/images/products/whey_new.png",
-    slugImage: "/images/products/creatine_bg.jpg",
+    slugImage: "/images/lifestyle/athlete-walking.jpg",
     backgroundImage: DEFAULT_PRODUCT_BACKGROUND,
     description: `The foundation of every serious stack. Built for athletes who train hard and expect their nutrition to match their effort. 25g of pure whey isolate per serve — no fillers, no proprietary blends, no compromise. Every ingredient on the label earns its place. Mixes clean, digests clean, and gets out of the way so you can get back to work.`,
     stats: [
@@ -86,7 +86,7 @@ export const SUPPLEMENTS: Product[] = [
     name: "Pre-Workout",
     category: "pwo",
     image: "/images/products/whey_new.png",
-    slugImage: "/images/products/creatine_bg.jpg",
+    slugImage: "/images/products/pwo_bg.jpg",
     backgroundImage: DEFAULT_PRODUCT_BACKGROUND,
     description: `Built to get you under the bar and moving. A clean, dosed pre-workout formula — no proprietary blends hiding underdosed ingredients, no crash, no jitters that pull focus off the lift. Every dose is exactly what's printed on the label, at a level that actually does something. For athletes who want output, not a sugar rush.`,
     stats: [
@@ -110,7 +110,7 @@ export const SUPPLEMENTS: Product[] = [
     name: "Mass Gainer",
     category: "gainer",
     image: "/images/products/whey_new.png",
-    slugImage: "/images/products/creatine_bg.jpg",
+    slugImage: "/images/products/gainer_bg.jpg",
     backgroundImage: DEFAULT_PRODUCT_BACKGROUND,
     description: `Built for the athlete who can't eat enough to grow. A dense blend of whey protein, complex carbohydrates, and healthy fats designed to put on size without cutting corners. No sugar-loaded filler carbs, no bloating, no compromise on protein quality. Formulated for hard training days when your body needs more than a standard shake can deliver. Mixes clean, digests clean, built for the grind.`,
     stats: [
