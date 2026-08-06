@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 06 Aug 2026 — Session 49**
+**Last updated: 06 Aug 2026 — Session 50**
 
 
 **Pending/Deferred items**
@@ -71,9 +71,9 @@ These items must be confirmed before Claude Code begins building.
 | —   | BaseLayout                  | Complete    | 17 May 2026 |                                                                                            |
 | 1   | Nav                         | Complete    | 17 May 2026 | Single logo asset used for both states — swap when two-variant PNGs arrive. Session 42: mobile overlay refactored, see below — not yet developer-signed-off in-browser |
 | 2   | Hero                        | Complete    | 26 Jul 2026 | Session 38: split into `HeroDesktop.astro` + `HeroMobile.astro` (CSS `display` swap at 768px, `index.astro` now just the orchestrator) so mobile can be designed independently. Desktop: `hero_v2.png`, single-tier headline, bottom gradient. Mobile: `hero_v2_mobile.png`, two-tier headline layout + icon CTA row (currently commented out, developer WIP), still in active visual iteration — not yet developer-signed-off |
-| 3   | Identity                    | Complete    | 11 Jun 2026 | Session 24: refactored to accept headline/body/primaryCta props; secondary CTA removed; stats row removed; CTA points to #trending |
-| 4   | Banner (ui)                 | Complete    | 11 Jun 2026 | Session 24: 80vh; grid 1fr 1fr (empty left cell, content right); background-image from prop |
-| 5   | ProductStrips               | Complete    | 11 Jun 2026 | Session 24: NEW component replacing Trending + BuiltForStrength; 3 alternating full-width strips — Whey 100 Protein (image right), Creatine (image left, gold), Pre-Workout (muted/coming soon); ghost number watermark; stat callout on strip 01 |
+| 3   | Identity                    | Complete    | 11 Jun 2026 | Session 24: refactored to accept headline/body/primaryCta props; secondary CTA removed; stats row removed; CTA points to #trending. Session 50 (06 Aug 2026): rebuilt as a single centered "statement" layout — deliberate exception per `design.md` §4 — replacing the two-column split. Headline split into `headline`/`accentText`/`highlightText` props so "One Standard." (dimmed white) and "No Compromise." (accent color) render as separate spans. Below `--bp-xl` (1280px) each of the three segments stacks on its own line |
+| 4   | Banner (ui)                 | Removed     | —           | Built Session 24 (80vh; grid 1fr 1fr, empty left cell, content right; background-image from prop). Removed 06 Aug 2026 — `ui/Banner.astro` deleted along with its (already-commented-out) usage in `index.astro`; see below |
+| 5   | ProductStrips               | Complete    | 11 Jun 2026 | Session 24: NEW component replacing Trending + BuiltForStrength; 3 alternating full-width strips — Whey 100 Protein (image right), Creatine (image left, gold), Pre-Workout (muted/coming soon); ghost number watermark; stat callout on strip 01. Session 50 (06 Aug 2026): 4th entry (Mass Gainer, id:04) added to `src/data/products.ts` — layout is fully data-driven off `flip`/`overlay`/`imageMuted` flags, no changes needed in `ProductStrip.astro` itself; the `overlay: true` it was initially given (which put it on the full-bleed pattern) was removed so it matched id:01's standard split layout as requested |
 | 6   | Brand Story / Emotion       | Complete    | 11 Jun 2026 | Session 24: fully redesigned as white-bg social proof section (`#emotion`); large display headline; 4-stat list (1fr 2fr grid, sticky left anchor); image + CTA below; no longer uses gym-interior image or diagonal clip |
 | 7   | Trending                    | Removed     | —           | Removed Session 24 — replaced by Banner + ProductStrips                                    |
 | 8   | Built for Strength          | Removed     | —           | Removed Session 24 — product content merged into ProductStrips                             |
@@ -92,6 +92,25 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 50 — 06 Aug 2026
+
+**What was done:**
+
+- Identity section (`src/components/Identity/index.astro`) redesigned from the original two-column split (headline/CTA one side, body text the other) into a single centered "statement" layout — a deliberate exception to `design.md` §4's "left-align by default" rule, chosen specifically because Identity sits between Hero and the (then-still-present) Banner, both of which anchor their headline left; centering it was the clearest way to break the repeated pattern.
+- Headline copy split into three props — `headline`, `accentText`, `highlightText` — so the tagline "Stock the brand that belongs in your gym. One Standard. No Compromise." can style its trailing phrases differently: `accentText` ("One Standard.") renders dimmed (`color: var(--color-white)` at `opacity: 0.5`, the token-based-opacity pattern already established in `design.md` for ghost numbers), `highlightText` ("No Compromise.") renders in an accent color. Mirrors `Banner.astro`'s existing pattern of passing headline text as separate props rather than embedding markup in a single string.
+- Responsive behavior: below `--bp-xl` (1280px — chosen over an initial 1040px guess per developer feedback that 1040 didn't hold up on modern laptop widths) the three headline segments each stack onto their own line via `display: flex; flex-direction: column` on the parent, rather than wrapping naturally mid-sentence; applies down through tablet and mobile since it's a `max-width` query. Same breakpoint also governs the section's mobile padding and CTA stacking, consolidated into one query.
+- Per developer instruction, the original two-column markup/CSS was initially kept as comments (not deleted) during active iteration on the new layout, then removed outright once the developer signed off on the centered design — `Identity/index.astro` now contains only the current layout.
+- `src/data/products.ts`: developer added a 4th product entry (`id: "04"`, Mass Gainer) but it initially had `overlay: true`, which put it on `ProductStrip.astro`'s full-bleed background-image pattern (shared with id:03) instead of the standard split layout id:01 uses. Removed the flag — confirmed `ProductStrip.astro` needed no changes since its layout is already fully driven by the `flip`/`overlay`/`imageMuted` data flags, not by id.
+- `ui/Banner.astro` removed from the project entirely, per developer instruction (the component and its usage in `index.astro` had already been commented out ahead of this). Deleted the component file; removed the dead import and commented-out usage block from `src/pages/index.astro`; updated `page-structure.md` (section-map code sample, section table — renumbered rows 5–8, `ui/` folder tree, page-level-config note) and this file's Build Sections table to reflect the removal. `progress-tracker.md`/`feature-updates.md` entries from earlier sessions that mention Banner were left untouched as historical record, consistent with how other removed components (Trending, BuiltForStrength, etc.) are handled.
+
+**Decisions made this session:**
+
+- Centered "statement" layout for Identity confirmed by developer as the intended direction (not just explored) — implemented and iterated on directly (headline color/opacity treatment, breakpoint tuning) rather than left as a proposal.
+- Original two-column Identity code deleted outright once the new layout was signed off — no longer kept for revert.
+- `ui/Banner.astro` confirmed removed, not deferred — deleted along with every reference found in code and in the "current state" docs (`page-structure.md`, this file's Build Sections table).
+
+---
 
 ### Session 49 — 06 Aug 2026
 

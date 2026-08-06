@@ -16,6 +16,7 @@ export interface Product {
   flip?: boolean;
   overlay?: boolean;
   stats: ProductStat[];
+  href?: string;
 }
 
 export const PRODUCTS: Product[] = [
@@ -32,6 +33,7 @@ export const PRODUCTS: Product[] = [
       { number: "25g", label: "Pure protein" },
       { number: "100%", label: "Whey isolate" },
     ],
+    href: "/supplements/whey",
   },
   {
     id: "02",
@@ -47,6 +49,7 @@ export const PRODUCTS: Product[] = [
       { number: "5g", label: "Per serve" },
       { number: "100%", label: "Monohydrate" },
     ],
+    href: "/supplements/creatine",
   },
   {
     id: "03",
@@ -62,5 +65,22 @@ export const PRODUCTS: Product[] = [
       { number: "300mg", label: "Caffeine" },
       { number: "6g", label: "Citrulline" },
     ],
+    href: "/supplements/pwo",
+  },
+  {
+    id: "04",
+    label: "04 — Mass",
+    labelAccent: "gold",
+    category: "Surplus",
+    name: "Mass Gainer",
+    body: "Dense calories built for athletes who can't eat enough to grow. No sugar-loaded filler, no bloating, no compromise on protein quality. Coming soon — built to the same standard as everything else Probell makes.",
+    image: "/images/products/gainer.jpg",
+    imageAlt: "Probell athlete",
+    flip: true,
+    stats: [
+      { number: "50g", label: "Protein" },
+      { number: "250g", label: "Carbs" },
+    ],
+    href: "/supplements/gainer",
   },
 ];

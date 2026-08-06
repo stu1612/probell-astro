@@ -1,40 +1,43 @@
 ---
 interface Props {
   headline: string;
+  accentText?: string;
+  highlightText?: string;
   body: string;
   primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
 }
 
-const { headline, body, primaryCta, secondaryCta } = Astro.props;
+const { headline, accentText, highlightText, body, primaryCta, secondaryCta } =
+  Astro.props;
 const hasCtas = primaryCta || secondaryCta;
 ---
 
 <section id="identity">
-  <div class="identity__row">
-    <div class="identity__left">
-      <h4 class="display-text identity__headline">{headline}</h4>
+  <div class="identity__stack">
+    <h4 class="display-text identity__headline">
+      <span class="identity__headline-main">{headline}</span>
+      {accentText && <span class="identity__accent"> {accentText}</span>}
       {
-        hasCtas && (
-          <div class="identity__ctas">
-            {primaryCta && (
-              <a href={primaryCta.href} class="btn-primary">
-                {primaryCta.label}
-              </a>
-            )}
-            {secondaryCta && (
-              <a href={secondaryCta.href} class="btn-secondary">
-                {secondaryCta.label}
-              </a>
-            )}
-          </div>
+        highlightText && (
+          <span class="identity__highlight"> {highlightText}</span>
         )
       }
-    </div>
+    </h4>
+    {body && <p class="font-text identity__body-text">{body}</p>}
     {
-      body && (
-        <div class="identity__body">
-          <p class="font-text">{body}</p>
+      hasCtas && (
+        <div class="identity__ctas">
+          {primaryCta && (
+            <a href={primaryCta.href} class="btn-primary">
+              {primaryCta.label}
+            </a>
+          )}
+          {secondaryCta && (
+            <a href={secondaryCta.href} class="btn-secondary">
+              {secondaryCta.label}
+            </a>
+          )}
         </div>
       )
     }
@@ -42,58 +45,56 @@ const hasCtas = primaryCta || secondaryCta;
 </section>
 
 <style>
+  /* Centered "statement" layout — deliberate exception per design.md §4 */
   #identity {
-    padding: var(--space-lg) 0;
-  }
-  .identity__row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-lg);
-    align-items: start;
+    padding: var(--space-md) 0;
   }
 
-  .identity__row:not(:has(.identity__body)) {
-    grid-template-columns: 1fr;
-  }
-
-  .identity__left {
+  .identity__stack {
     display: flex;
     flex-direction: column;
-    gap: var(--space-lg);
-    justify-content: space-between;
-    height: 100%;
+    align-items: center;
+    gap: var(--space-md);
+    text-align: center;
   }
 
   .identity__headline {
     font-family: var(--font-display);
     font-size: var(--text-highlight);
     color: var(--color-white);
-    text-align: left;
+    text-align: center;
   }
 
-  .identity__body {
-    height: 100%;
-    display: flex;
-    align-items: end;
+  .identity__accent {
+    color: var(--color-white);
+    opacity: 0.5;
+  }
+
+  .identity__highlight {
+    color: var(--color-gold);
   }
 
   .identity__body-text {
     font-size: var(--text-body);
     color: var(--color-white);
     line-height: 1.6;
+    max-width: 840px;
   }
 
   .identity__ctas {
     display: flex;
     gap: var(--space-md);
+    justify-content: center;
   }
 
-  @media (max-width: 1040px) {
-    .identity__row {
-      grid-template-columns: 1fr;
-      gap: var(--space-md);
-      padding: 0 var(--space-md) var(--space-md);
-      text-align: left;
+  @media (max-width: 1280px) {
+    #identity {
+      padding: var(--space-xl) 0;
+    }
+
+    .identity__headline {
+      display: flex;
+      flex-direction: column;
     }
 
     .identity__ctas {
