@@ -2,9 +2,9 @@
 // Full-bleed photographic hero — background image is per-product
 // (product.slugImage), not a fixed asset, so each /supplements/[slug]
 // page renders its own photography once real product shots replace
-// the shared placeholder in src/data/supplements.ts.
+// the shared placeholder in src/data/catalog.ts.
 import { Image } from "astro:assets";
-import type { Product, ProductStat } from "@data/supplements";
+import type { Product, ProductStat } from "@data/catalog";
 
 interface Props {
   product: Product;

@@ -75,10 +75,18 @@ here.
 ### Supplements
 **Routes:** `src/pages/supplements/index.astro` (listing),
 `src/pages/supplements/[slug].astro` (detail) —
-**Complete, Session 30 (14 Jun 2026); detail page rebuilt Session 44 (03 Aug 2026)**
+**Complete, Session 30 (14 Jun 2026); detail page rebuilt Session 44
+(03 Aug 2026); listing rebuilt Session 51 (07 Aug 2026)**
 
-- Listing: dark hero → editorial alternating product rows, whole row
-  links to detail page
+- Listing (current, Session 51): dark, full-bleed, editorial
+  alternating rows (`SupplementRow.astro`) — same gym photography
+  direction as the homepage `ProductStrips`. Each row: ghost id
+  number, category eyebrow, excerpt, "Best For" athlete-fit line, all
+  4 stats, CTA to the detail page (the CTA links, not the whole row).
+  Replaces the Session 48 `ProductCard` white-grid layout, which is
+  deleted, not kept as a fallback. The page's `#supplements-hero`
+  block is currently commented out (not deleted) — rows render
+  directly under a screen-reader-only `<h1>`.
 - Detail (current, Session 44): full-bleed photographic hero
   (`product.slugImage`) with ghost stat number → stat strip breaking
   out over the hero's bottom edge → black Overview / white Ingredients
@@ -86,7 +94,10 @@ here.
   anchor/row section → red CTA block. Built as five components under
   `src/components/ProductDetail/`. Replaces the original "dark hero +
   white 4-stat body" layout from Session 30 — not an addition to it.
-- Data: `src/data/supplements.ts`, exported as `SUPPLEMENTS`
+- Data: `src/data/catalog.ts`, exported as `PRODUCTS`. Session 51
+  merged the formerly separate `src/data/products.ts` (ProductStrips)
+  and `src/data/supplements.ts` (Supplements pages) into this single
+  source — both old files deleted, not kept for reference.
 
 ### Learn
 **Removed, Session 45 (03 Aug 2026).** Was `src/pages/learn.astro`
@@ -125,8 +136,7 @@ imported via `@data/*` and `@constants/*` aliases:
 | File | Exports | Used by |
 |---|---|---|
 | `src/data/stats.ts` | `STATS`, `Stat` | BrandStory |
-| `src/data/products.ts` | `PRODUCTS`, `Product`/`ProductStat` | ProductStrips |
-| `src/data/supplements.ts` | `SUPPLEMENTS`, `Product` | Supplements pages |
+| `src/data/catalog.ts` | `PRODUCTS`, `Product`/`ProductStat`/`ProductUsage` | ProductStrips, Supplements listing, Supplements detail — merged Session 51, replacing `products.ts` + `supplements.ts` |
 | `src/data/navigation.ts` | `NAV_LINKS`, `MOBILE_NAV_LINKS`, `FOOTER_SITE_LINKS`, `FOOTER_PRODUCT_LINKS`, `FOOTER_PARTNER_LINKS` | Nav, Footer |
 | `src/data/categories.ts` | `CATEGORY_PAGES` | Unused since Learn was removed (Session 45) — kept per developer instruction, not deleted |
 | `src/data/audience-cards.ts` | audience card content | AudienceCards |
@@ -151,6 +161,8 @@ src/components/
 ├── Identity/index.astro
 ├── BrandStory/ (index.astro, BrandStatsBlock.astro, BrandCtaBlock.astro)
 ├── ProductStrips/ (index.astro, ProductStrip.astro)
+├── ProductDetail/ (ProductHero.astro, ProductStats.astro, ProductOverview.astro, ProductUsage.astro, ProductCta.astro)
+├── SupplementRow.astro
 ├── AudienceCards/ (index.astro, AudienceCard.astro)
 ├── Contact/ (index.astro, ContactForm.astro)
 ├── Footer/index.astro
@@ -160,8 +172,10 @@ src/components/
 ```
 
 `ui/` stays flat — the folder is its own namespace.
-`ProductCard.astro` was deleted (Session 28, dead code) — do not
-reference it.
+`ui/ProductCard.astro` (Session 48) was deleted again Session 51 when
+the Supplements listing moved to `SupplementRow.astro` — an earlier,
+unrelated `ProductCard.astro` was also deleted in Session 28. Do not
+reference either.
 
 ---
 
