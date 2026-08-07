@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import type { Product } from "@data/products";
+import type { Product } from "@data/catalog";
 
 interface Props {
   product: Product;
@@ -56,18 +56,20 @@ const { product } = Astro.props;
         ))
       }
     </h3>
-    <p class="ps__body font-text text-grey">{product.body}</p>
+    <p class="ps__body font-text text-grey">{product.excerpt}</p>
     <div class="ps__stats">
       {
-        product.stats.map((stat) => (
+        product.stats.slice(0, 2).map((stat) => (
           <div class="ps__stat">
-            <span class="display-text ps__stat-num">{stat.number}</span>
+            <span class="display-text ps__stat-num">{stat.value}</span>
             <span class="label-text ps__stat-label">{stat.label}</span>
           </div>
         ))
       }
     </div>
-    <a href={product.href} class="btn-skeleton ps__cta"> See More → </a>
+    <a href={`/supplements/${product.slug}`} class="btn-skeleton ps__cta">
+      See More →
+    </a>
   </div>
 
   <span class="ps__ghost">{product.id}</span>

@@ -1,0 +1,248 @@
+---
+// Supplements listing row — dark, full-bleed, editorial. Same visual
+// language as ProductStrips/ProductStrip.astro (ghost number, eyebrow,
+// skeleton CTA) but listing-specific: shows all 4 stats and the
+// bestFor line, since this page is the primary product-decision
+// surface before a visitor drills into /supplements/[slug].
+import { Image } from "astro:assets";
+import type { Product } from "@data/catalog";
+
+interface Props {
+  product: Product;
+  loading?: "eager" | "lazy";
+}
+
+const { product, loading = "lazy" } = Astro.props;
+---
+
+<div class={`sr__row${product.flip ? " sr__row--flip" : ""}`}>
+  <div
+    class={`sr__img-wrap${product.imageMuted ? " sr__img-wrap--muted" : ""}`}
+  >
+    <Image
+      src={product.image}
+      alt={product.imageAlt}
+      width={1200}
+      height={900}
+      format="webp"
+      loading={loading}
+    />
+  </div>
+
+  <div class="sr__content">
+    <span class="label-text label-text--red sr__eyebrow">
+      <span class="sr__diamond">◆</span>
+      {product.id} / {product.category}
+    </span>
+    <h2 class="display-text sr__name">{product.name}</h2>
+    <p class="sr__excerpt font-text text-grey">{product.excerpt}</p>
+
+    <div class="sr__best-for">
+      <span class="label-text sr__best-for-label">Best For</span>
+      <p class="sr__best-for-text">{product.bestFor}</p>
+    </div>
+
+    <div class="sr__stats">
+      {
+        product.stats.map((stat) => (
+          <div class="sr__stat">
+            <span class="display-text sr__stat-value">{stat.value}</span>
+            <span class="label-text sr__stat-label">{stat.label}</span>
+          </div>
+        ))
+      }
+    </div>
+
+    <a href={`/supplements/${product.slug}`} class="btn-skeleton sr__cta">
+      View Product →
+    </a>
+  </div>
+
+  <span class="sr__ghost">{product.id}</span>
+</div>
+
+<style>
+  .sr__row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 90vh;
+    overflow: hidden;
+    background: var(--color-black);
+  }
+
+  .sr__row + .sr__row {
+    margin-top: var(--space-xl);
+  }
+
+  .sr__row--flip .sr__content {
+    order: 2;
+  }
+
+  .sr__row--flip .sr__img-wrap {
+    order: 1;
+  }
+
+  .sr__img-wrap {
+    order: 2;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .sr__img-wrap :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--transition-slow);
+  }
+
+  .sr__img-wrap--muted :global(img) {
+    filter: grayscale(50%);
+    opacity: 0.6;
+  }
+
+  .sr__row:hover .sr__img-wrap :global(img) {
+    transform: scale(1.05);
+  }
+
+  .sr__content {
+    order: 1;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-xl) var(--space-lg);
+    max-width: 640px;
+  }
+
+  .sr__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .sr__diamond {
+    font-size: 0.6em;
+  }
+
+  .sr__name {
+    font-size: var(--text-statement);
+    font-family: var(--font-display);
+    color: var(--color-white);
+    line-height: 0.95;
+  }
+
+  .sr__excerpt {
+    max-width: 46ch;
+  }
+
+  .sr__best-for {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-sm);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .sr__best-for-label {
+    color: var(--color-gold);
+  }
+
+  .sr__best-for-text {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-white);
+    line-height: 1.5;
+    max-width: 46ch;
+  }
+
+  .sr__stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md) var(--space-lg);
+    width: 100%;
+  }
+
+  .sr__stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding-left: var(--space-sm);
+    border-left: 2px solid var(--color-red);
+  }
+
+  .sr__stat-value {
+    font-size: var(--text-product);
+    color: var(--color-white);
+    line-height: 1;
+  }
+
+  .sr__stat-label {
+    color: var(--color-grey);
+  }
+
+  .sr__cta {
+    background: transparent;
+    color: var(--color-gold);
+    border-color: var(--color-gold);
+  }
+
+  .sr__row:hover .sr__cta {
+    background: var(--color-gold);
+    color: var(--color-black);
+    border-color: var(--color-black);
+  }
+
+  .sr__ghost {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    bottom: -0.1em;
+    font-family: var(--font-display);
+    font-size: 28vw;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: var(--color-grey);
+    opacity: 0.08;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .sr__row:hover .sr__ghost {
+    opacity: 0.12;
+  }
+
+  .sr__row--flip .sr__ghost {
+    left: auto;
+    right: 0;
+  }
+
+  @media (max-width: 768px) {
+    .sr__row {
+      grid-template-columns: 3fr 1fr;
+    }
+
+    .sr__row--flip {
+      grid-template-columns: 1fr 3fr;
+    }
+
+    .sr__content {
+      padding: var(--space-md);
+      max-width: none;
+    }
+
+    .sr__stats {
+      grid-template-columns: 1fr;
+    }
+
+    .sr__ghost {
+      font-size: 45vw;
+    }
+  }
+</style>

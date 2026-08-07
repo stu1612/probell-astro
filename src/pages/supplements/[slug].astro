@@ -5,13 +5,15 @@ import ProductStats from "@components/ProductDetail/ProductStats.astro";
 import ProductOverview from "@components/ProductDetail/ProductOverview.astro";
 import ProductUsage from "@components/ProductDetail/ProductUsage.astro";
 import ProductCta from "@components/ProductDetail/ProductCta.astro";
-import { SUPPLEMENTS, type Product } from "@data/supplements";
+import { PRODUCTS, type Product } from "@data/catalog";
 
 export function getStaticPaths() {
-  return SUPPLEMENTS.map((product) => ({
-    params: { slug: product.slug },
-    props: { product },
-  }));
+  return PRODUCTS.filter((product) => product.status === "available").map(
+    (product) => ({
+      params: { slug: product.slug },
+      props: { product },
+    }),
+  );
 }
 
 interface Props {

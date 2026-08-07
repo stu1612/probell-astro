@@ -5,8 +5,16 @@ export interface Stat {
 }
 
 export const STATS: Stat[] = [
-  { number: "25g", label: "Pure protein per serve", accent: true },
-  { number: "100%", label: "Whey isolate. No blends. No compromise.", accent: false },
-  { number: "0g", label: "Fillers. Ever.", accent: false },
-  { number: "3", label: "Products. All stocked and ready to move.", accent: false },
+  { number: "0", label: "Proprietary blends. Ever.", accent: true },
+  {
+    number: "4",
+    label: "Formulations. All made in the USA. One Standard.",
+    accent: false,
+  },
+  { number: "100%", label: "Label accuracy. No shortcuts.", accent: false },
+  {
+    number: "GMP",
+    label: "Manufacturing. All products are made in a GMP-certified facility.",
+    accent: false,
+  },
 ];

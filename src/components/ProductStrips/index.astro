@@ -1,10 +1,10 @@
 ---
-import { PRODUCTS } from "@data/products";
+import { PRODUCTS } from "@data/catalog";
 import ProductStrip from "@components/ProductStrips/ProductStrip.astro";
 ---
 
 <div class="ps">
-  {PRODUCTS.map((product) => (
+  {PRODUCTS.filter((product) => product.status === "available").map((product) => (
     <ProductStrip product={product} />
   ))}
 </div>

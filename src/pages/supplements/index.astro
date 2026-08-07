@@ -1,9 +1,12 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import SectionWrapper from "@components/SectionWrapper/index.astro";
-import ProductCard from "@components/ui/ProductCard.astro";
-import { Image } from "astro:assets";
-import { SUPPLEMENTS } from "@data/supplements";
+import SupplementRow from "@components/SupplementRow.astro";
+import { PRODUCTS } from "@data/catalog";
+
+const availableProducts = PRODUCTS.filter(
+  (product) => product.status === "available",
+);
 
 const title = "Supplements | Probell Nutrition";
 const description =
@@ -11,7 +14,7 @@ const description =
 ---
 
 <BaseLayout title={title} description={description} transparentNav={true}>
-  <div id="supplements-hero">
+  <!-- <div id="supplements-hero">
     <Image
       src="/images/partners/partner-sales.jpg"
       alt=""
@@ -33,18 +36,15 @@ const description =
         </p>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <SectionWrapper bg="white">
-    <ul class="sup-grid">
-      {
-        SUPPLEMENTS.map((product, i) => (
-          <li class="sup-grid__item">
-            <ProductCard product={product} loading={i === 0 ? "eager" : "lazy"} />
-          </li>
-        ))
-      }
-    </ul>
+  <SectionWrapper bg="black">
+    <h1 class="sr-only">Supplements</h1>
+    {
+      availableProducts.map((product, i) => (
+        <SupplementRow product={product} loading={i === 0 ? "eager" : "lazy"} />
+      ))
+    }
   </SectionWrapper>
 </BaseLayout>
 
@@ -104,30 +104,10 @@ const description =
     line-height: 1.6;
   }
 
-  /* Product grid — card itself lives in ui/ProductCard.astro */
-  .sup-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-xl) var(--space-md);
-    padding-block: var(--space-sm);
-  }
-
   /* Responsive */
-  @media (max-width: 1024px) {
-    .sup-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
   @media (max-width: 768px) {
     .sup-hero {
       min-height: 50vh;
-    }
-
-    .sup-grid {
-      grid-template-columns: 1fr;
-      gap: var(--space-lg);
-      padding-inline: var(--space-sm);
     }
   }
 </style>
