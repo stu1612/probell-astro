@@ -58,21 +58,22 @@ const { product } = Astro.props;
   }
 
   .pd-ingredients-card {
-    background: var(--color-white);
-    border: 1px solid var(--color-border);
+    background: var(--color-gold);
+    /* border: 1px solid var(--color-border); */
     padding: var(--space-lg);
   }
 
   .pd-ingredients-card__text {
     font-family: var(--font-body);
     font-size: var(--text-body);
-    color: var(--color-grey);
+    color: var(--color-black);
     line-height: 1.8;
   }
 
   @media (max-width: 1024px) {
     .pd-content-grid {
       grid-template-columns: 1fr;
+      padding-block: var(--space-md);
     }
   }
 </style>

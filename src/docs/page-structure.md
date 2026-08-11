@@ -84,9 +84,10 @@ here.
   number, category eyebrow, excerpt, "Best For" athlete-fit line, all
   4 stats, CTA to the detail page (the CTA links, not the whole row).
   Replaces the Session 48 `ProductCard` white-grid layout, which is
-  deleted, not kept as a fallback. The page's `#supplements-hero`
-  block is currently commented out (not deleted) — rows render
-  directly under a screen-reader-only `<h1>`.
+  deleted, not kept as a fallback. The page's old dark hero
+  (title/subtitle over `partner-sales.jpg`) is deleted, not kept
+  commented out — the page opens straight into the rows under a
+  screen-reader-only `<h1>`.
 - Detail (current, Session 44): full-bleed photographic hero
   (`product.slugImage`) with ghost stat number → stat strip breaking
   out over the hero's bottom edge → black Overview / white Ingredients

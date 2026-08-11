@@ -14,30 +14,6 @@ const description =
 ---
 
 <BaseLayout title={title} description={description} transparentNav={true}>
-  <!-- <div id="supplements-hero">
-    <Image
-      src="/images/partners/partner-sales.jpg"
-      alt=""
-      width={1920}
-      height={1080}
-      format="webp"
-      loading="eager"
-      class="sup-hero__image"
-    />
-    <div class="sup-hero__overlay"></div>
-    <div class="sup-hero">
-      <div class="container">
-        <span class="sup-hero__eyebrow label-text label-text--red">
-          The Range
-        </span>
-        <h1 class="sup-hero__title">Supplements.</h1>
-        <p class="sup-hero__sub">
-          One standard. No fillers, no shortcuts, no compromise.
-        </p>
-      </div>
-    </div>
-  </div> -->
-
   <SectionWrapper bg="black">
     <h1 class="sr-only">Supplements</h1>
     {
@@ -48,66 +24,3 @@ const description =
   </SectionWrapper>
 </BaseLayout>
 
-<style>
-  /* Hero — dark, sits under the transparent nav */
-  #supplements-hero {
-    position: relative;
-    top: calc(var(--nav-height) * -1);
-    margin-bottom: calc(var(--nav-height) * -1);
-    background: var(--color-black);
-    overflow: hidden;
-  }
-
-  .sup-hero__image {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .sup-hero__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-  }
-
-  .sup-hero {
-    position: relative;
-    display: flex;
-    align-items: flex-end;
-    min-height: 60vh;
-    padding-block: var(--space-2xl) var(--space-xl);
-  }
-
-  .sup-hero__eyebrow {
-    display: block;
-    margin-bottom: var(--space-sm);
-  }
-
-  .sup-hero__title {
-    font-family: var(--font-display);
-    font-size: var(--text-hero);
-    color: var(--color-white);
-    text-transform: uppercase;
-    letter-spacing: -0.02em;
-    line-height: 0.95;
-    margin: 0;
-  }
-
-  .sup-hero__sub {
-    max-width: 36ch;
-    margin-top: var(--space-md);
-    font-family: var(--font-body);
-    font-size: var(--text-body);
-    color: var(--color-grey);
-    line-height: 1.6;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .sup-hero {
-      min-height: 50vh;
-    }
-  }
-</style>

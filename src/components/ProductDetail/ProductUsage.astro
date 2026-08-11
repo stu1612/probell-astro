@@ -3,6 +3,7 @@
 // usageItems is always the product's when/amount/mixWith triplet,
 // built by the page from product.usage.
 import SectionWrapper from "@components/SectionWrapper/index.astro";
+import type { Product } from "@data/catalog";
 
 interface UsageItem {
   label: string;
@@ -13,7 +14,14 @@ interface Props {
   usageItems: UsageItem[];
 }
 
+interface Props {
+  product: Product;
+}
+
 const { usageItems } = Astro.props;
+const { product } = Astro.props;
+
+const bestFor = product.bestFor || "general health and wellness";
 ---
 
 <SectionWrapper bg="white">
@@ -30,8 +38,9 @@ const { usageItems } = Astro.props;
         <p class="pd-usage-statement display-text">
           Three steps. No guesswork.
         </p>
+
         <p class="pd-usage-body font-text text-black">
-          Every serve is dosed for one job — get it in, get back to work.
+          {bestFor}
         </p>
       </div>
 

@@ -17,15 +17,15 @@ import { Image } from "astro:assets";
     </picture>
     <div class="hero__overlay-top"></div>
     <div class="hero__overlay-bottom"></div>
-    <h1 class="headline">
-      <span class="headline__line--1">Built for</span>
-      <span>the Grind</span>
+    <h1 class="hero-headline">
+      <span class="hero-headline__accent">Built for</span>
+      <span class="hero-headline__line">the Grind</span>
     </h1>
 
-    <h3 class="headline-2">
-      <span>the only</span>
-      <span class="headline__line--2">supplement</span>
-      <span>you can lift</span>
+    <h3 class="hero-subheadline">
+      <span class="hero-subheadline__line">the only</span>
+      <span class="hero-subheadline__accent">supplement</span>
+      <span class="hero-subheadline__line">you can lift</span>
     </h3>
   </div>
 </section>
@@ -73,7 +73,7 @@ import { Image } from "astro:assets";
     height: 70%;
     background: linear-gradient(
       180deg,
-      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.5) 0%,
       rgba(0, 0, 0, 0) 100%
     );
     pointer-events: none;
@@ -86,13 +86,13 @@ import { Image } from "astro:assets";
     height: 50%;
     background: linear-gradient(
       180deg,
-      rgba(0, 0, 0, 0) 40%,
-      rgba(0, 0, 0, 1) 100%
+      rgba(18, 18, 19, 0) 40%,
+      rgba(18, 18, 19, 1) 100%
     );
     pointer-events: none;
   }
 
-  .headline {
+  .hero-headline {
     position: absolute;
     top: 80px;
     left: 0;
@@ -105,8 +105,9 @@ import { Image } from "astro:assets";
     text-transform: uppercase;
     text-align: justify;
     padding-left: 23px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   }
-  .headline-2 {
+  .hero-subheadline {
     position: absolute;
     bottom: 5%;
     right: 0;
@@ -119,14 +120,23 @@ import { Image } from "astro:assets";
     text-transform: uppercase;
     text-align: right;
     padding-right: 23px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   }
 
-  .headline__line--1 {
-    font-size: clamp(5rem, 13vw, 10rem);
+  .hero-headline__accent {
+    font-size: 5rem;
   }
 
-  .headline__line--2 {
-    font-size: clamp(3rem, 8vw, 10rem);
+  .hero-headline__line {
+    font-size: 2.5rem;
+  }
+
+  .hero-subheadline__accent {
+    font-size: 3rem;
+  }
+
+  .hero-subheadline__line {
+    font-size: 1.5rem;
   }
 
   .hero__grid {
