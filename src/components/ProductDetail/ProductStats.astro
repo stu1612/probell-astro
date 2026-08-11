@@ -39,6 +39,7 @@ const { stats } = Astro.props;
     flex-direction: column;
     gap: var(--space-xs);
     padding: var(--space-md);
+    min-width: 0;
     border-left: 1px solid var(--color-border);
   }
 
@@ -60,15 +61,16 @@ const { stats } = Astro.props;
   @media (max-width: 768px) {
     .pd-stats {
       grid-template-columns: repeat(2, 1fr);
-      margin-top: calc(var(--space-lg) * -1);
+      margin-top: 0;
     }
 
-    .pd-stats__item:nth-child(2) {
+    .pd-stats__item {
       border-left: none;
+      border-top: none;
     }
 
-    .pd-stats__item:nth-child(n + 3) {
-      border-top: 1px solid var(--color-border);
+    .pd-stats__value {
+      font-size: var(--text-statement-md);
     }
   }
 </style>

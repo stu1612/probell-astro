@@ -61,9 +61,6 @@ export interface Product {
   slugImage: string;
 }
 
-export const DEFAULT_PRODUCT_BACKGROUND =
-  "/images/products/backgrounds/default-product-bg.jpg";
-
 export const PRODUCTS: Product[] = [
   {
     id: "01",

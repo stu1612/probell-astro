@@ -134,8 +134,37 @@ const { product, leadStat } = Astro.props;
       min-height: 80vh;
     }
 
+    .pd-hero__inner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      padding: var(--space-xs);
+    }
+
+    .pd-hero__scrim {
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 55%),
+        linear-gradient(0deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 55%),
+        rgba(0, 0, 0, 0.35);
+    }
+
     .pd-hero__ghost {
       font-size: 50vw;
+    }
+
+    .pd-hero__actions .btn-secondary {
+      background: var(--color-red);
+      color: var(--color-white);
+      border-color: var(--color-red);
+    }
+
+    .pd-hero__actions .btn-secondary:hover {
+      background: var(--color-red);
+      color: var(--color-white);
+      border-color: var(--color-red);
+      opacity: 0.85;
     }
   }
 </style>
