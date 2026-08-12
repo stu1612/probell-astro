@@ -19,6 +19,18 @@
 //
 // No advertised flavours per client confirmation (29 July 2026).
 // Client to confirm final ingredients and nutritional data before launch.
+//
+// Product photography is imported from src/assets/products/ (not
+// referenced as public/ string paths) so Astro's <Image /> component
+// can actually process it at build time — WebP conversion, responsive
+// sizing. A public/ string path bypasses that pipeline entirely.
+
+import type { ImageMetadata } from "astro";
+import whey from "@assets/products/whey.jpg";
+import creatine from "@assets/products/creatine.jpg";
+import preWorkout from "@assets/products/pre-workout.jpg";
+import massGainer from "@assets/products/mass-gainer.jpg";
+import supplementDetailHero from "@assets/products/supplement-detail-hero.jpg";
 
 export interface ProductStat {
   value: string;
@@ -50,7 +62,7 @@ export interface Product {
   ingredients: string;
   usage: ProductUsage;
   /** Shared full-bleed gym photography — homepage strip + supplements listing. */
-  image: string;
+  image: ImageMetadata;
   imageAlt: string;
   imageMuted?: boolean;
   /** Strip layout alternation (homepage ProductStrips / supplements listing rows). */
@@ -58,7 +70,7 @@ export interface Product {
   /** Full-bleed background variant, no side-by-side image column. */
   overlay?: boolean;
   /** Detail-page (/supplements/[slug]) hero background — still a shared placeholder, unrelated to this task. */
-  slugImage: string;
+  slugImage: ImageMetadata;
 }
 
 export const PRODUCTS: Product[] = [
@@ -88,9 +100,9 @@ export const PRODUCTS: Product[] = [
       mixWith:
         "Mix with 250–300ml of cold water or milk. Shake well for 20 to 30 seconds.",
     },
-    image: "/images/products/whey.jpg",
+    image: whey,
     imageAlt: "Probell Whey 100 Protein in gym setting",
-    slugImage: "/images/products/supplement-detail-hero.jpg",
+    slugImage: supplementDetailHero,
   },
   {
     id: "02",
@@ -118,10 +130,10 @@ export const PRODUCTS: Product[] = [
       mixWith:
         "Mix with 250–300ml of cold water. Stir or shake until fully dissolved. Can also be added to your post-workout protein shake.",
     },
-    image: "/images/products/creatine.jpg",
+    image: creatine,
     imageAlt: "Probell Creatine in gym setting",
     flip: true,
-    slugImage: "/images/products/supplement-detail-hero.jpg",
+    slugImage: supplementDetailHero,
   },
   {
     id: "03",
@@ -150,10 +162,10 @@ export const PRODUCTS: Product[] = [
       mixWith:
         "Mix with 250–300ml of cold water. Stir or shake until fully dissolved.",
     },
-    image: "/images/products/pre-workout.jpg",
+    image: preWorkout,
     imageAlt: "Probell Pre-Workout in gym setting",
     overlay: true,
-    slugImage: "/images/products/supplement-detail-hero.jpg",
+    slugImage: supplementDetailHero,
   },
   {
     id: "04",
@@ -182,9 +194,9 @@ export const PRODUCTS: Product[] = [
       mixWith:
         "Mix with 400–500ml of cold milk or water. Shake well — high density mixes better in a shaker bottle than stirred.",
     },
-    image: "/images/products/mass-gainer.jpg",
+    image: massGainer,
     imageAlt: "Probell Mass Gainer athlete",
     flip: true,
-    slugImage: "/images/products/supplement-detail-hero.jpg",
+    slugImage: supplementDetailHero,
   },
 ];

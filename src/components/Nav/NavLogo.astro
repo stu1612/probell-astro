@@ -1,10 +1,11 @@
 ---
 import { Image } from "astro:assets";
+import probellLogo from "@assets/icons/probell-logo.png";
 ---
 
 <a href="/" aria-label="Probell Nutrition home">
   <Image
-    src="/images/icons/probell-logo.png"
+    src={probellLogo}
     alt="Probell Nutrition"
     width={200}
     height={80}
@@ -12,7 +13,7 @@ import { Image } from "astro:assets";
     loading="eager"
   />
   <Image
-    src="/images/icons/probell-logo.png"
+    src={probellLogo}
     alt="Probell Nutrition"
     width={200}
     height={80}

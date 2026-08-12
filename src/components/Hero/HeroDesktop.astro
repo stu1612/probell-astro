@@ -1,12 +1,13 @@
 ---
 import { Image } from "astro:assets";
+import homepageHero from "@assets/hero/homepage-hero.jpg";
 ---
 
 <section id="hero-desktop">
   <div class="hero">
     <picture class="hero__picture">
       <Image
-        src="/images/hero/homepage-hero.jpg"
+        src={homepageHero}
         alt="Probell Nutrition athlete in training"
         width={1920}
         height={1080}

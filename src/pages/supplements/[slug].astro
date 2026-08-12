@@ -38,7 +38,7 @@ const productSchema = {
   "@type": "Product",
   name: product.name,
   description: product.description,
-  image: new URL(product.slugImage, Astro.site).href,
+  image: new URL(product.slugImage.src, Astro.site).href,
   brand: {
     "@type": "Brand",
     name: "Probell Nutrition",
