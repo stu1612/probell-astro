@@ -112,7 +112,7 @@ probell-nutrition/
 - Components named in PascalCase — `Nav.astro`, `ProductCard.astro`
 - Image files named in kebab-case — `hero-main.jpg`, `whey-cpb.png`
 - No test pages, no playground pages — build directly in components
-- Public images go in `/public/images/` — organised by section
+- Photography used via `<Image />` goes in `src/assets/`, organised by section, and is imported — not referenced by string path (see Images section below). `/public/images/` is reserved for files that must bypass Astro's asset pipeline (OG meta image, CSS backgrounds).
 - No unused files — remove immediately if a component is replaced
 
 ---
@@ -226,15 +226,27 @@ If a value is not in the token system — add it to `globals.css` first.
 
 ## Images
 
-### Always use Astro's Image component
+### Always use Astro's Image component — with an imported src
+
+Photography lives in `src/assets/`, imported and passed to `<Image />`
+as a module, **not** referenced as a `/public/images/...` string path.
+A string `src` is not something Astro's build pipeline can process —
+`<Image />` passes it straight through as a plain `<img>`, silently
+ignoring `format`/`width`/`height` and shipping the original,
+unconverted file. This was a real bug found via a PageSpeed audit
+(12 Aug 2026, see Session Log) — every product/audience/hero/partner
+image on the site was doing this. Only files that must stay outside
+Astro's asset pipeline (OG meta image, a CSS `url()` background) stay
+in `public/images/`.
 
 ```astro
 ---
 import { Image } from 'astro:assets';
+import heroMain from '@assets/hero/hero-main.jpg';
 ---
 
 <Image
-  src="/images/hero/hero-main.jpg"
+  src={heroMain}
   alt="Athlete in gym with Probell kettlebell"
   width={1440}
   height={810}
@@ -246,6 +258,7 @@ import { Image } from 'astro:assets';
 
 ### Rules
 
+- Photography imported from `src/assets/` — never a `/public/images/...` string passed to `<Image src="...">`
 - All images use `format="webp"` for automatic optimisation
 - Hero image: `loading="eager"` — all others: `loading="lazy"`
 - Always provide meaningful `alt` text — never empty for content images

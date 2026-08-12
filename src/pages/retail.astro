@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import FormField from "@components/ui/FormField.astro";
+import partnerPagesHero from "@assets/partners/partner-pages-hero.jpg";
 
 const title = "Retailer Program | Probell Nutrition";
 const description =
@@ -43,7 +44,7 @@ const howItWorks = [
 <BaseLayout title={title} description={description} transparentNav={true}>
   <div id="retail-hero">
     <Image
-      src="/images/partners/partner-pages-hero.jpg"
+      src={partnerPagesHero}
       alt="Probell Nutrition retail display"
       width={1920}
       height={1080}

@@ -1,10 +1,12 @@
 ---
+import { Image } from "astro:assets";
 import {
   FOOTER_SITE_LINKS,
   FOOTER_PRODUCT_LINKS,
   FOOTER_PARTNER_LINKS,
 } from "@data/navigation";
 import { COPYRIGHT } from "@constants/site";
+import probellLogo from "@assets/icons/probell-logo.png";
 ---
 
 <footer class="footer">
@@ -13,12 +15,13 @@ import { COPYRIGHT } from "@constants/site";
       <!-- Column 1: Logo + tagline -->
       <div class="footer__brand">
         <a href="/" aria-label="Probell Nutrition home">
-          <img
-            src="/images/icons/probell-logo.png"
+          <Image
+            src={probellLogo}
             alt="Probell Nutrition"
             class="footer__logo"
-            width="120"
-            height="40"
+            width={120}
+            height={40}
+            format="webp"
             loading="lazy"
           />
         </a>

@@ -1,9 +1,15 @@
+import type { ImageMetadata } from "astro";
+import supplements from "@assets/audience/supplements.jpg";
+import retailer from "@assets/audience/retailer.jpg";
+import distributor from "@assets/audience/distributor.jpg";
+import sales from "@assets/audience/sales.jpg";
+
 export interface AudienceCard {
   number: string;
   headline: string;
   descriptor: string;
   href: string;
-  image: string;
+  image: ImageMetadata;
   tint?: "gold" | "grey" | "red";
 }
 
@@ -13,7 +19,7 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     headline: "See More",
     descriptor: "Premium protein, built for people who train hard.",
     href: "/supplements",
-    image: "/images/audience/supplements.jpg",
+    image: supplements,
     tint: "gold",
   },
   {
@@ -21,7 +27,7 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     headline: "Retailers",
     descriptor: "Stock Probell. Gyms, stores, and studios welcome.",
     href: "/retail",
-    image: "/images/audience/retailer.jpg",
+    image: retailer,
     tint: "gold",
   },
   {
@@ -29,7 +35,7 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     headline: "Distributors",
     descriptor: "Wholesale and national distribution opportunities.",
     href: "/distributor",
-    image: "/images/audience/distributor.jpg",
+    image: distributor,
     tint: "gold",
   },
   {
@@ -37,7 +43,7 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     headline: "Sales Partners",
     descriptor: "Independent reps. Real commission. Real product.",
     href: "/sales",
-    image: "/images/audience/sales.jpg",
+    image: sales,
     tint: "gold",
   },
 ];

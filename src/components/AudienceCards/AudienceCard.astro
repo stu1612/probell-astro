@@ -1,7 +1,6 @@
 ---
 import { Image } from "astro:assets";
 import type { AudienceCard } from "@data/audience-cards";
-import placeholderImage from "../../../public/images/audience/placeholder.jpg";
 
 interface Props {
   card: AudienceCard;
@@ -15,7 +14,7 @@ const { card } = Astro.props;
   class={`ac__card${card.tint ? ` ac__card--${card.tint}` : ""}`}
 >
   <Image
-    src={card.image ?? placeholderImage}
+    src={card.image}
     alt=""
     width={800}
     height={1000}

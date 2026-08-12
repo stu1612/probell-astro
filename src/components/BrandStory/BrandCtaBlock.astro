@@ -1,12 +1,13 @@
 ---
 import { Image } from "astro:assets";
+import partnerCta from "@assets/partners/partner-cta.jpg";
 ---
 
 <div class="em__cta-section">
   <div class="em__cta-layout">
     <div class="em__cta-img">
       <Image
-        src="/images/partners/partner-cta.jpg"
+        src={partnerCta}
         alt="Probell products in a gym setting"
         width={780}
         height={580}

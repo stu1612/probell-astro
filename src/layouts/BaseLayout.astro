@@ -1,6 +1,7 @@
 ---
 import Nav from "@components/Nav/index.astro";
 import Footer from "@components/Footer/index.astro";
+import probellLogo from "@assets/icons/probell-logo.png";
 import "../styles/global.css";
 
 interface Props {
@@ -24,7 +25,7 @@ const organizationSchema = {
   name: "Probell Nutrition",
   legalName: "Probell LLC",
   url: Astro.site?.href,
-  logo: new URL("/images/icons/probell-logo.png", Astro.site).href,
+  logo: new URL(probellLogo.src, Astro.site).href,
   description:
     "The kettlebell-shaped protein built for people who already show up. B2B enquiries welcome.",
   email: "info@probellnutrition.com",

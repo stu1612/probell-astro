@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import FormField from "@components/ui/FormField.astro";
+import partnerPagesHero from "@assets/partners/partner-pages-hero.jpg";
 
 const title = "Distributor Program | Probell Nutrition";
 const description =
@@ -14,7 +15,7 @@ const hubspotFormGuid = import.meta.env.HUBSPOT_DISTRIBUTOR_FORM_GUID ?? "";
 <BaseLayout title={title} description={description} transparentNav={true}>
   <div id="distributor-hero">
     <Image
-      src="/images/partners/partner-pages-hero.jpg"
+      src={partnerPagesHero}
       alt="Probell Nutrition distribution and logistics"
       width={1920}
       height={1080}
