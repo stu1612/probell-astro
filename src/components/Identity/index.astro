@@ -15,7 +15,7 @@ const hasCtas = primaryCta || secondaryCta;
 
 <section id="identity">
   <div class="identity__stack">
-    <h4 class="display-text identity__headline">
+    <h2 class="display-text identity__headline">
       <span class="identity__headline-main">{headline}</span>
       {accentText && <span class="identity__accent"> {accentText}</span>}
       {
@@ -23,7 +23,7 @@ const hasCtas = primaryCta || secondaryCta;
           <span class="identity__highlight"> {highlightText}</span>
         )
       }
-    </h4>
+    </h2>
     {body && <p class="font-text identity__body-text">{body}</p>}
     {
       hasCtas && (

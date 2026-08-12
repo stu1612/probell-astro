@@ -32,9 +32,22 @@ const usageItems = [
   { label: "How much", value: product.usage.amount },
   { label: "What to mix with", value: product.usage.mixWith },
 ];
+
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: product.name,
+  description: product.description,
+  image: new URL(product.slugImage, Astro.site).href,
+  brand: {
+    "@type": "Brand",
+    name: "Probell Nutrition",
+  },
+};
 ---
 
 <BaseLayout title={title} description={description} transparentNav={true}>
+  <script type="application/ld+json" set:html={JSON.stringify(productSchema)} is:inline />
   <ProductHero product={product} leadStat={leadStat} />
   <ProductStats stats={product.stats} />
   <ProductOverview product={product} />

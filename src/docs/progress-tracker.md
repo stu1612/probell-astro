@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 12 Aug 2026 — Session 53**
+**Last updated: 12 Aug 2026 — Session 54**
 
 
 **Pending/Deferred items**
@@ -16,7 +16,7 @@
 
 **Phase:** Post-build structural redesign
 **Active section:** Sales Partner, Retailer, and Distributor pages all built, now live at flat routes `/sales`, `/retail`, `/distributor` (moved out of `/partners/*` in Session 41 — see below; the `/partners/index` hub-page scaffold this note used to mention was deleted as part of the same move, not left pending). Retailer and Distributor were developer-confirmed complete (visual check + working submission) prior to Session 40; Session 40 added a photographic hero background to all three pages, so Retailer/Distributor's prior visual sign-off predates that change and is worth a quick re-look. Sales Partner's visual verification is still outstanding. Session 42: mobile nav overlay (`Nav/NavOverlay.astro`, `Nav/NavHamburger.astro`) reworked — link list, toggle button, layout, and colors all revised across several in-session rounds of feedback — see Session 42 log; not yet developer-signed-off in-browser.
-**Next action:** `/sales` visual sign-off still outstanding — developer to review in-browser directly when ready (Playwright verification is opt-in only, not a blocker — see Session 41 process note). Mobile nav overlay changes (Session 42) also still need an in-browser look. Contact router and footer/nav social links (both Session 41) have since been developer-confirmed working. Session 44: `/supplements/[slug]` rebuilt on the Session 43 playground design via new `src/components/ProductDetail/*` components; the playground route/components have since been deleted. Visual sign-off still needed on Creatine/PWO/Mass Gainer specifically (only Whey was reviewed before adoption). Session 51 (07 Aug 2026): **DEVIATION** — `/supplements` listing page rebuilt again, replacing the Session 48 `ProductCard` grid entirely (component deleted) with dark full-bleed alternating rows (`SupplementRow.astro`) using the same gym photography as the homepage `ProductStrips` — Session 48's mobile-card sign-off item is superseded, not still open. Visual sign-off needed on this new listing layout, plus a re-look at `/supplements/[slug]` now that its data source changed (see Session 51 log). All product data now lives in one consolidated `src/data/catalog.ts` (`products.ts`/`supplements.ts` deleted); `page-structure.md` updated to match. The listing page's old hero block (title/subtitle over `partner-sales.jpg`) has been removed outright, confirmed by developer — the page now opens straight into the product rows under a screen-reader-only heading. Session 52 (11 Aug 2026): mobile-only polish/bugfix pass across `HeroMobile`, `ProductStrips`/`SupplementRow` (fixed a CSS Grid bug hiding the Creatine flip-row image), and the three `ProductDetail` components — see Session 52 log. Visual sign-off on all of it still outstanding; no headless-browser tooling is available in this environment to verify automatically. Session 53 (12 Aug 2026): asset-only housekeeping (unused-image audit, `public/images/` folder/naming cleanup) — see Session 53 log; no visual or functional change, doesn't affect any outstanding sign-off item above.
+**Next action:** `/sales` visual sign-off still outstanding — developer to review in-browser directly when ready (Playwright verification is opt-in only, not a blocker — see Session 41 process note). Mobile nav overlay changes (Session 42) also still need an in-browser look. Contact router and footer/nav social links (both Session 41) have since been developer-confirmed working. Session 44: `/supplements/[slug]` rebuilt on the Session 43 playground design via new `src/components/ProductDetail/*` components; the playground route/components have since been deleted. Visual sign-off still needed on Creatine/PWO/Mass Gainer specifically (only Whey was reviewed before adoption). Session 51 (07 Aug 2026): **DEVIATION** — `/supplements` listing page rebuilt again, replacing the Session 48 `ProductCard` grid entirely (component deleted) with dark full-bleed alternating rows (`SupplementRow.astro`) using the same gym photography as the homepage `ProductStrips` — Session 48's mobile-card sign-off item is superseded, not still open. Visual sign-off needed on this new listing layout, plus a re-look at `/supplements/[slug]` now that its data source changed (see Session 51 log). All product data now lives in one consolidated `src/data/catalog.ts` (`products.ts`/`supplements.ts` deleted); `page-structure.md` updated to match. The listing page's old hero block (title/subtitle over `partner-sales.jpg`) has been removed outright, confirmed by developer — the page now opens straight into the product rows under a screen-reader-only heading. Session 52 (11 Aug 2026): mobile-only polish/bugfix pass across `HeroMobile`, `ProductStrips`/`SupplementRow` (fixed a CSS Grid bug hiding the Creatine flip-row image), and the three `ProductDetail` components — see Session 52 log. Visual sign-off on all of it still outstanding; no headless-browser tooling is available in this environment to verify automatically. Session 53 (12 Aug 2026): asset-only housekeeping (unused-image audit, `public/images/` folder/naming cleanup) — see Session 53 log; no visual or functional change, doesn't affect any outstanding sign-off item above. Session 54 (12 Aug 2026): pre-launch SEO audit against `src/features/seo-audit-brief.md` — four findings (duplicate homepage `<h1>`, skipped heading level in `Identity`, webmanifest color mismatch, missing structured data) all developer-approved and fixed — see Session 54 log. No layout/visual change, doesn't affect any outstanding sign-off item above.
 
 **Note on Sessions 31–33:** this work was carried out by the developer directly, without running through Claude Code sessions — logged here retroactively per developer request, sole-authorship, "off script." See entries below.
 
@@ -92,6 +92,31 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 54 — 12 Aug 2026
+
+**What was done:**
+
+- Ran the pre-launch SEO audit specified in `src/features/seo-audit-brief.md` (page-level structure, images, favicon/webmanifest, structured data, technical/route-flatten checks) across all 14 routes, checking findings against actual `npm run build` output rather than source alone. Reported findings first, per the brief's "read/report only" instruction; all four fixes below were applied only after developer approval, one at a time.
+- **Duplicate `<h1>` on homepage:** `HeroDesktop.astro` and `HeroMobile.astro` both render unconditionally into the DOM — only CSS `display` toggles visibility per breakpoint — so two `<h1>` elements existed in the same page source, confirmed in built `dist/index.html`. Fixed by keeping the semantic `<h1>` on `HeroMobile.astro` (Google's default crawl/indexing behavior is mobile-first) and demoting `HeroDesktop.astro`'s to a `<div>`. No visual change — all styling is class-based (`.headline`), not tag-based.
+- **Skipped heading level:** homepage went `<h1>` (Hero) straight to `<h4>` (`Identity/index.astro`), skipping `<h2>`/`<h3>`. Changed to `<h2>` — no visual change, font-size comes entirely from `.identity__headline`/`.display-text` classes. `Identity` is only used on the homepage, so no other page's hierarchy was affected. Rebuilt and confirmed the full homepage heading order is now clean: h1 → h3 (mobile hero subline) → h2 (Identity) → h3 (product strips) → h2 → h3 → h2 → h2 → h2, no skips.
+- **Webmanifest color mismatch:** `site.webmanifest`'s `theme_color`/`background_color` were `#000000` (`--color-black-true`) where the brief specified they should match `--color-black`. Updated both to `#121213`.
+- **Missing structured data:** no JSON-LD existed anywhere on the site. Added an `Organization` schema (name, legal name, URL, logo, brand description reused verbatim from the homepage meta description, email, address sourced from `legal.ts`) sitewide in `BaseLayout.astro`, and a `Product` schema (name, description, image, brand) on each of the 4 `/supplements/[slug]` pages. Deliberately no `offers`/price fields — the site is B2B enquiry-based, not ecommerce.
+- Verified with `npm run build` after each fix (14 pages, zero errors) and direct inspection of the built HTML/JSON-LD output, not just source.
+- Developer also asked to close out the long-standing `favicon-48x48.png` gap (file existed on disk since Session 46 but was linked nowhere, flagged again in Sessions 47/49): added a `<link rel="icon" type="image/png" href="/favicon-48x48.png" sizes="48x48" />` to `BaseLayout.astro` and a matching `48x48` entry to `site.webmanifest`'s `icons` array. Rebuilt and confirmed the link tag renders in the built HTML.
+
+**Decisions made this session:**
+
+- Mobile hero variant (`HeroMobile.astro`) holds the canonical `<h1>`, desktop variant demoted to a `<div>` — chosen over the reverse because Google's default crawl/indexing behavior is mobile-first.
+- Product structured data intentionally omits `offers`/pricing — matches the site's no-ecommerce, enquiry-only positioning already established elsewhere (`legal.ts`'s "not an ecommerce store" language, Retailer/Distributor page copy).
+- Organization schema's `description` field reuses the homepage's existing approved meta description rather than new marketing copy, per standing "no unrequested copy" rule.
+- `favicon-48x48.png`'s multi-session "flagged, not fixed" status resolved — developer confirmed it should be wired in, closing out the item carried since Session 46/47.
+
+**Decisions still open:**
+
+- None.
+
+---
 
 ### Session 53 — 12 Aug 2026
 
