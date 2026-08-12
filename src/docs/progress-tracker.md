@@ -129,6 +129,52 @@ These items must be confirmed before Claude Code begins building.
   URL. Manual deploy-time step for the developer, not something the
   build handles.
 
+**Pre-launch technical audit (`src/features/technical-audit-brief.md`):**
+
+- Ran the second pre-launch audit — broken links, form validation edge
+  cases, environment variables, console errors — across the full site,
+  report-only pass first per the brief. Full findings reported
+  in-conversation; summary below.
+- **Broken links:** Pass. Every internal link (static and data-driven —
+  `navigation.ts`, `audience-cards.ts`, `ContactRouter.astro`,
+  `catalog.ts`, `legal.ts`) traced against actual routes — no dead
+  links, no orphaned pages.
+- **Form validation — real issue found and fixed:** all three partner
+  forms (`sales.astro`, `retail.astro`, `distributor.astro`) had
+  `novalidate` on the `<form>` with no replacement validation in the
+  submit handler — empty required fields and malformed emails were
+  submitting straight to HubSpot with no user-facing error. Fixed by
+  calling `form.checkValidity()` / `form.reportValidity()` at the top
+  of each submit handler, before the honeypot/spam check — this
+  reuses the `required`/`type="email"` attributes already on
+  `FormField.astro`'s inputs via native browser constraint validation,
+  no custom validation UI needed.
+- **Unbounded text input — fixed:** no field had a `maxlength`,
+  including the free-text "why/message" fields. Added a `maxlength`
+  prop to `FormField.astro` (default 200 for text/email inputs, 2000
+  for textareas), applied automatically to all three forms.
+- **Honeypot accessibility gap — fixed:** the `botcheck` honeypot in
+  all three forms was hidden visually and removed from Tab order
+  (`tabindex="-1"`) but had no `aria-hidden="true"`, so a
+  screen-reader user browsing by form field (not Tab) could still land
+  on an unlabeled checkbox and unknowingly block their own submission.
+  Added `aria-hidden="true"` to all three.
+- **Bot-speed time-trap:** Pass on code review (`isSpamSubmission`'s
+  3-second minimum is sound) — brief still recommends a live test,
+  not done here.
+- **Environment variables:** Pass — `WEB3FORMS_KEY` fully removed
+  (no source or `.env` references), `.env` confirmed git-ignored and
+  untracked, no hardcoded HubSpot IDs anywhere in source. Developer
+  confirmed the `HUBSPOT_PORTAL_ID`/form GUIDs in `.env` are live
+  production values, already in use — not a dev/sandbox portal.
+- **Console errors/warnings:** `npx astro check` — 0 errors, 0
+  warnings, 1 pre-existing cosmetic hint (`Nav/index.astro`'s
+  `<script define:vars>`, unrelated to this audit, not fixed). Live
+  in-browser console check across routes — developer confirmed no
+  errors or warnings seen.
+- Verified with `npx astro check` (0 errors) and `npm run build` (15
+  pages, zero errors) after the fixes.
+
 ---
 
 ### Session 55 — 12 Aug 2026

@@ -137,6 +137,7 @@ const howItWorks = [
             class="sales-apply__honeypot"
             tabindex="-1"
             autocomplete="off"
+            aria-hidden="true"
           />
 
           <FormField
@@ -223,6 +224,11 @@ const howItWorks = [
     if (!form || !success || !error) return;
 
     error.style.display = "none";
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
 
     const portalId = form.dataset.portalId ?? "";
     const formGuid = form.dataset.formGuid ?? "";
