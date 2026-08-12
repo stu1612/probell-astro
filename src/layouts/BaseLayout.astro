@@ -17,6 +17,26 @@ const {
   canonicalUrl = Astro.url.href,
   transparentNav = false,
 } = Astro.props;
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Probell Nutrition",
+  legalName: "Probell LLC",
+  url: Astro.site?.href,
+  logo: new URL("/images/icons/probell-logo.png", Astro.site).href,
+  description:
+    "The kettlebell-shaped protein built for people who already show up. B2B enquiries welcome.",
+  email: "info@probellnutrition.com",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "8 The Green STE",
+    addressLocality: "Dover",
+    addressRegion: "DE",
+    postalCode: "19901",
+    addressCountry: "US",
+  },
+};
 ---
 
 <html lang="en">
@@ -38,9 +58,11 @@ const {
     <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicon-48x48.png" sizes="48x48" />
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} is:inline />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
