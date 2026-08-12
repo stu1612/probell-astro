@@ -10,10 +10,10 @@ export interface AudienceCard {
 export const AUDIENCE_CARDS: AudienceCard[] = [
   {
     number: "01",
-    headline: "Shop",
+    headline: "See More",
     descriptor: "Premium protein, built for people who train hard.",
     href: "/supplements",
-    image: "/images/audience/shop_2.jpg",
+    image: "/images/audience/supplements.jpg",
     tint: "gold",
   },
   {
@@ -37,7 +37,7 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     headline: "Sales Partners",
     descriptor: "Independent reps. Real commission. Real product.",
     href: "/sales",
-    image: "/images/audience/partners.jpg",
+    image: "/images/audience/sales.jpg",
     tint: "gold",
   },
 ];

@@ -90,7 +90,7 @@ export const PRODUCTS: Product[] = [
     },
     image: "/images/products/whey.jpg",
     imageAlt: "Probell Whey 100 Protein in gym setting",
-    slugImage: "/images/bold-statement/focus.jpg",
+    slugImage: "/images/products/supplement-detail-hero.jpg",
   },
   {
     id: "02",
@@ -118,10 +118,10 @@ export const PRODUCTS: Product[] = [
       mixWith:
         "Mix with 250–300ml of cold water. Stir or shake until fully dissolved. Can also be added to your post-workout protein shake.",
     },
-    image: "/images/products/creatine_bg.jpg",
+    image: "/images/products/creatine.jpg",
     imageAlt: "Probell Creatine in gym setting",
     flip: true,
-    slugImage: "/images/bold-statement/focus.jpg",
+    slugImage: "/images/products/supplement-detail-hero.jpg",
   },
   {
     id: "03",
@@ -150,10 +150,10 @@ export const PRODUCTS: Product[] = [
       mixWith:
         "Mix with 250–300ml of cold water. Stir or shake until fully dissolved.",
     },
-    image: "/images/products/pwo_bg.jpg",
+    image: "/images/products/pre-workout.jpg",
     imageAlt: "Probell Pre-Workout in gym setting",
     overlay: true,
-    slugImage: "/images/bold-statement/focus.jpg",
+    slugImage: "/images/products/supplement-detail-hero.jpg",
   },
   {
     id: "04",
@@ -182,9 +182,9 @@ export const PRODUCTS: Product[] = [
       mixWith:
         "Mix with 400–500ml of cold milk or water. Shake well — high density mixes better in a shaker bottle than stirred.",
     },
-    image: "/images/products/gainer.jpg",
+    image: "/images/products/mass-gainer.jpg",
     imageAlt: "Probell Mass Gainer athlete",
     flip: true,
-    slugImage: "/images/bold-statement/focus.jpg",
+    slugImage: "/images/products/supplement-detail-hero.jpg",
   },
 ];

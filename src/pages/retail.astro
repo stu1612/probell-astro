@@ -43,7 +43,7 @@ const howItWorks = [
 <BaseLayout title={title} description={description} transparentNav={true}>
   <div id="retail-hero">
     <Image
-      src="/images/partners/partner-retail.jpg"
+      src="/images/partners/partner-pages-hero.jpg"
       alt="Probell Nutrition retail display"
       width={1920}
       height={1080}
@@ -80,9 +80,9 @@ const howItWorks = [
   <section class="retail-pricing">
     <div class="container">
       <p class="font-text retail-pricing__copy">
-        Wholesale pricing is shared directly with approved retailers. Submit
-        a request below and we&rsquo;ll get back to you personally — no
-        account, no login, no waiting on hold.
+        Wholesale pricing is shared directly with approved retailers. Submit a
+        request below and we&rsquo;ll get back to you personally — no account,
+        no login, no waiting on hold.
       </p>
     </div>
   </section>
@@ -128,8 +128,8 @@ const howItWorks = [
           style="display: none;"
           aria-live="polite"
         >
-          Thanks for reaching out. We read every request personally — we'll
-          be in touch.
+          Thanks for reaching out. We read every request personally — we'll be
+          in touch.
         </div>
 
         <form
@@ -177,8 +177,8 @@ const howItWorks = [
           <div class="form-group retail-apply__consent">
             <label class="retail-apply__consent-label">
               <input type="checkbox" name="consent" required />
-              I agree to be contacted by Probell Nutrition regarding my
-              request. See our <a href="/legal/privacy">Privacy Policy</a>.
+              I agree to be contacted by Probell Nutrition regarding my request. See
+              our <a href="/legal/privacy">Privacy Policy</a>.
             </label>
           </div>
 
@@ -210,9 +210,7 @@ const howItWorks = [
   const CONSENT_TEXT =
     "I agree to be contacted by Probell Nutrition regarding my request.";
 
-  const form = document.getElementById(
-    "retail-form",
-  ) as HTMLFormElement | null;
+  const form = document.getElementById("retail-form") as HTMLFormElement | null;
   const success = document.getElementById("retail-success");
   const error = document.getElementById("retail-error");
   const renderedAt = Date.now();
@@ -474,9 +472,7 @@ const howItWorks = [
 
   @media (max-width: 768px) {
     .retail-hero__content {
-      padding-block: calc(var(--space-xl) + var(--nav-height)) var(
-          --space-lg
-        );
+      padding-block: calc(var(--space-xl) + var(--nav-height)) var(--space-lg);
     }
 
     .retail-how__list {
