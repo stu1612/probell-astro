@@ -116,6 +116,18 @@ don't treat it as dead code to clean up.
 
 - `LegalLayout.astro` + `LegalSections.astro`, content from `LEGAL_PAGES`
 
+### 404 (Not Found)
+**Route:** `src/pages/404.astro` — **Complete, Session 56 (12 Aug 2026)**
+
+Wrapped in `BaseLayout` (Nav + Footer, consistent with every other
+page). Dark, centered "statement" treatment — ghost "404" reusing the
+`ProductStrips` ghost-number pattern (token color, `opacity: 0.08`),
+headline/body on existing tokens, `.btn-primary` "Back to Home" (`/`)
++ `.btn-secondary` "Browse Supplements" (`/supplements`) CTAs. No new
+tokens or components. One.com hosting may need an `ErrorDocument 404
+/404.html` line in a `.htaccess` for the static host to actually route
+broken URLs here — flagged to developer, not yet actioned.
+
 ### Partners (Sales / Retailer / Distributor)
 **Routes:** `src/pages/partners/index.astro`, `distributor.astro`,
 `retail.astro`, `sales.astro` — **Scaffolded as empty files only.

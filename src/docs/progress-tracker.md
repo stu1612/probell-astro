@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 12 Aug 2026 — Session 55**
+**Last updated: 12 Aug 2026 — Session 56**
 
 
 **Pending/Deferred items**
@@ -92,6 +92,44 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 56 — 12 Aug 2026
+
+**What was done:**
+
+- Built `src/pages/404.astro` — no error page existed previously and it
+  wasn't in `page-structure.md`; confirmed with developer before
+  building since it's a new page outside the documented spec.
+- Wrapped in `BaseLayout` (same Nav/Footer as every other page) rather
+  than a bare page, so a broken link doesn't dead-end the visitor.
+  Dark, centered "statement" treatment per the one documented centered-
+  layout exception in `design.md` §4; large ghost "404" reusing the
+  same token-color + `opacity: 0.08` pattern as `ProductStrips`' ghost
+  numbers, not a new pattern. Headline/body on existing
+  `--font-display`/`--font-body`/`--text-statement` tokens. CTAs use
+  the existing `.btn-primary` ("Back to Home" → `/`) and
+  `.btn-secondary` ("Browse Supplements" → `/supplements`) classes — no
+  new Button component, no new tokens.
+- Verified with `npm run build` — `dist/404.html` generated, 15 pages
+  built, zero errors.
+- Developer confirmed the page visually in-browser and signed off.
+
+**Decisions made this session:**
+
+- New page, not previously documented anywhere in `page-structure.md`
+  — added here as the reference going forward rather than left
+  undocumented.
+
+**Flagged, not yet actioned:**
+
+- Astro emits `dist/404.html` automatically, which most static hosts
+  pick up by convention — but one.com's shared-Apache hosting may need
+  an explicit `ErrorDocument 404 /404.html` line in a `.htaccess`
+  uploaded alongside `/dist/` for it to actually trigger on a broken
+  URL. Manual deploy-time step for the developer, not something the
+  build handles.
+
+---
 
 ### Session 55 — 12 Aug 2026
 

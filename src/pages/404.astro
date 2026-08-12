@@ -1,0 +1,82 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Page Not Found | Probell Nutrition"
+  description="The page you're looking for doesn't exist or has moved."
+>
+  <section class="not-found">
+    <span class="not-found__ghost" aria-hidden="true">404</span>
+    <div class="container not-found__content">
+      <h1 class="not-found__headline">Page Not Found</h1>
+      <p class="not-found__body">
+        The page you're looking for doesn't exist or has moved.
+      </p>
+      <div class="not-found__actions">
+        <a href="/" class="btn-primary">Back to Home</a>
+        <a href="/supplements" class="btn-secondary">Browse Supplements</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    background: var(--color-black);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .not-found__ghost {
+    position: absolute;
+    z-index: 1;
+    font-family: var(--font-display);
+    font-size: 40vw;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: var(--color-grey);
+    opacity: 0.08;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .not-found__content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .not-found__headline {
+    font-family: var(--font-display);
+    font-size: var(--text-statement);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    color: var(--color-white);
+  }
+
+  .not-found__body {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    color: var(--color-grey);
+    max-width: 32rem;
+  }
+
+  .not-found__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+  }
+</style>
