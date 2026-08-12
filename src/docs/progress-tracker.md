@@ -1,6 +1,6 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 11 Aug 2026 — Session 52**
+**Last updated: 12 Aug 2026 — Session 53**
 
 
 **Pending/Deferred items**
@@ -16,7 +16,7 @@
 
 **Phase:** Post-build structural redesign
 **Active section:** Sales Partner, Retailer, and Distributor pages all built, now live at flat routes `/sales`, `/retail`, `/distributor` (moved out of `/partners/*` in Session 41 — see below; the `/partners/index` hub-page scaffold this note used to mention was deleted as part of the same move, not left pending). Retailer and Distributor were developer-confirmed complete (visual check + working submission) prior to Session 40; Session 40 added a photographic hero background to all three pages, so Retailer/Distributor's prior visual sign-off predates that change and is worth a quick re-look. Sales Partner's visual verification is still outstanding. Session 42: mobile nav overlay (`Nav/NavOverlay.astro`, `Nav/NavHamburger.astro`) reworked — link list, toggle button, layout, and colors all revised across several in-session rounds of feedback — see Session 42 log; not yet developer-signed-off in-browser.
-**Next action:** `/sales` visual sign-off still outstanding — developer to review in-browser directly when ready (Playwright verification is opt-in only, not a blocker — see Session 41 process note). Mobile nav overlay changes (Session 42) also still need an in-browser look. Contact router and footer/nav social links (both Session 41) have since been developer-confirmed working. Session 44: `/supplements/[slug]` rebuilt on the Session 43 playground design via new `src/components/ProductDetail/*` components; the playground route/components have since been deleted. Visual sign-off still needed on Creatine/PWO/Mass Gainer specifically (only Whey was reviewed before adoption). Session 51 (07 Aug 2026): **DEVIATION** — `/supplements` listing page rebuilt again, replacing the Session 48 `ProductCard` grid entirely (component deleted) with dark full-bleed alternating rows (`SupplementRow.astro`) using the same gym photography as the homepage `ProductStrips` — Session 48's mobile-card sign-off item is superseded, not still open. Visual sign-off needed on this new listing layout, plus a re-look at `/supplements/[slug]` now that its data source changed (see Session 51 log). All product data now lives in one consolidated `src/data/catalog.ts` (`products.ts`/`supplements.ts` deleted); `page-structure.md` updated to match. The listing page's old hero block (title/subtitle over `partner-sales.jpg`) has been removed outright, confirmed by developer — the page now opens straight into the product rows under a screen-reader-only heading. Session 52 (11 Aug 2026): mobile-only polish/bugfix pass across `HeroMobile`, `ProductStrips`/`SupplementRow` (fixed a CSS Grid bug hiding the Creatine flip-row image), and the three `ProductDetail` components — see Session 52 log. Visual sign-off on all of it still outstanding; no headless-browser tooling is available in this environment to verify automatically.
+**Next action:** `/sales` visual sign-off still outstanding — developer to review in-browser directly when ready (Playwright verification is opt-in only, not a blocker — see Session 41 process note). Mobile nav overlay changes (Session 42) also still need an in-browser look. Contact router and footer/nav social links (both Session 41) have since been developer-confirmed working. Session 44: `/supplements/[slug]` rebuilt on the Session 43 playground design via new `src/components/ProductDetail/*` components; the playground route/components have since been deleted. Visual sign-off still needed on Creatine/PWO/Mass Gainer specifically (only Whey was reviewed before adoption). Session 51 (07 Aug 2026): **DEVIATION** — `/supplements` listing page rebuilt again, replacing the Session 48 `ProductCard` grid entirely (component deleted) with dark full-bleed alternating rows (`SupplementRow.astro`) using the same gym photography as the homepage `ProductStrips` — Session 48's mobile-card sign-off item is superseded, not still open. Visual sign-off needed on this new listing layout, plus a re-look at `/supplements/[slug]` now that its data source changed (see Session 51 log). All product data now lives in one consolidated `src/data/catalog.ts` (`products.ts`/`supplements.ts` deleted); `page-structure.md` updated to match. The listing page's old hero block (title/subtitle over `partner-sales.jpg`) has been removed outright, confirmed by developer — the page now opens straight into the product rows under a screen-reader-only heading. Session 52 (11 Aug 2026): mobile-only polish/bugfix pass across `HeroMobile`, `ProductStrips`/`SupplementRow` (fixed a CSS Grid bug hiding the Creatine flip-row image), and the three `ProductDetail` components — see Session 52 log. Visual sign-off on all of it still outstanding; no headless-browser tooling is available in this environment to verify automatically. Session 53 (12 Aug 2026): asset-only housekeeping (unused-image audit, `public/images/` folder/naming cleanup) — see Session 53 log; no visual or functional change, doesn't affect any outstanding sign-off item above.
 
 **Note on Sessions 31–33:** this work was carried out by the developer directly, without running through Claude Code sessions — logged here retroactively per developer request, sole-authorship, "off script." See entries below.
 
@@ -92,6 +92,35 @@ These items must be confirmed before Claude Code begins building.
 ---
 
 ## Session Log
+
+### Session 53 — 12 Aug 2026
+
+**What was done:**
+
+- **Unused-image audit:** cross-referenced every file in `public/images/` (and `src/assets/`) against actual `image`/`src` references across `.astro`/`.ts` source. Found and removed, across a few rounds as the audit went deeper:
+  - Superseded originals left behind by the recent audience-cards rework: `audience/distributor.jpg`, `audience/retailer.jpg`, `audience/partners.jpg`, `audience/shop_2.jpg`.
+  - Long-orphaned assets already flagged as loose ends in earlier sessions but never deleted: `hero/hero_img.jpg` (replaced by `hero_v2.jpg` back in an earlier session), `bold-statement/discipline.png` (orphaned since Creatine's image swapped to `creatine_bg.jpg`; Session 51 had explicitly left the delete decision open), `lifestyle/athlete-walking.jpg` (not referenced by current `catalog.ts`), `partners/partner-retail.jpg` (belonged to the old `/partners/retail.astro` route, moved/replaced in Session 41), `lifestyle/cpb-gym.jpg` and `lifestyle/three-flavours.jpg` (both fully superseded per Session 51's log but not removed at the time).
+  - Default Astro starter-template assets, never referenced: `src/assets/astro.svg`, `src/assets/background.svg`.
+  - `src/data/categories.ts` — not imported anywhere; its `trending/*.jpg` paths pointed at a `public/images/trending/` folder that no longer exists on disk. Dead file from before the `catalog.ts` consolidation, removed.
+- **Folder/naming cleanup**, developer-requested once the audit was done: kept the existing folder-per-purpose structure (`hero/`, `products/`, `audience/`, `partners/`, `lifestyle/`, `icons/`) rather than flattening — judged easier to navigate at this asset count, and folder segments don't meaningfully affect SEO (filename does more work than path). Within that:
+  - Removed the now-stale `bold-statement/` folder (that homepage section was deleted in the Session 24 redesign; the one file left in it, `focus.jpg`, is actually the shared `/supplements/[slug]` detail-page hero) — moved to `products/supplement-detail-hero.jpg`.
+  - Moved `audience/audience_bg.jpg` → `partners/partner-pages-hero.jpg`: it's the shared hero background for the `/sales`, `/retail`, `/distributor` pages, not a homepage audience-card image, so it belongs with the other partner-program asset (`partner-sales.jpg`, itself renamed to `partner-cta.jpg` to disambiguate the two).
+  - Dropped version/variant suffixes (`_v2`, `_v3`, `_bg`) sitewide in favor of names describing content: `audience/shop_v2.jpg`→`supplements.jpg`, `retailer_v3.jpg`→`retailer.jpg`, `distributor_v2.jpg`→`distributor.jpg`, `sales_v2.jpg`→`sales.jpg`, `card-placeholder-audience.jpg`→`placeholder.jpg`; `products/creatine_bg.jpg`→`creatine.jpg`, `pwo_bg.jpg`→`pre-workout.jpg`, `gainer.jpg`→`mass-gainer.jpg` (now matches the product's actual name rather than its internal slug); `hero/hero_v2.jpg`/`hero_v2_mobile.jpg`→`homepage-hero.jpg`/`homepage-hero-mobile.jpg`.
+  - Updated every reference across `src/data/audience-cards.ts`, `src/data/catalog.ts` (4 `image` + 4 `slugImage` fields), `src/pages/sales.astro`/`retail.astro`/`distributor.astro`, `src/components/AudienceCards/AudienceCard.astro`, `src/components/BrandStory/BrandCtaBlock.astro`, `src/components/Hero/HeroDesktop.astro`/`HeroMobile.astro`.
+- Verified with a stale-path grep (no old filenames/paths left anywhere in `src/`) and a full-path existence check (every `/images/...` reference in source resolves to a real file on disk), then `npx astro check` — 0 errors, 0 warnings, 1 pre-existing unrelated hint.
+- Purely an asset/housekeeping pass — no component logic, layout, or copy changed. All changes left unstaged for developer review/commit, per standing no-auto-commit rule.
+
+**Decisions made this session:**
+
+- Folder-per-purpose (`hero/`, `products/`, `audience/`, `partners/`, etc.) confirmed as the preferred `public/images/` structure over a single flat folder, given the current asset count.
+- File-naming convention going forward: name for content/purpose, not version (no `_v2`/`_v3`), and match a product's real name over its internal slug where they differ (e.g. `mass-gainer.jpg`, not `gainer.jpg`).
+- `discipline.png`'s fate (left open as a question in Session 51) resolved: deleted, confirmed orphaned.
+
+**Decisions still open:**
+
+- None new. Doesn't touch any of the outstanding visual sign-off items from Sessions 40/42/44/51/52.
+
+---
 
 ### Session 52 — 11 Aug 2026
 
