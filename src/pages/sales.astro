@@ -207,7 +207,7 @@ const howItWorks = [
 <script>
   import {
     submitToHubSpot,
-    isSpamSubmission,
+    checkSpamSubmission,
     splitFullName,
   } from "@lib/hubspot";
 
@@ -237,7 +237,12 @@ const howItWorks = [
       (form.elements.namedItem("botcheck") as HTMLInputElement)?.checked ??
       false;
 
-    if (isSpamSubmission(honeypot, renderedAt)) {
+    const spamReason = checkSpamSubmission(honeypot, renderedAt);
+    if (spamReason === "honeypot") {
+      return;
+    }
+    if (spamReason === "too-fast") {
+      error.style.display = "block";
       return;
     }
 

@@ -19,13 +19,20 @@ interface SubmitToHubSpotOptions {
   consentText: string;
 }
 
-export function isSpamSubmission(
+export type SpamCheckResult = "honeypot" | "too-fast" | null;
+
+// Honeypot means the field was filled — near-certainly a bot, safe to
+// silently drop with no feedback. Too-fast can also catch a genuine human
+// (autofill, repeat visitor moving quickly), so callers should surface an
+// error for that case rather than dropping it silently.
+export function checkSpamSubmission(
   honeypotValue: boolean,
   formRenderedAt: number,
-): boolean {
-  if (honeypotValue) return true;
+): SpamCheckResult {
+  if (honeypotValue) return "honeypot";
   const elapsedSeconds = (Date.now() - formRenderedAt) / 1000;
-  return elapsedSeconds < MIN_SUBMIT_SECONDS;
+  if (elapsedSeconds < MIN_SUBMIT_SECONDS) return "too-fast";
+  return null;
 }
 
 export async function submitToHubSpot({
