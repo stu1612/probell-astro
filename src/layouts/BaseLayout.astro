@@ -63,7 +63,11 @@ const organizationSchema = {
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} is:inline />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(organizationSchema)}
+      is:inline
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -72,6 +76,14 @@ const organizationSchema = {
     />
   </head>
   <body>
+    <!-- Start of HubSpot Embed Code -->
+    <script
+      type="text/javascript"
+      id="hs-script-loader"
+      async
+      defer
+      src="//js-eu1.hs-scripts.com/148924644.js"></script>
+    <!-- End of HubSpot Embed Code -->
     <Nav transparent={transparentNav} />
     <slot />
     <Footer />

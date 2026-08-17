@@ -3,7 +3,8 @@ import { NAV_LINKS } from "@data/navigation";
 import NavLogo from "@components/Nav/NavLogo.astro";
 import NavHamburger from "@components/Nav/NavHamburger.astro";
 import NavOverlay from "@components/Nav/NavOverlay.astro";
-import SocialIcons from "@components/ui/SocialIcons.astro";
+// Social links disabled at developer's discretion — stale, no purpose currently. Reintegrate when appropriate.
+// import SocialIcons from "@components/ui/SocialIcons.astro";
 
 interface Props {
   transparent?: boolean;
@@ -29,7 +30,8 @@ const navClass = transparent ? "nav nav--transparent" : "nav nav--scrolled";
     </div>
     <div class="nav__right">
       <a href="/#contact" class="btn-primary">Become a Partner → </a>
-      <SocialIcons />
+      <!-- Social links disabled at developer's discretion — stale, no purpose currently. Reintegrate when appropriate. -->
+      <!-- <SocialIcons /> -->
     </div>
     <NavHamburger />
   </div>

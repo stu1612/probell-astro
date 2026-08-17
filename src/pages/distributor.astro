@@ -134,7 +134,7 @@ const hubspotFormGuid = import.meta.env.HUBSPOT_DISTRIBUTOR_FORM_GUID ?? "";
 <script>
   import {
     submitToHubSpot,
-    isSpamSubmission,
+    checkSpamSubmission,
     splitFullName,
   } from "@lib/hubspot";
 
@@ -166,7 +166,12 @@ const hubspotFormGuid = import.meta.env.HUBSPOT_DISTRIBUTOR_FORM_GUID ?? "";
       (form.elements.namedItem("botcheck") as HTMLInputElement)?.checked ??
       false;
 
-    if (isSpamSubmission(honeypot, renderedAt)) {
+    const spamReason = checkSpamSubmission(honeypot, renderedAt);
+    if (spamReason === "honeypot") {
+      return;
+    }
+    if (spamReason === "too-fast") {
+      error.style.display = "block";
       return;
     }
 
