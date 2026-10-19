@@ -1,220 +1,75 @@
 # Probell Nutrition — Page Structure
 
-**Last updated: 19 Jul 2026 — reconciled against progress-tracker.md through Session 33 and live `index.astro`**
+The current state of each page: what it's for and anything that isn't
+obvious from the code. For the exact markup, read the page file. Design
+intent is in `design.md`.
 
----
+Every page uses `BaseLayout.astro`, which renders Nav, the page content
+and Footer. Footer sits outside each page's `<main>`.
 
-## ⚠️ Superseded Content Warning
+## Home (`src/pages/index.astro`)
 
-The previous version of this document described an 11-section homepage
-(Nav → Hero → Identity → Trending → Brand Story → Built for Strength →
-Bold Statement → Built for Endurance → Instagram → Contact → Footer).
-**That structure no longer exists.** Session 24 (11 Jun 2026) collapsed
-the homepage and deleted `Trending.astro`, `BuiltForStrength.astro`,
-`BoldStatement.astro`, `Instagram.astro`, and `InkEdge.astro` outright.
+The order follows the brand story: feel the brand, see the product,
+find your route in, then make contact.
 
-This version reflects the site as currently built, confirmed directly
-against `index.astro`.
+1. **Hero:** full-bleed photo with the headline "Built For The Grind".
+   `HeroDesktop` and `HeroMobile` are both rendered and swapped with CSS
+   at 768px.
+2. **Black `SectionWrapper`:**
+   - **Identity:** the B2B pitch to gyms. A props-driven, centred
+     statement layout.
+   - **ProductStrips:** alternating product strips with ghost numbers.
+     Data comes from `catalog.ts`.
+   - **AudienceCards:** four routes in (Shop → `/supplements`, Retailer
+     → `/retail`, Distributor → `/distributor`, Partner → `/sales`).
+     Data comes from `audience-cards.ts`.
+3. **White `SectionWrapper`:** BrandStory (`id="emotion"`), a social
+   proof and stats section. Data comes from `stats.ts`.
+4. **Contact:** `ContactRouter.astro` sends each visitor type to the
+   right page or a mailto. It sits outside any wrapper.
+5. **Empty black `SectionWrapper`:** a deliberate spacer before the
+   Footer, not leftover code.
 
----
+## Partner pages: `/sales`, `/retail`, `/distributor`
 
-## Homepage — Current Section Map
+Each page recruits one audience and ends with a HubSpot form submitted
+through `src/lib/hubspot.ts`, which uses a honeypot and a time-trap
+instead of a CAPTCHA.
 
-Confirmed structure, from `index.astro`:
+- **Sales:** commission-based Sales Partners.
+- **Retail:** stores stocking Probell.
+- **Distributor:** deliberately minimal. A short pitch and a short
+  form, with a gold eyebrow instead of the red used on the other two.
 
-```astro
-<main>
-  <Hero />
-  <SectionWrapper bg="black">
-    <AudienceCards />
-    <Identity headline="..." body="..." primaryCta={{ ... }} />
-    <ProductStrips />
-  </SectionWrapper>
-  <SectionWrapper bg="white">
-    <BrandStory />
-  </SectionWrapper>
-  <Contact />
-  <SectionWrapper bg="black">
-    <!-- deliberate empty placeholder block, added by developer — 
-         reserved for a future section, no spec assigned yet -->
-  </SectionWrapper>
-</main>
-```
+The portal and form IDs come from the `HUBSPOT_*` env vars. If one is
+missing, the form falls back to `""` and fails silently. That's a known
+issue, logged under "Later" in `context-audit.md`.
 
-| # | Section | Component | Background | Notes |
-|---|---------|-----------|------------|-------|
-| 1 | Nav | `Nav/index.astro` | transparent → solid on scroll | Internals refactored into `NavLogo.astro`, `NavHamburger.astro`, `NavOverlay.astro`, `ui/SocialIcons.astro` (Session 28) |
-| 2 | Hero | `Hero/index.astro` | full-bleed `hero_v2.png` (desktop) / `hero_v2_mobile.png` (mobile) | Single headline "Built For The Grind" (Session 24). Internals refactored into `HeroDesktop.astro` + `HeroMobile.astro` (both rendered, CSS `display: none`/`block` swap at 768px — no JS) so mobile can be styled independently; `index.astro` is now just the orchestrator |
-| 3 | **AudienceCards** | `AudienceCards/index.astro` + `AudienceCard.astro` | inside black wrapper | **Confirmed position: first item inside the black `SectionWrapper`, immediately after Hero, before Identity.** 4-card grid — Shop, Retailer, Distributor, Partners — from `src/data/audience-cards.ts`. Overlay gradient currently commented out, not deleted (Session 33) — flag to developer whether that's permanent |
-| 4 | Identity | `Identity/index.astro` | black (via wrapper) | Props-driven (`headline`, `accentText`, `highlightText`, `body`, `primaryCta`). Centered "statement" layout — deliberate exception per `design.md` §4 |
-| 5 | ProductStrips | `ProductStrips/index.astro` + `ProductStrip.astro` | black (via wrapper) | Replaces Trending + Built for Strength. 3 alternating strips: Whey 100 Protein, Creatine, Pre-Workout |
-| 6 | BrandStory ("Emotion") | `BrandStory/index.astro` + sub-components | **white** (own wrapper) | Rebuilt Session 24 as social-proof section, `id="emotion"`. No longer uses `gym-interior` image or diagonal clip-path |
-| 7 | Contact | `Contact/index.astro` + `ContactForm.astro` | `var(--color-surface)` | Sits **outside** any `SectionWrapper` (Session 31 fix) |
-| — | (empty placeholder block) | — | — | Added deliberately by developer as an empty block after Contact, before </main> — reserved space for a future section, not yet assigned. No content to build against; not an error, not leftover from a prior edit. Revisit when there's a spec for what goes here |
-| 8 | Footer | `Footer/index.astro` | black | Per `BaseLayout.astro`, Footer is typically rendered outside `<main>` — confirm whether that's still the case or whether it's now the contents of the unclear wrapper above |
+The original intent for these pages is in `src/features/*-page.md` and
+`partner-crm-integration.md`, as reference.
 
-**Removed:** `ui/Banner.astro` — deleted from the project along with its usage in `index.astro` (previously row 5, image-backed "Trending" banner between Identity and ProductStrips). Do not reference or rebuild without an explicit new spec.
+## Supplements
 
-**Removed entirely (Session 24) — do not reference or rebuild without an
-explicit new spec:** `Trending.astro`, `BuiltForStrength.astro`,
-`BoldStatement.astro`, `Instagram.astro`, `InkEdge.astro`.
+- **`/supplements`:** dark, full-bleed alternating rows
+  (`SupplementRow.astro`) with the same gym photography as
+  ProductStrips. It has no hero: it opens straight into the rows under
+  a screen-reader-only `<h1>`.
+- **`/supplements/[slug]`:** built from the components in
+  `src/components/ProductDetail/`, in this order:
+  - a photo hero with a ghost stat
+  - a stat strip
+  - an overview and ingredients section
+  - a "How to use it" section
+  - a red CTA block
+- **Data:** `src/data/catalog.ts` (`PRODUCTS`) is the single product
+  source for these pages and for ProductStrips.
 
----
+## Legal: `/legal`, plus privacy, terms, returns and shipping
 
-## Border Breakers — Status
+These pages use `LegalLayout.astro` and `LegalSections.astro`. Their
+content comes from `LEGAL_PAGES` in `src/data/legal.ts`.
 
-`design.md` Section 5 (Techniques A–E) describes transitions between
-sections that mostly no longer exist. See `design.md`'s own updated
-notes on this — needs a dedicated cleanup pass there, not duplicated
-here.
+## 404
 
----
-
-## Other Pages — Current State
-
-### Supplements
-**Routes:** `src/pages/supplements/index.astro` (listing),
-`src/pages/supplements/[slug].astro` (detail) —
-**Complete, Session 30 (14 Jun 2026); detail page rebuilt Session 44
-(03 Aug 2026); listing rebuilt Session 51 (07 Aug 2026)**
-
-- Listing (current, Session 51): dark, full-bleed, editorial
-  alternating rows (`SupplementRow.astro`) — same gym photography
-  direction as the homepage `ProductStrips`. Each row: ghost id
-  number, category eyebrow, excerpt, "Best For" athlete-fit line, all
-  4 stats, CTA to the detail page (the CTA links, not the whole row).
-  Replaces the Session 48 `ProductCard` white-grid layout, which is
-  deleted, not kept as a fallback. The page's old dark hero
-  (title/subtitle over `partner-sales.jpg`) is deleted, not kept
-  commented out — the page opens straight into the rows under a
-  screen-reader-only `<h1>`.
-- Detail (current, Session 44): full-bleed photographic hero
-  (`product.slugImage`) with ghost stat number → stat strip breaking
-  out over the hero's bottom edge → black Overview / white Ingredients
-  two-column section → white BrandStory-style "How to use it"
-  anchor/row section → red CTA block. Built as five components under
-  `src/components/ProductDetail/`. Replaces the original "dark hero +
-  white 4-stat body" layout from Session 30 — not an addition to it.
-- Data: `src/data/catalog.ts`, exported as `PRODUCTS`. Session 51
-  merged the formerly separate `src/data/products.ts` (ProductStrips)
-  and `src/data/supplements.ts` (Supplements pages) into this single
-  source — both old files deleted, not kept for reference.
-
-### Learn
-**Removed, Session 45 (03 Aug 2026).** Was `src/pages/learn.astro`
-(4 tabs — Whey, Creatine, Pre-Workout, Mass Gainer — content from
-`CATEGORY_PAGES`, tab switching via vanilla JS). Deleted per developer
-instruction along with every nav/footer link that pointed at `/learn`.
-`src/data/categories.ts` (`CATEGORY_PAGES`) was deliberately **not**
-deleted — kept per developer instruction even though currently unused;
-don't treat it as dead code to clean up.
-
-### Legal
-**Routes:** `src/pages/legal/index.astro`, `privacy.astro`,
-`terms.astro`, `returns.astro`, `shipping.astro` —
-**Complete, Session 29 (13 Jun 2026)**
-
-- `LegalLayout.astro` + `LegalSections.astro`, content from `LEGAL_PAGES`
-
-### 404 (Not Found)
-**Route:** `src/pages/404.astro` — **Complete, Session 56 (12 Aug 2026)**
-
-Wrapped in `BaseLayout` (Nav + Footer, consistent with every other
-page). Dark, centered "statement" treatment — ghost "404" reusing the
-`ProductStrips` ghost-number pattern (token color, `opacity: 0.08`),
-headline/body on existing tokens, `.btn-primary` "Back to Home" (`/`)
-+ `.btn-secondary` "Browse Supplements" (`/supplements`) CTAs. No new
-tokens or components. One.com hosting may need an `ErrorDocument 404
-/404.html` line in a `.htaccess` for the static host to actually route
-broken URLs here — flagged to developer, not yet actioned.
-
-### Partners (Sales / Retailer / Distributor)
-**Routes:** `src/pages/partners/index.astro`, `distributor.astro`,
-`retail.astro`, `sales.astro` — **Scaffolded as empty files only.
-Not built.**
-
-Specs live in `src/features/`: `sales-partner-page.md`,
-`retailer-program-page.md`, `distributor-program-page.md`,
-`partner-crm-integration.md`. **These have already been updated
-directly in the project** — read them fresh from `src/features/`
-before building, don't rely on any version described in a chat session.
-
----
-
-## Data & Content Architecture
-
-Since Session 27, content lives in `src/data/` and `src/constants/`,
-imported via `@data/*` and `@constants/*` aliases:
-
-| File | Exports | Used by |
-|---|---|---|
-| `src/data/stats.ts` | `STATS`, `Stat` | BrandStory |
-| `src/data/catalog.ts` | `PRODUCTS`, `Product`/`ProductStat`/`ProductUsage` | ProductStrips, Supplements listing, Supplements detail — merged Session 51, replacing `products.ts` + `supplements.ts` |
-| `src/data/navigation.ts` | `NAV_LINKS`, `MOBILE_NAV_LINKS`, `FOOTER_SITE_LINKS`, `FOOTER_PRODUCT_LINKS`, `FOOTER_PARTNER_LINKS` | Nav, Footer |
-| `src/data/categories.ts` | `CATEGORY_PAGES` | Unused since Learn was removed (Session 45) — kept per developer instruction, not deleted |
-| `src/data/audience-cards.ts` | audience card content | AudienceCards |
-| `src/constants/site.ts` | `SITE_NAME`, `COPYRIGHT`, `CONTACT_SUBJECT` | Footer, Contact |
-
-Page-level config (Identity props, Contact select
-options) stays inline in `index.astro` / the component — not extracted,
-per Session 27's explicit decision.
-
----
-
-## Component File Structure
-
-Since Session 28, section-level components use folder/`index.astro`,
-with sub-components extracted only where responsibility is clearly
-separate:
-
-```
-src/components/
-├── Nav/ (index.astro, NavLogo.astro, NavHamburger.astro, NavOverlay.astro)
-├── Hero/ (index.astro, HeroDesktop.astro, HeroMobile.astro)
-├── Identity/index.astro
-├── BrandStory/ (index.astro, BrandStatsBlock.astro, BrandCtaBlock.astro)
-├── ProductStrips/ (index.astro, ProductStrip.astro)
-├── ProductDetail/ (ProductHero.astro, ProductStats.astro, ProductOverview.astro, ProductUsage.astro, ProductCta.astro)
-├── SupplementRow.astro
-├── AudienceCards/ (index.astro, AudienceCard.astro)
-├── Contact/ (index.astro, ContactForm.astro)
-├── Footer/index.astro
-├── SectionWrapper/index.astro
-└── ui/ (Button.astro, Tag.astro, TornEdge.astro, 
-         FormField.astro, SocialIcons.astro)
-```
-
-`ui/` stays flat — the folder is its own namespace.
-`ui/ProductCard.astro` (Session 48) was deleted again Session 51 when
-the Supplements listing moved to `SupplementRow.astro` — an earlier,
-unrelated `ProductCard.astro` was also deleted in Session 28. Do not
-reference either.
-
----
-
-## Asset Checklist — Current
-
-| Asset | Path | Status |
-|-------|------|--------|
-| Logo | `/public/images/icons/probell-logo.png` | ✓ single asset, swap when 2-variant PNGs arrive |
-| Hero image | `/public/images/hero/hero-main.jpg` | ✓ current |
-| Lifestyle image | `/public/images/lifestyle/man-holding-kettlebell.jpg` | ✓ added Session 24 |
-| `gym-interior.png` / `discipline.png` | — | No longer used — components deleted/redesigned |
-| Whey CPB / Cookies & Cream / Salted Caramel PNGs | `/public/images/products/` | Pending |
-| Audience card images | `/public/images/audience/` (7 files) | ✓ added Session 32 |
-| Favicon | `/public/favicon.ico` | Pending |
-
----
-
-## Open Decisions (unresolved as of Session 33)
-
-- Active display font — Anton or Barlow Condensed
-- Active body font — Space Grotesk or DM Sans
-- Contact form email + `WEB3FORMS_KEY` env var
-- Instagram URL / whether `Instagram.astro` will be rebuilt
-- Facebook URL
-- Logo light variant PNG
-- Arnold Expo date — see `market-strategy.md`
-- AudienceCards overlay gradient — remove permanently or re-enable
-- The unclear `SectionWrapper` after Contact — confirm its contents
-  directly against source
+A dark, centred statement page with a ghost "404". It has two buttons:
+Back to Home and Browse Supplements.

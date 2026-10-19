@@ -1,6 +1,6 @@
 # Probell — Partner Program CRM Integration Spec
 
-**Status: Ready for development**
+**Status: Built (`src/lib/hubspot.ts`). Reference for intent, not binding.**
 
 ---
 

@@ -1,7 +1,7 @@
 # Probell — Distributor Program Page Spec
 
-**Status: Ready for development**
-**Route:** `src/pages/partners/distributor.astro` (already scaffolded)
+**Status: Built. Reference for intent, not binding.**
+**Route:** `src/pages/distributor.astro` (`/distributor`)
 
 ---
 

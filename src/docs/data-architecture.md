@@ -1,9 +1,5 @@
 # Data & Content Architecture
 
-**Last updated: 12 June 2026**
-
----
-
 ## /src/data/
 
 Component-driven content. Arrays and objects that map directly to UI components.
@@ -11,14 +7,13 @@ Import with `@data/` alias.
 
 Examples:
 
-- `src/data/stats.ts` — stats rows, performance numbers
-- `src/data/products.ts` — product SKUs, names, descriptions
-- `src/data/navigation.ts` — nav links, footer links
+- `src/data/catalog.ts` — `PRODUCTS`, the single product source
+- `src/data/audience-cards.ts`, `stats.ts`, `navigation.ts`, `legal.ts`
 
 Convention:
 
 - Named exports, uppercase — `export const STATS = [...]`
-- TypeScript interfaces defined in the same file or in `src/types/`
+- TypeScript interfaces defined in the same file
 - Every data file has a corresponding interface
 
 ## /src/constants/

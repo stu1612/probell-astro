@@ -1,7 +1,7 @@
 # Probell — Retailer Program Page Spec
 
-**Status: Ready for development**
-**Route:** `src/pages/partners/retail.astro` (already scaffolded)
+**Status: Built. Reference for intent, not binding.**
+**Route:** `src/pages/retail.astro` (`/retail`)
 
 ---
 

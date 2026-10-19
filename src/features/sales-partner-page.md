@@ -1,7 +1,7 @@
 # Probell — Sales Partner Page Spec
 
-**Status: Ready for development**
-**Route:** `src/pages/partners/sales.astro` (already scaffolded)
+**Status: Built. Reference for intent, not binding.**
+**Route:** `src/pages/sales.astro` (`/sales`)
 
 ---
 
