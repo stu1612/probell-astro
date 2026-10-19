@@ -1,71 +1,69 @@
-# Probell Nutrition — Claude Code Context
+# Probell Nutrition
 
-**Project:** Probell Nutrition website
-**Stack:** Astro (static output) · Plain CSS · Google Fonts · No frameworks
-**Deploy:** Static `/dist/` upload to one.com via FTP
-**Purpose:** B2B brand presentation — gyms, distributors, retailers,
-sales partners. Single conversion goal: get the right people to make
-contact. Not an ecommerce store.
+A B2B brand site for an American-directed supplement brand (a
+kettlebell-shaped protein container). The audience is gyms, retailers,
+distributors and sales partners, in the US only. **The single goal is to
+get the right people to make contact. It isn't an ecommerce store.** The
+homepage follows that story: feel the brand, see the product, find your
+route in, then make contact.
 
----
+## How to work with Stu
 
-## This File Is Intentionally Thin
+- Use your judgement. Propose ideas and alternatives, challenge docs and
+  specs, and give opinions when asked.
+- Docs and specs describe intent, not law. When code and docs disagree,
+  trust the code and flag the doc.
+- When a decision is Stu's (scope, design direction, anything external),
+  ask before solving it.
+- Do small, clear tasks directly. For larger ones, show a short plan
+  first.
+- If you need information from Vercel, DNS or any external service, ask
+  Stu. Don't propose installing tools or widening permissions to get it.
 
-Everything about how to work on this project — session protocol,
-coding standards, design tokens, current page structure, build
-history — lives in `src/docs/` and `src/features/`, not here. This
-file previously duplicated large sections of those files inline; that
-duplication has been removed because it created drift risk (a token or
-rule could change in one place and silently go stale in the other).
+## Stack and deploy
 
-**Do not re-add detailed rules here.** If something needs to be a
-standing rule, it belongs in the relevant `src/docs/` file. This file's
-job is to point at the right place, not to restate content.
+- Astro 7, static output, with `@astrojs/sitemap`. Plain CSS and no
+  frameworks (no React, Vue, Svelte or Tailwind).
+- Commands: `npm run dev`, `npm run build`, `npm run lint`.
+- Hosted on Vercel. Production builds from `main`. Day-to-day work
+  happens on `dev`. `course/*` branches come off `dev` (temporary).
+- DNS and email are at one.com. Don't touch them.
+- Path aliases: `@components`, `@layouts`, `@data`, `@constants`, `@lib`,
+  `@assets`.
 
----
+## Code rules
 
-## Session Start Protocol
+- **Images:** always `<Image />` with an imported file from
+  `src/assets/`, never `<img>` or a `/public` string path, because those
+  skip optimisation. `public/images/` holds only `og-image.jpg` and the
+  Contact CSS background.
+- **CSS values:** use the custom properties in `src/styles/global.css`
+  for colours, type, spacing and transitions. A one-off component value
+  can stay in that component's scoped styles.
+- **Content:** lists and repeated content live in `src/data/` (uppercase
+  named exports with an interface), not hardcoded in components.
+  `catalog.ts` (`PRODUCTS`) is the single product source.
+- **Components:** homepage sections each have a folder with an
+  `index.astro` and their sub-components. Page-specific groups such as
+  `ProductDetail/` are a folder of parts. Shared pieces live in
+  `src/components/ui/`.
+- **Forms:** the partner forms (`/sales`, `/retail`, `/distributor`) post
+  to HubSpot through `src/lib/hubspot.ts`. Each page reads `HUBSPOT_*`
+  env vars and **falls back to `""` if one is missing, so the build
+  passes and leads are lost silently.** The fix is planned; see "Later"
+  in `src/docs/context-audit.md`.
+- **Comments:** leave commented-out code in place unless asked to
+  remove it.
+- **Changes:** keep them minimal, with no unrelated refactors. Stop
+  after 2 failed attempts at the same fix, and don't install packages to
+  get around a problem.
 
-Follow `src/docs/ai-interaction.md` exactly — it contains the full
-required session-start prompt, the doc read list, and the
-confirm-before-proceeding rule. Do not skip it and do not proceed
-without developer confirmation.
+## Where to look
 
-Quick reference — the docs read at the start of every session:
-`src/docs/brand.md`, `src/docs/design.md`, `src/docs/coding-standards.md`,
-`src/docs/ai-interaction.md`, `src/docs/page-structure.md`,
-`src/docs/progress-tracker.md`. Feature-specific specs live separately
-in `src/features/` and are read only when working on that feature.
-
----
-
-## Stack Rules — Non-Negotiable Summary
-
-Full detail in `src/docs/coding-standards.md`. In short: no React/Vue/
-Svelte, no Tailwind/CSS frameworks, no `<img>` tags (always
-`astro:assets` `<Image />`), no raw hex/px/rem values (always CSS
-custom property tokens), no animations beyond the few permitted hover
-transitions (see `src/docs/design.md` Section 8 for the current list
-including one confirmed exception), no features outside
-`page-structure.md` or the relevant `src/features/` spec, no auto-commits.
-
----
-
-## Known Current State (as of 19 Jul 2026)
-
-The homepage went through a major structural redesign in Session 24
-(11 Jun 2026) — several original sections were deleted and replaced.
-`src/docs/page-structure.md` reflects the current, real structure.
-**Do not rely on memory of an earlier homepage layout** — if anything
-here or in a past conversation describes an 11-section homepage with
-`Trending`, `BuiltForStrength`, `BoldStatement`, or `Instagram`
-components, that's stale; check `page-structure.md` for what's
-actually live.
-
-Four partner-program pages (Sales Partner, Retailer, Distributor, plus
-a shared CRM integration spec) are specced in `src/features/` and
-scaffolded as empty route files in `src/pages/partners/` — not yet
-built. Read the specs fresh before starting that work.
-
-For anything not covered by this summary, go to the actual source file
-— this document does not attempt to be comprehensive.
+| Need | Read |
+|---|---|
+| Copy, imagery, audience, go-to-market | `src/docs/brand.md` |
+| A new section or a visual change | `src/docs/design.md` |
+| A new page, or changes to `<head>` or meta | `src/docs/seo.md` |
+| What's in progress, next, open or buggy, and project history | Ask the `tracker-historian` agent. Don't read `progress-tracker.md` directly |
+| The original intent behind the partner pages | `src/features/*-page.md`, `partner-crm-integration.md` |
