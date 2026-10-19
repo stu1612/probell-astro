@@ -23,5 +23,3 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# playwright mcp session artefacts
-.playwright-mcp/

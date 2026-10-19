@@ -51,16 +51,6 @@ including one confirmed exception), no features outside
 
 ---
 
-## Deviation Convention
-
-The developer may prefix a task with `Deviation:` to signal a knowing,
-deliberate departure from spec. Full rules in
-`src/docs/ai-interaction.md` — the short version: proceed without
-flagging spec misalignment for that task, then log it with a
-`**DEVIATION:**` prefix in `src/docs/progress-tracker.md`'s session log.
-
----
-
 ## Known Current State (as of 19 Jul 2026)
 
 The homepage went through a major structural redesign in Session 24
