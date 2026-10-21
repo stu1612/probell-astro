@@ -12,9 +12,18 @@ Open a session on: $ARGUMENTS (if empty, use the board's Now item).
    `progress-tracker.md` yourself.
 2. Read the one doc from the "Where to look" map in CLAUDE.md that fits
    the topic. Read none if nothing fits. Then look at the code involved.
-3. Reply with:
-   - Three lines of status: where things stand, what's next, and any
-     blocker or open item that touches the topic.
-   - Up to three ideas or questions worth raising (risks, a better
-     approach, or a doc that disagrees with the code).
-4. Stop and wait for Stu. Don't start work.
+3. Reply with exactly these four lines:
+   - **Now:** the task that needs doing now, as an action. If finished
+     work is still listed as current, the real Now is the first task
+     not yet done. Never report work that's already complete.
+   - **Next:** the next task after Now.
+   - **Open:** open items or blockers that touch the topic. If there
+     are none, write "There are no open tasks."
+   - **Worth raising:** only issues, security problems or bugs that
+     could affect how the Now task is done. Don't suggest work that
+     comes after Now. If there's nothing, write "Nothing affects how
+     <Now task> is done."
+4. Keep every line consistent with Now. If you find leftover cleanup
+   (an item that should already be deleted), don't report it. Mention
+   it only if it blocks Now.
+5. Stop and wait for Stu. Don't start work.
