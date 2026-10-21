@@ -17,46 +17,15 @@ to date.
 
 1. HubSpot partner forms must never fail silently. Spec and build in
    Module 4, test in Module 5. See `src/docs/context-audit.md` → Later.
-
-### Open (waiting on Stu)
-
-- Visual sign-offs, still unconfirmed in-browser:
-  - `/sales` page
-  - mobile nav overlay (Session 42)
-  - `/supplements` listing rows (Session 51)
-  - `/supplements/[slug]` for Creatine, PWO and Mass Gainer
-  - the Session 52 mobile polish pass
-  - Retail and Distributor heroes again after the Session 40 photo
-    backgrounds
-- Re-enable the Facebook and Instagram links (commented out in Session
-  57) once the accounts are refreshed.
-- Confirm `info@probellnutrition.com` is live (not `.se`), then swap the
-  Sales Partner HubSpot confirmation email's From address off the
-  placeholder (Session 34).
-- Client assets: final product PNGs and a transparent logo PNG.
-- Footer design still needs a visual reference review.
-- Later business decisions: a CMS (Hygraph) and a payment gateway.
-
-### Known bugs
-
-- Doc drift against the code (one.com, `globals.css`, file trees, token
-  tables and so on). This is being fixed in Now; the list is in the
-  Session 58 log.
-- Partner forms fall back to an empty HubSpot config without any
-  warning (see Next).
-
-### Closed (Session 58 tidy-up)
-
-- DNS/MX: the site is served by Vercel and the MX records are intact at
-  one.com.
-- Fonts: Anton (display) and Space Grotesk (body) are final (Stu, 19 Oct
-  2026).
-- Hero headline: resolved in Session 24.
-- Instagram live feed: the component was removed in Session 24 and
-  isn't planned.
-- Playwright verification: opt-in only since Session 41.
-- Sessions 31–33 were done by the developer directly and logged
-  retroactively.
+2. Per-field validation on the partner forms (`/sales`, `/retail`,
+   `/distributor`). Today they rely on the browser's built-in required
+   checks only.
+3. Site-wide accessibility pass (none done yet). Known so far: the mobile
+   nav overlay has no Escape-to-close and no focus trap
+   (`Nav/index.astro`).
+4. Full UI check and a possible redesign, in its own session. This
+   replaces the old per-page visual sign-offs and the footer review.
+5. Swap in the client's final product PNGs and a transparent logo PNG.
 
 ---
 
@@ -86,22 +55,6 @@ Newest first.
 **Decisions made this session:**
 
 - None.
-
-**Outstanding — doc drift to reconcile on this branch** (found while reading the docs at the start of this session):
-
-- `coding-standards.md` Stack table says "Astro 4.x". The project is now on Astro 7.
-- Hosting/deploy: `CLAUDE.md`, `coding-standards.md` (Stack, Build and Deploy, pre-deploy checklist) and `ai-interaction.md` (Responsibilities) still describe a one.com FTP deploy. The site is live on Vercel. Session 56's one.com `.htaccess` `ErrorDocument` note is probably moot on Vercel and should be confirmed and closed.
-- `coding-standards.md` File Structure tree is still the pre-Session-24, 11-component, `public/images/` layout. It doesn't show folder/`index.astro` components, `src/assets/`, `src/data/` or `src/lib/`.
-- `coding-standards.md` Contact Form section (Formspree/mailto) is obsolete. Contact is a router plus a mailto fallback (Session 41), and the partner forms go through `src/lib/hubspot.ts`.
-- `coding-standards.md` Islands section still lists "the Instagram feed" and "the contact form". Neither exists in that form now.
-- `ai-interaction.md` Image Rules and Section Complete Checklist say images must exist in `/public/images/`. That contradicts the Session 55 `src/assets/` import rule.
-- `ai-interaction.md` Workflow 4.5 presents Playwright verification as mandatory. Since Session 41 it's opt-in only.
-- `page-structure.md`:
-  - Asset Checklist uses stale paths (`hero-main.jpg`, `man-holding-kettlebell.jpg` under `lifestyle/`, `public/images/audience/`).
-  - `src/data/categories.ts` is still listed as "kept per developer instruction", but Session 53 deleted it.
-  - The "unclear SectionWrapper"/Footer placement notes and Open Decisions (Contact form email, `WEB3FORMS_KEY`, Instagram URL) are out of date.
-- `design.md` §5 (section transitions) and §8 (the `scale(1.03)` hover exception) are still flagged as unverified against the live code.
-- `Pre-Build Checklist` / `Deferred Items` in this file: favicon (done Session 46/54), hero headline A–D (resolved Session 24) and the Instagram rows are stale.
 
 ---
 
