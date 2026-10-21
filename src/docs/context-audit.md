@@ -221,9 +221,7 @@ added in its place.
 6. Write the new CLAUDE.md.
 7. Add settings and permissions.
 8. Add `/start` and `/wrap`, and update memory.
-9. Re-measure and run the proof: target well under 1,099 lines
-   (baseline 1,648), and a fresh session answers "Vercel, from
-   `main`" without being prompted.
+9. Re-measure: target well under 1,099 lines (baseline 1,648).
 
 ---
 
