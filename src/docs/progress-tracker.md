@@ -1,97 +1,62 @@
 # Probell Nutrition — Progress Tracker
 
-**Last updated: 17 Aug 2026 — Session 57**
+The project record. It's never read at session start: ask the
+`tracker-historian` agent for what you need. `/wrap` keeps the board up
+to date.
 
+## Board
 
-**Pending/Deferred items**
+### Now
 
-- [ ] DNS/hosting split: confirm probellnutrition.com's MX records are 
-  preserved when pointing DNS to Vercel. Screenshot current MX records 
-  before any DNS change. Do not conflate SMTP/mail settings with 
-  web-hosting DNS records — they're separate.
+- Docs clean-up on `course/module-3`: remove inactive tools and
+  unneeded docs, collapse duplicate rules, fix stale data, write a lean
+  CLAUDE.md and add `/start` and `/wrap`. The full plan and decisions
+  are in `src/docs/context-audit.md` under "Clean-up decisions".
 
----
+### Next
 
-## Current Status
-
-**Phase:** Post-build structural redesign
-**Active section:** Sales Partner, Retailer, and Distributor pages all built, now live at flat routes `/sales`, `/retail`, `/distributor` (moved out of `/partners/*` in Session 41 — see below; the `/partners/index` hub-page scaffold this note used to mention was deleted as part of the same move, not left pending). Retailer and Distributor were developer-confirmed complete (visual check + working submission) prior to Session 40; Session 40 added a photographic hero background to all three pages, so Retailer/Distributor's prior visual sign-off predates that change and is worth a quick re-look. Sales Partner's visual verification is still outstanding. Session 42: mobile nav overlay (`Nav/NavOverlay.astro`, `Nav/NavHamburger.astro`) reworked — link list, toggle button, layout, and colors all revised across several in-session rounds of feedback — see Session 42 log; not yet developer-signed-off in-browser.
-**Next action:** `/sales` visual sign-off still outstanding — developer to review in-browser directly when ready (Playwright verification is opt-in only, not a blocker — see Session 41 process note). Mobile nav overlay changes (Session 42) also still need an in-browser look. Contact router and footer/nav social links (both Session 41) have since been developer-confirmed working. Session 44: `/supplements/[slug]` rebuilt on the Session 43 playground design via new `src/components/ProductDetail/*` components; the playground route/components have since been deleted. Visual sign-off still needed on Creatine/PWO/Mass Gainer specifically (only Whey was reviewed before adoption). Session 51 (07 Aug 2026): **DEVIATION** — `/supplements` listing page rebuilt again, replacing the Session 48 `ProductCard` grid entirely (component deleted) with dark full-bleed alternating rows (`SupplementRow.astro`) using the same gym photography as the homepage `ProductStrips` — Session 48's mobile-card sign-off item is superseded, not still open. Visual sign-off needed on this new listing layout, plus a re-look at `/supplements/[slug]` now that its data source changed (see Session 51 log). All product data now lives in one consolidated `src/data/catalog.ts` (`products.ts`/`supplements.ts` deleted); `page-structure.md` updated to match. The listing page's old hero block (title/subtitle over `partner-sales.jpg`) has been removed outright, confirmed by developer — the page now opens straight into the product rows under a screen-reader-only heading. Session 52 (11 Aug 2026): mobile-only polish/bugfix pass across `HeroMobile`, `ProductStrips`/`SupplementRow` (fixed a CSS Grid bug hiding the Creatine flip-row image), and the three `ProductDetail` components — see Session 52 log. Visual sign-off on all of it still outstanding; no headless-browser tooling is available in this environment to verify automatically. Session 53 (12 Aug 2026): asset-only housekeeping (unused-image audit, `public/images/` folder/naming cleanup) — see Session 53 log; no visual or functional change, doesn't affect any outstanding sign-off item above. Session 54 (12 Aug 2026): pre-launch SEO audit against `src/features/seo-audit-brief.md` — four findings (duplicate homepage `<h1>`, skipped heading level in `Identity`, webmanifest color mismatch, missing structured data) all developer-approved and fixed — see Session 54 log. No layout/visual change, doesn't affect any outstanding sign-off item above. Session 55 (12 Aug 2026): PageSpeed Insights flagged product images shipping as unconverted `.jpg` despite going through `<Image />` — root cause was every photographic `src` sitewide being a `/public/images/...` string path rather than an `src/assets/` import, which Astro's `<Image />` can't optimize (it passes strings straight through, ignoring `format`/`width`/`height`). Fixed sitewide: all photography (products, audience cards, both hero variants, both partner-page images, the site logo) moved into `src/assets/` and imported; `coding-standards.md`'s Images section corrected since its own example documented the broken pattern. No visual change — same files, now WebP at ~55-60% smaller. See Session 55 log. Session 57 (17 Aug 2026): fixed a duplicate HubSpot embed script found in `BaseLayout.astro` (pasted twice — once correctly in `<head>`, once more as a stray duplicate sitting outside both `<head>` and `<body>`); resolved by keeping a single copy as the first child of `<body>` per HubSpot's own placement guidance, confirmed via layout audit that this covers every route including all five legal pages (routes through `LegalLayout` → `BaseLayout`). Also disabled the Facebook/Instagram social links sitewide (Nav, mobile nav overlay, footer) at developer's discretion — commented out, not deleted, since the accounts are currently stale; see below and Session 57 log.
-
-**Note on Sessions 31–33:** this work was carried out by the developer directly, without running through Claude Code sessions — logged here retroactively per developer request, sole-authorship, "off script." See entries below.
-
----
-
-## Pre-Build Checklist
-
-These items must be confirmed before Claude Code begins building.
-
-### Spec documents
-
-- [x] `brand.md` — complete
-- [x] `design.md` — complete
-- [x] `globals.css` — complete
-- [x] `coding-standards.md` — complete
-- [x] `ai-interaction.md` — complete
-- [x] `page-structure.md` — complete
-- [x] `progress-tracker.md` — complete
-
-### Assets
-
-- [x] Logo PNG — single asset supplied `/public/images/icons/probell-logo.png` — light/dark structure in place, awaiting two-variant assets
-- [x] Hero image — `hero-main.jpg` — replaced `hero-main-v2.png` (Jun 2026); now .jpg format
-- [x] Brand story image — `gym-interior.png` — generated and confirmed
-- [x] Bold statement image — `discipline.png` — client supplied
-- [ ] Whey CPB PNG — pending
-- [ ] Whey Cookies & Cream PNG — pending
-- [ ] Whey Salted Caramel PNG — pending
-- [ ] Favicon — pending
-
-### Decisions pending
-
-- [ ] Active display font — Anton or Barlow Condensed
-      Decide in browser against real photography
-- [ ] Active body font — Space Grotesk or DM Sans
-      Decide in browser against real content
-- [ ] Active hero headline — A, B, C, or D
-      Decide in browser against hero image
-- [ ] Footer design — visual references to be confirmed
-- [x] Contact form email address — resolved Session 41: Contact section no longer has a form (replaced by the router, see Session 41 log); `mailto:info@probellnutrition.com` is the fallback contact point
-- [x] Instagram account URL — resolved Session 41: `https://www.instagram.com/probellnutrition/`
-- [x] Formspree account setup — moot; project used Web3Forms instead of Formspree, and Web3Forms itself was removed entirely in Session 41 (Contact section replaced with a partner router + mailto fallback)
-
----
-
-## Build Sections
-
-| #   | Section                     | Status      | Completed   | Notes                                                                                      |
-| --- | --------------------------- | ----------- | ----------- | ------------------------------------------------------------------------------------------ |
-| —   | Project init                | Complete    | 17 May 2026 |                                                                                            |
-| —   | globals.css import          | Complete    | 17 May 2026 |                                                                                            |
-| —   | BaseLayout                  | Complete    | 17 May 2026 |                                                                                            |
-| 1   | Nav                         | Complete    | 17 May 2026 | Single logo asset used for both states — swap when two-variant PNGs arrive. Session 42: mobile overlay refactored, see below — not yet developer-signed-off in-browser. Session 57: `SocialIcons` usage commented out (developer's discretion, stale social presence) — see Footer row and Session 57 log |
-| 2   | Hero                        | Complete    | 26 Jul 2026 | Session 38: split into `HeroDesktop.astro` + `HeroMobile.astro` (CSS `display` swap at 768px, `index.astro` now just the orchestrator) so mobile can be designed independently. Desktop: `hero_v2.png`, single-tier headline, bottom gradient. Mobile: `hero_v2_mobile.png`, two-tier headline layout + icon CTA row (currently commented out, developer WIP), still in active visual iteration — not yet developer-signed-off |
-| 3   | Identity                    | Complete    | 11 Jun 2026 | Session 24: refactored to accept headline/body/primaryCta props; secondary CTA removed; stats row removed; CTA points to #trending. Session 50 (06 Aug 2026): rebuilt as a single centered "statement" layout — deliberate exception per `design.md` §4 — replacing the two-column split. Headline split into `headline`/`accentText`/`highlightText` props so "One Standard." (dimmed white) and "No Compromise." (accent color) render as separate spans. Below `--bp-xl` (1280px) each of the three segments stacks on its own line |
-| 4   | Banner (ui)                 | Removed     | —           | Built Session 24 (80vh; grid 1fr 1fr, empty left cell, content right; background-image from prop). Removed 06 Aug 2026 — `ui/Banner.astro` deleted along with its (already-commented-out) usage in `index.astro`; see below |
-| 5   | ProductStrips               | Complete    | 11 Jun 2026 | Session 24: NEW component replacing Trending + BuiltForStrength; 3 alternating full-width strips — Whey 100 Protein (image right), Creatine (image left, gold), Pre-Workout (muted/coming soon); ghost number watermark; stat callout on strip 01. Session 50 (06 Aug 2026): 4th entry (Mass Gainer, id:04) added to `src/data/products.ts` — layout is fully data-driven off `flip`/`overlay`/`imageMuted` flags, no changes needed in `ProductStrip.astro` itself; the `overlay: true` it was initially given (which put it on the full-bleed pattern) was removed so it matched id:01's standard split layout as requested. Session 51 (07 Aug 2026): data source repointed from `src/data/products.ts` to the new consolidated `src/data/catalog.ts` — see below |
-| 6   | Brand Story / Emotion       | Complete    | 11 Jun 2026 | Session 24: fully redesigned as white-bg social proof section (`#emotion`); large display headline; 4-stat list (1fr 2fr grid, sticky left anchor); image + CTA below; no longer uses gym-interior image or diagonal clip |
-| 7   | Trending                    | Removed     | —           | Removed Session 24 — replaced by Banner + ProductStrips                                    |
-| 8   | Built for Strength          | Removed     | —           | Removed Session 24 — product content merged into ProductStrips                             |
-| 9   | Bold Statement              | Removed     | —           | Removed Session 24 — component deleted                                                     |
-| 10  | Built for Endurance         | Removed     | —           | Removed Session 24 — Pre-Workout strip in ProductStrips serves as placeholder               |
-| 11  | Instagram                   | Removed     | —           | Removed Session 24 — component deleted; can be reinstated when account URL confirmed       |
-| 12  | Contact                     | Complete    | 30 Jul 2026 | Session 41: Web3Forms form removed entirely (form markup, `WEB3FORMS_KEY`, hCaptcha, `CONTACT_SUBJECT` constant) and replaced with a 3-option partner router (`ContactRouter.astro`, renamed from `ContactForm.astro`) linking to `/sales`, `/distributor`, `/retail`, plus a plain `mailto:info@probellnutrition.com` fallback — no form, no JS, no third-party service. `WEB3FORMS_KEY` also removed from `.env`. Per `src/features/contact-router-route-flatten.md` |
-| 13  | Footer                      | Complete    | 30 Jul 2026 | 4-col grid; probell-logo.png used (swap when logo-light.png arrives). Session 41: social icons now point to real URLs (`facebook.com/probellnutrition`, `instagram.com/probellnutrition`) and open in a new tab (`target="_blank" rel="noopener noreferrer"`) — same change applied to `ui/SocialIcons.astro` (used in the mobile nav overlay). Footer background switched from `var(--color-black)` to new `var(--color-black-true)` token — developer confirmed the pure-`#000` background is intentional, not a mistake; see `design.md` Section 1. Session 57 (17 Aug 2026): the "Follow Us" column (Facebook/Instagram icons) commented out sitewide at developer's discretion — accounts are currently stale and not worth surfacing; grid reduced from 5 to 4 columns (`2fr 1fr 1fr 1fr`) to close the gap. Code kept intact, not deleted, for reinstatement once the social presence improves — see Session 57 log |
-| —   | Supplements page            | Complete    | 14 Jun 2026 | Listing + detail pages built (Task 14). Session 44 (03 Aug 2026): detail page (`[slug].astro`) rebuilt on the bold full-bleed-hero design trialled in Session 43's playground — see Session 44 log; the "dark hero + white 4-stat body" layout this row originally described is superseded, not additive. Session 48 (03 Aug 2026): listing page's product card given a dedicated mobile layout and consolidated out of the page into `src/components/ui/ProductCard.astro` (also removed `global.css`'s dead, unused `.product-card` primitive) — see Session 48 log. Session 51 (07 Aug 2026): **DEVIATION** — listing page rebuilt again on new gym-photography product images; `ProductCard.astro` and its grid layout deleted entirely, replaced by dark full-bleed alternating rows (`SupplementRow.astro`). Both listing and detail pages now read from the new consolidated `src/data/catalog.ts` — see Session 51 log |
-| —   | AudienceCards                | Complete    | 10 Jul 2026 | Solo dev session (not run through Claude Code) — new homepage section, 4-card grid linking to `/supplements` and the three partner routes; see Session 32 |
-| —   | Sales Partner page (`/sales`) | Built — pending visual verification | 19 Jul 2026 | Hero, Why Probell, How It Works, application form; FAQ cut (deviation, see Session 34). `src/lib/hubspot.ts` created as shared submission utility for all three partner forms. HubSpot submission functionally confirmed working. Session 40: hero switched from text-only to photographic background (`partner-sales.jpg`, flat `rgba(0,0,0,0.5)` scrim). Session 41: route moved from `/partners/sales` to `/sales` (see below). Visual sign-off still outstanding — developer to review in-browser when ready, not tooling-blocked (see Session 41 process note) |
-| —   | Retailer page (`/retail`)     | Complete    | 19 Jul 2026 | Hero, short "Why Stock Probell" list (deliberately not a stat-chip grid per spec), pricing-is-request-not-publish framing, How It Works, request form (Business Name, Your Name, Email, Phone, Message; no Business Type dropdown, no location field, both deliberate per spec). No automated confirmation email (per spec — inline success only). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working. Session 40: hero switched from text-only to photographic background (`partner-retail.jpg`, flat `rgba(0,0,0,0.5)` scrim). Session 41: route moved from `/partners/retail` to `/retail` |
-| —   | Distributor page (`/distributor`) | Complete | 19 Jul 2026 | Deliberately minimal per spec — hero (gold eyebrow, distinct from red on the other two), one short positioning paragraph (no stat chips, no numbers), minimal contact form (Business Name, Your Name, Contact Email, Phone; no message field, no FAQ, no how-it-works). No automated confirmation email (spec: would contradict the page's "not automated forms" positioning). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working (3/3 pass). Session 40: hero switched from text-only to photographic background (`distributor.jpg`, flat `rgba(0,0,0,0.5)` scrim). Session 41: route moved from `/partners/distributor` to `/distributor` |
-| —   | Partner index page (`/partners/index`) | Removed | 30 Jul 2026 | Session 41: deleted along with the `/partners/` directory as part of the route flatten — no spec had been written for it, and per `src/features/contact-router-route-flatten.md` nothing links to `/partners` itself, so the nested segment was unused taxonomy. Developer confirmed deletion (not a deferral) when asked |
+1. HubSpot partner forms must never fail silently. Spec and build in
+   Module 4, test in Module 5. See `src/docs/context-audit.md` → Later.
+2. Per-field validation on the partner forms (`/sales`, `/retail`,
+   `/distributor`). Today they rely on the browser's built-in required
+   checks only.
+3. Site-wide accessibility pass (none done yet). Known so far: the mobile
+   nav overlay has no Escape-to-close and no focus trap
+   (`Nav/index.astro`).
+4. Full UI check and a possible redesign, in its own session. This
+   replaces the old per-page visual sign-offs and the footer review.
+5. Swap in the client's final product PNGs and a transparent logo PNG.
 
 ---
 
 ## Session Log
+
+Newest first.
+
+### Session 58 — 17 Oct 2026
+
+**Branch:** `course/module-3` — scope for this branch is project-doc cleanup: bringing context docs up to date with the real codebase, and fixing known bugs where docs and code have drifted apart from outdated history.
+
+**What was done:**
+
+- Logged dependency upgrades from commit `1214161` (done by the developer via `npm audit fix`, before this session):
+  - `astro` `^6.3.3` → `^7.4.0` (major)
+  - `eslint-plugin-astro` `^1.7.0` → `^3.2.1` (major — this was in `package.json`, but the commit message doesn't mention it)
+  - `typescript-eslint` `^8.59.3` → `^8.71.2`
+  - `esbuild` 0.27.7 → 0.28.0 (a transitive dependency, `package-lock.json` only)
+- Same commit added `src/docs/context-audit.md`, a snapshot of Claude Code context-window usage (token breakdown by category, memory files, agents). It's reference only and isn't part of the Session Start read list.
+- Verified the upgraded toolchain:
+  - `npx astro check`: 53 files, 0 errors, 0 warnings, **0 hints**. The pre-existing `Nav/index.astro` `define:vars` hint, carried since Session 56, no longer shows up under v7.
+  - `npm run build`: 15 pages, 16 images optimized to WebP, sitemap generated, zero errors.
+  - `npx eslint .`: clean. The Session 57 file-scoped `astro/no-set-html-directive` overrides still work under `eslint-plugin-astro` v3.
+  - `npm audit`: 0 vulnerabilities.
+- No source code changed. Visual output is unaffected as far as the build shows; no in-browser check was done.
+
+**Decisions made this session:**
+
+- None.
+
+---
 
 ### Session 57 — 17 Aug 2026
 
@@ -319,7 +284,7 @@ These items must be confirmed before Claude Code begins building.
 
 **What was done:**
 
-- **DEVIATION:** `/supplements` listing page redesigned per developer direction — moved away from single isolated kettlebell product cutouts to the same full-bleed gym-photography direction already used by the homepage `ProductStrips` (e.g. the athlete gripping the Whey kettlebell tub). Since that photography carries its own environment/lighting rather than being an isolated cutout, the white `ProductCard` grid it previously used no longer fit — replaced with a dark, full-bleed, alternating editorial layout (new `src/components/SupplementRow.astro`), matching `page-structure.md`'s original (pre-Session-48) description of the listing page more than it diverges from current spec.
+- `/supplements` listing page redesigned per developer direction — moved away from single isolated kettlebell product cutouts to the same full-bleed gym-photography direction already used by the homepage `ProductStrips` (e.g. the athlete gripping the Whey kettlebell tub). Since that photography carries its own environment/lighting rather than being an isolated cutout, the white `ProductCard` grid it previously used no longer fit — replaced with a dark, full-bleed, alternating editorial layout (new `src/components/SupplementRow.astro`), matching `page-structure.md`'s original (pre-Session-48) description of the listing page more than it diverges from current spec.
 - Along the way, developer raised a broader question: with only 4 launch products, was it worth collapsing the two parallel data files (`src/data/products.ts` for the homepage strips, `src/data/supplements.ts` for the listing/detail pages) into one source, to stop them drifting apart? Confirmed worth doing — live proof of the drift risk surfaced immediately: `products.ts`'s `whey` image had already been updated to the new photography (`whey.jpg`) while `supplements.ts`'s listing image still pointed at an old placeholder cutout (`whey_new.png`).
 - New `src/data/catalog.ts` built as the single source of truth for all 4 products, replacing both old files. Migrated component by component, developer-reviewed and confirmed at each stage: `ProductStrips`/`ProductStrip.astro` (homepage) first, then the new `/supplements` listing, then `src/components/ProductDetail/*` + `[slug].astro` (detail pages) last. `src/data/products.ts`, `src/data/supplements.ts`, and `src/components/ui/ProductCard.astro` deleted once nothing referenced them.
 - Merge decisions, confirmed with developer along the way:
@@ -339,7 +304,7 @@ These items must be confirmed before Claude Code begins building.
 
 **Decisions made this session:**
 
-- **DEVIATION:** `/supplements` listing page's visual direction and layout changed (gym-photography full-bleed rows replacing the white card grid) — diverges from the page's current build-section entry, per explicit developer instruction; not treated as an error to correct.
+- `/supplements` listing page's visual direction and layout changed (gym-photography full-bleed rows replacing the white card grid) — diverges from the page's current build-section entry, per explicit developer instruction; not treated as an error to correct.
 - Single consolidated `src/data/catalog.ts` confirmed as the ongoing single source of truth for all product data — `products.ts` and `supplements.ts` are gone, not just deprecated.
 - `status` field's meaning is locked as a pure visibility safeguard (`available`/`removed`) — no "coming soon" value exists or should be added; that distinction, if ever needed again, will need a different mechanism.
 
@@ -508,7 +473,7 @@ These items must be confirmed before Claude Code begins building.
 
 **What was done:**
 
-- **DEVIATION:** built `src/pages/supplements/playground.astro` — a standalone route (not a `getStaticPaths` dynamic page, not linked from nav) to trial a bolder visual direction for `/supplements/[slug]` against real Whey data before deciding whether to carry any of it back into the live template. `coding-standards.md` explicitly bans playground/test pages ("build directly in components") — flagged by the developer as a knowing deviation, proceeded per `ai-interaction.md`'s `Deviation:` convention.
+- built `src/pages/supplements/playground.astro` — a standalone route (not a `getStaticPaths` dynamic page, not linked from nav) to trial a bolder visual direction for `/supplements/[slug]` against real Whey data before deciding whether to carry any of it back into the live template. `coding-standards.md` explicitly bans playground/test pages ("build directly in components") — flagged by the developer as a knowing deviation, proceeded per `ai-interaction.md`'s `Deviation:` convention.
 - Layout, using only existing tokens/components (no new global primitives):
   - Full-bleed photographic hero (`creatine_bg.jpg`, per developer instruction — not `product.backgroundImage`/`slugImage`) with the standard `rgba(0,0,0,0.5)` scrim exception, a large low-opacity ghost stat number (pattern borrowed from `ProductStrip.astro`'s `.ps__ghost`), and left-aligned statement-scale product name.
   - A stat strip that breaks out over the hero's bottom edge via negative `margin-top` (bold "card overlapping photography" moment, no new token needed).
@@ -558,7 +523,7 @@ These items must be confirmed before Claude Code begins building.
 
 **What was done:**
 
-- Per `src/features/contact-router-route-flatten.md` (**DEVIATION: intentional structure simplification**, logged in the spec itself):
+- Per `src/features/contact-router-route-flatten.md` (intentional structure simplification, logged in the spec itself):
   - **Route flatten:** grepped the codebase for every `partners/` reference first, per the spec's requirement, and confirmed the full set with the developer before editing. Moved `src/pages/partners/{sales,retail,distributor}.astro` to `src/pages/{sales,retail,distributor}.astro` via `git mv` (history preserved); updated the three `href`s in `src/data/audience-cards.ts` from `/partners/*` to the flat paths. Developer confirmed the empty `src/pages/partners/index.astro` scaffold (previously logged as "not started, no spec written") should be deleted, not moved — deleted it along with the rest of the now-empty `partners/` directory.
   - **Contact section:** removed the Web3Forms form entirely — form markup/fields, `WEB3FORMS_KEY` env var reference, hCaptcha script/div, honeypot — from what was `Contact/ContactForm.astro`. Renamed the file to `Contact/ContactRouter.astro` (it no longer contains a form) and rebuilt it as 3 link options ("I'm a Gym" → `/sales`, "I'm a Distributor" → `/distributor`, "I'm a Retailer" → `/retail`) plus a plain `mailto:info@probellnutrition.com` fallback ("Something else? Reach out directly.") — no JS, no third-party service. `Contact/index.astro` updated to import/wrap the renamed component. Removed the now-unused `CONTACT_SUBJECT` constant from `src/constants/site.ts` (its only consumer was the deleted form's hidden `subject` field).
   - Developer subsequently hand-edited `ContactRouter.astro` directly in the IDE: router options switched from `.btn-primary` to `.btn-secondary`, added a `rgba(0,0,0,0.5)` background panel behind the options group, centered the fallback line.
@@ -569,7 +534,7 @@ These items must be confirmed before Claude Code begins building.
 
 **Decisions made this session:**
 
-- **DEVIATION:** Route flatten and Contact-section rebuild — both pre-logged as deliberate in `src/features/contact-router-route-flatten.md`, not flagged as spec drift.
+- Route flatten and Contact-section rebuild — both pre-logged as deliberate in `src/features/contact-router-route-flatten.md`, not flagged as spec drift.
 - `/partners/index.astro` deleted outright rather than moved/kept as a placeholder — explicit developer instruction, overriding this doc's prior note that it was just an unstarted future page.
 - `--color-black-true` token added to formalize a developer-confirmed intentional true-black background (Footer) — not a fix-in-place of `--color-black` itself, since that token's existing off-black value is used correctly elsewhere.
 - `design.md`'s `--color-black` hex corrected from `#000000` to `#121213` to match `globals.css` — a documentation correction, not a code change; flagging here in case the developer intended the doc's `#000000` as the target and the code as the drift, rather than the reverse (the code's value long predates this session, so it was treated as authoritative).
@@ -625,7 +590,7 @@ These items must be confirmed before Claude Code begins building.
 - `npm run build` passes — zero errors, 15 pages generated
 - Claude code-review pass on the above (not implemented by Claude, developer had already made the changes): no functional or build issues found. One thing flagged to developer, not fixed — developer's call:
   - `Identity/index.astro`'s `.identity__ctas` still has `align-items: center` inside `@media (max-width: 1040px)` — CTA buttons stay centered while the headline/body above them are now left-aligned; may be intentional, may have been missed
-- **DEVIATION:** Per explicit developer instruction this session, [[feedback-commented-code]]'s "never remove without being asked" default was overridden — all commented-out code and the resulting empty style rule were deleted outright (normally this would just be flagged, not fixed):
+- Per explicit developer instruction this session, [[feedback-commented-code]]'s "never remove without being asked" default was overridden — all commented-out code and the resulting empty style rule were deleted outright (normally this would just be flagged, not fixed):
   - `AudienceCards/AudienceCard.astro`: removed a commented-out `<div class="ac__overlay">` markup line, a commented-out `.ac__overlay { ... }` CSS block (dead duplicate of the live rule further down the file), and a commented-out `opacity: 0;` line inside the live `.ac__overlay` rule
   - `AudienceCards/index.astro`: removed a commented-out `padding-block: var(--space-xl);` line in `.ac`
   - `Identity/index.astro`: removed the commented-out `#identity`/`.identity__headline` rules inside `@media (min-width: 768px)` (flagged above), which left that media query block empty, so the empty block was removed too
@@ -635,7 +600,7 @@ These items must be confirmed before Claude Code begins building.
 **Decisions made this session:**
 
 - None requiring a spec update — CSS-only alignment/sizing adjustments to already-built components
-- **DEVIATION:** commented-out code removed outright rather than left in place, on explicit developer instruction — see above; [[feedback-commented-code]] itself is unchanged as a default, this was a one-off override
+- commented-out code removed outright rather than left in place, on explicit developer instruction — see above; [[feedback-commented-code]] itself is unchanged as a default, this was a one-off override
 
 **Decisions still open:**
 
@@ -656,7 +621,7 @@ These items must be confirmed before Claude Code begins building.
 
 **Decisions made this session:**
 
-- **DEVIATION:** Mobile hero (`HeroMobile.astro`) currently uses raw, non-token color/shadow values that `design.md`'s "no raw hex/px/rgba outside the two documented exceptions" rule would normally disallow — e.g. `rgba(0, 0, 0, ...)` gradient stops (vs. the brand near-black token value used on desktop) and an invalid `rgba(0, 0, 0, 100)` alpha (browsers clamp this to fully opaque; not a rendering bug, just malformed syntax). Flagged to developer; developer has confirmed this is intentional for now — a `#000` hex value is planned to be added to `design.md`/`globals.css` as a formal token in an upcoming change, at which point this should be reconciled. Left as-is per explicit instruction, not fixed in this session.
+- Mobile hero (`HeroMobile.astro`) currently uses raw, non-token color/shadow values that `design.md`'s "no raw hex/px/rgba outside the two documented exceptions" rule would normally disallow — e.g. `rgba(0, 0, 0, ...)` gradient stops (vs. the brand near-black token value used on desktop) and an invalid `rgba(0, 0, 0, 100)` alpha (browsers clamp this to fully opaque; not a rendering bug, just malformed syntax). Flagged to developer; developer has confirmed this is intentional for now — a `#000` hex value is planned to be added to `design.md`/`globals.css` as a formal token in an upcoming change, at which point this should be reconciled. Left as-is per explicit instruction, not fixed in this session.
 - Desktop's `hero__overlay-right` (a right-side fade gradient, previously kept commented-out "in case needed") was removed outright rather than kept commented, per explicit developer instruction this session to clean up commented-out code in the Hero files.
 
 **Decisions still open:**
@@ -671,17 +636,17 @@ These items must be confirmed before Claude Code begins building.
 
 **What was done:**
 
-- **DEVIATION:** UI Refresh exploration per `src/features/ui-refresh.md` — built three new visual treatments of the existing `ProductStrips` sections (Whey 100 Protein, Creatine, Pre-Workout) inside a new `src/components/Playground/index.astro`, matching the reference screenshots at `public/images/snippets/`. Production `ProductStrips`/`ProductStrip.astro` and `index.astro` were not touched; playground code is not imported anywhere in production.
-- **DEVIATION:** Added a temporary, unlinked `src/pages/playground.astro` route solely to render `<Playground />` for developer review — `coding-standards.md` prohibits test/playground pages; this is a deliberate, logged exception for review purposes only, to be removed (or its contents promoted) once reviewed.
+- UI Refresh exploration per `src/features/ui-refresh.md` — built three new visual treatments of the existing `ProductStrips` sections (Whey 100 Protein, Creatine, Pre-Workout) inside a new `src/components/Playground/index.astro`, matching the reference screenshots at `public/images/snippets/`. Production `ProductStrips`/`ProductStrip.astro` and `index.astro` were not touched; playground code is not imported anywhere in production.
+- Added a temporary, unlinked `src/pages/playground.astro` route solely to render `<Playground />` for developer review — `coding-standards.md` prohibits test/playground pages; this is a deliberate, logged exception for review purposes only, to be removed (or its contents promoted) once reviewed.
 - Reused product names/body copy from `@data/products` (unchanged) rather than the placeholder copy visible in the reference screenshots, to keep brand-voice copy authoritative; only the visual treatment was rebuilt.
 - Per spec: `public/images/lifestyle/athlete-walking.jpg` used for all three sections regardless of the product imagery shown in the references; button styling in the references was ignored — existing `.btn-secondary` used as-is.
 - Visual deviations from `design.md`/`coding-standards.md`, per the reference: square (non-rounded) full-bleed image edges instead of the current `border-radius: 22px`; a "◆ 01 / FOUNDATION"-style eyebrow (uniform red accent across all three, rather than the current alternating red/gold) replacing "01 — Strength"; a two-stat-with-divider row (current component supports only one stat); section 3 (Pre-Workout) rebuilt as a full-bleed image background with dark scrim and overlaid content, replacing the current split-panel layout.
 - `npm run build` passes — zero errors, 16 pages generated (includes the new `/playground` route).
 - Visual verification not done via Playwright MCP (not connected this session, consistent with prior sessions) — build confirmed clean; developer to review `/playground` directly in-browser at 375/768/1440px before any decision on production use.
 - Developer revisions applied after initial build: section 1 desktop column order reversed (content left/image right; ghost-number anchor now follows content side via flip/overlay modifiers); section 3's `athlete-walking.jpg` zoomed (`transform: scale(1.45)`) to crop out the dark doorframe margins in the source photo that were reading as excess black background; mobile layout corrected from a stacked image-on-top pattern to the reference's actual side-by-side arrangement (narrow ~25% image column, same left/right side as desktop) for sections 1 & 2; whole-section hover added (image zoom 1.05x on sections 1/2, button color state on all three); each strip's data now carries its own `image`/`imageAlt` fields (still all pointing at `athlete-walking.jpg`) instead of one shared constant, so per-section images can be swapped later.
-- **DEVIATION:** Added `.btn-skeleton` to `global.css` — a colorless, structural-only button base (padding/border-width/typography/transition list, including `border-color` in the transition, which `.btn-secondary` was missing). Added because the Playground CTA's hover state is driven by the parent `.pg-strip:hover`, not the button's own `:hover`, which doesn't fit `.btn-secondary`'s baked-in hover colors — diagnosed that `.btn-secondary:hover` sets `border-color` to the same value as its `background`, so the border-color change is real but invisually blends into the fill. Playground's CTA now uses `.btn-skeleton` plus locally-scoped colors (gold border/text at rest, gold fill with a contrasting **black** border on hover) so the border change actually reads. Developer confirmed this is the start of a broader button redesign and it's fine to go off-script for now — `.btn-primary`/`.btn-secondary` themselves were left untouched.
+- Added `.btn-skeleton` to `global.css` — a colorless, structural-only button base (padding/border-width/typography/transition list, including `border-color` in the transition, which `.btn-secondary` was missing). Added because the Playground CTA's hover state is driven by the parent `.pg-strip:hover`, not the button's own `:hover`, which doesn't fit `.btn-secondary`'s baked-in hover colors — diagnosed that `.btn-secondary:hover` sets `border-color` to the same value as its `background`, so the border-color change is real but invisually blends into the fill. Playground's CTA now uses `.btn-skeleton` plus locally-scoped colors (gold border/text at rest, gold fill with a contrasting **black** border on hover) so the border change actually reads. Developer confirmed this is the start of a broader button redesign and it's fine to go off-script for now — `.btn-primary`/`.btn-secondary` themselves were left untouched.
 - Developer tested the Playground build wrapped in the real `SectionWrapper bg="black"` (matching production nesting) and confirmed the full-bleed treatment survives it, once `Playground`'s outer element cancels the wrapper's `padding-inline` via a negative-margin breakout (tracking `SectionWrapper`'s own 1024px breakpoint where it drops from `--container-pad-lg` to `--container-pad`). Also added `margin-top` between the three sections via `.pg-strip + .pg-strip` (previously stacked with zero gap).
-- **DEVIATION — promoted to production:** developer signed off on the visual result and had this migrated into the live `ProductStrips` component (previously logged as pending review in the entries above):
+- **promoted to production:** developer signed off on the visual result and had this migrated into the live `ProductStrips` component (previously logged as pending review in the entries above):
   - `src/data/products.ts`: `Product` interface gained `category` (eyebrow term), `overlay?` (flags strip 03's full-bleed treatment), and `stats: ProductStat[]` replacing the old singular `stat?`. All three `PRODUCTS` entries updated with real `stats` pairs and `category` values. Original per-product images (`three-flavours.jpg`, `trending-creatine.jpg`, `discipline.png`) deliberately left as-is — not overwritten with the exploration's placeholder `athlete-walking.jpg`; images/hrefs/alt text are the developer's to finish.
   - `ProductStrip.astro`: fully rewritten — branches on `product.overlay` for split-panel (01/02) vs. full-bleed-with-scrim (03), uniform red diamond eyebrow (`labelAccent`'s red/gold alternation is no longer used, left in the interface rather than deleted), dual-stat row, flip-aware ghost position, whole-strip hover (image zoom on non-overlay strips, button color on all three), `.btn-skeleton`-based CTA. All classes renamed from the playground's `pg-strip__*` to `ps__strip`/`ps__*`. `margin-bottom: 5rem` (raw value) on the old `.ps__strip` replaced with a token-based `.ps__strip + .ps__strip { margin-top: var(--space-xl); }`. Left a code comment flagging that the `.ps__bg` image's `scale(1.45)` zoom was tuned specifically for `athlete-walking.jpg`'s framing and will likely need retuning once strip 03's real image is finalized.
   - `ProductStrips/index.astro`: added the same `SectionWrapper` padding-breakout margin confirmed in the Playground test, so the promoted component keeps its full-bleed edges without needing any change to `index.astro`'s homepage composition (`ProductStrips` is just one sibling inside the shared black `SectionWrapper` next to `AudienceCards`/`Identity`/`Banner` — the breakout only affects its own box).
@@ -692,9 +657,9 @@ These items must be confirmed before Claude Code begins building.
 
 **Decisions made this session:**
 
-- **DEVIATION:** Entire task — see `src/features/ui-refresh.md`. Developer explicitly authorized working outside `design.md`/`coding-standards.md` boundaries for this exploration, including the otherwise-disallowed playground component and page.
-- **DEVIATION:** `.btn-skeleton` added to shared `global.css` (not playground-scoped) ahead of a planned broader button redesign — flagged since this is the one change from this session that touches production CSS directly, even though no existing button's rendered output changed.
-- **DEVIATION:** Playground treatment promoted into live `ProductStrips`/`ProductStrip.astro`/`products.ts` — see above. `design.md`'s Component Rules section (button system) and the ghost-number red/gold alternation are now stale against what's actually live and should be reconciled once the wider button redesign is scoped, rather than read as accidental drift.
+- Entire task — see `src/features/ui-refresh.md`. Developer explicitly authorized working outside `design.md`/`coding-standards.md` boundaries for this exploration, including the otherwise-disallowed playground component and page.
+- `.btn-skeleton` added to shared `global.css` (not playground-scoped) ahead of a planned broader button redesign — flagged since this is the one change from this session that touches production CSS directly, even though no existing button's rendered output changed.
+- Playground treatment promoted into live `ProductStrips`/`ProductStrip.astro`/`products.ts` — see above. `design.md`'s Component Rules section (button system) and the ghost-number red/gold alternation are now stale against what's actually live and should be reconciled once the wider button redesign is scoped, rather than read as accidental drift.
 
 **Decisions still open:**
 
@@ -765,7 +730,7 @@ These items must be confirmed before Claude Code begins building.
 
 **Decisions made this session:**
 
-- **DEVIATION:** FAQ section (Section 4 of `sales-partner-page.md`) cut from this build — spec assumed reuse of an existing homepage FAQ accordion component that no longer exists (removed in the Session 24 redesign, never rebuilt). Building a new accordion was out of scope for this session. Revisit if applicant confusion becomes a real issue post-launch.
+- FAQ section (Section 4 of `sales-partner-page.md`) cut from this build — spec assumed reuse of an existing homepage FAQ accordion component that no longer exists (removed in the Session 24 redesign, never rebuilt). Building a new accordion was out of scope for this session. Revisit if applicant confusion becomes a real issue post-launch.
 - `partner-crm-integration.md` was updated mid-session by the developer — reCAPTCHA removed entirely from all three HubSpot forms (confirmed incompatible with the raw `submissions/v3/integration/submit` API — HubSpot rejects API submissions outright when CAPTCHA is enabled on the form). Honeypot + time-trap is the confirmed, sole spam-protection layer; `hubspot.ts` reflects this — no reCAPTCHA site key dependency exists or is pending.
 - One shared `src/lib/hubspot.ts` built now (with the Sales Partner page) rather than deferred — Retailer and Distributor should call into it rather than duplicating fetch/endpoint logic, per the spec's explicit instruction.
 - Visual verification (Step 4.5) not performed by Claude Code this session — Playwright MCP was not connected. Developer opted to review `/partners/sales` in-browser directly rather than connect Playwright mid-session. Section is therefore logged as "Built — pending visual verification," not "Complete."
@@ -798,8 +763,8 @@ These items must be confirmed before Claude Code begins building.
 
 **Decisions made this session:**
 
-- **DEVIATION:** Partner-page specs rewritten to v2 with materially different scope than the versions Claude Code last built against — read the current `src/features/*-page.md` content fresh before starting the next partner-page build task; do not assume v1 scope
-- **DEVIATION:** AudienceCard overlay gradient disabled via comment-out rather than removal — per [[feedback-commented-code]], left in place rather than deleted; flag to developer if intent was actually to remove it permanently
+- Partner-page specs rewritten to v2 with materially different scope than the versions Claude Code last built against — read the current `src/features/*-page.md` content fresh before starting the next partner-page build task; do not assume v1 scope
+- AudienceCard overlay gradient disabled via comment-out rather than removal — per [[feedback-commented-code]], left in place rather than deleted; flag to developer if intent was actually to remove it permanently
 
 **Decisions still open:**
 
@@ -829,8 +794,8 @@ These items must be confirmed before Claude Code begins building.
 
 **Decisions made this session:**
 
-- **DEVIATION:** Market direction confirmed as US-only (see `market-strategy.md`) — a prior Sweden-first proof-of-concept strategy referenced in earlier project discussion is explicitly superseded and should be disregarded in historical summaries
-- **DEVIATION:** Partner program page routes added ahead of their content build — scaffolding only, intentionally sequenced before the full page-structure work
+- Market direction confirmed as US-only (see `market-strategy.md`) — a prior Sweden-first proof-of-concept strategy referenced in earlier project discussion is explicitly superseded and should be disregarded in historical summaries
+- Partner program page routes added ahead of their content build — scaffolding only, intentionally sequenced before the full page-structure work
 
 **Decisions still open:** same list as Session 33 above, minus the spec-v2 item (specs were still at v1 as of this session).
 
@@ -855,7 +820,7 @@ These items must be confirmed before Claude Code begins building.
 
 **Decisions made this session:**
 
-- **DEVIATION:** Mobile audit conducted via Playwright MCP as a dedicated audit-only session type (no code changes during the audit itself) — findings then applied in this same commit; establishes the audit-then-fix pattern referenced in `mobile-audit.md`
+- Mobile audit conducted via Playwright MCP as a dedicated audit-only session type (no code changes during the audit itself) — findings then applied in this same commit; establishes the audit-then-fix pattern referenced in `mobile-audit.md`
 
 **Decisions still open:** same list as Session 33 above, minus the spec-v2 and Arnold Expo items (those postdate this session).
 
@@ -1741,44 +1706,76 @@ These items must be confirmed before Claude Code begins building.
 
 ---
 
-## Known Issues
 
-None.
+## History: pre-build checklist and build sections
+
+Kept as a record only. It isn't maintained.
+
+
+These items must be confirmed before Claude Code begins building.
+
+### Spec documents
+
+- [x] `brand.md` — complete
+- [x] `design.md` — complete
+- [x] `globals.css` — complete
+- [x] `coding-standards.md` — complete
+- [x] `ai-interaction.md` — complete
+- [x] `page-structure.md` — complete
+- [x] `progress-tracker.md` — complete
+
+### Assets
+
+- [x] Logo PNG — single asset supplied `/public/images/icons/probell-logo.png` — light/dark structure in place, awaiting two-variant assets
+- [x] Hero image — `hero-main.jpg` — replaced `hero-main-v2.png` (Jun 2026); now .jpg format
+- [x] Brand story image — `gym-interior.png` — generated and confirmed
+- [x] Bold statement image — `discipline.png` — client supplied
+- [ ] Whey CPB PNG — pending
+- [ ] Whey Cookies & Cream PNG — pending
+- [ ] Whey Salted Caramel PNG — pending
+- [ ] Favicon — pending
+
+### Decisions pending
+
+- [ ] Active display font — Anton or Barlow Condensed
+      Decide in browser against real photography
+- [ ] Active body font — Space Grotesk or DM Sans
+      Decide in browser against real content
+- [ ] Active hero headline — A, B, C, or D
+      Decide in browser against hero image
+- [ ] Footer design — visual references to be confirmed
+- [x] Contact form email address — resolved Session 41: Contact section no longer has a form (replaced by the router, see Session 41 log); `mailto:info@probellnutrition.com` is the fallback contact point
+- [x] Instagram account URL — resolved Session 41: `https://www.instagram.com/probellnutrition/`
+- [x] Formspree account setup — moot; project used Web3Forms instead of Formspree, and Web3Forms itself was removed entirely in Session 41 (Contact section replaced with a partner router + mailto fallback)
 
 ---
 
-## Deferred Items
+## Build Sections
 
-| Item                        | Reason                                | Owner              |
-| --------------------------- | ------------------------------------- | ------------------ |
-| Footer design               | Needs visual reference review         | Developer          |
-| Product PNGs                | Client assets not yet finalised       | Client / Developer |
-| Logo transparent PNG        | Client to supply                      | Client             |
-| Instagram live feed         | Account URL confirmed (Session 41); component itself was removed Session 24 and hasn't been rebuilt | Developer |
-| Font decisions              | Must be made in browser               | Developer          |
-| Hero headline               | Must be made in browser               | Developer          |
-| CMS integration (Hygraph)   | Deferred until core UI stable         | Developer          |
-| Payment gateway             | Deferred — business decisions pending | Client / Developer |
+| #   | Section                     | Status      | Completed   | Notes                                                                                      |
+| --- | --------------------------- | ----------- | ----------- | ------------------------------------------------------------------------------------------ |
+| —   | Project init                | Complete    | 17 May 2026 |                                                                                            |
+| —   | globals.css import          | Complete    | 17 May 2026 |                                                                                            |
+| —   | BaseLayout                  | Complete    | 17 May 2026 |                                                                                            |
+| 1   | Nav                         | Complete    | 17 May 2026 | Single logo asset used for both states — swap when two-variant PNGs arrive. Session 42: mobile overlay refactored, see below — not yet developer-signed-off in-browser. Session 57: `SocialIcons` usage commented out (developer's discretion, stale social presence) — see Footer row and Session 57 log |
+| 2   | Hero                        | Complete    | 26 Jul 2026 | Session 38: split into `HeroDesktop.astro` + `HeroMobile.astro` (CSS `display` swap at 768px, `index.astro` now just the orchestrator) so mobile can be designed independently. Desktop: `hero_v2.png`, single-tier headline, bottom gradient. Mobile: `hero_v2_mobile.png`, two-tier headline layout + icon CTA row (currently commented out, developer WIP), still in active visual iteration — not yet developer-signed-off |
+| 3   | Identity                    | Complete    | 11 Jun 2026 | Session 24: refactored to accept headline/body/primaryCta props; secondary CTA removed; stats row removed; CTA points to #trending. Session 50 (06 Aug 2026): rebuilt as a single centered "statement" layout — deliberate exception per `design.md` §4 — replacing the two-column split. Headline split into `headline`/`accentText`/`highlightText` props so "One Standard." (dimmed white) and "No Compromise." (accent color) render as separate spans. Below `--bp-xl` (1280px) each of the three segments stacks on its own line |
+| 4   | Banner (ui)                 | Removed     | —           | Built Session 24 (80vh; grid 1fr 1fr, empty left cell, content right; background-image from prop). Removed 06 Aug 2026 — `ui/Banner.astro` deleted along with its (already-commented-out) usage in `index.astro`; see below |
+| 5   | ProductStrips               | Complete    | 11 Jun 2026 | Session 24: NEW component replacing Trending + BuiltForStrength; 3 alternating full-width strips — Whey 100 Protein (image right), Creatine (image left, gold), Pre-Workout (muted/coming soon); ghost number watermark; stat callout on strip 01. Session 50 (06 Aug 2026): 4th entry (Mass Gainer, id:04) added to `src/data/products.ts` — layout is fully data-driven off `flip`/`overlay`/`imageMuted` flags, no changes needed in `ProductStrip.astro` itself; the `overlay: true` it was initially given (which put it on the full-bleed pattern) was removed so it matched id:01's standard split layout as requested. Session 51 (07 Aug 2026): data source repointed from `src/data/products.ts` to the new consolidated `src/data/catalog.ts` — see below |
+| 6   | Brand Story / Emotion       | Complete    | 11 Jun 2026 | Session 24: fully redesigned as white-bg social proof section (`#emotion`); large display headline; 4-stat list (1fr 2fr grid, sticky left anchor); image + CTA below; no longer uses gym-interior image or diagonal clip |
+| 7   | Trending                    | Removed     | —           | Removed Session 24 — replaced by Banner + ProductStrips                                    |
+| 8   | Built for Strength          | Removed     | —           | Removed Session 24 — product content merged into ProductStrips                             |
+| 9   | Bold Statement              | Removed     | —           | Removed Session 24 — component deleted                                                     |
+| 10  | Built for Endurance         | Removed     | —           | Removed Session 24 — Pre-Workout strip in ProductStrips serves as placeholder               |
+| 11  | Instagram                   | Removed     | —           | Removed Session 24 — component deleted; can be reinstated when account URL confirmed       |
+| 12  | Contact                     | Complete    | 30 Jul 2026 | Session 41: Web3Forms form removed entirely (form markup, `WEB3FORMS_KEY`, hCaptcha, `CONTACT_SUBJECT` constant) and replaced with a 3-option partner router (`ContactRouter.astro`, renamed from `ContactForm.astro`) linking to `/sales`, `/distributor`, `/retail`, plus a plain `mailto:info@probellnutrition.com` fallback — no form, no JS, no third-party service. `WEB3FORMS_KEY` also removed from `.env`. Per `src/features/contact-router-route-flatten.md` |
+| 13  | Footer                      | Complete    | 30 Jul 2026 | 4-col grid; probell-logo.png used (swap when logo-light.png arrives). Session 41: social icons now point to real URLs (`facebook.com/probellnutrition`, `instagram.com/probellnutrition`) and open in a new tab (`target="_blank" rel="noopener noreferrer"`) — same change applied to `ui/SocialIcons.astro` (used in the mobile nav overlay). Footer background switched from `var(--color-black)` to new `var(--color-black-true)` token — developer confirmed the pure-`#000` background is intentional, not a mistake; see `design.md` Section 1. Session 57 (17 Aug 2026): the "Follow Us" column (Facebook/Instagram icons) commented out sitewide at developer's discretion — accounts are currently stale and not worth surfacing; grid reduced from 5 to 4 columns (`2fr 1fr 1fr 1fr`) to close the gap. Code kept intact, not deleted, for reinstatement once the social presence improves — see Session 57 log |
+| —   | Supplements page            | Complete    | 14 Jun 2026 | Listing + detail pages built (Task 14). Session 44 (03 Aug 2026): detail page (`[slug].astro`) rebuilt on the bold full-bleed-hero design trialled in Session 43's playground — see Session 44 log; the "dark hero + white 4-stat body" layout this row originally described is superseded, not additive. Session 48 (03 Aug 2026): listing page's product card given a dedicated mobile layout and consolidated out of the page into `src/components/ui/ProductCard.astro` (also removed `global.css`'s dead, unused `.product-card` primitive) — see Session 48 log. Session 51 (07 Aug 2026): listing page rebuilt again on new gym-photography product images; `ProductCard.astro` and its grid layout deleted entirely, replaced by dark full-bleed alternating rows (`SupplementRow.astro`). Both listing and detail pages now read from the new consolidated `src/data/catalog.ts` — see Session 51 log |
+| —   | AudienceCards                | Complete    | 10 Jul 2026 | Solo dev session (not run through Claude Code) — new homepage section, 4-card grid linking to `/supplements` and the three partner routes; see Session 32 |
+| —   | Sales Partner page (`/sales`) | Built — pending visual verification | 19 Jul 2026 | Hero, Why Probell, How It Works, application form; FAQ cut (deviation, see Session 34). `src/lib/hubspot.ts` created as shared submission utility for all three partner forms. HubSpot submission functionally confirmed working. Session 40: hero switched from text-only to photographic background (`partner-sales.jpg`, flat `rgba(0,0,0,0.5)` scrim). Session 41: route moved from `/partners/sales` to `/sales` (see below). Visual sign-off still outstanding — developer to review in-browser when ready, not tooling-blocked (see Session 41 process note) |
+| —   | Retailer page (`/retail`)     | Complete    | 19 Jul 2026 | Hero, short "Why Stock Probell" list (deliberately not a stat-chip grid per spec), pricing-is-request-not-publish framing, How It Works, request form (Business Name, Your Name, Email, Phone, Message; no Business Type dropdown, no location field, both deliberate per spec). No automated confirmation email (per spec — inline success only). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working. Session 40: hero switched from text-only to photographic background (`partner-retail.jpg`, flat `rgba(0,0,0,0.5)` scrim). Session 41: route moved from `/partners/retail` to `/retail` |
+| —   | Distributor page (`/distributor`) | Complete | 19 Jul 2026 | Deliberately minimal per spec — hero (gold eyebrow, distinct from red on the other two), one short positioning paragraph (no stat chips, no numbers), minimal contact form (Business Name, Your Name, Contact Email, Phone; no message field, no FAQ, no how-it-works). No automated confirmation email (spec: would contradict the page's "not automated forms" positioning). Reuses `src/lib/hubspot.ts`. Developer-confirmed: visual check done, submission working (3/3 pass). Session 40: hero switched from text-only to photographic background (`distributor.jpg`, flat `rgba(0,0,0,0.5)` scrim). Session 41: route moved from `/partners/distributor` to `/distributor` |
+| —   | Partner index page (`/partners/index`) | Removed | 30 Jul 2026 | Session 41: deleted along with the `/partners/` directory as part of the route flatten — no spec had been written for it, and per `src/features/contact-router-route-flatten.md` nothing links to `/partners` itself, so the nested segment was unused taxonomy. Developer confirmed deletion (not a deferral) when asked |
 
 ---
 
-## How Claude Code Updates This File
-
-At the start of every session:
-
-- Read current status and next action
-- Confirm with developer before proceeding
-
-At the end of every section:
-
-- Update section status to `Complete`
-- Add completion date
-- Add any notes — deviations from spec, decisions made, issues found
-- Update `Current Status` and `Next action` at the top of this file
-
-At the end of every session:
-
-- Add a session entry to the Session Log
-- List what was built
-- List any open decisions
-- Update `Next action` at the top of this file
