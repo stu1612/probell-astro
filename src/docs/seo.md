@@ -1,9 +1,5 @@
 # SEO Standards
 
-**Last updated: 13 June 2026**
-
----
-
 ## Purpose
 
 Every page on this site must implement the full SEO
