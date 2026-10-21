@@ -354,9 +354,12 @@ added in its place.
    external-services rule, working style and a doc map.
 6. **Retired:** the Deviation convention, the mandatory confirm stop
    and the mandatory Playwright checks.
-7. **Completed specs:** moved as-is to `src/features/archive/` with
-   the header "Implemented. Paths may be stale." Paths aren't
-   rewritten.
+7. **Completed specs:** ~~moved as-is to `src/features/archive/` with
+   the header "Implemented. Paths may be stale."~~ Revised 21 Oct 2026:
+   the site is published and the code is the source, so all of
+   `src/features/` was deleted (git history keeps it). Non-obvious intent
+   moved to `brand.md` (Partner pages) and the `hubspot.ts` header; the
+   pending confirmation-email sender swap went to the tracker board.
 8. **Design docs:** they describe intent and aren't rulebooks. Claude
    proposes ideas within that intent.
    - Gradients: the code wins. Dark overlays go where text sits on

@@ -30,6 +30,27 @@ a gym owner has to believe their members will want this.
     experience.
   - The Sales Partner page supports this.
 
+## Partner pages
+
+Each page has one honest stance. Never invent traction, scale or numbers
+(the production run size stays private).
+
+- **Sales Partner (`/sales`):** qualifies on belief, not credentials. No
+  experience or resume fields. "Why Probell?" is the qualifying input.
+  Region and event are free text: there are no fixed territories yet, and
+  free text surfaces opportunities a dropdown would miss. No published
+  commission terms.
+- **Retailer (`/retail`):** small scale is a strength ("someone who won't
+  waste your time"). Wholesale pricing is shared on request, never
+  published, and the page should make that feel like normal B2B practice.
+  No business-type dropdown or location field; those belong in the
+  follow-up conversation.
+- **Distributor (`/distributor`):** aimed at regional or mid-size
+  distributors scouting new brands, not enterprise. Deliberately minimal:
+  intro, one short paragraph, and a form with no message field. No stat
+  chips, FAQ or automation. Over-building it would look like compensating
+  for a lack of track record.
+
 ## Principles
 
 1. **Earned, not aspirational.** The brand is for people who already show

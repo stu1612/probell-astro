@@ -30,6 +30,9 @@ to date.
     backgrounds
 - Re-enable the Facebook and Instagram links (commented out in Session
   57) once the accounts are refreshed.
+- Confirm `info@probellnutrition.com` is live (not `.se`), then swap the
+  Sales Partner HubSpot confirmation email's From address off the
+  placeholder (Session 34).
 - Client assets: final product PNGs and a transparent logo PNG.
 - Footer design still needs a visual reference review.
 - Later business decisions: a CMS (Hygraph) and a payment gateway.

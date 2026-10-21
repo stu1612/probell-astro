@@ -1,10 +1,21 @@
 // Shared HubSpot Forms API submission utility for the three partner-program
-// forms (Sales Partner, Retailer, Distributor). See
-// src/features/partner-crm-integration.md for the full integration spec.
+// forms (Sales Partner, Retailer, Distributor). The portal is on HubSpot's EU
+// data centre, so only the api-eu1 endpoint works.
+//
+// Portal-side decisions (not visible in code):
+// - Review status is the manual `application_status` contact property
+//   (New → Reviewing → In Discussion → Active), not a Deal pipeline: Deals
+//   model dollar value, and the free tier's single pipeline is kept for real
+//   orders later.
+// - Free tier caps custom properties at 10; 7 are in use.
+// - Only Sales Partner sends an automated confirmation email. Distributor
+//   deliberately has none (its page promises a personal conversation).
 
 // reCAPTCHA is deliberately not used — HubSpot rejects raw API submissions
-// outright when CAPTCHA is enabled on the form. Honeypot + time-trap is the
-// confirmed replacement (see partner-crm-integration.md, Spam Protection).
+// outright when CAPTCHA is enabled on the form, so it must stay OFF on all
+// three HubSpot forms. Honeypot + time-trap is the confirmed replacement.
+// If spam becomes a real problem, the fix is standalone reCAPTCHA v3 with
+// server-side verification, which means adding a serverless function.
 const MIN_SUBMIT_SECONDS = 3;
 
 export interface HubSpotField {

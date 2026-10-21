@@ -62,8 +62,7 @@ route in, then make contact.
 
 | Need | Read |
 |---|---|
-| Copy, imagery, audience, go-to-market | `src/docs/brand.md` |
+| Copy, imagery, audience, go-to-market, partner page intent | `src/docs/brand.md` |
 | A new section or a visual change | `src/docs/design.md` |
 | A new page, or changes to `<head>` or meta | `src/docs/seo.md` |
 | What's in progress, next, open or buggy, and project history | Ask the `tracker-historian` agent. Don't read `progress-tracker.md` directly |
-| The original intent behind the partner pages | `src/features/*-page.md`, `partner-crm-integration.md` |
