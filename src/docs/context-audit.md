@@ -146,8 +146,6 @@ The brief has four parts:
 | DNS is managed at one.com, and email (MX) is intact at one.com | `dig` (see DNS proof below) |
 | The apex domain redirects to `www` | `curl -sI` returns 308 to `https://www.probellnutrition.com/` (noted only, not acted on) |
 | Vercel project `probell-astro`. The MCP gets 403 on the team scope, and there's no CLI | MCP `list_projects` works, other calls are forbidden |
-| HubSpot env vars are set in Vercel and tested | Stu |
-| Partner forms fall back to `""` if a `HUBSPOT_*` var is missing | `src/pages/sales.astro:11-12` and its siblings |
 | Vercel production builds from `main`. Day-to-day work is on `dev`; `course/*` branches are children of `dev`, used for now | Stu; `git merge-base` |
 | Fonts are Anton (display) and Space Grotesk (body), confirmed final | `global.css:38-46`; Stu |
 | `TornEdge.astro` isn't used in the code | Referenced only in docs and specs |
@@ -226,24 +224,6 @@ added in its place.
 ---
 
 ## Later
-
-### HubSpot partner forms: missing config fails silently
-
-- Problem: sales/retail/distributor pages fall back to "" when a
-  HUBSPOT_* value is missing (sales.astro:11-12 and siblings).
-  The build passes and leads are lost without anyone knowing.
-- Decision (Stu): forms must never fail silently.
-  - Missing config = catch at build. Production build fails
-    (Vercel keeps the last good deploy live). Dev/preview: warn and
-    show a visible "form unavailable, email us" fallback.
-  - HubSpot errors at submit time: show a clear error plus a
-    mailto fallback.
-- First check when this is picked up: are the portal ID and GUIDs
-  public anyway (grep dist/ after a build)? If so, move them to a
-  typed file in src/data/ instead of guarding env vars.
-- Preview env vars: Stu checks in the Vercel dashboard. No Vercel
-  access needed.
-- Planned for: Module 4 (spec + build), test in Module 5.
 
 ### Payment gateway
 

@@ -3,13 +3,15 @@ import { Image } from "astro:assets";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import FormField from "@components/ui/FormField.astro";
 import partnerPagesHero from "@assets/partners/partner-pages-hero.jpg";
+import { HUBSPOT_FORMS } from "@data/hubspot";
+import { CONTACT_EMAIL } from "@constants/site";
 
 const title = "Retailer Program | Probell Nutrition";
 const description =
   "Tell us what you need — we'll give you a straight answer, fast. Request wholesale pricing to stock Probell Nutrition.";
 
-const hubspotPortalId = import.meta.env.HUBSPOT_PORTAL_ID ?? "";
-const hubspotFormGuid = import.meta.env.HUBSPOT_RETAILER_FORM_GUID ?? "";
+const hubspotPortalId = HUBSPOT_FORMS.portalId;
+const hubspotFormGuid = HUBSPOT_FORMS.retailer;
 
 const whyStock = [
   "The kettlebell-shaped container — genuinely distinct on a shelf or gym floor, a conversation starter with members and customers",
@@ -190,7 +192,7 @@ const howItWorks = [
             style="display: none;"
             aria-live="polite"
           >
-            Something went wrong. Please try again or email us directly.
+            Something went wrong. Please try again or <a href={`mailto:${CONTACT_EMAIL}`}>email us directly</a>.
           </p>
 
           <button type="submit" class="btn-primary retail-apply__submit">
@@ -465,6 +467,11 @@ const howItWorks = [
   .retail-apply__success {
     color: var(--color-gold);
     padding: var(--space-lg) 0;
+  }
+
+  .retail-apply__error a {
+    color: inherit;
+    text-decoration: underline;
   }
 
   .retail-apply__error {
