@@ -3,13 +3,15 @@ import { Image } from "astro:assets";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import FormField from "@components/ui/FormField.astro";
 import partnerPagesHero from "@assets/partners/partner-pages-hero.jpg";
+import { HUBSPOT_FORMS } from "@data/hubspot";
+import { CONTACT_EMAIL } from "@constants/site";
 
 const title = "Distributor Program | Probell Nutrition";
 const description =
   "We're early, and we're serious about growing right. If you see an opportunity here, we want to hear how you see it.";
 
-const hubspotPortalId = import.meta.env.HUBSPOT_PORTAL_ID ?? "";
-const hubspotFormGuid = import.meta.env.HUBSPOT_DISTRIBUTOR_FORM_GUID ?? "";
+const hubspotPortalId = HUBSPOT_FORMS.portalId;
+const hubspotFormGuid = HUBSPOT_FORMS.distributor;
 ---
 
 <BaseLayout title={title} description={description} transparentNav={true}>
@@ -93,6 +95,7 @@ const hubspotFormGuid = import.meta.env.HUBSPOT_DISTRIBUTOR_FORM_GUID ?? "";
           />
           <FormField
             id="distributor-name"
+            rule="fullName"
             label="Your Name"
             name="fullName"
             required={true}
@@ -104,14 +107,20 @@ const hubspotFormGuid = import.meta.env.HUBSPOT_DISTRIBUTOR_FORM_GUID ?? "";
             type="email"
             required={true}
           />
-          <FormField id="distributor-phone" label="Phone" name="phone" />
+          <FormField id="distributor-phone" label="Phone" name="phone" rule="phone" />
 
           <div class="form-group distributor-apply__consent">
             <label class="distributor-apply__consent-label">
-              <input type="checkbox" name="consent" required />
+              <input
+                type="checkbox"
+                name="consent"
+                required
+                aria-describedby="distributor-consent-error"
+              />
               I agree to be contacted by Probell Nutrition regarding my inquiry. See
               our <a href="/legal/privacy">Privacy Policy</a>.
             </label>
+            <p class="form-error" id="distributor-consent-error" hidden></p>
           </div>
 
           <p
@@ -120,7 +129,7 @@ const hubspotFormGuid = import.meta.env.HUBSPOT_DISTRIBUTOR_FORM_GUID ?? "";
             style="display: none;"
             aria-live="polite"
           >
-            Something went wrong. Please try again or email us directly.
+            Something went wrong. Please try again or <a href={`mailto:${CONTACT_EMAIL}`}>email us directly</a>.
           </p>
 
           <button type="submit" class="btn-primary distributor-apply__submit">
@@ -138,6 +147,7 @@ const hubspotFormGuid = import.meta.env.HUBSPOT_DISTRIBUTOR_FORM_GUID ?? "";
     checkSpamSubmission,
     splitFullName,
   } from "@lib/hubspot";
+  import { validateForm, enableLiveValidation } from "@lib/form-validation";
 
   const CONSENT_TEXT =
     "I agree to be contacted by Probell Nutrition regarding my inquiry.";
@@ -155,8 +165,8 @@ const hubspotFormGuid = import.meta.env.HUBSPOT_DISTRIBUTOR_FORM_GUID ?? "";
 
     error.style.display = "none";
 
-    if (!form.checkValidity()) {
-      form.reportValidity();
+    if (!validateForm(form)) {
+      enableLiveValidation(form);
       return;
     }
 
@@ -322,8 +332,13 @@ const hubspotFormGuid = import.meta.env.HUBSPOT_DISTRIBUTOR_FORM_GUID ?? "";
     padding: var(--space-lg) 0;
   }
 
+  .distributor-apply__error a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
   .distributor-apply__error {
-    color: var(--color-red);
+    color: var(--color-red-text);
     margin-bottom: var(--space-sm);
   }
 

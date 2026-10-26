@@ -12,14 +12,14 @@ const { title, description, lastUpdated, intro } = Astro.props;
 ---
 
 <BaseLayout title={`${title} | Probell Nutrition`} description={description}>
-  <main class="legal">
+  <div class="legal">
     <div class="legal__container">
       <h1 class="legal__title display-text">{title}</h1>
       <p class="legal__updated label-text">Last updated: {lastUpdated}</p>
       <p class="legal__intro">{intro}</p>
       <slot />
     </div>
-  </main>
+  </div>
 </BaseLayout>
 
 <style>

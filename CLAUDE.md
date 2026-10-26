@@ -48,10 +48,10 @@ route in, then make contact.
   `ProductDetail/` are a folder of parts. Shared pieces live in
   `src/components/ui/`.
 - **Forms:** the partner forms (`/sales`, `/retail`, `/distributor`) post
-  to HubSpot through `src/lib/hubspot.ts`. Each page reads `HUBSPOT_*`
-  env vars and **falls back to `""` if one is missing, so the build
-  passes and leads are lost silently.** The fix is planned; see "Later"
-  in `src/docs/context-audit.md`.
+  to HubSpot through `src/lib/hubspot.ts`. The portal ID and form GUIDs
+  are public and live in `src/data/hubspot.ts` (`HUBSPOT_FORMS`), not
+  env vars. A failed submit shows an error with a `CONTACT_EMAIL`
+  mailto link.
 - **Comments:** leave commented-out code in place unless asked to
   remove it.
 - **Changes:** keep them minimal, with no unrelated refactors. Stop

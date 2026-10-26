@@ -20,10 +20,10 @@ import homepageHero from "@assets/hero/homepage-hero.jpg";
   </div>
 
   <div class="hero__headline">
-    <div class="headline">
+    <h1 class="headline">
       <span class="headline__line--1">Built for</span>
       <span class="headline__line--2">the Grind</span>
-    </div>
+    </h1>
     <p class="hero__subline">The only protein you can actually lift</p>
   </div>
 </section>
@@ -96,6 +96,8 @@ import homepageHero from "@assets/hero/homepage-hero.jpg";
 
   .headline {
     font-family: var(--font-display);
+    /* h1 defaults to bold; Anton ships one weight, so keep it regular. */
+    font-weight: 400;
     color: var(--color-white);
     display: flex;
     flex-direction: column;

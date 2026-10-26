@@ -1,4 +1,6 @@
 ---
+import { CONTACT_EMAIL } from "@constants/site";
+
 const ROUTER_OPTIONS = [
   { label: "I'm a Gym", href: "/sales" },
   { label: "I'm a Distributor", href: "/distributor" },
@@ -19,7 +21,7 @@ const ROUTER_OPTIONS = [
 
   <p class="contact-router__fallback label-text">
     Something else? <a
-      href="mailto:info@probellnutrition.com"
+      href={`mailto:${CONTACT_EMAIL}`}
       class="contact-router__mailto">Reach out directly.</a
     >
   </p>

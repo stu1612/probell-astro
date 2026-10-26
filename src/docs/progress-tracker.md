@@ -8,30 +8,110 @@ to date.
 
 ### Now
 
-- Docs clean-up on `course/module-3`: remove inactive tools and
-  unneeded docs, collapse duplicate rules, fix stale data, write a lean
-  CLAUDE.md and add `/start` and `/wrap`. The full plan and decisions
-  are in `src/docs/context-audit.md` under "Clean-up decisions".
+- Full UI check and a possible redesign, in its own session. This
+  replaces the old per-page visual sign-offs and the footer review.
 
 ### Next
 
-1. HubSpot partner forms must never fail silently. Spec and build in
-   Module 4, test in Module 5. See `src/docs/context-audit.md` → Later.
-2. Per-field validation on the partner forms (`/sales`, `/retail`,
-   `/distributor`). Today they rely on the browser's built-in required
-   checks only.
-3. Site-wide accessibility pass (none done yet). Known so far: the mobile
-   nav overlay has no Escape-to-close and no focus trap
-   (`Nav/index.astro`).
-4. Full UI check and a possible redesign, in its own session. This
-   replaces the old per-page visual sign-offs and the footer review.
-5. Swap in the client's final product PNGs and a transparent logo PNG.
+1. Swap in the client's final product PNGs and a transparent logo PNG.
 
 ---
 
 ## Session Log
 
 Newest first.
+
+### Session 60 — 26 Oct 2026
+
+**Branch:** `dev`.
+
+**What was done:**
+
+- `2e11c1b`: site-wide accessibility pass.
+  - Mobile nav overlay:
+    - `inert` while closed, so it can't be tabbed to or read when hidden.
+    - Focus moves to the first link on open, and Tab is trapped between
+      the hamburger and the links.
+    - Escape closes it and returns focus to the hamburger.
+  - Global gold `:focus-visible` ring. It's black on the white nav and
+    `#emotion`, and white on `.pd-cta`. Inputs no longer set
+    `outline: none`.
+  - Skip link, and `<main id="main">` in `BaseLayout`. The `<main>` in
+    `index.astro` and `LegalLayout` became `<div>`.
+  - The desktop hero headline is now the `<h1>` (kept at weight 400).
+  - Global `prefers-reduced-motion` rule.
+  - New `--color-red-text` (`#e0574a`, 5.0:1 on black) for small red text
+    on dark backgrounds: red labels, form errors, and footer/legal/hero
+    hover colours.
+  - Hamburger SVG is `aria-hidden`, and the button has `aria-controls`.
+  - Build and lint are clean, and every page has one `<main>`, a skip
+    link and one `<h1>` per breakpoint. It hasn't been checked in a
+    browser yet.
+
+**Decisions made this session:**
+
+- Brand red `#c0392b` stays for buttons, fills, large display numbers,
+  text on white, and nav hover (the background changes there). Small
+  text on dark uses `--color-red-text`.
+
+**Still open:**
+
+- In-browser keyboard check:
+  - skip link
+  - focus ring on every section
+  - mobile menu focus and Escape
+  - reduced motion
+- Stu to confirm the lighter red labels look right.
+
+---
+
+### Session 59 — 26 Oct 2026
+
+**Branch:** `dev`.
+
+**What was done:**
+
+- Docs clean-up on `course/module-3` finished and merged into `dev`
+  (`afaad50`, commits from `3497b87` on, 19–21 Oct). The decisions are
+  in `src/docs/context-audit.md` under "Clean-up decisions".
+- `3d73517`: HubSpot partner forms can't fail silently.
+  - The portal ID and form GUIDs moved from `HUBSPOT_*` env vars to
+    `src/data/hubspot.ts` (`HUBSPOT_FORMS`). They're public anyway,
+    because the browser posts straight to HubSpot.
+  - The submit error now links `mailto:` the new `CONTACT_EMAIL`
+    (`src/constants/site.ts`). `ContactRouter.astro` uses it too.
+  - `HUBSPOT_*` lines removed from `.env`. The HubSpot entry was
+    removed from the audit's "Later" list, and CLAUDE.md was updated.
+  - Test posts to all three forms returned HTTP 200, and Stu confirmed
+    they arrived.
+- `f17aaa9`: inline per-field validation on `/sales`, `/retail` and
+  `/distributor`, in `src/lib/form-validation.ts` with an error slot
+  and `rule` prop in `FormField.astro`. It checks:
+  - required fields
+  - email with a real domain
+  - optional US phone (`type="tel"`)
+  - first and last name
+  - message length of 20+ characters
+  - consent
+  - Errors show on the first submit, then update live.
+  - It replaces `checkValidity()`/`reportValidity()`.
+  - Build and lint are clean. It hasn't been checked in a browser.
+
+**Decisions made this session:**
+
+- HubSpot IDs live in code, not env vars. This removes the
+  missing-config failure mode, so there's no build guard or dev
+  fallback.
+- Validation shows on submit and then live, not on blur. Phone stays
+  optional but must be a US number if filled in.
+
+**Still open:**
+
+- Stu: clear the unused `HUBSPOT_*` env vars in Vercel, and delete the
+  "TEST" contact in HubSpot.
+- In-browser check of the new form validation.
+
+---
 
 ### Session 58 — 17 Oct 2026
 

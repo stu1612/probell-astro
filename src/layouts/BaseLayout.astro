@@ -76,6 +76,7 @@ const organizationSchema = {
     />
   </head>
   <body>
+    <a href="#main" class="skip-link">Skip to content</a>
     <!-- Start of HubSpot Embed Code -->
     <script
       type="text/javascript"
@@ -85,7 +86,9 @@ const organizationSchema = {
       src="//js-eu1.hs-scripts.com/148924644.js"></script>
     <!-- End of HubSpot Embed Code -->
     <Nav transparent={transparentNav} />
-    <slot />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
     <Footer />
   </body>
 </html>

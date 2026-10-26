@@ -62,19 +62,53 @@ const navClass = transparent ? "nav nav--transparent" : "nav nav--scrolled";
   }
 
   // Mobile overlay toggle
+  // The overlay is `inert` while closed so its links can't be tabbed to
+  // or read out when invisible. While open, Tab cycles between the
+  // hamburger (the close button) and the overlay links.
+  const overlayLinks = Array.from(overlay.querySelectorAll("a"));
+
   function openOverlay() {
+    overlay.inert = false;
     overlay.classList.add("nav-overlay--open");
     document.body.classList.add("nav-open");
     hamburger.setAttribute("aria-expanded", "true");
     hamburger.setAttribute("aria-label", "Close menu");
+    overlayLinks[0]?.focus();
   }
 
-  function closeOverlay() {
+  function closeOverlay({ returnFocus = false } = {}) {
+    overlay.inert = true;
     overlay.classList.remove("nav-overlay--open");
     document.body.classList.remove("nav-open");
     hamburger.setAttribute("aria-expanded", "false");
     hamburger.setAttribute("aria-label", "Open menu");
+    if (returnFocus) hamburger.focus();
   }
+
+  document.addEventListener("keydown", (e) => {
+    if (!overlay.classList.contains("nav-overlay--open")) return;
+
+    if (e.key === "Escape") {
+      closeOverlay({ returnFocus: true });
+      return;
+    }
+
+    if (e.key === "Tab") {
+      const focusable = [hamburger, ...overlayLinks];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      } else if (!focusable.includes(document.activeElement)) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
 
   function toggleOverlay() {
     if (overlay.classList.contains("nav-overlay--open")) {

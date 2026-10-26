@@ -11,6 +11,7 @@
    5. Layout helpers
    6. Component primitives
    7. Utility classes
+   8. Accessibility (focus, skip link, reduced motion)
    ============================================================ */
 
 /* ============================================================
@@ -26,6 +27,9 @@
   --color-black: #121213;
   --color-black-true: #000000;
   --color-red: #c0392b;
+  /* Lighter red for small text on dark backgrounds: brand red is only
+     3.4:1 on black, this is 5.0:1 (AA). Buttons and fills keep brand red. */
+  --color-red-text: #e0574a;
   --color-gold: #c9a84c;
   --color-white: #f9f6ee;
   --color-grey: #a0a0a0;
@@ -191,7 +195,7 @@ select {
 }
 
 .label-text--red {
-  color: var(--color-red);
+  color: var(--color-red-text);
 }
 .label-text--gold {
   color: var(--color-gold);
@@ -425,13 +429,25 @@ select {
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
-  outline: none;
   border-color: var(--color-grey);
 }
 
 .form-textarea {
   resize: vertical;
   min-height: 120px;
+}
+
+.form-input[aria-invalid="true"],
+.form-select[aria-invalid="true"],
+.form-textarea[aria-invalid="true"] {
+  border-color: var(--color-red);
+  box-shadow: 0 0 0 1px var(--color-red);
+}
+
+.form-error {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  color: var(--color-red-text);
 }
 
 /* ============================================================
@@ -536,4 +552,63 @@ select {
 /* Navigation state */
 body.nav-open {
   overflow: hidden;
+}
+
+/* ============================================================
+   8. ACCESSIBILITY
+   ============================================================ */
+
+/* Keyboard focus only. Gold reads on the dark sections (8:1); the light
+   and red sections below swap it for a colour that contrasts there. */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+.nav--scrolled :focus-visible,
+body.nav-open .nav :focus-visible,
+#emotion :focus-visible {
+  outline-color: var(--color-black);
+}
+
+.pd-cta :focus-visible {
+  outline-color: var(--color-white);
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--space-xs);
+  left: var(--space-xs);
+  z-index: 1000;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-white);
+  color: var(--color-black);
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* <main> takes focus from the skip link; it doesn't need a ring. */
+main:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

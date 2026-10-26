@@ -3,13 +3,15 @@ import { Image } from "astro:assets";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import FormField from "@components/ui/FormField.astro";
 import partnerPagesHero from "@assets/partners/partner-pages-hero.jpg";
+import { HUBSPOT_FORMS } from "@data/hubspot";
+import { CONTACT_EMAIL } from "@constants/site";
 
 const title = "Retailer Program | Probell Nutrition";
 const description =
   "Tell us what you need — we'll give you a straight answer, fast. Request wholesale pricing to stock Probell Nutrition.";
 
-const hubspotPortalId = import.meta.env.HUBSPOT_PORTAL_ID ?? "";
-const hubspotFormGuid = import.meta.env.HUBSPOT_RETAILER_FORM_GUID ?? "";
+const hubspotPortalId = HUBSPOT_FORMS.portalId;
+const hubspotFormGuid = HUBSPOT_FORMS.retailer;
 
 const whyStock = [
   "The kettlebell-shaped container — genuinely distinct on a shelf or gym floor, a conversation starter with members and customers",
@@ -156,6 +158,7 @@ const howItWorks = [
           />
           <FormField
             id="retail-name"
+            rule="fullName"
             label="Your Name"
             name="fullName"
             required={true}
@@ -167,9 +170,10 @@ const howItWorks = [
             type="email"
             required={true}
           />
-          <FormField id="retail-phone" label="Phone" name="phone" />
+          <FormField id="retail-phone" label="Phone" name="phone" rule="phone" />
           <FormField
             id="retail-message"
+            rule="message"
             label="Tell us about your business and what you're looking for"
             name="inquiryMessage"
             type="textarea"
@@ -178,10 +182,16 @@ const howItWorks = [
 
           <div class="form-group retail-apply__consent">
             <label class="retail-apply__consent-label">
-              <input type="checkbox" name="consent" required />
+              <input
+                type="checkbox"
+                name="consent"
+                required
+                aria-describedby="retail-consent-error"
+              />
               I agree to be contacted by Probell Nutrition regarding my request. See
               our <a href="/legal/privacy">Privacy Policy</a>.
             </label>
+            <p class="form-error" id="retail-consent-error" hidden></p>
           </div>
 
           <p
@@ -190,7 +200,7 @@ const howItWorks = [
             style="display: none;"
             aria-live="polite"
           >
-            Something went wrong. Please try again or email us directly.
+            Something went wrong. Please try again or <a href={`mailto:${CONTACT_EMAIL}`}>email us directly</a>.
           </p>
 
           <button type="submit" class="btn-primary retail-apply__submit">
@@ -208,6 +218,7 @@ const howItWorks = [
     checkSpamSubmission,
     splitFullName,
   } from "@lib/hubspot";
+  import { validateForm, enableLiveValidation } from "@lib/form-validation";
 
   const CONSENT_TEXT =
     "I agree to be contacted by Probell Nutrition regarding my request.";
@@ -223,8 +234,8 @@ const howItWorks = [
 
     error.style.display = "none";
 
-    if (!form.checkValidity()) {
-      form.reportValidity();
+    if (!validateForm(form)) {
+      enableLiveValidation(form);
       return;
     }
 
@@ -467,8 +478,13 @@ const howItWorks = [
     padding: var(--space-lg) 0;
   }
 
+  .retail-apply__error a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
   .retail-apply__error {
-    color: var(--color-red);
+    color: var(--color-red-text);
     margin-bottom: var(--space-sm);
   }
 
