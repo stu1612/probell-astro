@@ -1,4 +1,6 @@
 ---
+import type { FieldRule } from '@lib/form-validation';
+
 interface Props {
   id: string;
   label: string;
@@ -7,6 +9,7 @@ interface Props {
   required?: boolean;
   placeholder?: string;
   maxlength?: number;
+  rule?: FieldRule;
 }
 
 const {
@@ -17,19 +20,24 @@ const {
   required = false,
   placeholder,
   maxlength = type === 'textarea' ? 2000 : 200,
+  rule,
 } = Astro.props;
+
+const errorId = `${id}-error`;
+const inputType = rule === 'phone' ? 'tel' : type;
 ---
 
 <div class="form-group">
   <label class="form-label" for={id}>{label}</label>
   {type === 'textarea' ? (
-    <textarea class="form-textarea" id={id} name={name} placeholder={placeholder} required={required} maxlength={maxlength}></textarea>
+    <textarea class="form-textarea" id={id} name={name} placeholder={placeholder} required={required} maxlength={maxlength} data-rule={rule} aria-describedby={errorId}></textarea>
   ) : type === 'select' ? (
-    <select class="form-select" id={id} name={name} required={required}>
+    <select class="form-select" id={id} name={name} required={required} data-rule={rule} aria-describedby={errorId}>
       <option value="" disabled selected></option>
       <slot />
     </select>
   ) : (
-    <input class="form-input" type={type} id={id} name={name} required={required} maxlength={maxlength} />
+    <input class="form-input" type={inputType} id={id} name={name} required={required} maxlength={maxlength} data-rule={rule} aria-describedby={errorId} inputmode={rule === 'phone' ? 'tel' : undefined} autocomplete={rule === 'phone' ? 'tel' : undefined} />
   )}
+  <p class="form-error" id={errorId} hidden></p>
 </div>

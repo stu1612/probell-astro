@@ -95,6 +95,7 @@ const hubspotFormGuid = HUBSPOT_FORMS.distributor;
           />
           <FormField
             id="distributor-name"
+            rule="fullName"
             label="Your Name"
             name="fullName"
             required={true}
@@ -106,14 +107,20 @@ const hubspotFormGuid = HUBSPOT_FORMS.distributor;
             type="email"
             required={true}
           />
-          <FormField id="distributor-phone" label="Phone" name="phone" />
+          <FormField id="distributor-phone" label="Phone" name="phone" rule="phone" />
 
           <div class="form-group distributor-apply__consent">
             <label class="distributor-apply__consent-label">
-              <input type="checkbox" name="consent" required />
+              <input
+                type="checkbox"
+                name="consent"
+                required
+                aria-describedby="distributor-consent-error"
+              />
               I agree to be contacted by Probell Nutrition regarding my inquiry. See
               our <a href="/legal/privacy">Privacy Policy</a>.
             </label>
+            <p class="form-error" id="distributor-consent-error" hidden></p>
           </div>
 
           <p
@@ -140,6 +147,7 @@ const hubspotFormGuid = HUBSPOT_FORMS.distributor;
     checkSpamSubmission,
     splitFullName,
   } from "@lib/hubspot";
+  import { validateForm, enableLiveValidation } from "@lib/form-validation";
 
   const CONSENT_TEXT =
     "I agree to be contacted by Probell Nutrition regarding my inquiry.";
@@ -157,8 +165,8 @@ const hubspotFormGuid = HUBSPOT_FORMS.distributor;
 
     error.style.display = "none";
 
-    if (!form.checkValidity()) {
-      form.reportValidity();
+    if (!validateForm(form)) {
+      enableLiveValidation(form);
       return;
     }
 

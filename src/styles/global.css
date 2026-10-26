@@ -434,6 +434,19 @@ select {
   min-height: 120px;
 }
 
+.form-input[aria-invalid="true"],
+.form-select[aria-invalid="true"],
+.form-textarea[aria-invalid="true"] {
+  border-color: var(--color-red);
+  box-shadow: 0 0 0 1px var(--color-red);
+}
+
+.form-error {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  color: var(--color-red);
+}
+
 /* ============================================================
    7. UTILITY CLASSES
    ============================================================ */

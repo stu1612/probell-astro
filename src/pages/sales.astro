@@ -144,6 +144,7 @@ const howItWorks = [
 
           <FormField
             id="sales-name"
+            rule="fullName"
             label="Full Name"
             name="fullName"
             required={true}
@@ -155,7 +156,7 @@ const howItWorks = [
             type="email"
             required={true}
           />
-          <FormField id="sales-phone" label="Phone" name="phone" />
+          <FormField id="sales-phone" label="Phone" name="phone" rule="phone" />
           <FormField
             id="sales-region"
             label="Where do you want to sell?"
@@ -169,6 +170,7 @@ const howItWorks = [
           />
           <FormField
             id="sales-why"
+            rule="message"
             label="Why Probell?"
             name="inquiryMessage"
             type="textarea"
@@ -182,10 +184,16 @@ const howItWorks = [
 
           <div class="form-group sales-apply__consent">
             <label class="sales-apply__consent-label">
-              <input type="checkbox" name="consent" required />
+              <input
+                type="checkbox"
+                name="consent"
+                required
+                aria-describedby="sales-consent-error"
+              />
               I agree to be contacted by Probell Nutrition regarding my application.
               See our <a href="/legal/privacy">Privacy Policy</a>.
             </label>
+            <p class="form-error" id="sales-consent-error" hidden></p>
           </div>
 
           <p
@@ -212,6 +220,7 @@ const howItWorks = [
     checkSpamSubmission,
     splitFullName,
   } from "@lib/hubspot";
+  import { validateForm, enableLiveValidation } from "@lib/form-validation";
 
   const CONSENT_TEXT =
     "I agree to be contacted by Probell Nutrition regarding my application.";
@@ -227,8 +236,8 @@ const howItWorks = [
 
     error.style.display = "none";
 
-    if (!form.checkValidity()) {
-      form.reportValidity();
+    if (!validateForm(form)) {
+      enableLiveValidation(form);
       return;
     }
 
