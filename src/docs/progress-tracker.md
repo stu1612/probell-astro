@@ -8,22 +8,62 @@ to date.
 
 ### Now
 
-- Site-wide accessibility pass (none done yet). Known so far: the mobile
-  nav overlay has no Escape-to-close and no focus trap
-  (`Nav/index.astro`), and form inputs drop the focus outline
-  (`global.css` `.form-input:focus`).
+- Full UI check and a possible redesign, in its own session. This
+  replaces the old per-page visual sign-offs and the footer review.
 
 ### Next
 
-1. Full UI check and a possible redesign, in its own session. This
-   replaces the old per-page visual sign-offs and the footer review.
-2. Swap in the client's final product PNGs and a transparent logo PNG.
+1. Swap in the client's final product PNGs and a transparent logo PNG.
 
 ---
 
 ## Session Log
 
 Newest first.
+
+### Session 60 — 26 Oct 2026
+
+**Branch:** `dev`.
+
+**What was done:**
+
+- `2e11c1b`: site-wide accessibility pass.
+  - Mobile nav overlay:
+    - `inert` while closed, so it can't be tabbed to or read when hidden.
+    - Focus moves to the first link on open, and Tab is trapped between
+      the hamburger and the links.
+    - Escape closes it and returns focus to the hamburger.
+  - Global gold `:focus-visible` ring. It's black on the white nav and
+    `#emotion`, and white on `.pd-cta`. Inputs no longer set
+    `outline: none`.
+  - Skip link, and `<main id="main">` in `BaseLayout`. The `<main>` in
+    `index.astro` and `LegalLayout` became `<div>`.
+  - The desktop hero headline is now the `<h1>` (kept at weight 400).
+  - Global `prefers-reduced-motion` rule.
+  - New `--color-red-text` (`#e0574a`, 5.0:1 on black) for small red text
+    on dark backgrounds: red labels, form errors, and footer/legal/hero
+    hover colours.
+  - Hamburger SVG is `aria-hidden`, and the button has `aria-controls`.
+  - Build and lint are clean, and every page has one `<main>`, a skip
+    link and one `<h1>` per breakpoint. It hasn't been checked in a
+    browser yet.
+
+**Decisions made this session:**
+
+- Brand red `#c0392b` stays for buttons, fills, large display numbers,
+  text on white, and nav hover (the background changes there). Small
+  text on dark uses `--color-red-text`.
+
+**Still open:**
+
+- In-browser keyboard check:
+  - skip link
+  - focus ring on every section
+  - mobile menu focus and Escape
+  - reduced motion
+- Stu to confirm the lighter red labels look right.
+
+---
 
 ### Session 59 — 26 Oct 2026
 
