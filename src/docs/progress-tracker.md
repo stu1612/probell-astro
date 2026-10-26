@@ -8,30 +8,70 @@ to date.
 
 ### Now
 
-- Docs clean-up on `course/module-3`: remove inactive tools and
-  unneeded docs, collapse duplicate rules, fix stale data, write a lean
-  CLAUDE.md and add `/start` and `/wrap`. The full plan and decisions
-  are in `src/docs/context-audit.md` under "Clean-up decisions".
+- Site-wide accessibility pass (none done yet). Known so far: the mobile
+  nav overlay has no Escape-to-close and no focus trap
+  (`Nav/index.astro`), and form inputs drop the focus outline
+  (`global.css` `.form-input:focus`).
 
 ### Next
 
-1. HubSpot partner forms must never fail silently. Spec and build in
-   Module 4, test in Module 5. See `src/docs/context-audit.md` → Later.
-2. Per-field validation on the partner forms (`/sales`, `/retail`,
-   `/distributor`). Today they rely on the browser's built-in required
-   checks only.
-3. Site-wide accessibility pass (none done yet). Known so far: the mobile
-   nav overlay has no Escape-to-close and no focus trap
-   (`Nav/index.astro`).
-4. Full UI check and a possible redesign, in its own session. This
+1. Full UI check and a possible redesign, in its own session. This
    replaces the old per-page visual sign-offs and the footer review.
-5. Swap in the client's final product PNGs and a transparent logo PNG.
+2. Swap in the client's final product PNGs and a transparent logo PNG.
 
 ---
 
 ## Session Log
 
 Newest first.
+
+### Session 59 — 26 Oct 2026
+
+**Branch:** `dev`.
+
+**What was done:**
+
+- Docs clean-up on `course/module-3` finished and merged into `dev`
+  (`afaad50`, commits from `3497b87` on, 19–21 Oct). The decisions are
+  in `src/docs/context-audit.md` under "Clean-up decisions".
+- `3d73517`: HubSpot partner forms can't fail silently.
+  - The portal ID and form GUIDs moved from `HUBSPOT_*` env vars to
+    `src/data/hubspot.ts` (`HUBSPOT_FORMS`). They're public anyway,
+    because the browser posts straight to HubSpot.
+  - The submit error now links `mailto:` the new `CONTACT_EMAIL`
+    (`src/constants/site.ts`). `ContactRouter.astro` uses it too.
+  - `HUBSPOT_*` lines removed from `.env`. The HubSpot entry was
+    removed from the audit's "Later" list, and CLAUDE.md was updated.
+  - Test posts to all three forms returned HTTP 200, and Stu confirmed
+    they arrived.
+- `f17aaa9`: inline per-field validation on `/sales`, `/retail` and
+  `/distributor`, in `src/lib/form-validation.ts` with an error slot
+  and `rule` prop in `FormField.astro`. It checks:
+  - required fields
+  - email with a real domain
+  - optional US phone (`type="tel"`)
+  - first and last name
+  - message length of 20+ characters
+  - consent
+  - Errors show on the first submit, then update live.
+  - It replaces `checkValidity()`/`reportValidity()`.
+  - Build and lint are clean. It hasn't been checked in a browser.
+
+**Decisions made this session:**
+
+- HubSpot IDs live in code, not env vars. This removes the
+  missing-config failure mode, so there's no build guard or dev
+  fallback.
+- Validation shows on submit and then live, not on blur. Phone stays
+  optional but must be a US number if filled in.
+
+**Still open:**
+
+- Stu: clear the unused `HUBSPOT_*` env vars in Vercel, and delete the
+  "TEST" contact in HubSpot.
+- In-browser check of the new form validation.
+
+---
 
 ### Session 58 — 17 Oct 2026
 
