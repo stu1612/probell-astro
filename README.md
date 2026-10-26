@@ -19,6 +19,16 @@ It's a B2B brand site, not a shop. The audience is US gyms, retailers, distribut
 - **Content lives in data files.** Products, partner routes and other repeated content sit in `src/data/` as typed exports, with one product catalogue as the single source of truth. Components only render.
 - **Forms fail visibly.** If a HubSpot submit fails, the user sees an error and a direct email address instead of a silent failure.
 
+## Building it with AI: what I learned
+
+I built Probell with Claude Code, and it's the project where I got the approach wrong first.
+
+- **One big spec didn't work.** I started by writing a long, detailed spec and asking the agent to build from it. The result worked but looked generic, and the spec went out of date as soon as real decisions were made during the build.
+- **Words are a poor way to describe a design.** The UI only started to feel like the brand once I gave the agent visual references (a vision board of images) and pinned the design down as tokens: colours, type, spacing. Adjectives like "bold" or "premium" got me generic output.
+- **Rules beat instructions.** What lasted was a short `CLAUDE.md` with the rules that actually matter on this project, like how images must be loaded and where content lives, plus a note of the gotchas I'd already hit so they didn't happen twice.
+
+Those lessons shaped how I set up my next project, a [basketball club site rebuild](https://github.com/stu1612/team4q).
+
 ## Structure
 
 ```
