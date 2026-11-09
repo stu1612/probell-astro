@@ -8,14 +8,19 @@ to date.
 
 ### Now
 
-- Full UI check of the rest of the site, now that the partner pages
-  are redesigned (Session 61). This replaces the old per-page visual
-  sign-offs and the footer review. Decide whether the partner-page
-  pattern carries over to other pages.
+- UI update, ongoing until Stu signs off every page and section. It
+  replaces the old per-page visual sign-offs and the footer review.
+  - Signed off: `/sales`, `/retail`, `/distributor` (Session 61).
+  - To check: home (each section), nav, footer, `/supplements`, product
+    detail, legal pages, 404. Decide per page whether the partner-page
+    pattern carries over.
 
 ### Next
 
 1. Swap in the client's final product PNGs and a transparent logo PNG.
+2. Add the partner-page pattern to `design.md` (Session 61).
+3. Check whether the homepage Contact headline should be in Anton (it
+   uses `.display-text` without setting the font).
 
 ---
 
@@ -80,6 +85,7 @@ Newest first.
     contrast on off-white and this page avoids red.
   - Form unchanged; validation, lint and build checked at 1440px and
     390px, with no horizontal scroll.
+  - Committed as `c577cc8`, with this log entry. Stu approved the look.
 
 **Decisions made this session:**
 
@@ -90,8 +96,6 @@ Newest first.
 
 **Still open:**
 
-- Stu to review `/distributor`, including the new "Where We Are" label
-  on the positioning band.
 - `design.md` doesn't describe the partner-page pattern yet (shared
   parts, gold detail with red kept for the CTA, dark square form
   fields, light statement band).
