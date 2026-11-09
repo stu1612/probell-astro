@@ -8,18 +8,84 @@ to date.
 
 ### Now
 
-- Full UI check and a possible redesign, in its own session. This
-  replaces the old per-page visual sign-offs and the footer review.
+- Partner pages premium redesign, in progress. `/sales` is built on the
+  new shared parts in `src/components/Partner/`; `/retail` then
+  `/distributor` move onto the same parts next. See Session 61 for the
+  pattern and the steps to continue.
 
 ### Next
 
-1. Swap in the client's final product PNGs and a transparent logo PNG.
+1. Full UI check of the rest of the site (on hold while the partner
+   pages are redesigned). This replaces the old per-page visual
+   sign-offs and the footer review.
+2. Swap in the client's final product PNGs and a transparent logo PNG.
 
 ---
 
 ## Session Log
 
 Newest first.
+
+### Session 61 — 9 Nov 2026
+
+**Branch:** `dev`.
+
+**What was done:**
+
+- Playwright MCP fixed (corrupt npx cache) and `.playwright-mcp/` added
+  to `.gitignore`.
+- `/sales` redesigned for a premium feel that keeps the gritty, bold
+  direction. Stu set the brief: the old design patterns are no longer
+  the scope; expand on the current direction.
+  - Shared parts in `src/components/Partner/`:
+    - `PartnerHero`: near-full-screen photo with a bottom-weighted
+      scrim, film grain, gold-ruled eyebrow, Anton headline, optional
+      facts row.
+    - `PartnerReasons`: sticky portrait photo beside a numbered
+      editorial list (Anton title + grey line per reason).
+    - `PartnerSteps`: timeline on a gold rule with hollow gold-outline
+      numbers; turns vertical on phones.
+    - `PartnerApply`: sticky intro beside a raised dark panel with a
+      gold top rule. The page passes its own form into the slot; shared
+      form pieces use the `pa-honeypot`, `pa-consent`, `pa-success`,
+      `pa-error` and `pa-submit` classes.
+  - Content lives in `src/data/partners.ts` (`SALES_FACTS`,
+    `SALES_REASONS`, `SALES_STEPS`).
+  - `global.css`: new `.container-wide` (side padding lines up with the
+    nav logo; 16px on phones) and `--color-border-strong`. Form fields
+    are now dark and square with a gold focus border, site-wide, so
+    `/retail` and `/distributor` already have them.
+  - Fixed: the sales h1/h2 weren't in Anton (`.display-text` sets no
+    font family, so each part sets `--font-display` itself).
+  - Form fields, IDs, script and HubSpot mapping unchanged; validation
+    checked in the browser. Lint and build clean. Checked at 1440px and
+    390px.
+
+**Decisions made this session:**
+
+- Partner pages share one set of parts; each page keeps its own form
+  and submit script.
+- Red is kept for the one CTA per page; gold carries the detail (rules,
+  labels, numbers).
+
+**Still open:**
+
+- Stu to review `/sales`, including new copy: the facts row
+  (Independent / Commission-based / US only), "Why Probell / Something
+  Worth Carrying." and the split reason titles in `partners.ts`.
+- Next steps to continue:
+  1. `/retail`: add `RETAIL_REASONS` (from `whyStock`) and
+     `RETAIL_STEPS` to `partners.ts`, then rebuild the page with
+     `PartnerHero`, `PartnerReasons` (`audience/retailer.jpg`),
+     `PartnerSteps` and `PartnerApply`. The pricing section has no
+     shared part yet; decide whether it becomes one.
+  2. `/distributor`: `PartnerHero` (gold eyebrow) + positioning copy +
+     `PartnerApply` only, keeping the page deliberately minimal (see
+     `brand.md`).
+  3. Remove the old page-scoped hero/apply styles from each page as it
+     moves over.
+- The homepage Contact headline uses `.display-text` without setting
+  Anton; check whether that's intended.
 
 ### Session 60 — 26 Oct 2026
 
