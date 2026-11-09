@@ -8,10 +8,10 @@ to date.
 
 ### Now
 
-- Partner pages premium redesign, in progress. `/sales` is built on the
-  new shared parts in `src/components/Partner/`; `/retail` then
-  `/distributor` move onto the same parts next. See Session 61 for the
-  pattern and the steps to continue.
+- Partner pages premium redesign, in progress. `/sales` and `/retail`
+  are built on the shared parts in `src/components/Partner/`;
+  `/distributor` moves onto them next. See Session 61 for the pattern
+  and the steps to continue.
 
 ### Next
 
@@ -60,6 +60,18 @@ Newest first.
   - Form fields, IDs, script and HubSpot mapping unchanged; validation
     checked in the browser. Lint and build clean. Checked at 1440px and
     390px.
+  - Committed as `f7e98a8`. Stu approved the look.
+- `/retail` rebuilt on the same parts, with `RETAIL_FACTS`,
+  `RETAIL_REASONS` (split from the old `whyStock`) and `RETAIL_STEPS`
+  in `partners.ts`.
+  - New shared part `PartnerStatement`: a light off-white band with one
+    statement, used for the wholesale pricing copy. Its eyebrow uses
+    brand red, because `--color-red-text` fails AA on off-white.
+  - `PartnerReasons` takes an `imagePosition` prop for the crop.
+    `/retail` uses `audience/sales.jpg` (product in hand) because
+    `audience/retailer.jpg` is a landscape gym shot with no product.
+  - Form unchanged; validation, lint and build checked at 1440px and
+    390px.
 
 **Decisions made this session:**
 
@@ -70,20 +82,14 @@ Newest first.
 
 **Still open:**
 
-- Stu to review `/sales`, including new copy: the facts row
-  (Independent / Commission-based / US only), "Why Probell / Something
-  Worth Carrying." and the split reason titles in `partners.ts`.
-- Next steps to continue:
-  1. `/retail`: add `RETAIL_REASONS` (from `whyStock`) and
-     `RETAIL_STEPS` to `partners.ts`, then rebuild the page with
-     `PartnerHero`, `PartnerReasons` (`audience/retailer.jpg`),
-     `PartnerSteps` and `PartnerApply`. The pricing section has no
-     shared part yet; decide whether it becomes one.
-  2. `/distributor`: `PartnerHero` (gold eyebrow) + positioning copy +
-     `PartnerApply` only, keeping the page deliberately minimal (see
-     `brand.md`).
-  3. Remove the old page-scoped hero/apply styles from each page as it
-     moves over.
+- Stu to review `/retail`, including new copy: the facts row (Wholesale
+  pricing on request / Direct ordering / US only), "Why Stock Probell /
+  Worth the Shelf Space." and the split reason titles.
+- Next step to continue: `/distributor`: `PartnerHero` (gold eyebrow,
+  no facts row) + `PartnerStatement` for the positioning copy +
+  `PartnerApply` (gold eyebrow), keeping the page deliberately minimal
+  (see `brand.md`). Move its form internals onto the `pa-*` classes
+  and drop the old page-scoped styles, as `/sales` and `/retail` did.
 - The homepage Contact headline uses `.display-text` without setting
   Anton; check whether that's intended.
 

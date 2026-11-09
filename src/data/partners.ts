@@ -59,3 +59,47 @@ export const SALES_STEPS: PartnerStep[] = [
     body: "Materials and kit — details to follow.",
   },
 ];
+
+export const RETAIL_FACTS: string[] = [
+  "Wholesale pricing on request",
+  "Direct ordering",
+  "US only",
+];
+
+export const RETAIL_REASONS: PartnerReason[] = [
+  {
+    title: "Distinct on the Shelf",
+    body: "The kettlebell-shaped container stands out on a shelf or gym floor, and gets members and customers talking.",
+  },
+  {
+    title: "US-Made",
+    body: "A no-compromise formula, made in the USA.",
+  },
+  {
+    title: "A Direct Line",
+    body: "A personal ordering relationship. No call center, no runaround.",
+  },
+];
+
+export const RETAIL_STEPS: PartnerStep[] = [
+  {
+    step: "01",
+    label: "Submit Your Request",
+    body: "A short form, a couple minutes.",
+  },
+  {
+    step: "02",
+    label: "We Review",
+    body: "Every request read personally.",
+  },
+  {
+    step: "03",
+    label: "Pricing Shared Directly",
+    body: "Wholesale pricing and next steps sent to you.",
+  },
+  {
+    step: "04",
+    label: "Order",
+    body: "Straightforward reordering once you're set up.",
+  },
+];

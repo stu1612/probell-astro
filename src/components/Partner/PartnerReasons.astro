@@ -9,9 +9,18 @@ interface Props {
   reasons: PartnerReason[];
   image: ImageMetadata;
   alt: string;
+  /* object-position for the crop, e.g. "60% 50%" to keep the product in. */
+  imagePosition?: string;
 }
 
-const { eyebrow, title, reasons, image, alt } = Astro.props;
+const {
+  eyebrow,
+  title,
+  reasons,
+  image,
+  alt,
+  imagePosition = "50% 50%",
+} = Astro.props;
 ---
 
 <section class="pr">
@@ -23,6 +32,7 @@ const { eyebrow, title, reasons, image, alt } = Astro.props;
         width={900}
         format="webp"
         class="pr__image"
+        style={`object-position: ${imagePosition};`}
       />
     </div>
 
@@ -123,10 +133,6 @@ const { eyebrow, title, reasons, image, alt } = Astro.props;
     .pr__media {
       position: static;
       aspect-ratio: 4 / 3;
-    }
-
-    .pr__image {
-      object-position: 50% 35%;
     }
   }
 
