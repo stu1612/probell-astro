@@ -1,16 +1,20 @@
 ---
 interface Props {
   eyebrow: string;
+  /* Gold fails contrast on off-white, so gold-led pages use "black". */
+  eyebrowTone?: "red" | "black";
   text: string;
 }
 
-const { eyebrow, text } = Astro.props;
+const { eyebrow, eyebrowTone = "red", text } = Astro.props;
 ---
 
 <!-- Light band that breaks the dark run with one plain statement. -->
 <section class="pst">
   <div class="container-wide pst__inner">
-    <span class="label-text pst__eyebrow">{eyebrow}</span>
+    <span class={`label-text pst__eyebrow pst__eyebrow--${eyebrowTone}`}>
+      {eyebrow}
+    </span>
     <p class="pst__text">{text}</p>
   </div>
 </section>
@@ -34,6 +38,10 @@ const { eyebrow, text } = Astro.props;
     gap: var(--space-sm);
     /* Brand red passes AA on off-white; --color-red-text doesn't. */
     color: var(--color-red);
+  }
+
+  .pst__eyebrow--black {
+    color: var(--color-black);
   }
 
   .pst__eyebrow::before {

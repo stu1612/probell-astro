@@ -8,17 +8,14 @@ to date.
 
 ### Now
 
-- Partner pages premium redesign, in progress. `/sales` and `/retail`
-  are built on the shared parts in `src/components/Partner/`;
-  `/distributor` moves onto them next. See Session 61 for the pattern
-  and the steps to continue.
+- Full UI check of the rest of the site, now that the partner pages
+  are redesigned (Session 61). This replaces the old per-page visual
+  sign-offs and the footer review. Decide whether the partner-page
+  pattern carries over to other pages.
 
 ### Next
 
-1. Full UI check of the rest of the site (on hold while the partner
-   pages are redesigned). This replaces the old per-page visual
-   sign-offs and the footer review.
-2. Swap in the client's final product PNGs and a transparent logo PNG.
+1. Swap in the client's final product PNGs and a transparent logo PNG.
 
 ---
 
@@ -72,6 +69,17 @@ Newest first.
     `audience/retailer.jpg` is a landscape gym shot with no product.
   - Form unchanged; validation, lint and build checked at 1440px and
     390px.
+  - Committed as `490e0ee`. Stu approved the look.
+- `/distributor` rebuilt on the same parts, kept deliberately minimal:
+  `PartnerHero` (gold eyebrow, no facts row) + `PartnerStatement`
+  (positioning copy) + `PartnerApply` (gold eyebrow). No reasons or
+  steps.
+  - `PartnerHero` takes `titleSize="statement"` for longer headlines
+    (the distributor headline ran to four lines at hero size).
+  - `PartnerStatement` takes `eyebrowTone="black"`, because gold fails
+    contrast on off-white and this page avoids red.
+  - Form unchanged; validation, lint and build checked at 1440px and
+    390px, with no horizontal scroll.
 
 **Decisions made this session:**
 
@@ -82,14 +90,11 @@ Newest first.
 
 **Still open:**
 
-- Stu to review `/retail`, including new copy: the facts row (Wholesale
-  pricing on request / Direct ordering / US only), "Why Stock Probell /
-  Worth the Shelf Space." and the split reason titles.
-- Next step to continue: `/distributor`: `PartnerHero` (gold eyebrow,
-  no facts row) + `PartnerStatement` for the positioning copy +
-  `PartnerApply` (gold eyebrow), keeping the page deliberately minimal
-  (see `brand.md`). Move its form internals onto the `pa-*` classes
-  and drop the old page-scoped styles, as `/sales` and `/retail` did.
+- Stu to review `/distributor`, including the new "Where We Are" label
+  on the positioning band.
+- `design.md` doesn't describe the partner-page pattern yet (shared
+  parts, gold detail with red kept for the CTA, dark square form
+  fields, light statement band).
 - The homepage Contact headline uses `.display-text` without setting
   Anton; check whether that's intended.
 

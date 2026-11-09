@@ -11,6 +11,8 @@ interface Props {
   title: string;
   sub: string;
   facts?: string[];
+  /* "statement" for longer headlines that would run past three lines. */
+  titleSize?: "hero" | "statement";
 }
 
 const {
@@ -22,6 +24,7 @@ const {
   title,
   sub,
   facts = [],
+  titleSize = "hero",
 } = Astro.props;
 ---
 
@@ -42,7 +45,7 @@ const {
     <span class={`label-text label-text--${eyebrowTone} ph__eyebrow`}>
       {eyebrow}
     </span>
-    <h1 class="display-text ph__title">{title}</h1>
+    <h1 class={`display-text ph__title ph__title--${titleSize}`}>{title}</h1>
     <p class="font-text ph__sub">{sub}</p>
     {
       facts.length > 0 && (
@@ -126,6 +129,11 @@ const {
     max-width: 14ch;
   }
 
+  .ph__title--statement {
+    font-size: var(--text-statement);
+    max-width: 18ch;
+  }
+
   .ph__sub {
     margin-top: var(--space-md);
     max-width: 52ch;
@@ -162,6 +170,10 @@ const {
 
     .ph__title {
       font-size: var(--text-highlight);
+    }
+
+    .ph__title--statement {
+      font-size: var(--text-statement);
     }
 
     .ph__facts {
