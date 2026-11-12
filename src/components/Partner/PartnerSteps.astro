@@ -1,0 +1,128 @@
+---
+import type { PartnerStep } from "@data/partners";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  steps: PartnerStep[];
+}
+
+const { eyebrow, title, steps } = Astro.props;
+---
+
+<section class="ps">
+  <div class="container-wide">
+    <span class="label-text label-text--gold">{eyebrow}</span>
+    <h2 class="display-text ps__title">{title}</h2>
+
+    <ol class="ps__list">
+      {
+        steps.map((item) => (
+          <li class="ps__item">
+            <span class="display-text ps__num" aria-hidden="true">
+              {item.step}
+            </span>
+            <h3 class="display-text ps__label">{item.label}</h3>
+            <p class="font-text ps__body">{item.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .ps {
+    background: var(--color-black-true);
+    padding-block: var(--space-xl);
+  }
+
+  .ps__title {
+    margin-top: var(--space-sm);
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--text-statement-md);
+    color: var(--color-white);
+  }
+
+  .ps__list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: var(--space-lg);
+    border-top: 1px solid rgba(201, 168, 76, 0.4);
+  }
+
+  .ps__item {
+    position: relative;
+    padding: var(--space-md) var(--space-md) 0 0;
+  }
+
+  /* Marker sitting on the gold rule. */
+  .ps__item::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    background: var(--color-gold);
+  }
+
+  .ps__num {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--text-highlight);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(201, 168, 76, 0.7);
+  }
+
+  .ps__label {
+    margin-top: var(--space-sm);
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--text-product);
+    color: var(--color-white);
+  }
+
+  .ps__body {
+    margin-top: var(--space-xs);
+    max-width: 30ch;
+    color: var(--color-grey);
+  }
+
+  @media (max-width: 1024px) {
+    .ps__list {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: var(--space-lg);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .ps {
+      padding-block: var(--space-lg);
+    }
+
+    /* Stacked: the rule runs down the left edge instead. */
+    .ps__list {
+      grid-template-columns: 1fr;
+      row-gap: var(--space-md);
+      border-top: none;
+      border-left: 1px solid rgba(201, 168, 76, 0.4);
+    }
+
+    .ps__item {
+      padding: 0 0 0 var(--space-md);
+    }
+
+    .ps__item::before {
+      top: 0.5rem;
+      left: -4px;
+    }
+
+    .ps__num {
+      font-size: var(--text-statement);
+    }
+  }
+</style>

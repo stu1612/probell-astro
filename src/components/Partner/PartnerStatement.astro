@@ -1,0 +1,74 @@
+---
+interface Props {
+  eyebrow: string;
+  /* Gold fails contrast on off-white, so gold-led pages use "black". */
+  eyebrowTone?: "red" | "black";
+  text: string;
+}
+
+const { eyebrow, eyebrowTone = "red", text } = Astro.props;
+---
+
+<!-- Light band that breaks the dark run with one plain statement. -->
+<section class="pst">
+  <div class="container-wide pst__inner">
+    <span class={`label-text pst__eyebrow pst__eyebrow--${eyebrowTone}`}>
+      {eyebrow}
+    </span>
+    <p class="pst__text">{text}</p>
+  </div>
+</section>
+
+<style>
+  .pst {
+    background: var(--color-white);
+    padding-block: var(--space-xl);
+  }
+
+  .pst__inner {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: var(--space-xl);
+    align-items: baseline;
+  }
+
+  .pst__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    /* Brand red passes AA on off-white; --color-red-text doesn't. */
+    color: var(--color-red);
+  }
+
+  .pst__eyebrow--black {
+    color: var(--color-black);
+  }
+
+  .pst__eyebrow::before {
+    content: "";
+    width: 3rem;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .pst__text {
+    font-family: var(--font-body);
+    font-size: var(--text-product);
+    line-height: 1.35;
+    color: var(--color-black);
+    max-width: 34ch;
+  }
+
+  @media (max-width: 1024px) {
+    .pst__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .pst {
+      padding-block: var(--space-lg);
+    }
+  }
+</style>

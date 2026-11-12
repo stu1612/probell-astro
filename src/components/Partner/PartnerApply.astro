@@ -1,0 +1,141 @@
+---
+interface Props {
+  eyebrow: string;
+  eyebrowTone?: "red" | "gold";
+  title: string;
+  body: string;
+}
+
+const { eyebrow, eyebrowTone = "red", title, body } = Astro.props;
+---
+
+<!-- The page passes its own form (fields, script, HubSpot mapping) into the
+     slot. The pa-* classes below style the form's shared pieces. -->
+<section class="pa">
+  <div class="container-wide pa__inner">
+    <div class="pa__intro">
+      <span class={`label-text label-text--${eyebrowTone}`}>{eyebrow}</span>
+      <h2 class="display-text pa__title">{title}</h2>
+      <p class="font-text pa__body">{body}</p>
+    </div>
+
+    <div class="pa__panel">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .pa {
+    background: var(--color-black);
+    padding-block: var(--space-xl);
+  }
+
+  .pa__inner {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .pa__intro {
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-md));
+  }
+
+  .pa__title {
+    margin-top: var(--space-sm);
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--text-statement-md);
+    color: var(--color-white);
+  }
+
+  .pa__body {
+    margin-top: var(--space-md);
+    max-width: 42ch;
+    color: var(--color-grey);
+  }
+
+  .pa__panel {
+    padding: var(--space-lg);
+    background: #171718;
+    border: 1px solid var(--color-border);
+    border-top: 2px solid var(--color-gold);
+  }
+
+  .pa__panel :global(.pa-honeypot) {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .pa__panel :global(.form-group) {
+    margin-bottom: var(--space-sm);
+  }
+
+  .pa__panel :global(.pa-consent) {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    color: var(--color-grey);
+    font-size: var(--text-label);
+    line-height: 1.5;
+  }
+
+  .pa__panel :global(.pa-consent input) {
+    margin-top: 0.2em;
+    accent-color: var(--color-gold);
+  }
+
+  .pa__panel :global(.pa-consent a) {
+    color: var(--color-gold);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .pa__panel :global(.pa-success) {
+    color: var(--color-gold);
+    padding: var(--space-lg) 0;
+  }
+
+  .pa__panel :global(.pa-error) {
+    color: var(--color-red-text);
+    margin-bottom: var(--space-sm);
+  }
+
+  .pa__panel :global(.pa-error a) {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  .pa__panel :global(.pa-submit) {
+    width: 100%;
+    margin-top: var(--space-sm);
+    padding-block: 1.1rem;
+  }
+
+  @media (max-width: 1024px) {
+    .pa__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .pa__intro {
+      position: static;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .pa {
+      padding-block: var(--space-lg);
+    }
+
+    .pa__panel {
+      padding: var(--space-md) var(--space-sm);
+    }
+  }
+</style>

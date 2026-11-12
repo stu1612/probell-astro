@@ -1,9 +1,14 @@
 ---
-import { Image } from "astro:assets";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import FormField from "@components/ui/FormField.astro";
+import PartnerHero from "@components/Partner/PartnerHero.astro";
+import PartnerReasons from "@components/Partner/PartnerReasons.astro";
+import PartnerSteps from "@components/Partner/PartnerSteps.astro";
+import PartnerApply from "@components/Partner/PartnerApply.astro";
 import partnerPagesHero from "@assets/partners/partner-pages-hero.jpg";
+import partnerCta from "@assets/partners/partner-cta.jpg";
 import { HUBSPOT_FORMS } from "@data/hubspot";
+import { SALES_FACTS, SALES_REASONS, SALES_STEPS } from "@data/partners";
 import { CONTACT_EMAIL } from "@constants/site";
 
 const title = "Sales Partner Program | Probell Nutrition";
@@ -12,206 +17,128 @@ const description =
 
 const hubspotPortalId = HUBSPOT_FORMS.portalId;
 const hubspotFormGuid = HUBSPOT_FORMS.sales;
-
-const whyProbell = [
-  "US-made, no compromise formula",
-  "Kettlebell-shaped container — the product is the conversation starter",
-  "Ground-floor opportunity — early partners shape the network",
-  "Built for people who already show up",
-];
-
-const howItWorks = [
-  {
-    step: "01",
-    label: "Apply",
-    body: "A short form, a few minutes.",
-  },
-  {
-    step: "02",
-    label: "We Review",
-    body: "Every application read personally, including any region or event opportunities you've flagged.",
-  },
-  {
-    step: "03",
-    label: "Conversation",
-    body: "Commission structure and territory discussed 1:1.",
-  },
-  {
-    step: "04",
-    label: "Onboarding",
-    body: "Materials and kit — details to follow.",
-  },
-];
 ---
 
 <BaseLayout title={title} description={description} transparentNav={true}>
-  <div id="sales-hero">
-    <Image
-      src={partnerPagesHero}
-      alt="Probell Nutrition sales partner in the field"
-      width={1920}
-      height={1080}
-      format="webp"
-      loading="eager"
-      class="sales-hero__image"
-    />
-    <div class="sales-hero__overlay"></div>
-    <div class="container sales-hero__content">
-      <span class="label-text label-text--red">Sales Partner Program</span>
-      <h1 class="display-text sales-hero__title">
-        We&rsquo;re Not Looking for Salespeople.
-      </h1>
-      <p class="sales-hero__sub font-text text-grey">
-        Probell partners aren&rsquo;t chosen for experience — they&rsquo;re
-        chosen for conviction. If you already live this, we want to hear from
-        you.
-      </p>
+  <PartnerHero
+    id="sales-hero"
+    image={partnerPagesHero}
+    alt="Probell Nutrition sales partner in the field"
+    eyebrow="Sales Partner Program"
+    title="We’re Not Looking for Salespeople."
+    sub="Probell partners aren’t chosen for experience — they’re chosen for conviction. If you already live this, we want to hear from you."
+    facts={SALES_FACTS}
+  />
+
+  <PartnerReasons
+    eyebrow="Why Probell"
+    title="Something Worth Carrying."
+    reasons={SALES_REASONS}
+    image={partnerCta}
+    alt="Athlete holding a Probell kettlebell-shaped protein container"
+    imagePosition="50% 35%"
+  />
+
+  <PartnerSteps eyebrow="The Process" title="How It Works" steps={SALES_STEPS} />
+
+  <PartnerApply
+    eyebrow="Apply"
+    title="Tell Us Why Probell."
+    body="We’re building our partner network from the ground up. Tell us where you want to sell — you could be the first Probell partner in your area."
+  >
+    <div
+      id="sales-success"
+      class="pa-success label-text"
+      style="display: none;"
+      aria-live="polite"
+    >
+      Thanks for applying. We read every application personally — we'll be
+      in touch.
     </div>
-  </div>
 
-  <section class="sales-why">
-    <div class="container">
-      <ul class="sales-why__grid">
-        {
-          whyProbell.map((item) => (
-            <li class="sales-why__card">
-              <p class="font-text">{item}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
+    <form
+      id="sales-form"
+      novalidate
+      data-portal-id={hubspotPortalId}
+      data-form-guid={hubspotFormGuid}
+    >
+      <input
+        type="checkbox"
+        name="botcheck"
+        class="pa-honeypot"
+        tabindex="-1"
+        autocomplete="off"
+        aria-hidden="true"
+      />
 
-  <section class="sales-how">
-    <div class="container">
-      <h2 class="display-text sales-how__title">How It Works</h2>
-      <ol class="sales-how__list">
-        {
-          howItWorks.map((item) => (
-            <li class="sales-how__item">
-              <span class="sales-how__num" aria-hidden="true">
-                {item.step}
-              </span>
-              <div class="sales-how__content">
-                <h3 class="sales-how__label">{item.label}</h3>
-                <p class="font-text text-grey">{item.body}</p>
-              </div>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
-  </section>
+      <FormField
+        id="sales-name"
+        rule="fullName"
+        label="Full Name"
+        name="fullName"
+        required={true}
+      />
+      <FormField
+        id="sales-email"
+        label="Email"
+        name="email"
+        type="email"
+        required={true}
+      />
+      <FormField id="sales-phone" label="Phone" name="phone" rule="phone" />
+      <FormField
+        id="sales-region"
+        label="Where do you want to sell?"
+        name="regionInterest"
+        required={true}
+      />
+      <FormField
+        id="sales-event"
+        label="Any event you'd like to sell at?"
+        name="eventInterest"
+      />
+      <FormField
+        id="sales-why"
+        rule="message"
+        label="Why Probell?"
+        name="inquiryMessage"
+        type="textarea"
+        required={true}
+      />
+      <FormField
+        id="sales-heard"
+        label="How did you hear about us?"
+        name="howHeard"
+      />
 
-  <section class="sales-apply">
-    <div class="container sales-apply__inner">
-      <div class="sales-apply__intro">
-        <span class="label-text label-text--red">Apply</span>
-        <h2 class="display-text sales-apply__title">Tell Us Why Probell.</h2>
-        <p class="font-text text-grey">
-          We&rsquo;re building our partner network from the ground up. Tell us
-          where you want to sell — you could be the first Probell partner in
-          your area.
-        </p>
-      </div>
-
-      <div class="sales-apply__form-wrap">
-        <div
-          id="sales-success"
-          class="sales-apply__success label-text"
-          style="display: none;"
-          aria-live="polite"
-        >
-          Thanks for applying. We read every application personally — we'll be
-          in touch.
-        </div>
-
-        <form
-          id="sales-form"
-          novalidate
-          data-portal-id={hubspotPortalId}
-          data-form-guid={hubspotFormGuid}
-        >
+      <div class="form-group">
+        <label class="pa-consent">
           <input
             type="checkbox"
-            name="botcheck"
-            class="sales-apply__honeypot"
-            tabindex="-1"
-            autocomplete="off"
-            aria-hidden="true"
+            name="consent"
+            required
+            aria-describedby="sales-consent-error"
           />
-
-          <FormField
-            id="sales-name"
-            rule="fullName"
-            label="Full Name"
-            name="fullName"
-            required={true}
-          />
-          <FormField
-            id="sales-email"
-            label="Email"
-            name="email"
-            type="email"
-            required={true}
-          />
-          <FormField id="sales-phone" label="Phone" name="phone" rule="phone" />
-          <FormField
-            id="sales-region"
-            label="Where do you want to sell?"
-            name="regionInterest"
-            required={true}
-          />
-          <FormField
-            id="sales-event"
-            label="Any event you'd like to sell at?"
-            name="eventInterest"
-          />
-          <FormField
-            id="sales-why"
-            rule="message"
-            label="Why Probell?"
-            name="inquiryMessage"
-            type="textarea"
-            required={true}
-          />
-          <FormField
-            id="sales-heard"
-            label="How did you hear about us?"
-            name="howHeard"
-          />
-
-          <div class="form-group sales-apply__consent">
-            <label class="sales-apply__consent-label">
-              <input
-                type="checkbox"
-                name="consent"
-                required
-                aria-describedby="sales-consent-error"
-              />
-              I agree to be contacted by Probell Nutrition regarding my application.
-              See our <a href="/legal/privacy">Privacy Policy</a>.
-            </label>
-            <p class="form-error" id="sales-consent-error" hidden></p>
-          </div>
-
-          <p
-            id="sales-error"
-            class="sales-apply__error label-text"
-            style="display: none;"
-            aria-live="polite"
-          >
-            Something went wrong. Please try again or <a href={`mailto:${CONTACT_EMAIL}`}>email us directly</a>.
-          </p>
-
-          <button type="submit" class="btn-primary sales-apply__submit">
-            Apply Now
-          </button>
-        </form>
+          <span>
+            I agree to be contacted by Probell Nutrition regarding my
+            application. See our <a href="/legal/privacy">Privacy Policy</a>.
+          </span>
+        </label>
+        <p class="form-error" id="sales-consent-error" hidden></p>
       </div>
-    </div>
-  </section>
+
+      <p
+        id="sales-error"
+        class="pa-error label-text"
+        style="display: none;"
+        aria-live="polite"
+      >
+        Something went wrong. Please try again or <a href={`mailto:${CONTACT_EMAIL}`}>email us directly</a>.
+      </p>
+
+      <button type="submit" class="btn-primary pa-submit">Apply Now</button>
+    </form>
+  </PartnerApply>
 </BaseLayout>
 
 <script>
@@ -300,215 +227,3 @@ const howItWorks = [
     }
   });
 </script>
-
-<style>
-  /* Hero */
-  #sales-hero {
-    position: relative;
-    top: calc(var(--nav-height) * -1);
-    margin-bottom: calc(var(--nav-height) * -1);
-    background: var(--color-black);
-    overflow: hidden;
-  }
-
-  .sales-hero__image {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .sales-hero__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-  }
-
-  .sales-hero__content {
-    position: relative;
-    padding-block: calc(var(--space-2xl) + var(--nav-height)) var(--space-xl);
-  }
-
-  .sales-hero__title {
-    margin-top: var(--space-sm);
-    font-size: var(--text-statement);
-    color: var(--color-white);
-    max-width: 16ch;
-  }
-
-  .sales-hero__sub {
-    margin-top: var(--space-md);
-    max-width: 50ch;
-    color: var(--color-grey);
-  }
-
-  /* Why Probell */
-  .sales-why {
-    background: var(--color-black);
-    padding-block: var(--space-lg);
-  }
-
-  .sales-why__grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-md);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .sales-why__card {
-    padding: var(--space-md);
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-  }
-
-  .sales-why__card p {
-    color: var(--color-white);
-    line-height: 1.5;
-  }
-
-  /* How It Works */
-  .sales-how {
-    background: var(--color-black);
-    padding-block: var(--space-xl);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .sales-how__title {
-    font-size: var(--text-section);
-    color: var(--color-white);
-    margin-bottom: var(--space-lg);
-  }
-
-  .sales-how__list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-md);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .sales-how__item {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    padding-top: var(--space-sm);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .sales-how__num {
-    font-family: var(--font-display);
-    font-size: var(--text-product);
-    color: var(--color-red);
-    line-height: 1;
-  }
-
-  .sales-how__label {
-    font-family: var(--font-display);
-    font-size: var(--text-product);
-    color: var(--color-white);
-    text-transform: uppercase;
-    letter-spacing: -0.02em;
-    margin: 0;
-  }
-
-  /* Application form */
-  .sales-apply {
-    background: var(--color-black);
-    padding-block: var(--space-xl);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .sales-apply__inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-xl);
-    align-items: start;
-  }
-
-  .sales-apply__title {
-    margin-top: var(--space-sm);
-    font-size: var(--text-section);
-    color: var(--color-white);
-  }
-
-  .sales-apply__intro p {
-    margin-top: var(--space-md);
-    max-width: 42ch;
-    color: var(--color-grey);
-  }
-
-  .sales-apply__honeypot {
-    position: absolute;
-    left: -9999px;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .sales-apply__consent-label {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-xs);
-    color: var(--color-grey);
-    font-size: var(--text-label);
-    line-height: 1.5;
-  }
-
-  .sales-apply__consent-label a {
-    color: var(--color-gold);
-  }
-
-  .sales-apply__consent-label input {
-    margin-top: 0.2em;
-  }
-
-  .sales-apply__success {
-    color: var(--color-gold);
-    padding: var(--space-lg) 0;
-  }
-
-  .sales-apply__error a {
-    color: inherit;
-    text-decoration: underline;
-  }
-
-  .sales-apply__error {
-    color: var(--color-red-text);
-    margin-bottom: var(--space-sm);
-  }
-
-  .sales-apply__submit {
-    margin-top: var(--space-sm);
-  }
-
-  @media (max-width: 1024px) {
-    .sales-why__grid,
-    .sales-how__list {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 768px) {
-    .sales-hero__content {
-      padding-block: calc(var(--space-xl) + var(--nav-height)) var(--space-lg);
-    }
-
-    .sales-why__grid,
-    .sales-how__list {
-      grid-template-columns: 1fr;
-    }
-
-    .sales-apply__inner {
-      grid-template-columns: 1fr;
-    }
-
-    .sales-apply__submit {
-      width: 100%;
-    }
-  }
-</style>

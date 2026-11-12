@@ -34,6 +34,8 @@
   --color-white: #f9f6ee;
   --color-grey: #a0a0a0;
   --color-border: #222222;
+  /* Form field outline: 3.3:1 on the dark panels (WCAG 1.4.11). */
+  --color-border-strong: #666666;
   --color-surface: #111111;
   --color-bg-warm: #f5f3ef;
   --color-silver: #9ca3ad;
@@ -210,6 +212,18 @@ select {
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 var(--container-pad);
+}
+
+/* Full-width container whose side padding lines up with the nav logo. */
+.container-wide {
+  width: 100%;
+  padding-inline: var(--container-pad-lg);
+}
+
+@media (max-width: 1024px) {
+  .container-wide {
+    padding-inline: var(--space-sm);
+  }
 }
 
 .section {
@@ -408,11 +422,11 @@ select {
 .form-input,
 .form-select,
 .form-textarea {
-  background: var(--color-white);
-  border: 1px solid var(--color-white);
-  border-radius: 12px;
-  color: var(--color-black);
-  padding: 0.75rem 1rem;
+  background: var(--color-black-true);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0;
+  color: var(--color-white);
+  padding: 0.85rem 1rem;
   font-family: var(--font-body);
   font-size: var(--text-body);
   width: 100%;
@@ -422,14 +436,26 @@ select {
 
 .form-input::placeholder,
 .form-textarea::placeholder {
-  color: var(--color-black);
-  opacity: 0.8;
+  color: var(--color-grey);
+}
+
+.form-input:hover,
+.form-select:hover,
+.form-textarea:hover {
+  border-color: var(--color-grey);
 }
 
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
-  border-color: var(--color-grey);
+  border-color: var(--color-gold);
+}
+
+/* Keep browser autofill on the dark field instead of its pale fill. */
+.form-input:-webkit-autofill {
+  -webkit-text-fill-color: var(--color-white);
+  box-shadow: 0 0 0 100px var(--color-black-true) inset;
+  caret-color: var(--color-white);
 }
 
 .form-textarea {

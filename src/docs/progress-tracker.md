@@ -8,18 +8,99 @@ to date.
 
 ### Now
 
-- Full UI check and a possible redesign, in its own session. This
+- UI update, ongoing until Stu signs off every page and section. It
   replaces the old per-page visual sign-offs and the footer review.
+  - Signed off: `/sales`, `/retail`, `/distributor` (Session 61).
+  - To check: home (each section), nav, footer, `/supplements`, product
+    detail, legal pages, 404. Decide per page whether the partner-page
+    pattern carries over.
 
 ### Next
 
 1. Swap in the client's final product PNGs and a transparent logo PNG.
+2. Add the partner-page pattern to `design.md` (Session 61).
+3. Check whether the homepage Contact headline should be in Anton (it
+   uses `.display-text` without setting the font).
 
 ---
 
 ## Session Log
 
 Newest first.
+
+### Session 61 — 9 Nov 2026
+
+**Branch:** `dev`.
+
+**What was done:**
+
+- Playwright MCP fixed (corrupt npx cache) and `.playwright-mcp/` added
+  to `.gitignore`.
+- `/sales` redesigned for a premium feel that keeps the gritty, bold
+  direction. Stu set the brief: the old design patterns are no longer
+  the scope; expand on the current direction.
+  - Shared parts in `src/components/Partner/`:
+    - `PartnerHero`: near-full-screen photo with a bottom-weighted
+      scrim, film grain, gold-ruled eyebrow, Anton headline, optional
+      facts row.
+    - `PartnerReasons`: sticky portrait photo beside a numbered
+      editorial list (Anton title + grey line per reason).
+    - `PartnerSteps`: timeline on a gold rule with hollow gold-outline
+      numbers; turns vertical on phones.
+    - `PartnerApply`: sticky intro beside a raised dark panel with a
+      gold top rule. The page passes its own form into the slot; shared
+      form pieces use the `pa-honeypot`, `pa-consent`, `pa-success`,
+      `pa-error` and `pa-submit` classes.
+  - Content lives in `src/data/partners.ts` (`SALES_FACTS`,
+    `SALES_REASONS`, `SALES_STEPS`).
+  - `global.css`: new `.container-wide` (side padding lines up with the
+    nav logo; 16px on phones) and `--color-border-strong`. Form fields
+    are now dark and square with a gold focus border, site-wide, so
+    `/retail` and `/distributor` already have them.
+  - Fixed: the sales h1/h2 weren't in Anton (`.display-text` sets no
+    font family, so each part sets `--font-display` itself).
+  - Form fields, IDs, script and HubSpot mapping unchanged; validation
+    checked in the browser. Lint and build clean. Checked at 1440px and
+    390px.
+  - Committed as `f7e98a8`. Stu approved the look.
+- `/retail` rebuilt on the same parts, with `RETAIL_FACTS`,
+  `RETAIL_REASONS` (split from the old `whyStock`) and `RETAIL_STEPS`
+  in `partners.ts`.
+  - New shared part `PartnerStatement`: a light off-white band with one
+    statement, used for the wholesale pricing copy. Its eyebrow uses
+    brand red, because `--color-red-text` fails AA on off-white.
+  - `PartnerReasons` takes an `imagePosition` prop for the crop.
+    `/retail` uses `audience/sales.jpg` (product in hand) because
+    `audience/retailer.jpg` is a landscape gym shot with no product.
+  - Form unchanged; validation, lint and build checked at 1440px and
+    390px.
+  - Committed as `490e0ee`. Stu approved the look.
+- `/distributor` rebuilt on the same parts, kept deliberately minimal:
+  `PartnerHero` (gold eyebrow, no facts row) + `PartnerStatement`
+  (positioning copy) + `PartnerApply` (gold eyebrow). No reasons or
+  steps.
+  - `PartnerHero` takes `titleSize="statement"` for longer headlines
+    (the distributor headline ran to four lines at hero size).
+  - `PartnerStatement` takes `eyebrowTone="black"`, because gold fails
+    contrast on off-white and this page avoids red.
+  - Form unchanged; validation, lint and build checked at 1440px and
+    390px, with no horizontal scroll.
+  - Committed as `c577cc8`, with this log entry. Stu approved the look.
+
+**Decisions made this session:**
+
+- Partner pages share one set of parts; each page keeps its own form
+  and submit script.
+- Red is kept for the one CTA per page; gold carries the detail (rules,
+  labels, numbers).
+
+**Still open:**
+
+- `design.md` doesn't describe the partner-page pattern yet (shared
+  parts, gold detail with red kept for the CTA, dark square form
+  fields, light statement band).
+- The homepage Contact headline uses `.display-text` without setting
+  Anton; check whether that's intended.
 
 ### Session 60 — 26 Oct 2026
 

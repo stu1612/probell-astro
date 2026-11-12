@@ -1,9 +1,15 @@
 ---
-import { Image } from "astro:assets";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import FormField from "@components/ui/FormField.astro";
+import PartnerHero from "@components/Partner/PartnerHero.astro";
+import PartnerReasons from "@components/Partner/PartnerReasons.astro";
+import PartnerStatement from "@components/Partner/PartnerStatement.astro";
+import PartnerSteps from "@components/Partner/PartnerSteps.astro";
+import PartnerApply from "@components/Partner/PartnerApply.astro";
 import partnerPagesHero from "@assets/partners/partner-pages-hero.jpg";
+import productInHand from "@assets/audience/sales.jpg";
 import { HUBSPOT_FORMS } from "@data/hubspot";
+import { RETAIL_FACTS, RETAIL_REASONS, RETAIL_STEPS } from "@data/partners";
 import { CONTACT_EMAIL } from "@constants/site";
 
 const title = "Retailer Program | Probell Nutrition";
@@ -12,204 +18,123 @@ const description =
 
 const hubspotPortalId = HUBSPOT_FORMS.portalId;
 const hubspotFormGuid = HUBSPOT_FORMS.retailer;
-
-const whyStock = [
-  "The kettlebell-shaped container — genuinely distinct on a shelf or gym floor, a conversation starter with members and customers",
-  "US-made, no-compromise formula",
-  "Direct, personal ordering relationship — no call center, no runaround",
-];
-
-const howItWorks = [
-  {
-    step: "01",
-    label: "Submit Your Request",
-    body: "A short form, a couple minutes.",
-  },
-  {
-    step: "02",
-    label: "We Review",
-    body: "Every request read personally.",
-  },
-  {
-    step: "03",
-    label: "Pricing Shared Directly",
-    body: "Wholesale pricing and next steps sent to you.",
-  },
-  {
-    step: "04",
-    label: "Order",
-    body: "Straightforward reordering once you're set up.",
-  },
-];
 ---
 
 <BaseLayout title={title} description={description} transparentNav={true}>
-  <div id="retail-hero">
-    <Image
-      src={partnerPagesHero}
-      alt="Probell Nutrition retail display"
-      width={1920}
-      height={1080}
-      format="webp"
-      loading="eager"
-      class="retail-hero__image"
-    />
-    <div class="retail-hero__overlay"></div>
-    <div class="container retail-hero__content">
-      <span class="label-text label-text--red">Retailer Program</span>
-      <h1 class="display-text retail-hero__title">
-        You&rsquo;ve Got Enough to Manage.
-      </h1>
-      <p class="retail-hero__sub font-text text-grey">
-        Tell us what you need — we&rsquo;ll give you a straight answer, fast.
-      </p>
+  <PartnerHero
+    id="retail-hero"
+    image={partnerPagesHero}
+    alt="Probell Nutrition retail display"
+    eyebrow="Retailer Program"
+    title="You’ve Got Enough to Manage."
+    sub="Tell us what you need — we’ll give you a straight answer, fast."
+    facts={RETAIL_FACTS}
+  />
+
+  <PartnerReasons
+    eyebrow="Why Stock Probell"
+    title="Worth the Shelf Space."
+    reasons={RETAIL_REASONS}
+    image={productInHand}
+    alt="Athlete lifting a Probell kettlebell-shaped pre-workout container"
+    imagePosition="58% 50%"
+  />
+
+  <PartnerStatement
+    eyebrow="Wholesale Pricing"
+    text="Wholesale pricing is shared directly with approved retailers. Submit a request below and we’ll get back to you personally — no account, no login, no waiting on hold."
+  />
+
+  <PartnerSteps eyebrow="The Process" title="How It Works" steps={RETAIL_STEPS} />
+
+  <PartnerApply
+    eyebrow="Request Pricing"
+    title="Let’s Talk Stocking Probell."
+    body="Tell us about your business and what you’re looking for — we’ll follow up directly with wholesale pricing."
+  >
+    <div
+      id="retail-success"
+      class="pa-success label-text"
+      style="display: none;"
+      aria-live="polite"
+    >
+      Thanks for reaching out. We read every request personally — we'll be
+      in touch.
     </div>
-  </div>
 
-  <section class="retail-why">
-    <div class="container">
-      <ul class="retail-why__list">
-        {
-          whyStock.map((item) => (
-            <li class="retail-why__item">
-              <p class="font-text">{item}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
+    <form
+      id="retail-form"
+      novalidate
+      data-portal-id={hubspotPortalId}
+      data-form-guid={hubspotFormGuid}
+    >
+      <input
+        type="checkbox"
+        name="botcheck"
+        class="pa-honeypot"
+        tabindex="-1"
+        autocomplete="off"
+        aria-hidden="true"
+      />
 
-  <section class="retail-pricing">
-    <div class="container">
-      <p class="font-text retail-pricing__copy">
-        Wholesale pricing is shared directly with approved retailers. Submit a
-        request below and we&rsquo;ll get back to you personally — no account,
-        no login, no waiting on hold.
-      </p>
-    </div>
-  </section>
+      <FormField
+        id="retail-business"
+        label="Business Name"
+        name="businessName"
+        required={true}
+      />
+      <FormField
+        id="retail-name"
+        rule="fullName"
+        label="Your Name"
+        name="fullName"
+        required={true}
+      />
+      <FormField
+        id="retail-email"
+        label="Email"
+        name="email"
+        type="email"
+        required={true}
+      />
+      <FormField id="retail-phone" label="Phone" name="phone" rule="phone" />
+      <FormField
+        id="retail-message"
+        rule="message"
+        label="Tell us about your business and what you're looking for"
+        name="inquiryMessage"
+        type="textarea"
+        required={true}
+      />
 
-  <section class="retail-how">
-    <div class="container">
-      <h2 class="display-text retail-how__title">How It Works</h2>
-      <ol class="retail-how__list">
-        {
-          howItWorks.map((item) => (
-            <li class="retail-how__item">
-              <span class="retail-how__num" aria-hidden="true">
-                {item.step}
-              </span>
-              <div class="retail-how__content">
-                <h3 class="retail-how__label">{item.label}</h3>
-                <p class="font-text text-grey">{item.body}</p>
-              </div>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
-  </section>
-
-  <section class="retail-apply">
-    <div class="container retail-apply__inner">
-      <div class="retail-apply__intro">
-        <span class="label-text label-text--red">Request Pricing</span>
-        <h2 class="display-text retail-apply__title">
-          Let&rsquo;s Talk Stocking Probell.
-        </h2>
-        <p class="font-text text-grey">
-          Tell us about your business and what you&rsquo;re looking for —
-          we&rsquo;ll follow up directly with wholesale pricing.
-        </p>
-      </div>
-
-      <div class="retail-apply__form-wrap">
-        <div
-          id="retail-success"
-          class="retail-apply__success label-text"
-          style="display: none;"
-          aria-live="polite"
-        >
-          Thanks for reaching out. We read every request personally — we'll be
-          in touch.
-        </div>
-
-        <form
-          id="retail-form"
-          novalidate
-          data-portal-id={hubspotPortalId}
-          data-form-guid={hubspotFormGuid}
-        >
+      <div class="form-group">
+        <label class="pa-consent">
           <input
             type="checkbox"
-            name="botcheck"
-            class="retail-apply__honeypot"
-            tabindex="-1"
-            autocomplete="off"
-            aria-hidden="true"
+            name="consent"
+            required
+            aria-describedby="retail-consent-error"
           />
-
-          <FormField
-            id="retail-business"
-            label="Business Name"
-            name="businessName"
-            required={true}
-          />
-          <FormField
-            id="retail-name"
-            rule="fullName"
-            label="Your Name"
-            name="fullName"
-            required={true}
-          />
-          <FormField
-            id="retail-email"
-            label="Email"
-            name="email"
-            type="email"
-            required={true}
-          />
-          <FormField id="retail-phone" label="Phone" name="phone" rule="phone" />
-          <FormField
-            id="retail-message"
-            rule="message"
-            label="Tell us about your business and what you're looking for"
-            name="inquiryMessage"
-            type="textarea"
-            required={true}
-          />
-
-          <div class="form-group retail-apply__consent">
-            <label class="retail-apply__consent-label">
-              <input
-                type="checkbox"
-                name="consent"
-                required
-                aria-describedby="retail-consent-error"
-              />
-              I agree to be contacted by Probell Nutrition regarding my request. See
-              our <a href="/legal/privacy">Privacy Policy</a>.
-            </label>
-            <p class="form-error" id="retail-consent-error" hidden></p>
-          </div>
-
-          <p
-            id="retail-error"
-            class="retail-apply__error label-text"
-            style="display: none;"
-            aria-live="polite"
-          >
-            Something went wrong. Please try again or <a href={`mailto:${CONTACT_EMAIL}`}>email us directly</a>.
-          </p>
-
-          <button type="submit" class="btn-primary retail-apply__submit">
-            Submit Request
-          </button>
-        </form>
+          <span>
+            I agree to be contacted by Probell Nutrition regarding my request.
+            See our <a href="/legal/privacy">Privacy Policy</a>.
+          </span>
+        </label>
+        <p class="form-error" id="retail-consent-error" hidden></p>
       </div>
-    </div>
-  </section>
+
+      <p
+        id="retail-error"
+        class="pa-error label-text"
+        style="display: none;"
+        aria-live="polite"
+      >
+        Something went wrong. Please try again or <a href={`mailto:${CONTACT_EMAIL}`}>email us directly</a>.
+      </p>
+
+      <button type="submit" class="btn-primary pa-submit">Submit Request</button>
+    </form>
+  </PartnerApply>
 </BaseLayout>
 
 <script>
@@ -293,226 +218,3 @@ const howItWorks = [
     }
   });
 </script>
-
-<style>
-  /* Hero */
-  #retail-hero {
-    position: relative;
-    top: calc(var(--nav-height) * -1);
-    margin-bottom: calc(var(--nav-height) * -1);
-    background: var(--color-black);
-    overflow: hidden;
-  }
-
-  .retail-hero__image {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .retail-hero__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-  }
-
-  .retail-hero__content {
-    position: relative;
-    padding-block: calc(var(--space-2xl) + var(--nav-height)) var(--space-xl);
-  }
-
-  .retail-hero__title {
-    margin-top: var(--space-sm);
-    font-size: var(--text-statement);
-    color: var(--color-white);
-    max-width: 18ch;
-  }
-
-  .retail-hero__sub {
-    margin-top: var(--space-md);
-    max-width: 50ch;
-    color: var(--color-grey);
-  }
-
-  /* Why Stock Probell — deliberately light, not a heavy stat-chip block */
-  .retail-why {
-    background: var(--color-black);
-    padding-block: var(--space-lg);
-  }
-
-  .retail-why__list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    max-width: 60ch;
-  }
-
-  .retail-why__item {
-    padding-left: var(--space-md);
-    border-left: 1px solid var(--color-border);
-  }
-
-  .retail-why__item p {
-    color: var(--color-white);
-    line-height: 1.6;
-  }
-
-  /* Pricing framing */
-  .retail-pricing {
-    background: var(--color-black);
-    padding-block: var(--space-md) var(--space-lg);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .retail-pricing__copy {
-    max-width: 60ch;
-    color: var(--color-grey);
-    line-height: 1.6;
-  }
-
-  /* How It Works */
-  .retail-how {
-    background: var(--color-black);
-    padding-block: var(--space-xl);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .retail-how__title {
-    font-size: var(--text-section);
-    color: var(--color-white);
-    margin-bottom: var(--space-lg);
-  }
-
-  .retail-how__list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-md);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .retail-how__item {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    padding-top: var(--space-sm);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .retail-how__num {
-    font-family: var(--font-display);
-    font-size: var(--text-product);
-    color: var(--color-red);
-    line-height: 1;
-  }
-
-  .retail-how__label {
-    font-family: var(--font-display);
-    font-size: var(--text-product);
-    color: var(--color-white);
-    text-transform: uppercase;
-    letter-spacing: -0.02em;
-    margin: 0;
-  }
-
-  /* Request form */
-  .retail-apply {
-    background: var(--color-black);
-    padding-block: var(--space-xl);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .retail-apply__inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-xl);
-    align-items: start;
-  }
-
-  .retail-apply__title {
-    margin-top: var(--space-sm);
-    font-size: var(--text-section);
-    color: var(--color-white);
-  }
-
-  .retail-apply__intro p {
-    margin-top: var(--space-md);
-    max-width: 42ch;
-    color: var(--color-grey);
-  }
-
-  .retail-apply__honeypot {
-    position: absolute;
-    left: -9999px;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .retail-apply__consent-label {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-xs);
-    color: var(--color-grey);
-    font-size: var(--text-label);
-    line-height: 1.5;
-  }
-
-  .retail-apply__consent-label a {
-    color: var(--color-gold);
-  }
-
-  .retail-apply__consent-label input {
-    margin-top: 0.2em;
-  }
-
-  .retail-apply__success {
-    color: var(--color-gold);
-    padding: var(--space-lg) 0;
-  }
-
-  .retail-apply__error a {
-    color: inherit;
-    text-decoration: underline;
-  }
-
-  .retail-apply__error {
-    color: var(--color-red-text);
-    margin-bottom: var(--space-sm);
-  }
-
-  .retail-apply__submit {
-    margin-top: var(--space-sm);
-  }
-
-  @media (max-width: 1024px) {
-    .retail-how__list {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 768px) {
-    .retail-hero__content {
-      padding-block: calc(var(--space-xl) + var(--nav-height)) var(--space-lg);
-    }
-
-    .retail-how__list {
-      grid-template-columns: 1fr;
-    }
-
-    .retail-apply__inner {
-      grid-template-columns: 1fr;
-    }
-
-    .retail-apply__submit {
-      width: 100%;
-    }
-  }
-</style>
