@@ -4,8 +4,9 @@ import AudienceCard from "@components/AudienceCards/AudienceCard.astro";
 ---
 
 <section class="ac">
-  <h2 class="ac__heading">Become an ambassador</h2>
-  <div class="ac__grid grid-4">
+  <span class="label-text label-text--gold ac__eyebrow">Work With Probell</span>
+  <h2 class="ac__heading">Choose Your Route</h2>
+  <div class="ac__grid grid-3">
     {AUDIENCE_CARDS.map((card) => <AudienceCard card={card} />)}
   </div>
 </section>
@@ -16,18 +17,50 @@ import AudienceCard from "@components/AudienceCards/AudienceCard.astro";
     padding: var(--space-xl) 0;
   }
 
+  .ac__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .ac__eyebrow::before {
+    content: "";
+    width: 2rem;
+    height: 1px;
+    background: currentColor;
+  }
+
   .ac__heading {
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-lg);
     font-family: var(--font-display);
+    /* h2 defaults to bold; Anton ships one weight, so keep it regular. */
+    font-weight: 400;
     font-size: var(--text-statement);
+    line-height: 0.9;
     color: var(--color-white);
     text-transform: uppercase;
-    text-align: center;
-    margin-bottom: var(--space-lg);
+  }
+
+  .ac__grid {
+    gap: var(--space-sm);
+  }
+
+  /* Keep all three routes in one row down to tablet; grid-3 would
+     drop to 2 + 1 here. */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .ac__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   @media (max-width: 768px) {
+    .ac {
+      padding: var(--space-lg) 0;
+    }
+
     .ac__heading {
-      text-align: left;
+      margin-bottom: var(--space-md);
     }
   }
 </style>

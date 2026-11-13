@@ -20,10 +20,10 @@ import partnerCta from "@assets/partners/partner-cta.jpg";
         Give your members what they've been asking for.
       </h2>
       <p class="em__cta-body font-text text-black">
-        Probell is stocked in gyms that take their members seriously. Talk to us
+        Probell is built for gyms that take their members seriously. Talk to us
         about wholesale pricing, margins, and display support.
       </p>
-      <a href="/supplements" class="btn-primary em__cta-btn">See Supplements</a>
+      <a href="/retail" class="btn-primary em__cta-btn">Request Wholesale Pricing</a>
     </div>
   </div>
 </div>
@@ -44,21 +44,31 @@ import partnerCta from "@assets/partners/partner-cta.jpg";
     width: 100%;
     height: 520px;
     object-fit: cover;
-    border-radius: var(--radius-image);
     display: block;
   }
 
   .em__cta-content {
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
+    align-items: flex-start;
   }
 
   .em__cta-headline {
     font-family: var(--font-display);
+    /* h2 defaults to bold; Anton ships one weight, so keep it regular. */
+    font-weight: 400;
     font-size: var(--text-statement-md);
     color: var(--color-black);
-    line-height: 0.95;
+    line-height: 0.9;
+    text-wrap: balance;
+  }
+
+  .em__cta-body {
+    margin-top: var(--space-md);
+  }
+
+  .em__cta-btn {
+    margin-top: var(--space-lg);
   }
 
   .em__cta-btn {
@@ -77,15 +87,21 @@ import partnerCta from "@assets/partners/partner-cta.jpg";
   }
 
   @media (max-width: 768px) {
+    .em__cta-section {
+      padding-top: var(--space-lg);
+    }
+
     .em__cta-layout {
       grid-template-columns: 1fr;
+      gap: var(--space-md);
     }
-  }
 
-  @media (max-width: 1024px) {
-    .em__cta-content {
-      display: flex;
-      align-items: center;
+    .em__cta-img :global(img) {
+      height: 320px;
+    }
+
+    .em__cta-btn {
+      margin-top: var(--space-md);
     }
   }
 </style>

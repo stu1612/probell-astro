@@ -40,7 +40,7 @@ import { STATS } from "@data/stats";
   .em__stats-layout {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: var(--space-2xl);
+    gap: var(--space-xl);
     align-items: start;
   }
 
@@ -105,7 +105,9 @@ import { STATS } from "@data/stats";
   }
 
   .em__stat-label {
-    color: var(--color-grey);
+    /* Grey fails contrast on white (2.5:1); dimmed black passes AA. */
+    color: var(--color-black);
+    opacity: 0.7;
     letter-spacing: 0.12em;
     max-width: 30ch;
   }
