@@ -80,12 +80,12 @@ const { product } = Astro.props;
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 90vh;
+    min-height: 80vh;
     overflow: hidden;
   }
 
   .ps__strip + .ps__strip {
-    margin-top: var(--space-xl);
+    margin-top: var(--space-lg);
   }
 
   .ps__strip--flip .ps__content {
@@ -129,10 +129,15 @@ const { product } = Astro.props;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: var(--space-md);
-    padding: var(--space-xl) var(--space-lg);
+    /* Outer edge sits on the wrapper's gutter (the site edge); padding
+       only on the side facing the image. */
+    padding: var(--space-xl) var(--space-lg) var(--space-xl) 0;
     max-width: 640px;
     min-width: 0;
+  }
+
+  .ps__strip--flip .ps__content {
+    padding: var(--space-xl) 0 var(--space-xl) var(--space-lg);
   }
 
   .ps__eyebrow {
@@ -146,19 +151,24 @@ const { product } = Astro.props;
   }
 
   .ps__name {
+    margin-top: var(--space-sm);
     font-size: var(--text-statement);
     font-family: var(--font-display);
+    /* h3 defaults to bold; Anton ships one weight, so keep it regular. */
+    font-weight: 400;
     color: var(--color-white);
-    line-height: 0.95;
+    line-height: 0.9;
   }
 
   .ps__body {
+    margin-top: var(--space-md);
     max-width: 46ch;
   }
 
   .ps__stats {
     display: flex;
-    gap: var(--space-md);
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
   }
 
   .ps__stat {
@@ -166,13 +176,13 @@ const { product } = Astro.props;
     flex-direction: column;
     gap: var(--space-xs);
     padding-left: var(--space-sm);
-    border-left: 2px solid var(--color-red);
+    border-left: 2px solid var(--color-gold);
   }
 
   .ps__stat-num {
-    font-size: var(--text-product);
+    font-size: var(--text-section);
     color: var(--color-white);
-    line-height: 1;
+    line-height: 0.9;
   }
 
   .ps__stat-label {
@@ -180,6 +190,7 @@ const { product } = Astro.props;
   }
 
   .ps__cta {
+    margin-top: var(--space-lg);
     background: transparent;
     color: var(--color-gold);
     border-color: var(--color-gold);
@@ -247,6 +258,8 @@ const { product } = Astro.props;
 
   .ps__strip--overlay .ps__content {
     grid-column: 1;
+    /* Text sits on the photo here, so inset it on both sides. */
+    padding: var(--space-xl) var(--space-lg);
   }
 
   @media (max-width: 768px) {
@@ -259,8 +272,25 @@ const { product } = Astro.props;
     }
 
     .ps__content {
-      padding: var(--space-md);
+      padding: var(--space-lg) var(--space-md) var(--space-lg) 0;
       max-width: none;
+    }
+
+    .ps__strip--flip .ps__content {
+      padding: var(--space-lg) 0 var(--space-lg) var(--space-md);
+    }
+
+    .ps__strip--overlay .ps__content {
+      padding: var(--space-lg) var(--space-md);
+    }
+
+    .ps__stats {
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    .ps__cta {
+      margin-top: var(--space-md);
     }
 
     .ps__ghost {
