@@ -32,14 +32,41 @@ condensed display type (Anton) over a clean body face (Space Grotesk).
 - **Square buttons.** The radius was removed on purpose, and the
   commented-out `border-radius` in `global.css` is intentional.
 - **Dark overlays on photos** wherever text sits on an image (Hero,
-  Contact, AudienceCard, ProductHero). These are scrims, not decoration.
-  No decorative or colourful gradients.
+  Contact, AudienceCard, ProductHero, PartnerHero). These are scrims, not
+  decoration. No decorative or colourful gradients. PartnerHero also
+  adds a faint grain texture over the scrim for grit.
 - **Ghost numbers** (ProductStrips, SupplementRow, ProductHero, 404) use
   a colour token with low opacity.
 - **Nav** is transparent over the hero and turns solid off-white on
   scroll. It has square buttons and no dropdowns. The social links are
   commented out until the accounts are refreshed.
-- **Forms** use `ui/FormField.astro`.
+- **Forms** use `ui/FormField.astro`. Fields are dark and square
+  site-wide, with a gold focus border.
+
+## Partner pages
+
+`/sales`, `/retail` and `/distributor` are built from the shared parts
+in `src/components/Partner/`, with their content in
+`src/data/partners.ts`. Each page picks the parts it needs, in this
+order:
+
+- **PartnerHero:** full-bleed photo with scrim and grain, eyebrow,
+  Anton headline, subline and an optional row of fact labels.
+  `titleSize="statement"` is for headlines that would run past three
+  lines.
+- **PartnerReasons:** image beside a numbered list of reasons.
+- **PartnerStatement:** a light band with one large statement. It gives
+  the black-against-light contrast on an otherwise dark page.
+- **PartnerSteps:** numbered "How it works" steps on true black.
+- **PartnerApply:** sticky intro on the left and the page's own form in
+  a dark panel on the right. The form, its script and its HubSpot
+  mapping stay in the page and pass in through the slot.
+
+Gold carries the detail (numbers, rules, the form panel's top edge,
+field focus) and red stays on the primary CTA. Eyebrows are red on
+`/sales` and `/retail` and gold on `/distributor`.
+The distributor page uses only Hero, Statement and Apply, which keeps it
+deliberately minimal (see `brand.md`).
 
 ## Deliberately different
 

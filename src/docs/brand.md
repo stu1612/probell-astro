@@ -47,8 +47,8 @@ Each page has one honest stance. Never invent traction, scale or numbers
   follow-up conversation.
 - **Distributor (`/distributor`):** aimed at regional or mid-size
   distributors scouting new brands, not enterprise. Deliberately minimal:
-  intro, one short paragraph, and a form with no message field. No stat
-  chips, FAQ or automation. Over-building it would look like compensating
+  a hero, one short statement, and a form with no message field. No fact
+  labels, reasons, steps, FAQ or automation. Over-building it would look like compensating
   for a lack of track record.
 
 ## Principles
