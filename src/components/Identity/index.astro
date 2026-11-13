@@ -1,20 +1,37 @@
 ---
 interface Props {
+  eyebrow?: string;
   headline: string;
   accentText?: string;
   highlightText?: string;
+  lead?: string;
   body: string;
   primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
 }
 
-const { headline, accentText, highlightText, body, primaryCta, secondaryCta } =
-  Astro.props;
+const {
+  eyebrow,
+  headline,
+  accentText,
+  highlightText,
+  lead,
+  body,
+  primaryCta,
+  secondaryCta,
+} = Astro.props;
 const hasCtas = primaryCta || secondaryCta;
 ---
 
 <section id="identity">
   <div class="identity__stack">
+    {
+      eyebrow && (
+        <span class="label-text label-text--gold identity__eyebrow">
+          {eyebrow}
+        </span>
+      )
+    }
     <h2 class="display-text identity__headline">
       <span class="identity__headline-main">{headline}</span>
       {accentText && <span class="identity__accent"> {accentText}</span>}
@@ -24,6 +41,7 @@ const hasCtas = primaryCta || secondaryCta;
         )
       }
     </h2>
+    {lead && <p class="font-text identity__lead">{lead}</p>}
     {body && <p class="font-text identity__body-text">{body}</p>}
     {
       hasCtas && (
@@ -54,15 +72,33 @@ const hasCtas = primaryCta || secondaryCta;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-md);
     text-align: center;
+  }
+
+  .identity__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .identity__eyebrow::before,
+  .identity__eyebrow::after {
+    content: "";
+    width: 2rem;
+    height: 1px;
+    background: currentColor;
   }
 
   .identity__headline {
     font-family: var(--font-display);
-    font-size: var(--text-highlight);
+    font-weight: 400;
+    font-size: var(--text-statement);
+    line-height: 0.92;
     color: var(--color-white);
     text-align: center;
+    max-width: 18ch;
+    text-wrap: balance;
   }
 
   .identity__accent {
@@ -74,17 +110,27 @@ const hasCtas = primaryCta || secondaryCta;
     color: var(--color-gold);
   }
 
-  .identity__body-text {
-    font-size: var(--text-body);
+  .identity__lead {
+    margin-top: var(--space-md);
+    max-width: 34ch;
+    font-size: var(--text-product);
+    line-height: 1.25;
     color: var(--color-white);
+    text-wrap: balance;
+  }
+
+  .identity__body-text {
+    margin-top: var(--space-sm);
+    max-width: 60ch;
+    color: var(--color-grey);
     line-height: 1.6;
-    max-width: 840px;
   }
 
   .identity__ctas {
     display: flex;
     gap: var(--space-md);
     justify-content: center;
+    margin-top: var(--space-lg);
   }
 
   @media (max-width: 1280px) {
@@ -96,6 +142,16 @@ const hasCtas = primaryCta || secondaryCta;
     .identity__ctas {
       flex-direction: column;
       align-items: center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    #identity {
+      padding: var(--space-lg) 0;
+    }
+
+    .identity__ctas {
+      margin-top: var(--space-md);
     }
   }
 </style>
