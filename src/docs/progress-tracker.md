@@ -10,22 +10,77 @@ to date.
 
 - UI update, ongoing until Stu signs off every page and section. It
   replaces the old per-page visual sign-offs and the footer review.
-  - Signed off: `/sales`, `/retail`, `/distributor` (Session 61).
-  - To check: home (each section), nav, footer, `/supplements`, product
-    detail, legal pages, 404. Decide per page whether the partner-page
-    pattern carries over.
+  - Signed off: `/sales`, `/retail`, `/distributor` (Session 61); home
+    Hero, Identity, ProductStrips (Session 62).
+  - Built, not yet committed (branch `dev-homepage-ui-upgrade`): home
+    AudienceCards (signed off) and BrandStory (awaiting sign-off).
+  - To check: home Contact, nav, footer, `/supplements`, product
+    detail, legal pages, 404. Homepage keeps its own character; the
+    focus is padding, spacing and typography.
+  - Contact section: decide the headline font (`.display-text` sets no
+    font family), and fix the "I'm a Gym" router button (goes to
+    `/sales`; gyms route to `/retail` everywhere else).
 
 ### Next
 
 1. Swap in the client's final product PNGs and a transparent logo PNG.
-2. Check whether the homepage Contact headline should be in Anton (it
-   uses `.display-text` without setting the font).
+2. After the homepage pass: add `font-weight: 400` to `.display-text`
+   in `global.css` to end Anton faux-bold site-wide, then review the
+   pages not yet upgraded.
 
 ---
 
 ## Session Log
 
 Newest first.
+
+### Session 62 — 13 Nov 2026
+
+**Branch:** `dev-homepage-ui-upgrade` (off `dev`).
+
+**What was done:**
+
+- Docs: `design.md` now describes the partner-page pattern (shared
+  parts, gold detail with red for the CTA, dark square fields);
+  `brand.md` distributor line matches the rebuilt page. Committed as
+  `d418245`.
+- Home Hero: gold-ruled eyebrow "US-Made · Kettlebell Protein", tighter
+  Anton headline, PartnerHero grain, text on the `.container-wide`
+  edge. Subline is now "The only protein you can lift" on both
+  breakpoints (mobile is a `p`, not an `h3`). Fixed mobile faux-bold.
+  No CTA, by Stu's choice. Committed as `2393792`.
+- Home Identity: "The Standard" eyebrow, headline down to
+  `--text-statement` with balanced wrap, new `lead` prop splitting the
+  body into lead + grey support copy, varied vertical rhythm.
+  `SectionWrapper` and nav mobile gutters 0.5rem → 1rem so every
+  homepage section shares one edge. Committed as `91aa165`.
+- Home ProductStrips: faux-bold fixed, text aligned to the site edge
+  (padding only on the image side), bigger stats with gold rules,
+  strips 90vh → 80vh with 4rem gaps. Committed as `c2d1b05`.
+
+**Decisions made this session:**
+
+- The homepage keeps its own character; it borrows only details from
+  the partner pages (gold-ruled eyebrows, grain, gold detail).
+- Anton faux-bold is fixed per section during the homepage pass; the
+  global `.display-text` fix waits until after it (see Next).
+
+**Still open:**
+
+- Uncommitted on `dev-homepage-ui-upgrade`:
+  - AudienceCards (signed off): square cards, gold numbers, title
+    stays on hover, heading "Choose Your Route" with eyebrow "Work With
+    Probell". Now three cards: Gyms & Retailers (`/retail`),
+    Distributors, Sales Partners. The "See More" products card was
+    dropped, so `src/assets/audience/supplements.jpg` is unused.
+  - BrandStory (awaiting sign-off): square image, faux-bold fixed,
+    AA-passing stat labels, `.container` removed, smaller headline.
+    Copy: CTA is now "Request Wholesale Pricing" → `/retail`; "stocked
+    in gyms" → "built for gyms"; the "waiting for someone to stock"
+    line was trimmed from Identity's body (kept as the BrandStory
+    headline).
+- Not checked in a browser this session; build and lint clean after
+  each section.
 
 ### Session 61 — 9 Nov 2026
 
@@ -92,11 +147,6 @@ Newest first.
   and submit script.
 - Red is kept for the one CTA per page; gold carries the detail (rules,
   labels, numbers).
-
-**Still open:**
-
-- The homepage Contact headline uses `.display-text` without setting
-  Anton; check whether that's intended.
 
 ### Session 60 — 26 Oct 2026
 
