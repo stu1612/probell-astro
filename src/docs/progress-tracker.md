@@ -18,8 +18,7 @@ to date.
 ### Next
 
 1. Swap in the client's final product PNGs and a transparent logo PNG.
-2. Add the partner-page pattern to `design.md` (Session 61).
-3. Check whether the homepage Contact headline should be in Anton (it
+2. Check whether the homepage Contact headline should be in Anton (it
    uses `.display-text` without setting the font).
 
 ---
@@ -96,9 +95,6 @@ Newest first.
 
 **Still open:**
 
-- `design.md` doesn't describe the partner-page pattern yet (shared
-  parts, gold detail with red kept for the CTA, dark square form
-  fields, light statement band).
 - The homepage Contact headline uses `.display-text` without setting
   Anton; check whether that's intended.
 
